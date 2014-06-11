@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+.etiqueta {
+	font-weight: bold;
+	font-family: arial;
+	color: #555555;
+}
+
+.z-groupbox-3d {
+	background: #C0C0C0;
+}
+
+.z-groupbox-3d-hm {
+	background: #C0C0C0;
+}
+
+.z-groupbox-hr {
+	background: #C0C0C0;
+}
+
+.btn {
+	font-size: 10px;
+	cursor: pointer;
+	width: 85px;
+	height: 30px;
+}
+
+.multilinea {
+	height: 35px;
+}
+
+.multilineaTab {
+	height: 250px;
+}
+
+.banner {
+
+	background-color: #B6B6B6;
+	color: black;
+	background-image: url("./../imagenes/generales/fongo.png");
+	background-repeat: no-repeat;
+	background-position: top;
+}
+.banner-head {
+	font-size: 25px;
+	padding-left: 5%;
+	padding-right: 5%;
+	font-style: Arial-bold;
+	font-weight: bold;
+}
+
+.banner .logout {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.z-loading {
+	background-color: #0070AD;
+	border: 1px outset #A0A0A0;
+	font-weight: bold;
+	font-size: 18px;
+	cursor: wait;
+	width: 250px;
+	height: 45px;
+}
+
+.z-loading-indicator {
+	color: gray;
+	border: 0 none;
+}

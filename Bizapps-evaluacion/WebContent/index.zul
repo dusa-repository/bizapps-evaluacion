@@ -1,0 +1,103 @@
+<zk>
+	<style src="public/Estilo.css" />
+	
+	<style>
+		.z-groupbox-hr { background: #EFF5F5 }
+	</style>
+	<zscript>
+		String variable = execution.getParameter("respuesta");
+		String
+		a
+		= "";
+		if (variable == null)
+		a = "AUTENTICACIÓN DE USUARIO";
+		else
+		a =
+		execution.getParameter("respuesta");
+	</zscript>
+	<window title="" border="0" height="100%" contentStyle="overflow:auto" apply="controlador.portal.CIndex"
+	style="border-top: 20px solid #7F1110;">
+	<borderlayout
+ 		style="background-color:#fff;">
+		
+		<north height="5em">
+				<div vflex="1" hflex="1" class="banner">
+					<hbox vflex="1" hflex="1" align="rigth">
+						<div align="left" class="banner-head">
+							<image
+								src="public/imagenes/generales/ahorasi.png" height="3em"
+								width="11em" />
+						</div>
+						<div hflex="1"  align="left">
+							<label value="GESTIÓN DE DESEMPEÑO EMPRESARIAL"
+								class="banner-head" style= "text-shadow: 0.09em 0.09em #333;" />
+						</div>
+					</hbox>
+					</div>
+			</north>
+				<west border="none" style="overflow-y:scroll;background-image: url('public/imagenes/generales/gerente.png'); background-repeat:no-repeat;height=100%; width=100%">
+		</west>
+		<east width="60%" border="none">
+		 			<vlayout> 
+				<div height="100px" align="rigth">
+					<separator />
+					<separator />
+					<separator />
+				</div>
+				<div align="center">
+					<groupbox width="25em" height="12em">
+						<caption label="${a}"
+							style="color:black; font-size: 14px; font-weight:bold" />
+						<separator></separator>
+						<separator></separator>
+						<hlayout width="100%">
+							<h:form id="inicioSesion" action="j_spring_security_check"
+								method="POST" xmlns:h="native">
+								<hlayout width="100%">
+
+									<label class="etiqueta" height="20px" style="font-size:12px"
+										value="Nombre de Usuario :" />
+									<textbox placeholder="Usuario" height="18px" id="log_usuario"
+										name="j_username" hflex="1" />
+								</hlayout>
+								<separator></separator>
+								<separator></separator>
+								<hlayout width="100%">
+									<label class="etiqueta" height="20px" style="font-size:12px"
+										value="Contraseña :" />
+									<textbox placeholder="Contraseña" height="18px" id="log_clave"
+										hflex="1" type="password" name="j_password" />
+								</hlayout>
+								<separator></separator>
+								<separator></separator>
+								<separator></separator>
+								<hlayout width="100%">
+									<button type="submit" class="btn" label="Entrar"
+										image="/public/imagenes/botones/entrar.png" />
+								</hlayout>
+								<separator></separator>
+								<separator></separator>
+							</h:form>
+						</hlayout>
+						<hlayout width="100%">
+							<a href="">
+								<label id="lblOlvidoClave" sclass="pointer" value="¿Olvido su Contraseña?"
+									style="color:black;margin-left:10px;font-weight:bold" />
+							</a>
+						</hlayout>
+					</groupbox>
+				</div>
+			</vlayout>
+		</east>
+		<south vflex="2" border="0" height="3em"
+			collapsible="false">
+			<div align="center">
+				<separator></separator>
+				<label style="padding-center:35%; font-weight: bold; "
+					value="© 2014 Elaborado por BIZAPPS,C.A.  All Rights Reserved. Terms Privacy">
+				</label>
+			</div>
+		</south>
+	</borderlayout>
+	</window>
+</zk>

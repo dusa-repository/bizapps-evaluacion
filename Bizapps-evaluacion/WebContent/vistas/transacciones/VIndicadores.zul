@@ -1,0 +1,97 @@
+<zk>
+<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply="controlador.transacciones.CIndicadores">
+	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
+		<groupbox width="auto" mold="3d" title="Evaluación de Desempeño" >
+	<grid width="100%" align = "center">
+					<columns visible="true" >
+						<column label="Ficha" width="5%" />
+						<column label="Nombre del Trabajador" width="23%" />
+						<column label="Cargo" width="20%" />
+						<column label="Unidad Organizativa" width="27%" />
+						<column label="Gerencia a la que Reporta" width="25%" />					
+					</columns>
+					<rows>
+					<row>
+								<label id="lblFicha"></label>
+								<label id="lblNombreTrabajador"></label>
+								<label id="lblCargo"></label>
+								<label id="lblUnidadOrganizativa"></label>
+								<label id="lblGerencia"></label>
+						</row>
+					</rows>
+				</grid>
+		</groupbox>
+		<separator />
+		<div style="background-color:#F8E0E0;" >
+		<label value= "Sección I - Evaluación de Objetivos e Indicadores" style= "font-weight:bold;"/>
+		</div>
+		<separator />
+		<groupbox>
+		<grid>
+			<columns>
+				<column label="" width="50%" />
+				<column label="" width="50%" />
+			</columns>
+			<rows>
+				<row>
+					<label id="lblPrograma" value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
+					<combobox  id="cmbPrograma" readonly="true"
+						placeholder = "Seleccione..."
+						width="80%" cols="45"
+						maxlength="45" tabindex="1" mold="rounded"
+						value="@bind(vm.programa.nombrePrograma)" 
+						model="@load(vm.listaPrograma)"
+						selectedItem="@bind(vm.programa)"
+						onSelect="@command('buscarAsignaturas', comboAsignaturas = cmbAsignaturas)">
+						<template name="model">
+							<comboitem label="${each.getNombrePrograma()}" />
+						</template>
+					</combobox>
+				</row>
+
+			</rows>
+		</grid>
+	</groupbox>
+		<listbox height="auto" id="lbxMotivosooo" mold="paging"
+				pageSize="10" 
+				emptyMessage="aquiiiii" width="auto">
+				<listhead>
+					<listheader label="Línea" />
+					<listheader label="Indicador" />
+					<listheader label="Unid. Med." />
+					<listheader label="Medición" />
+					<listheader label="Peso (%)" />
+					<listheader label="Valor Meta" />
+					<listheader label="Valor Resultado" />
+					<listheader label="Res.Fy.Ant." />
+					<listheader label="Resultado (%)" />
+					<listheader label="Resul. Peso (%)" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="1"></listcell>
+						<listcell height="%"> 
+						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		<!-- Botones de acción sobre l registro de la apelación-->
+		<div align="right" height="100%">
+			<button id="btnGuardar" width="auto" height="auto"
+				mold="trendy" label="Agregar Indicador"
+				onClick="@command('registrarSolicitudApelacion', window=winRegistrarDatosInicialesApelacion) @global-command('actualizarListaSancionados')">
+
+			</button>
+			<button id="btnLimpiar" width="auto" height="auto"
+				mold="trendy" label="Eliminar Indicador" onClick="@command('cancelar')">
+
+			</button>
+			<button id="btnCerrar" width="auto" height="auto"
+				label="Actualizar Cálculos" mold="trendy" 
+				onClick="@command('cerrarVentana', ventana = winRegistrarDatosInicialesApelacion)">
+			</button>
+		</div>
+	</div>
+</window>
+</zk>

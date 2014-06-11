@@ -1,0 +1,48 @@
+<zk>
+	<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply="controlador.transacciones.CCompetenciasEspecificas">
+	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
+		<groupbox width="auto" mold="3d" title="Evaluación de Desempeño" >
+	<grid width="100%" align = "center">
+					<columns visible="true" >
+						<column label="Ficha" width="5%" />
+						<column label="Nombre del Trabajador" width="23%" />
+						<column label="Cargo" width="20%" />
+						<column label="Unidad Organizativa" width="27%" />
+						<column label="Gerencia a la que Reporta" width="25%" />					
+					</columns>
+					<rows>
+					<row>
+								<label id="lblFicha"></label>
+								<label id="lblNombreTrabajador"></label>
+								<label id="lblCargo"></label>
+								<label id="lblUnidadOrganizativa"></label>
+								<label id="lblGerencia"></label>
+						</row>
+					</rows>
+				</grid>
+		</groupbox>
+		<separator />
+		<div style="background-color:#F8E0E0;" >
+		<label value= "Sección II - Evaluación de Competencias Específicas" style= "font-weight:bold;"/>
+		</div>
+		<separator />
+		<listbox height="auto" id="lbxMotivosooo" mold="paging"
+				pageSize="10" 
+				emptyMessage="aquiiiii" width="auto">
+				<listhead>
+					<listheader label="Competencia" />
+					<listheader label="Nivel de Dominio Requerido" />
+					<listheader label="Nivel de Dominio Evidenciado" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="1"></listcell>
+						<listcell height="%"> 
+						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+	</div>
+	</window>
+</zk>

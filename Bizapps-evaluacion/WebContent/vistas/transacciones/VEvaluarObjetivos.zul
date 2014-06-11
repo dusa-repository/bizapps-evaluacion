@@ -1,0 +1,84 @@
+<zk>
+<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;">
+	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
+		<groupbox height="auto" width="auto" mold="3d" title="Evaluación de Desempeño" >
+			<caption id="lblDatosestudiante"  />
+			<listbox height="auto" width="auto" 
+				emptyMessage="Aquiiii">
+				<listhead>
+					<listheader label="#Evaluacion" />
+					<listheader label="Fecha de Creación"/>
+					<listheader label="Revisión" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell
+							label="${each.tipoMotivo.nombreTipoMotivo}" />
+						<listcell label="${each.descripcion}" />
+					</listitem>
+				</template>
+			</listbox>
+			<listbox height="auto" id="lbxMotivosoo" mold="paging"
+				pageSize="10" model="@bind(vm.listaMotivoListBox)"
+				emptyMessage="aquiiiii" width="auto">
+				<listhead>
+					<listheader label="Ficha" />
+					<listheader label="Nombre del Trabajador" />
+					<listheader label="Cargo" />
+					<listheader label="Unidad Organizativa" />
+					<listheader label="Gerencia a la que Reporta" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell
+							label="${each.tipoMotivo.nombreTipoMotivo}" />
+						<listcell label="${each.descripcion}" />
+					</listitem>
+				</template>
+			</listbox>
+		</groupbox>
+		<separator />
+		<div  style="background-color:#F8E0E0;" >
+		<label value= "Sección I - Evaluación de Objetivos e Indicadores" style= "font-weight:bold;"/>
+		</div>
+		<separator />
+		<listbox height="auto" id="lbxMotivosooo" mold="paging"
+				pageSize="10" 
+				emptyMessage="aquiiiii" width="auto">
+				<listhead>
+					<listheader label="Línea" />
+					<listheader label="Plan Estratégico" />
+					<listheader label="Objetivo" />
+					<listheader label="Corresponsables" />
+					<listheader label="Peso (%)" />
+					<listheader label="Total Ind. (%)" />
+					<listheader label="Resultados (%)" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="1"></listcell>
+						<listcell height="%"> 
+						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		<!-- Botones de acción sobre l registro de la apelación-->
+		<div align="right" height="100%">
+			<button id="btnGuardar" width="auto" height="auto"
+				mold="trendy" label="Agregar Objetivo"
+				onClick="@command('registrarSolicitudApelacion', window=winRegistrarDatosInicialesApelacion) @global-command('actualizarListaSancionados')">
+
+			</button>
+			<button id="btnLimpiar" width="auto" height="auto"
+				mold="trendy" label="Eliminar Objetivo" onClick="@command('cancelar')">
+
+			</button>
+			<button id="btnCerrar" width="auto" height="auto"
+				label="Actualizar Cálculos" mold="trendy" 
+				onClick="@command('cerrarVentana', ventana = winRegistrarDatosInicialesApelacion)">
+			</button>
+		</div>
+	</div>
+	</window>
+</zk>

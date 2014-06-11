@@ -1,0 +1,230 @@
+<zk>
+	<style src="/public/Estilo.css" />
+	<div id="divUsuario" apply="controlador.maestros.CUsuario" width="80%">
+		<groupbox width="100%" mold="3d" title="Usuario">
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="10%" />
+					<column label="" width="25%" />
+					<column label="" width="15%" />
+					<column label="" width="10%" />
+					<column label="" width="25%" />
+					<column label="" width="15%" />
+				</columns>
+				<rows>
+					<row>
+						<label class="etiqueta" value="Cedula:" />
+						<textbox id="txtCedulaUsuario" hflex="1" maxlength="12"
+							tooltiptext="Ingrese la Cedula del Usuario" />
+						<fileupload image="/public/imagenes/botones/cargar.png"
+							id="fudImagenUsuario" label="Foto">
+						</fileupload>
+
+						<label class="etiqueta" value="Ficha:" />
+						<textbox id="txtFichaUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese la Ficha del Usuario" />
+						<button id="btnBuscarUsuario" class="btn" label="Buscar"
+							tooltiptext="Catalogo" image="/public/imagenes/botones/buscar.png" />
+					</row>
+
+					<row>
+						<label class="etiqueta" value="Primer Nombre:" />
+						<textbox id="txtNombreUsuario" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Primer Nombre del Usuario" />
+						<image id="imagen" width="50px" height="50px" />
+						<label class="etiqueta" value="Segundo Nombre:" />
+						<textbox id="txtNombre2Usuario" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Segundo Nombre del Usuario" />
+						<hbox />
+					</row>
+					<row>
+						<label class="etiqueta" value="Primer Apellido:" />
+						<textbox id="txtApellidoUsuario" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Primer Apellido del Usuario" />
+						<hbox />
+						<label class="etiqueta" value="Segundo Apellido:" />
+						<textbox id="txtApellido2Usuario" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Segundo Apellido del Usuario" />
+						<hbox />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<tabbox width="100%">
+				<tabs>
+					<tab label="Datos Basicos" id="tabBasicos" />
+					<tab label="Datos de Usuario" id="tabUsuarios" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<groupbox width="100%" title="Datos Personales">
+							<grid width="100%">
+								<columns visible="false">
+									<column label="" width="20%" />
+									<column label="" width="30%" />
+									<column label="" width="20%" />
+									<column label="" width="30%" />
+								</columns>
+								<rows>
+									<row>
+										<label class="etiqueta" value="Telefono:" />
+										<textbox id="txtTelefonoUsuario" hflex="1" maxlength="50"
+											tooltiptext="Ingrese el Numero de Telefono del Usuario (0426-9999999)" />
+										<label class="etiqueta" value="Correo:" />
+										<textbox id="txtCorreoUsuario" hflex="1" maxlength="50"
+											tooltiptext="Ingrese el Correo Electronico del Usuario (ejemplo@ejemplo.com)" />
+									</row>
+									<row>
+										<label class="etiqueta" value="Sexo:" />
+										<radiogroup id="rdbSexoUsuario">
+											<radio id="rdoSexoFUsuario" label="Femenino" />
+											<radio id="rdoSexoMUsuario" label="Masculino" />
+										</radiogroup>
+
+										<label class="etiqueta" value="Direccion:" />
+										<textbox class="multilinea" id="txtDireccionUsuario"
+											hflex="1" maxlength="500"
+											tooltiptext="Ingrese el Numero de Telefono del Usuario"
+											multiline="true" />
+									</row>
+									<row>
+										<label class="etiqueta" value="Unidad:" />
+										<combobox id="cmbUnidad" readonly="true" tabindex="1"
+											width="100%" tooltiptext="Seleccione una Unidad" placeholder="Seleccione una Unidad">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idUnidadUsuario}" />
+											</template>
+										</combobox>
+										<button id="btnAbrirUnidad" label=""
+											tooltiptext="Crear una Nueva Unidad" image="/public/imagenes/botones/agregar.png" />
+										<hbox />
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+						<groupbox width="100%" title="Datos Medicos">
+							<grid width="100%">
+								<columns visible="false">
+									<column label="" width="20%" />
+									<column label="" width="26%" />
+									<column label="" width="8%" />
+									<column label="" width="20%" />
+									<column label="" width="26%" />
+								</columns>
+								<rows>
+									<row>
+										<label class="etiqueta" value="Especialidad:" />
+										<combobox id="cmbEspecialidad" readonly="true"
+											tabindex="1" width="100%" tooltiptext="Seleccione una Especialidad"
+											placeholder="Seleccione una Especialidad">
+											<template name="model">
+												<comboitem label="${each.descripcion}" context="${each.idEspecialidad}" />
+											</template>
+										</combobox>
+										<button id="btnAbrirEspecialidad" label=""
+											tooltiptext="Crear una Nueva Especialidad" image="/public/imagenes/botones/agregar.png" />
+										<label class="etiqueta" value="Licencia CM:" />
+										<textbox id="txtLicenciaCUsuario" hflex="1" maxlength="50"
+											tooltiptext="Ingrese la licencia CM del Usuario" />
+									</row>
+									<row>
+										<label class="etiqueta" value="Licencia MSDS:" />
+										<textbox id="txtLicenciaMUsuario" hflex="1" maxlength="50"
+											tooltiptext="Ingrese la Licencia MSDS del Usuario" />
+										<hbox />
+										<label class="etiqueta" value="Numero de Citas Diarias:" />
+										<spinner id="spnCitasUsuario" tooltiptext="Ingrese la Cantidad de Citas Diarias" />
+									</row>
+
+									<row>
+										<label class="etiqueta" value="Licencia INPSASEL:" />
+										<textbox id="txtLicenciaIUsuario" hflex="1" maxlength="50"
+											tooltiptext="Ingrese la Licencia INPSASEL del Usuario (Solo Numeros)" />
+										<hbox />
+										<label class="etiqueta" value="Tiempo entre citas(min):" />
+										<spinner id="spnTiempoUsuario" tooltiptext="Ingrese el Tiempo entre Citas" />
+									</row>
+								</rows>
+							</grid>
+							<separator />
+						</groupbox>
+						<div align="right" style="float: right;">
+							<button id="btnSiguientePestanna" label="Siguiente"
+								image="/public/imagenes/botones/adelante.png" />
+						</div>
+					</tabpanel>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+							</columns>
+							<rows>
+								<row>
+									<label class="etiqueta" value="Login de Usuario:" />
+									<textbox id="txtLoginUsuario" hflex="1" maxlength="50"
+										tooltiptext="Ingrese el Login del Usuario" />
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<label class="etiqueta" value="Password:" />
+									<textbox id="txtPasswordUsuario" hflex="1" maxlength="256"
+										tooltiptext="Ingrese la Contraseña del Usuario" type="password" />
+									<label class="etiqueta" value="Reescriba el Password:" />
+									<textbox id="txtPassword2Usuario" hflex="1" maxlength="256"
+										tooltiptext="Reescriba el Login del Usuario" type="password" />
+								</row>
+							</rows>
+						</grid>
+						<separator />
+						<groupbox width="100%"
+							title="Seleccione los Grupos Correspondientes al Usuario">
+							<vbox>
+								<button id="btnAbrirGrupo" label=""
+									tooltiptext="Crear un Nuevo Grupo" image="/public/imagenes/botones/agregar.png" />
+							</vbox>
+							<hbox>
+								<listbox id="ltbGruposDisponibles" height="160px"
+									emptyMessage="No hay Grupos registrados">
+									<template name="model">
+										<listitem>
+											<listcell label="${each.nombre}">
+											</listcell>
+										</listitem>
+									</template>
+								</listbox>
+								<vbox>
+									<button id="pasar1" image="/public/imagenes/botones/adelante.png"
+										tooltiptext="Agregar Grupos" width="30px" />
+									<separator />
+									<button id="pasar2" image="/public/imagenes/botones/atras.png"
+										tooltiptext="Quitar Grupos" width="30px" />
+								</vbox>
+								<listbox id="ltbGruposAgregados" height="160px"
+									emptyMessage="No ha Seleccionado ningun Grupo" checkmark="true">
+									<template name="model">
+										<listitem>
+											<listcell label="${each.nombre}">
+											</listcell>
+										</listitem>
+									</template>
+								</listbox>
+							</hbox>
+						</groupbox>
+						<separator />
+						<separator />
+						<div align="left" style="float: right;">
+							<button label="Anterior" id="btnAnteriorPestanna"
+								image="/public/imagenes/botones/atras.png" />
+						</div>
+						<div width="50%" id="botoneraUsuario" align="left" style="float: left;" />
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<div id="catalogoUsuario" />
+		</groupbox>
+	</div>
+</zk>

@@ -1,0 +1,18 @@
+<zk>
+	<div id="divVF00021" apply="controlador.transacciones.CEmpleado">
+		<groupbox mold="3d" width="20%" title="Evaluación de Desempeño">
+			<label value= "ARBOL DE PERSONAL " style="font-style: Arial; font-weight: bold; color: black;"></label>
+			<separator />
+			<tree id="arbolPersonal"   zclass="z-dottree" >  
+					<template name="model">
+						<treeitem context="menupopup">
+							<treerow>
+								<treecell label="${each.label}" style="font-style: Arial; font-weight: bold; color: black;" />
+							</treerow>
+						</treeitem>
+					</template>
+				</tree>
+			<separator />
+		</groupbox>
+	</div>
+</zk>

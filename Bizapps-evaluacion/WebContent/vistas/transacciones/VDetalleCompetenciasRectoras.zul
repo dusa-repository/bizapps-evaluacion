@@ -1,0 +1,26 @@
+<zk>
+	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
+	<style src="/public/Estilo.css" />
+		<div  style="background-color:#8F0000;" >
+		<label value= "Competencia Rectora: Control de Gestion" style= "color:write"/>
+		</div>
+		<separator />
+		<listbox height="auto" id="lbxMotivosooo" mold="paging"
+				pageSize="10" 
+				emptyMessage="aquiiiii" width="auto">
+				<listhead>
+					<listheader label="" />
+					<listheader label="Conducta" />
+					<listheader label="Observación" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="1"></listcell>
+						<listcell height="%"> 
+						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+	</div>
+</zk>
