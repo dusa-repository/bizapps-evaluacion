@@ -12,7 +12,9 @@ public interface IUnidadMedidaDAO extends JpaRepository<UnidadMedida, Integer> {
 
 	UnidadMedida findByDescripcion(String descripcion);
 
-	
+
+	 public List<UnidadMedida> findAll();
+
 
 	
 }

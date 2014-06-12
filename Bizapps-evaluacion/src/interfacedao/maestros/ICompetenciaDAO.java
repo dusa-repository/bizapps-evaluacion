@@ -1,4 +1,4 @@
-package interfacedao.transacciones;
+package interfacedao.maestros;
 
 import java.util.ArrayList;
 import java.util.List;

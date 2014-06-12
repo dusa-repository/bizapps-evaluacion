@@ -1,7 +1,8 @@
-package servicio.transacciones;
+package servicio.maestros;
 
 
-import interfacedao.transacciones.IEmpleadoDAO;
+
+import interfacedao.maestros.IEmpleadoDAO;
 
 import java.util.List;
 

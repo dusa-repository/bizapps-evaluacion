@@ -41,4 +41,9 @@ public class SUnidadMedida {
 	}
 	
 
+	public List<UnidadMedida> buscar() {
+		return unidadMedidaDAO.findAll();
+	}
+	
+
 }

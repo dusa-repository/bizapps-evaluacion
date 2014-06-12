@@ -40,5 +40,8 @@ public class SMedicion {
 		medicionDAO.delete(id);
 	}
 	
+	public List<Medicion> buscar() {
+		return medicionDAO.findAll();
+	}
 
 }

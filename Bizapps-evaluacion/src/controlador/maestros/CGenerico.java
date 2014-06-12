@@ -31,11 +31,14 @@ import arbol.CArbol;
 
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
+import servicio.maestros.SCompetencia;
 import servicio.maestros.SDominio;
+import servicio.maestros.SEmpleado;
 import servicio.maestros.SEmpresa;
 import servicio.maestros.SGerencia;
 import servicio.maestros.SMedicion;
 import servicio.maestros.SPeriodo;
+import servicio.maestros.SPerspectiva;
 import servicio.maestros.SRevision;
 import servicio.maestros.STipoFormacion;
 import servicio.maestros.SUnidadMedida;
@@ -44,11 +47,10 @@ import servicio.maestros.SUrgencia;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
-import servicio.transacciones.SCompetencia;
-import servicio.transacciones.SEmpleado;
+
 import servicio.transacciones.SEvaluacion;
 import servicio.transacciones.SNivelCompetenciaCargo;
-import servicio.transacciones.SPerspectiva;
+
 
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)

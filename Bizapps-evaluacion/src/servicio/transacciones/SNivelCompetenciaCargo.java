@@ -1,7 +1,6 @@
 package servicio.transacciones;
 
 
-import interfacedao.transacciones.IEmpleadoDAO;
 import interfacedao.transacciones.IEvaluacionDAO;
 import interfacedao.transacciones.INivelCompetenciaCargoDAO;
 
