@@ -29,6 +29,18 @@ import org.zkoss.zul.Tab;
 import arbol.CArbol;
 
 
+import servicio.maestros.SArea;
+import servicio.maestros.SCargo;
+import servicio.maestros.SDominio;
+import servicio.maestros.SEmpresa;
+import servicio.maestros.SGerencia;
+import servicio.maestros.SMedicion;
+import servicio.maestros.SPeriodo;
+import servicio.maestros.SRevision;
+import servicio.maestros.STipoFormacion;
+import servicio.maestros.SUnidadMedida;
+import servicio.maestros.SUnidadOrganizativa;
+import servicio.maestros.SUrgencia;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
@@ -58,6 +70,30 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacion servicioEvaluacion;
 	@WireVariable("SCompetencia")
 	protected SCompetencia servicioCompetencia;
+	@WireVariable("SCargo")
+	protected SCargo servicioCargo;
+	@WireVariable("SEmpresa")
+	protected SEmpresa servicioEmpresa;
+	@WireVariable("SGerencia")
+	protected SGerencia servicioGerencia;
+	@WireVariable("SUnidadOrganizativa")
+	protected SUnidadOrganizativa servicioUnidadOrganizativa;
+	@WireVariable("SRevision")
+	protected SRevision servicioRevision;
+	@WireVariable("SPeriodo")
+	protected SPeriodo servicioPeriodo;
+	@WireVariable("STipoFormacion")
+	protected STipoFormacion servicioTipoFormacion;
+	@WireVariable("SArea")
+	protected SArea servicioArea;
+	@WireVariable("SDominio")
+	protected SDominio servicioDominio;
+	@WireVariable("SMedicion")
+	protected SMedicion servicioMedicion;
+	@WireVariable("SUnidadMedida")
+	protected SUnidadMedida servicioUnidadMedida;
+	@WireVariable("SUrgencia")
+	protected SUrgencia servicioUrgencia;
 
 	
 	public static  List<Tab> tabs = new ArrayList<Tab>();
