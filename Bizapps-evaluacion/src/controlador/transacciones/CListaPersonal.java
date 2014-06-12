@@ -20,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -29,7 +28,6 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -42,7 +40,6 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
-import org.zkoss.zul.Window;
 
 import sun.util.calendar.BaseCalendar.Date;
 
@@ -53,10 +50,10 @@ import controlador.maestros.CGenerico;
 import componentes.Mensaje;
 import componentes.Validador;
 
-public class CObjetivos extends CGenerico {
+public class CListaPersonal extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
-	Mensaje msj = new Mensaje();
+		Mensaje msj = new Mensaje();
 
 	@Wire
 	private Textbox txtObjetivo;
@@ -73,7 +70,7 @@ public class CObjetivos extends CGenerico {
 	@Wire
 	private Button btnEliminar;
 	@Wire
-	private Button btnOk;
+	private Button btnCalculo;
 	@Wire
 	private Listbox lbxEmpleado;
 	@Wire
@@ -96,84 +93,71 @@ public class CObjetivos extends CGenerico {
 	private Label lblUnidadOrganizativa;
 	@Wire
 	private Label lblGerencia;
+	
 	@Wire
 	private Combobox cmbPerspectiva;
-	@Wire
-	private Window window;
-	@Wire
-	private Groupbox gpxAgregar;
-	@Wire
-	private Groupbox gpxAgregados;
-	
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	ListModelList<Perspectiva> perspectiva;
 	public String horaCreacion = String.valueOf(calendario
 			.get(Calendar.HOUR_OF_DAY))
 			+ String.valueOf(calendario.get(Calendar.MINUTE))
 			+ String.valueOf(calendario.get(Calendar.SECOND));
-
+	
+	public ListModelList<Perspectiva> perspectiva() {
+		perspectiva = new ListModelList<Perspectiva>(
+				servicioPerspectiva.buscar());
+		return perspectiva;
+	}
 
 	@Override
 	public void inicializar() throws IOException {
-
-		 List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-		 cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
-		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(horaCreacion);
-		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
-		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
-		String cargo = empleado.getCargo().getDescripcion();
-		String unidadOrganizativa = empleado.getUnidadOrganizativa()
-				.getDescripcion();
-		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
-				.getDescripcion();
-		lblFicha.setValue(ficha);
-		lblNombreTrabajador.setValue(nombreTrabajador);
-		lblCargo.setValue(cargo);
-		lblUnidadOrganizativa.setValue(unidadOrganizativa);
-		lblGerencia.setValue(gerenciaReporte);
-		gpxAgregar.setOpen(false);
-		gpxAgregados.setOpen(false);
+		
+//		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+//		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
+//		Authentication auth = SecurityContextHolder.getContext()
+//				.getAuthentication();
+//		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+//		String ficha = u.getCedula();
+//		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+//		lblEvaluacion.setValue(numeroEvaluacion.toString());
+//		lblFechaCreacion.setValue(horaCreacion);
+//		String nombreTrabajador = u.getNombre() + " "  + u.getApellido();
+//		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+//		String cargo = empleado.getCargo().getDescripcion();
+//		String unidadOrganizativa = empleado.getUnidadOrganizativa().getDescripcion();
+//		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia().getDescripcion();
+//		lblFicha.setValue(ficha);
+//		lblNombreTrabajador.setValue(nombreTrabajador);
+//		lblCargo.setValue(cargo);
+//		lblUnidadOrganizativa.setValue(unidadOrganizativa);
+//		lblGerencia.setValue(gerenciaReporte);	
+//	}
+//	
+//	public void limpiar (){
+//		txtObjetivo.setValue("");
+//		cmbPerspectiva.setValue(null);
+//		txtCorresponsables.setValue("");
+//	}
+//	@Listen("onClick = #btnAgregar")
+//	public void AgregarObjetvo() {	
+//	
+//		String objetivo =txtObjetivo.getValue();
+//		String corresponsables = txtCorresponsables.getValue();
+//		String perspectiva = cmbPerspectiva.getValue();
+//		EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
+//		objetivoLista.setIdObjetivo(1);
+//		objetivoLista.setDescripcionObjetivo(objetivo);
+//		objetivoLista.setIdEvaluacion(1);
+//		objetivoLista.setIdPerspectiva(1);
+//		objetivoLista.setLinea(1);
+//		objetivoLista.setPeso(0);
+//		objetivoLista.setResultado(0);
+//		objetivoLista.setTotalInd(0);
+//		objetivoLista.setCorresponsables(corresponsables);
+//		objetivosG.add(objetivoLista);
+//		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
+//		limpiar ();
+//	
+//	}
 	}
-
-
-	@Listen("onClick = #btnAgregar")
-	public void AgregarObjetivo() {	
-		gpxAgregar.setOpen(true);
-	}
-	
-	@Listen("onClick = #btnOk")
-	public void AgregarObjetivo2() {	
-		 gpxAgregados.setOpen(true);
-//		 Perspectiva perspectiva = cmbPerspectiva.getValue();
-		 String objetivo =txtObjetivo.getValue();
-		 String corresponsables = txtCorresponsables.getValue();
-		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
-		 objetivoLista.setIdObjetivo(1);
-		 objetivoLista.setDescripcionObjetivo(objetivo);
-		 objetivoLista.setIdEvaluacion(1);
-//		 objetivoLista.setPerspectiva(perspectiva);
-		 objetivoLista.setLinea(1);
-		 objetivoLista.setPeso(0);
-		 objetivoLista.setResultado(0);
-		 objetivoLista.setTotalInd(0);
-		 objetivoLista.setCorresponsables(corresponsables);
-		 objetivosG.add(objetivoLista);
-		 lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
-		 gpxAgregar.setOpen(false);
-	
-	}
-	
-	public void limpiar() {
-		 txtObjetivo.setValue("");
-		 cmbPerspectiva.setValue(null);
-		 txtCorresponsables.setValue("");
-	}
-
 }

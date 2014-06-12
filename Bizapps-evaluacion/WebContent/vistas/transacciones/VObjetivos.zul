@@ -1,137 +1,160 @@
 <zk>
-<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply= "controlador.transacciones.CObjetivos">
-	<groupbox height="auto" width="auto" mold="3d" title="Evaluación de Desempeño" >
-			<grid width="65%" align = "rigth"  height = "20%" >
-					<columns visible="true">
-						<column label="#Evaluacion" width="15%" />
-						<column label="Fecha Creacion" width="25%" />
-						<column label="Revision" width="25%" />
-						
-					</columns>
-					<rows>
-					<row>
-								<label id="lblEvaluacion"></label>
-								<label id="lblFechaCreacion"></label>
-								<label id="lblRevision"></label>
-						
-						</row>
-						
-					</rows>
-				</grid>
-				<grid width="100%" align = "center">
-					<columns visible="true" >
-						<column label="Ficha" width="5%" />
-						<column label="Nombre del Trabajador" width="23%" />
-						<column label="Cargo" width="20%" />
-						<column label="Unidad Organizativa" width="27%" />
-						<column label="Gerencia a la que Reporta" width="25%" />
-						
-					</columns>
-					<rows>
-					<row>
-								<label id="lblFicha"></label>
-								<label id="lblNombreTrabajador"></label>
-								<label id="lblCargo"></label>
-								<label id="lblUnidadOrganizativa"></label>
-								<label id="lblGerencia"></label>
-						
-						</row>
-						
-					</rows>
-				</grid>
-		</groupbox>
-	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
-			<separator />
-		<div  style="background-color:#F8E0E0;" >
-		<label value= "Sección I - Evaluación de Objetivos e Indicadores" style= "font-weight:bold;"/>
+	<window border="normal" height="auto" width="auto"
+		style="background-color:#8A0808;"
+		apply="controlador.transacciones.CObjetivos" id="winObjetivoModal">
+		<div style="background-color:#F8E0E0;">
+			<label value="Evaluación de Desempeño"
+				style="font-weight:bold;" />
 		</div>
-		<separator />
-		<listbox height="auto" id="lbxObjetivos" 
-				 width="auto">
+		<grid width="100%" align="center">
+			<columns visible="true">
+				<column label="#Evaluacion" width="13%"
+					style="font-size: 10px;" />
+				<column label="Fecha Creacion" width="18%"
+					style="font-size: 10px;" />
+				<column label="Revision" width="18%"
+					style="font-size: 10px;" />
+				<column label="Ficha" width="10%"
+					style="font-size: 10px;" />
+				<column label="Nombre del Trabajador" width="25%"
+					style="font-size: 10px;" />
+				<column label="Cargo" width="20%"
+					style="font-size: 10px;" />
+				<column label="Unidad Organizativa" width="27%"
+					style="font-size: 10px;" />
+				<column label="Gerencia a la que Reporta" width="25%"
+					style="font-size: 10px;" />
+			</columns>
+			<rows>
+				<row>
+					<label id="lblEvaluacion"
+						style="font-size: 10px;">
+					</label>
+					<label id="lblFechaCreacion"
+						style="font-size: 10px;">
+					</label>
+					<label id="lblRevision" value="FY13-14 (1)"
+						style="font-size: 10px;">
+					</label>
+					<label id="lblFicha" style="font-size: 10px;"></label>
+					<label id="lblNombreTrabajador"
+						style="font-size: 10px;">
+					</label>
+					<label id="lblCargo" style="font-size: 10px;"></label>
+					<label id="lblUnidadOrganizativa"
+						style="font-size: 10px;">
+					</label>
+					<label id="lblGerencia" style="font-size: 10px;"></label>
+				</row>
+			</rows>
+		</grid>
+		<div id="divEditarUsuario" class="z-groupbox-3d-hm;"
+			width="auto">
+			<separator />
+			<div style="background-color:#F8E0E0;">
+				<label value="Sección I - Evaluación de Objetivos "
+					style="font-weight:bold;" />
+			</div>
+			<separator />
+			<groupbox id="gpxAgregar">
+				<listbox height="auto" id="lbxObjetivos" width="auto">
+					<listhead>
+						<listheader label="Línea" width="5%" />
+						<listheader label="Plan Estratégico"
+							width="22%" />
+						<listheader label="Objetivo" width="33%" />
+						<listheader label="Corresponsables" width="13%" />
+						<listheader label="Peso (%)" width="6%" />
+						<listheader label="Total Ind(%)" width="8%" />
+						<listheader label="Resultados (%)" width="10%" />
+						<listheader width="6%" />
+					</listhead>
+					<listitem>
+						<listcell></listcell>
+						<listcell>
+							<combobox placeholder="Plan Estratégico"
+								mold="rounded" rows="1" width="100%"
+								style="background-color:white;border:none" readonly="true"
+								id="cmbPerspectiva">
+								<template name="model">
+									<comboitem
+										label="${each.descripcion}" />
+								</template>
+							</combobox>
+						</listcell>
+						<listcell>
+							<textbox placeholder="Objetivos"
+								mold="rounded" rows="4" width="100%" id="txtObjetivo">
+							</textbox>
+						</listcell>
+						<listcell>
+							<textbox placeholder="Corresponsables"
+								mold="rounded" rows="2" width="100%" id="txtCorresponsables" />
+						</listcell>
+						<listcell>
+							<textbox value="0" placeholder="Peso"
+								mold="rounded" rows="1" width="100%" readonly="true"
+								id="txtPeso" />
+						</listcell>
+						<listcell>
+							<textbox value="0" placeholder="Total"
+								mold="rounded" rows="1" width="100%" readonly="true"
+								id="txtTotal" />
+						</listcell>
+						<listcell>
+							<textbox value="0" placeholder="Resultados"
+								mold="rounded" rows="1" width="100%" readonly="true"
+								id="txtResultados" />
+						</listcell>
+						<listcell>
+							<button id="btnOk" width="auto"
+								height="auto" mold="trendy"
+								image="/public/imagenes/botones/seleccionar.png"
+								style="background-color:#F8E0E0;">
+							</button>
+						</listcell>
+					</listitem>
+				</listbox>
+			</groupbox>
+			<div align="right" height="100%">
+				<button id="btnAgregar" width="auto" height="auto"
+					mold="trendy" label="Agregar"
+					image="/public/imagenes/botones/agregar.png"
+					style="background-color:#F8E0E0;">
+				</button>
+				<button id="btnEliminar" width="auto" height="auto"
+					mold="trendy" label="Eliminar"
+					image="/public/imagenes/botones/eliminar.png">
+
+				</button>
+			</div>
+		</div>
+		<groupbox id = "gpxAgregados">
+			<listbox height="auto" id="lbxObjetivosGuardados"
+				width="auto">
 				<listhead>
 					<listheader label="Línea" width="5%" />
 					<listheader label="Plan Estratégico" width="25%" />
-					<listheader label="Objetivo" width="33%"/>
-					<listheader label="Corresponsables" width="13%"/>
-					<listheader label="Peso (%)" width="7%"/>
-					<listheader label="Total Ind(%)" width="9%"/>
-					<listheader label="Resultados (%)" width="10%"/>
+					<listheader label="Objetivo" width="33%" />
+					<listheader label="Corresponsables" width="13%" />
+					<listheader label="Peso (%)" width="8%" />
+					<listheader label="Total Ind(%)" width="9%" />
+					<listheader label="Resultados (%)" width="10%" />
 				</listhead>
+				<template name="model">
 					<listitem>
-						<listcell>
-						</listcell>
-						<listcell> 
-						<combobox placeholder = "Plan Estratégico" mold="rounded"  rows="1" width="100%"
-						 style="background-color:white;border:none" 
-						readonly="true" id= "cmbPerspectiva" >
-<!-- 						model="${$composer.persperctiva}"  -->
-								<template
-									name="model">
-										<comboitem label="${each.descripcion}" />
-								</template>
-						</combobox>
-						</listcell>
-						<listcell>
-						<textbox  placeholder = "Objetivos" mold="rounded"  rows="3" width="100%" id= "txtObjetivo">
-						</textbox>
-						</listcell>
-						<listcell> 
-						<textbox placeholder = "Corresponsables" mold="rounded"  rows="2" width="100%" id= "txtCorresponsables" />
-						</listcell>
-						<listcell> 
-						<textbox value= "0" placeholder = "Peso" mold="rounded"  rows="1" width="100%" readonly="true" id= "txtPeso"/>
-						</listcell>
-						<listcell> 
-						<textbox value= "0" placeholder = "Total" mold="rounded"  rows="1" width="100%" readonly="true" id = "txtTotal"/>
-						</listcell>
-						<listcell> 
-						<textbox value= "0" placeholder = "Resultados" mold="rounded"  rows="1" width="100%" readonly="true" id= "txtResultados"/>
-						</listcell>
-					</listitem>
-			</listbox>
-		<div align="right" height="100%">
-			<button id="btnAgregar" width="auto" height="auto"
-				mold="trendy" label="Agregar Objetivo">
-			</button>
-			<button id="btnEliminar" width="auto" height="auto"
-				mold="trendy" label="Eliminar Objetivo">
-
-			</button>
-			<button id="btnCalculos" width="auto" height="auto"
-				label="Actualizar Cálculos" mold="trendy">
-			</button>
-		</div>
-	</div>
-	<listbox height="auto" id="lbxObjetivosGuardados" 
-				 width="auto" >
-				 <listhead>
-					<listheader  width="5%" />
-					<listheader  width="25%" />
-					<listheader  width="33%"/>
-					<listheader  width="13%"/>
-					<listheader  width="7%"/>
-					<listheader  width="9%"/>
-					<listheader  width="10%"/>
-				</listhead>
-					<template name="model">
-					<listitem>
-						<listcell >
-						</listcell>
-						<listcell label="${each.idPerspectiva}"> 
-						</listcell>
+						<listcell></listcell>
+						<listcell label="${each.perspectiva.descripcion}"></listcell>
 						<listcell label="${each.descripcionObjetivo}">
 						</listcell>
-						<listcell label="${each.corresponsables}"> 
+						<listcell label="${each.corresponsables}">
 						</listcell>
-						<listcell label="${each.peso}"> 
-						</listcell>
-						<listcell label="${each.totalInd}"> 
-						</listcell>
-						<listcell label="${each.resultado}"> 
-						</listcell>
+						<listcell label="${each.peso}"></listcell>
+						<listcell label="${each.totalInd}"></listcell>
+						<listcell label="${each.resultado}"></listcell>
 					</listitem>
-						</template>
+				</template>
 			</listbox>
-		
+		</groupbox>
 	</window>
 </zk>

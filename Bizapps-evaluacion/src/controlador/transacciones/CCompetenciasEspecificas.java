@@ -12,6 +12,7 @@ import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 import modelos.Empleado;
 import modelos.Evaluacion;
+import modelos.NivelCompetenciaCargo;
 import modelos.Perspectiva;
 
 import org.springframework.security.core.Authentication;
@@ -49,7 +50,7 @@ import componentes.Validador;
 public class CCompetenciasEspecificas extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
-		Mensaje msj = new Mensaje();
+	Mensaje msj = new Mensaje();
 
 	@Wire
 	private Textbox txtObjetivo;
@@ -83,37 +84,52 @@ public class CCompetenciasEspecificas extends CGenerico {
 	private Label lblUnidadOrganizativa;
 	@Wire
 	private Label lblGerencia;
-	
+	@Wire
+	private Label lblEvaluacion;
+	@Wire
+	private Label lblFechaCreacion;
+	@Wire
+	private Label lblRevision;
+	public String horaCreacion = String.valueOf(calendario
+			.get(Calendar.HOUR_OF_DAY))
+			+ String.valueOf(calendario.get(Calendar.MINUTE))
+			+ String.valueOf(calendario.get(Calendar.SECOND));
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
-		String nombreTrabajador = u.getNombre() + " "  + u.getApellido();
+		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+		lblEvaluacion.setValue(numeroEvaluacion.toString());
+		lblFechaCreacion.setValue(horaCreacion);
 		String cargo = empleado.getCargo().getDescripcion();
-		String unidadOrganizativa = empleado.getUnidadOrganizativa().getDescripcion();
-		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia().getDescripcion();
+		String unidadOrganizativa = empleado.getUnidadOrganizativa()
+				.getDescripcion();
+		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
+				.getDescripcion();
 		lblFicha.setValue(ficha);
 		lblNombreTrabajador.setValue(nombreTrabajador);
 		lblCargo.setValue(cargo);
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
-		
+
 	}
 
 	@Listen("onClick = #btnAgregar")
-	public void AgregarObjetvo() {	
-	String objetivo =txtObjetivo.getValue();
-	String corresponsables = txtCorresponsables.getValue();
-	String peso = txtPeso.getValue();
-	String total = txtTotal.getValue();
-	String resultado = txtResultados.getValue();
+	public void AgregarObjetvo() {
+		String objetivo = txtObjetivo.getValue();
+		String corresponsables = txtCorresponsables.getValue();
+		String peso = txtPeso.getValue();
+		String total = txtTotal.getValue();
+		String resultado = txtResultados.getValue();
 
 	}
-	
+
+	NivelCompetenciaCargo ncc = new NivelCompetenciaCargo ();
+
 }

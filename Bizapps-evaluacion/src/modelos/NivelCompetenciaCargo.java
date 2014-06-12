@@ -2,7 +2,6 @@ package modelos;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import modelo.pk.NivelCompetenciaCargoPK;
 
 
@@ -12,24 +11,26 @@ import modelo.pk.NivelCompetenciaCargoPK;
  */
 @Entity
 @Table(name="nivel_competencia_cargo")
+@IdClass(NivelCompetenciaCargoPK.class)
 public class NivelCompetenciaCargo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private NivelCompetenciaCargoPK id;
-
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_competencia", referencedColumnName = "id_competencia")
+	private Competencia competencia;
+	
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
+	private Cargo cargo;
+	
+	
 	@Column(name="id_dominio")
 	private int idDominio;
 
 	public NivelCompetenciaCargo() {
-	}
-
-	public NivelCompetenciaCargoPK getId() {
-		return this.id;
-	}
-
-	public void setId(NivelCompetenciaCargoPK id) {
-		this.id = id;
+		super ();
 	}
 
 	public int getIdDominio() {

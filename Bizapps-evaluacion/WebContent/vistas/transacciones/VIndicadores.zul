@@ -1,29 +1,35 @@
 <zk>
 <window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply="controlador.transacciones.CIndicadores">
-	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
-		<groupbox width="auto" mold="3d" title="Evaluación de Desempeño" >
-	<grid width="100%" align = "center">
+		<div  style="background-color:#F8E0E0;" >
+			<label value= "Evaluación de Desempeño" style= "font-weight:bold;"/>
+		</div>
+				<grid width="100%" align = "center">
 					<columns visible="true" >
-						<column label="Ficha" width="5%" />
-						<column label="Nombre del Trabajador" width="23%" />
-						<column label="Cargo" width="20%" />
-						<column label="Unidad Organizativa" width="27%" />
-						<column label="Gerencia a la que Reporta" width="25%" />					
+						<column label="#Evaluacion" width="13%" style = "font-size: 10px;"/>
+						<column label="Fecha Creacion" width="18%" style = "font-size: 10px;" />
+						<column label="Revision" width="18%" style = "font-size: 10px;" />
+						<column label="Ficha" width="10%"  style = "font-size: 10px;" />
+						<column label="Nombre del Trabajador" width="25%" style = "font-size: 10px;" />
+						<column label="Cargo" width="20%" style = "font-size: 10px;" />
+						<column label="Unidad Organizativa" width="27%" style = "font-size: 10px;" />
+						<column label="Gerencia a la que Reporta" width="25%" style = "font-size: 10px;" />
 					</columns>
 					<rows>
 					<row>
-								<label id="lblFicha"></label>
-								<label id="lblNombreTrabajador"></label>
-								<label id="lblCargo"></label>
-								<label id="lblUnidadOrganizativa"></label>
-								<label id="lblGerencia"></label>
+								<label id="lblEvaluacion" style = "font-size: 10px;"></label>
+								<label id="lblFechaCreacion" style = "font-size: 10px;"></label>
+								<label id="lblRevision" value = "FY13-14 (1)" style = "font-size: 10px;"></label>
+								<label id="lblFicha" style = "font-size: 10px;"></label>
+								<label id="lblNombreTrabajador" style = "font-size: 10px;"></label>
+								<label id="lblCargo" style = "font-size: 10px;"></label>
+								<label id="lblUnidadOrganizativa" style = "font-size: 10px;"></label>
+								<label id="lblGerencia" style = "font-size: 10px;"></label>
 						</row>
 					</rows>
 				</grid>
-		</groupbox>
 		<separator />
 		<div style="background-color:#F8E0E0;" >
-		<label value= "Sección I - Evaluación de Objetivos e Indicadores" style= "font-weight:bold;"/>
+		<label value= "Sección I - Evaluación de Indicadores" style= "font-weight:bold;"/>
 		</div>
 		<separator />
 		<groupbox>
@@ -35,7 +41,7 @@
 			<rows>
 				<row>
 					<label id="lblPrograma" value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
-					<combobox  id="cmbPrograma" readonly="true"
+					<combobox  id="cmbObjetivos" readonly="true"
 						placeholder = "Seleccione..."
 						width="80%" cols="45"
 						maxlength="45" tabindex="1" mold="rounded"
@@ -52,46 +58,99 @@
 			</rows>
 		</grid>
 	</groupbox>
-		<listbox height="auto" id="lbxMotivosooo" mold="paging"
-				pageSize="10" 
-				emptyMessage="aquiiiii" width="auto">
+	<groupbox id = "gpxAgregar">
+		<listbox height="auto" id="lbxAgregarIndicador" mold="paging"
+				pageSize="10" width="auto">
 				<listhead>
-					<listheader label="Línea" />
-					<listheader label="Indicador" />
-					<listheader label="Unid. Med." />
-					<listheader label="Medición" />
-					<listheader label="Peso (%)" />
-					<listheader label="Valor Meta" />
-					<listheader label="Valor Resultado" />
-					<listheader label="Res.Fy.Ant." />
-					<listheader label="Resultado (%)" />
-					<listheader label="Resul. Peso (%)" />
+					<listheader label="Línea" width = "5%"/>
+					<listheader label="Indicador "  width = "25%"/>
+					<listheader label="Unid. Med." width = "9%"/>
+					<listheader label="Medición" width = "9%"/>
+					<listheader label="Peso (%)"  width = "9%" />
+					<listheader label="Valor Meta"  width = "9%"/>
+					<listheader label="Valor Resultado"  width = "12%" />
+					<listheader label="Res.Fy.Ant."  width = "9%"/>
+					<listheader label="Resultado (%)"  width = "12%"/>
+					<listheader label="Resul. Peso (%)"  width = "12%"/>
+					<listheader   width = "7%"/>
+				</listhead>
+					<listitem>
+						<listcell label="1"></listcell>
+						<listcell> 
+						<textbox  placeholder = "Indicador" mold="rounded"  rows="2" width = "100%" id = "txtIndicador"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Unidad" mold="rounded"  rows="1" width = "100%"  id = "txtUnidad"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Medición" mold="rounded"  rows="1" width = "100%" id = "txtMedicion"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Peso %" mold="rounded"  rows="1" width = "100%" id = "txtPeso" />
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Valor Meta" mold="rounded"  rows="1" width = "100%" id = "txtValorMeta" />
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Valor Resultado" mold="rounded"  rows="1" width = "100%" id = "txtValorResultado"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Res.Fy.Ant" mold="rounded"  rows="1" width = "100%" id = "txtResFy"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Resultado %" mold="rounded"  rows="1" width = "100%" id = "txtResultadoPorc"/>
+						</listcell>
+						<listcell> 
+						<textbox  placeholder = "Resultado peso %" mold="rounded"  rows="1" width = "100%" id = "txtPesoPorc"/>
+						</listcell>
+						<listcell>
+							<button id="btnOk" width="auto"
+								height="auto" mold="trendy"
+								image="/public/imagenes/botones/seleccionar.png"
+								style="background-color:#F8E0E0;">
+							</button>
+						</listcell>
+					</listitem>
+			</listbox>
+		</groupbox>
+		<div align="right" height="100%">
+			<button id="btnAgregar" width="auto" height="auto"
+				mold="trendy" label="Agregar"  image="/public/imagenes/botones/agregar.png" >
+			</button>
+			<button id="btnEliminar" width="auto" height="auto"  image="/public/imagenes/botones/eliminar.png" 
+				mold="trendy" label="Eliminar" onClick="@command('cancelar')">
+			</button>
+		</div>
+<groupbox id = "gpxAgregados">
+		<listbox height="auto" id="lbxAgregados" mold="paging"
+				pageSize="10"  width="auto">
+				<listhead>
+					<listheader label="Línea" width = "5%"/>
+					<listheader label="Indicador "  width = "25%"/>
+					<listheader label="Unid. Med." width = "9%"/>
+					<listheader label="Medición" width = "9%"/>
+					<listheader label="Peso (%)"  width = "9%" />
+					<listheader label="Valor Meta"  width = "9%"/>
+					<listheader label="Valor Resultado"  width = "12%" />
+					<listheader label="Res.Fy.Ant."  width = "9%"/>
+					<listheader label="Resultado (%)"  width = "12%"/>
+					<listheader label="Resul. Peso (%)"  width = "12%"/>
 				</listhead>
 				<template name="model">
 					<listitem>
 						<listcell label="1"></listcell>
-						<listcell height="%"> 
-						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
-						</listcell>
+						<listcell label="${each.descripcionIndicador}"></listcell>
+						<listcell label="0"></listcell>
+						<listcell label="0"></listcell>
+						<listcell label="${each.peso}"></listcell>
+						<listcell label="${each.valorMeta}"></listcell>
+						<listcell label="${each.valorResultado}"></listcell>
+						<listcell label="${each.resultadoFyAnterior}"></listcell>
+						<listcell label="${each.resultadoPeso}"></listcell>
+						<listcell label="${each.resultadoPorc}"></listcell>
 					</listitem>
 				</template>
 			</listbox>
-		<!-- Botones de acción sobre l registro de la apelación-->
-		<div align="right" height="100%">
-			<button id="btnGuardar" width="auto" height="auto"
-				mold="trendy" label="Agregar Indicador"
-				onClick="@command('registrarSolicitudApelacion', window=winRegistrarDatosInicialesApelacion) @global-command('actualizarListaSancionados')">
-
-			</button>
-			<button id="btnLimpiar" width="auto" height="auto"
-				mold="trendy" label="Eliminar Indicador" onClick="@command('cancelar')">
-
-			</button>
-			<button id="btnCerrar" width="auto" height="auto"
-				label="Actualizar Cálculos" mold="trendy" 
-				onClick="@command('cerrarVentana', ventana = winRegistrarDatosInicialesApelacion)">
-			</button>
-		</div>
-	</div>
+		</groupbox>	
 </window>
 </zk>

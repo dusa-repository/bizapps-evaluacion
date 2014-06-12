@@ -25,8 +25,11 @@ public class EvaluacionObjetivo implements Serializable {
 	@Column(name="id_evaluacion")
 	private int idEvaluacion;
 
-	@Column(name="id_perspectiva")
-	private int idPerspectiva;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_perspectiva", referencedColumnName = "id_perspectiva")
+	private Perspectiva perspectiva;
+	
 
 	private int linea;
 
@@ -71,14 +74,16 @@ public class EvaluacionObjetivo implements Serializable {
 	public void setIdEvaluacion(int idEvaluacion) {
 		this.idEvaluacion = idEvaluacion;
 	}
+	
 
-	public int getIdPerspectiva() {
-		return this.idPerspectiva;
+	public Perspectiva getPerspectiva() {
+		return perspectiva;
 	}
 
-	public void setIdPerspectiva(int idPerspectiva) {
-		this.idPerspectiva = idPerspectiva;
+	public void setPerspectiva(Perspectiva perspectiva) {
+		this.perspectiva = perspectiva;
 	}
+
 
 	public int getLinea() {
 		return this.linea;

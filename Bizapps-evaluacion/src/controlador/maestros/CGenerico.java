@@ -47,6 +47,7 @@ import servicio.seguridad.SUsuario;
 import servicio.transacciones.SCompetencia;
 import servicio.transacciones.SEmpleado;
 import servicio.transacciones.SEvaluacion;
+import servicio.transacciones.SNivelCompetenciaCargo;
 import servicio.transacciones.SPerspectiva;
 
 
@@ -70,6 +71,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacion servicioEvaluacion;
 	@WireVariable("SCompetencia")
 	protected SCompetencia servicioCompetencia;
+	@WireVariable("SNivelCompetenciaCargo")
+	protected SNivelCompetenciaCargo servicioNivelCompetenciaCargo;
 	@WireVariable("SCargo")
 	protected SCargo servicioCargo;
 	@WireVariable("SEmpresa")
@@ -94,6 +97,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SUnidadMedida servicioUnidadMedida;
 	@WireVariable("SUrgencia")
 	protected SUrgencia servicioUrgencia;
+
 
 	
 	public static  List<Tab> tabs = new ArrayList<Tab>();

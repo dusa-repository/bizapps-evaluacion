@@ -13,6 +13,7 @@ import modelo.seguridad.Usuario;
 import modelos.Competencia;
 import modelos.Empleado;
 import modelos.Evaluacion;
+import modelos.NivelCompetenciaCargo;
 import modelos.Perspectiva;
 
 import org.springframework.security.core.Authentication;
@@ -50,8 +51,14 @@ import componentes.Validador;
 public class CCompetenciasRectoras extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
-		Mensaje msj = new Mensaje();
+	Mensaje msj = new Mensaje();
 
+	@Wire
+	private Label lblEvaluacion;
+	@Wire
+	private Label lblFechaCreacion;
+	@Wire
+	private Label lblRevision;
 	@Wire
 	private Textbox txtObjetivo;
 	@Wire
@@ -84,29 +91,46 @@ public class CCompetenciasRectoras extends CGenerico {
 	private Label lblUnidadOrganizativa;
 	@Wire
 	private Label lblGerencia;
-	
+	public String horaCreacion = String.valueOf(calendario
+			.get(Calendar.HOUR_OF_DAY))
+			+ String.valueOf(calendario.get(Calendar.MINUTE))
+			+ String.valueOf(calendario.get(Calendar.SECOND));
 
 	@Override
 	public void inicializar() throws IOException {
-		List<Competencia> competenciaRectora = new ArrayList<Competencia>();
-		competenciaRectora = servicioCompetencia.buscarCompetenciasR();
-		lbxCompetenciaRectora.setModel(new ListModelList<Competencia>(competenciaRectora));
-		
+		// List<Competencia> competenciaRectora = new ArrayList<Competencia>();
+		// competenciaRectora = servicioCompetencia.buscarCompetenciasR();
+		// lbxCompetenciaRectora.setModel(new
+		// ListModelList<Competencia>(competenciaRectora));
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		String nombreTrabajador = u.getNombre() + " "  + u.getApellido();
+		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+
 		String cargo = empleado.getCargo().getDescripcion();
-		String unidadOrganizativa = empleado.getUnidadOrganizativa().getDescripcion();
-		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia().getDescripcion();
+		String unidadOrganizativa = empleado.getUnidadOrganizativa()
+				.getDescripcion();
+		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
+				.getDescripcion();
+
+		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
+
+		nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
+		System.out.println(nivel);
+		lbxCompetenciaRectora
+				.setModel(new ListModelList<NivelCompetenciaCargo>(nivel));
+
 		lblFicha.setValue(ficha);
 		lblNombreTrabajador.setValue(nombreTrabajador);
 		lblCargo.setValue(cargo);
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
-		
+		lblEvaluacion.setValue(numeroEvaluacion.toString());
+		lblFechaCreacion.setValue(horaCreacion);
 	}
 
 }

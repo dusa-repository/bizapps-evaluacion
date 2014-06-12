@@ -1,26 +1,33 @@
 <zk>
 	<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply="controlador.transacciones.CCompetenciasEspecificas">
 	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
-		<groupbox width="auto" mold="3d" title="Evaluación de Desempeño" >
-	<grid width="100%" align = "center">
+				<div  style="background-color:#F8E0E0;" >
+			<label value= "Evaluación de Desempeño" style= "font-weight:bold;"/>
+		</div>
+				<grid width="100%" align = "center">
 					<columns visible="true" >
-						<column label="Ficha" width="5%" />
-						<column label="Nombre del Trabajador" width="23%" />
-						<column label="Cargo" width="20%" />
-						<column label="Unidad Organizativa" width="27%" />
-						<column label="Gerencia a la que Reporta" width="25%" />					
+						<column label="#Evaluacion" width="13%" style = "font-size: 10px;"/>
+						<column label="Fecha Creacion" width="18%" style = "font-size: 10px;" />
+						<column label="Revision" width="18%" style = "font-size: 10px;" />
+						<column label="Ficha" width="10%"  style = "font-size: 10px;" />
+						<column label="Nombre del Trabajador" width="25%" style = "font-size: 10px;" />
+						<column label="Cargo" width="20%" style = "font-size: 10px;" />
+						<column label="Unidad Organizativa" width="27%" style = "font-size: 10px;" />
+						<column label="Gerencia a la que Reporta" width="25%" style = "font-size: 10px;" />
 					</columns>
 					<rows>
 					<row>
-								<label id="lblFicha"></label>
-								<label id="lblNombreTrabajador"></label>
-								<label id="lblCargo"></label>
-								<label id="lblUnidadOrganizativa"></label>
-								<label id="lblGerencia"></label>
+								<label id="lblEvaluacion" style = "font-size: 10px;"></label>
+								<label id="lblFechaCreacion" style = "font-size: 10px;"></label>
+								<label id="lblRevision" value = "FY13-14 (1)" style = "font-size: 10px;"></label>
+								<label id="lblFicha" style = "font-size: 10px;"></label>
+								<label id="lblNombreTrabajador" style = "font-size: 10px;"></label>
+								<label id="lblCargo" style = "font-size: 10px;"></label>
+								<label id="lblUnidadOrganizativa" style = "font-size: 10px;"></label>
+								<label id="lblGerencia" style = "font-size: 10px;"></label>
 						</row>
 					</rows>
 				</grid>
-		</groupbox>
 		<separator />
 		<div style="background-color:#F8E0E0;" >
 		<label value= "Sección II - Evaluación de Competencias Específicas" style= "font-weight:bold;"/>
