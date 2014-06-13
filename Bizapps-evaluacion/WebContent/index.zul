@@ -39,7 +39,7 @@
 		</west>
 		<east width="60%" border="none">
 		 			<vlayout> 
-				<div height="100px" align="rigth">
+				<div height="100px" align="center">
 					<separator />
 					<separator />
 					<separator />

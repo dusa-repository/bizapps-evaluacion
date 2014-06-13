@@ -10,9 +10,9 @@
 			<columns visible="true">
 				<column label="#Evaluacion" width="13%"
 					style="font-size: 10px;" />
-				<column label="Fecha Creacion" width="18%"
+				<column label="Fecha Creacion" width="22%"
 					style="font-size: 10px;" />
-				<column label="Revision" width="18%"
+				<column label="Revision" width="14%"
 					style="font-size: 10px;" />
 				<column label="Ficha" width="10%"
 					style="font-size: 10px;" />

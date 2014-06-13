@@ -91,10 +91,6 @@ public class CCompetenciasRectoras extends CGenerico {
 	private Label lblUnidadOrganizativa;
 	@Wire
 	private Label lblGerencia;
-	public String horaCreacion = String.valueOf(calendario
-			.get(Calendar.HOUR_OF_DAY))
-			+ String.valueOf(calendario.get(Calendar.MINUTE))
-			+ String.valueOf(calendario.get(Calendar.SECOND));
 
 	@Override
 	public void inicializar() throws IOException {
@@ -108,7 +104,7 @@ public class CCompetenciasRectoras extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 
 		String cargo = empleado.getCargo().getDescripcion();
@@ -120,6 +116,7 @@ public class CCompetenciasRectoras extends CGenerico {
 		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
 
 		nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
+		
 		System.out.println(nivel);
 		lbxCompetenciaRectora
 				.setModel(new ListModelList<NivelCompetenciaCargo>(nivel));
@@ -130,7 +127,7 @@ public class CCompetenciasRectoras extends CGenerico {
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(horaCreacion);
+		lblFechaCreacion.setValue(fechaHora.toString());
 	}
 
 }

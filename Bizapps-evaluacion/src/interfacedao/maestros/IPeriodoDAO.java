@@ -12,9 +12,9 @@ public interface IPeriodoDAO extends JpaRepository<Periodo, Integer> {
 
 	Periodo findByNombre(String nombre);
 
-	public List<Periodo> findByEstadoPeriodo(String estado);
+//	public List<Periodo> findByEstadoPeriodo(String estado);
 
-	
+	public String findByEstadoPeriodo (String estado);
 
 	
 }

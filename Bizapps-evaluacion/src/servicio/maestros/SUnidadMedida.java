@@ -3,6 +3,7 @@ package servicio.maestros;
 import interfacedao.maestros.IUnidadMedidaDAO;
 import java.util.List;
 
+import modelos.Perspectiva;
 import modelos.UnidadMedida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,6 @@ public class SUnidadMedida {
 	public List<UnidadMedida> buscar() {
 		return unidadMedidaDAO.findAll();
 	}
-	
+
 
 }

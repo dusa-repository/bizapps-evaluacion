@@ -25,20 +25,22 @@ public class NivelCompetenciaCargo implements Serializable {
 	@JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
 	private Cargo cargo;
 	
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_dominio", referencedColumnName = "id_dominio")
+	private Dominio dominio;
 	
-	@Column(name="id_dominio")
-	private int idDominio;
 
 	public NivelCompetenciaCargo() {
 		super ();
 	}
 
-	public int getIdDominio() {
-		return this.idDominio;
+	public Dominio getDominio() {
+		return dominio;
 	}
 
-	public void setIdDominio(int idDominio) {
-		this.idDominio = idDominio;
+	public void setDominio(Dominio dominio) {
+		this.dominio = dominio;
 	}
 
 	public Competencia getCompetencia() {

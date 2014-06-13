@@ -35,6 +35,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -111,11 +112,10 @@ public class CIndicadores extends CGenerico {
 	private Combobox cmbUnidad;
 	@Wire
 	private Combobox cmbMedicion;
+	@Wire
+	private Combobox cmbObjetivos;
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
-	public String horaCreacion = String.valueOf(calendario
-			.get(Calendar.HOUR_OF_DAY))
-			+ String.valueOf(calendario.get(Calendar.MINUTE))
-			+ String.valueOf(calendario.get(Calendar.SECOND));
+	
 
 	@Override
 	public void inicializar() throws IOException {
@@ -125,12 +125,16 @@ public class CIndicadores extends CGenerico {
 
 		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
 		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+		
 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+//		String periodo = "ACTIVO";
+//		String revision = servicioPeriodo.buscarPorEstado(periodo);
+//		System.out.println(revision);
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
@@ -144,9 +148,13 @@ public class CIndicadores extends CGenerico {
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(horaCreacion);
+		lblFechaCreacion.setValue(fechaHora.toString());
+//		lblRevision.setValue(revision);
 		gpxAgregar.setOpen(false);
 		gpxAgregados.setOpen(false);
+		
+		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivos(ficha, numeroEvaluacion);
+		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivo));
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -155,26 +163,27 @@ public class CIndicadores extends CGenerico {
 	}
 
 	@Listen("onClick = #btnOk")
-	public void AgregarObjetivo2() {
+	public void AgregarIndicador() {
 		gpxAgregados.setOpen(true);
-
 		String indicador = txtIndicador.getValue();
-//		String unidad = txtUnidad.getValue();
-//		String medicion = txtMedicion.getValue();
+		String unidadCombo= cmbUnidad.getSelectedItem().getContext();
+		UnidadMedida  unidad = servicioUnidadMedida.buscarUnidad(Integer.parseInt(unidadCombo));
+		String medicionCombo= cmbMedicion.getSelectedItem().getContext();
+		Medicion medicion = servicioMedicion.buscarMedicion(Integer.parseInt(medicionCombo));
+		String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
 		Double peso = Double.valueOf(txtPeso.getValue());
 		Double valorMeta = Double.valueOf(txtValorMeta.getValue());
 		Double valorResultado = Double.valueOf(txtValorResultado.getValue());
 		Double resFy = Double.valueOf(txtResFy.getValue());
 		Double resultadoPorc = Double.valueOf(txtResultadoPorc.getValue());
 		Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
-
+		Integer linea = indicadores.size() + 1;
 		EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
-		indicadorLista.setIdObjetivo(1);
+		indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
 		indicadorLista.setDescripcionIndicador(indicador);
-		indicadorLista.setIdMedicion(0);
-		indicadorLista.setIdIndicador(0);
-		indicadorLista.setIdUnidad(0);
-		indicadorLista.setLinea(1);
+		indicadorLista.setMedicion(medicion);
+		indicadorLista.setUnidadMedida(unidad);
+		indicadorLista.setLinea(linea);
 		indicadorLista.setPeso(peso);
 		indicadorLista.setResultadoFyAnterior(resFy);
 		indicadorLista.setResultadoPeso(pesoPorc);
@@ -185,12 +194,28 @@ public class CIndicadores extends CGenerico {
 		indicadores.add(indicadorLista);
 		lbxAgregados.setModel(new ListModelList<EvaluacionIndicador>(
 				indicadores));
+		servicioEvaluacionIndicador.guardar(indicadorLista);
+		Messagebox.show("Indicador para el objetivo" + " " + cmbObjetivos.getValue() + " " + "ha sido guardado exitosamente",
+				"Información", Messagebox.OK,
+				Messagebox.INFORMATION);
 		gpxAgregar.setOpen(false);
+		
+		limpiar ();
 
 	}
 
 	public void limpiar() {
-
+		txtIndicador.setValue("");
+		txtPeso.setValue("");
+		txtPesoPorc.setValue("");
+		txtResFy.setValue("");
+		txtResultadoPorc.setValue("");
+		txtValorMeta.setValue("");
+		txtValorResultado.setValue("");
+		cmbMedicion.setValue(null);
+		cmbUnidad.setValue(null);
 	}
+	
+	
 
 }

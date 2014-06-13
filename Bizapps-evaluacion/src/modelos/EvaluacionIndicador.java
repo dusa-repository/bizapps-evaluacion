@@ -14,20 +14,24 @@ public class EvaluacionIndicador implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_indicador")
 	private int idIndicador;
 
 	@Column(name="descripcion_indicador")
 	private String descripcionIndicador;
 
-	@Column(name="id_medicion")
-	private int idMedicion;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_medicion", referencedColumnName = "id_medicion")
+	private Medicion medicion;
 
 	@Column(name="id_objetivo")
 	private int idObjetivo;
-
-	@Column(name="id_unidad")
-	private int idUnidad;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_unidad", referencedColumnName = "id_unidad")
+	private UnidadMedida unidadMedida;
+	
 
 	private int linea;
 
@@ -69,12 +73,12 @@ public class EvaluacionIndicador implements Serializable {
 		this.descripcionIndicador = descripcionIndicador;
 	}
 
-	public int getIdMedicion() {
-		return this.idMedicion;
+	public Medicion getMedicion() {
+		return medicion;
 	}
 
-	public void setIdMedicion(int idMedicion) {
-		this.idMedicion = idMedicion;
+	public void setMedicion(Medicion medicion) {
+		this.medicion = medicion;
 	}
 
 	public int getIdObjetivo() {
@@ -85,12 +89,12 @@ public class EvaluacionIndicador implements Serializable {
 		this.idObjetivo = idObjetivo;
 	}
 
-	public int getIdUnidad() {
-		return this.idUnidad;
+	public UnidadMedida getUnidadMedida() {
+		return unidadMedida;
 	}
 
-	public void setIdUnidad(int idUnidad) {
-		this.idUnidad = idUnidad;
+	public void setUnidadMedida(UnidadMedida unidadMedida) {
+		this.unidadMedida = unidadMedida;
 	}
 
 	public int getLinea() {

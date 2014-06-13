@@ -126,7 +126,7 @@ public class CObjetivos extends CGenerico {
 		String ficha = u.getCedula();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(horaCreacion);
+		lblFechaCreacion.setValue(fechaHora.toString());
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
@@ -183,6 +183,27 @@ public class CObjetivos extends CGenerico {
 	
 	@Listen("onClick = #btnGuardar")
 	public void Guardar() {	
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
+		Integer idUsuario = u.getIdUsuario();
+		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
+		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
+		System.out.println(idEvaluacion);
+		Evaluacion evaluacionEmpleado = new Evaluacion();
+		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
+		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
+		evaluacionEmpleado.setFechaCreacion(fechaHora);
+		evaluacionEmpleado.setFicha(ficha);
+		evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
+		evaluacionEmpleado.setIdUsuario(idUsuario);
+		evaluacionEmpleado.setPeso(0);
+		evaluacionEmpleado.setResultado(0);
+		evaluacionEmpleado.setResultadoObjetivos(0);
+		evaluacionEmpleado.setResultadoGeneral(0);
+		evaluacionEmpleado.setResultadoFinal(0);
+
 		
 		if (objetivosG.size() == 0) {
 			Messagebox.show("Debe agregar sus objetivos",
@@ -191,9 +212,8 @@ public class CObjetivos extends CGenerico {
 		}
 		else {
 			EvaluacionObjetivo objetivo = new EvaluacionObjetivo ();
-			Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
 //			Integer revision = 1;
-			objetivo.setIdEvaluacion(evaluacion);
+			objetivo.setIdEvaluacion(idEvaluacion);
 			for (int j = 0; j < objetivosG.size(); j++) {
 				Integer linea = objetivosG.get(j).getLinea();
 				String corresponsables = objetivosG.get(j).getCorresponsables();
@@ -211,10 +231,11 @@ public class CObjetivos extends CGenerico {
 				objetivo.setTotalInd(total);	
 				servicioEvaluacionObjetivo.guardar(objetivo);
 			}
-	
+			servicioEvaluacion.guardar(evaluacionEmpleado);
 			Messagebox.show("Objetivos Guardados Exitosamente",
 					"Información", Messagebox.OK,
 					Messagebox.INFORMATION);
+			
 			limpiar ();
 			objetivosG.clear();
 		}

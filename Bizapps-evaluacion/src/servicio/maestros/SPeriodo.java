@@ -39,12 +39,18 @@ public class SPeriodo {
 	}
 	
 	
-	/* Servicio que permite buscar los periodos de acuerdo a un estado */
-	public List<Periodo> buscarPorEstado(String estado) {
-		List<Periodo> periodos;
-		periodos = periodoDAO.findByEstadoPeriodo(estado);
-		return periodos;
+//	/* Servicio que permite buscar los periodos de acuerdo a un estado */
+//	public List<Periodo> buscarPorEstado(String estado) {
+//		List<Periodo> periodos;
+//		periodos = periodoDAO.findByEstadoPeriodo(estado);
+//		return periodos;
+//	}
+	
+	public String  buscarPorEstado(String estado) {
+		return  periodoDAO.findByEstadoPeriodo(estado);
+	
 	}
+	
 	
 	/* Servicio que permite eliminar un periodo */
 	public void eliminarUnPeriodo(int id) {

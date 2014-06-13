@@ -6,8 +6,8 @@
 				<grid width="100%" align = "center">
 					<columns visible="true" >
 						<column label="#Evaluacion" width="13%" style = "font-size: 10px;"/>
-						<column label="Fecha Creacion" width="18%" style = "font-size: 10px;" />
-						<column label="Revision" width="18%" style = "font-size: 10px;" />
+						<column label="Fecha Creacion" width="22%" style = "font-size: 10px;" />
+						<column label="Revision" width="14%" style = "font-size: 10px;" />
 						<column label="Ficha" width="10%"  style = "font-size: 10px;" />
 						<column label="Nombre del Trabajador" width="25%" style = "font-size: 10px;" />
 						<column label="Cargo" width="20%" style = "font-size: 10px;" />
@@ -18,7 +18,7 @@
 					<row>
 								<label id="lblEvaluacion" style = "font-size: 10px;"></label>
 								<label id="lblFechaCreacion" style = "font-size: 10px;"></label>
-								<label id="lblRevision" value = "FY13-14 (1)" style = "font-size: 10px;"></label>
+								<label id="lblRevision" style = "font-size: 10px;"></label>
 								<label id="lblFicha" style = "font-size: 10px;"></label>
 								<label id="lblNombreTrabajador" style = "font-size: 10px;"></label>
 								<label id="lblCargo" style = "font-size: 10px;"></label>
@@ -40,17 +40,13 @@
 			</columns>
 			<rows>
 				<row>
-					<label id="lblPrograma" value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
+					<label id="lblobjetivos" value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
 					<combobox  id="cmbObjetivos" readonly="true"
 						placeholder = "Seleccione..."
-						width="80%" cols="45"
-						maxlength="45" tabindex="1" mold="rounded"
-						value="@bind(vm.programa.nombrePrograma)" 
-						model="@load(vm.listaPrograma)"
-						selectedItem="@bind(vm.programa)"
-						onSelect="@command('buscarAsignaturas', comboAsignaturas = cmbAsignaturas)">
+						width="100%" cols="45" tabindex="1" mold="rounded">
 						<template name="model">
-							<comboitem label="${each.getNombrePrograma()}" />
+							<comboitem context = "${each.idObjetivo}"
+							label="${each.descripcionObjetivo}" />
 						</template>
 					</combobox>
 				</row>
@@ -85,7 +81,7 @@
 								style="background-color:white;border:none" readonly="true"
 								id="cmbUnidad">
 								<template name="model">
-									<comboitem
+									<comboitem context="${each.idUnidad}"
 										label="${each.descripcion}" />
 								</template>
 							</combobox>
@@ -96,7 +92,7 @@
 								style="background-color:white;border:none" readonly="true"
 								id="cmbMedicion">
 								<template name="model">
-									<comboitem
+									<comboitem context="${each.idMedicion}"
 										label="${each.descripcionMedicion}" />
 								</template>
 							</combobox>
@@ -154,10 +150,10 @@
 				</listhead>
 				<template name="model">
 					<listitem>
-						<listcell label="1"></listcell>
+						<listcell label="${each.linea}"></listcell>
 						<listcell label="${each.descripcionIndicador}"></listcell>
-						<listcell label="0"></listcell>
-						<listcell label="0"></listcell>
+						<listcell label="${each.unidadMedida.descripcion}"></listcell>
+						<listcell label="${each.medicion.descripcionMedicion}"></listcell>
 						<listcell label="${each.peso}"></listcell>
 						<listcell label="${each.valorMeta}"></listcell>
 						<listcell label="${each.valorResultado}"></listcell>

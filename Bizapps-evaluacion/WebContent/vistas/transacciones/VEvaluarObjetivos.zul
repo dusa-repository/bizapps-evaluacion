@@ -1,84 +1,613 @@
 <zk>
-<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;">
-	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
-		<groupbox height="auto" width="auto" mold="3d" title="Evaluación de Desempeño" >
-			<caption id="lblDatosestudiante"  />
-			<listbox height="auto" width="auto" 
-				emptyMessage="Aquiiii">
-				<listhead>
-					<listheader label="#Evaluacion" />
-					<listheader label="Fecha de Creación"/>
-					<listheader label="Revisión" />
-				</listhead>
-				<template name="model">
-					<listitem>
-						<listcell
-							label="${each.tipoMotivo.nombreTipoMotivo}" />
-						<listcell label="${each.descripcion}" />
-					</listitem>
-				</template>
-			</listbox>
-			<listbox height="auto" id="lbxMotivosoo" mold="paging"
-				pageSize="10" model="@bind(vm.listaMotivoListBox)"
-				emptyMessage="aquiiiii" width="auto">
-				<listhead>
-					<listheader label="Ficha" />
-					<listheader label="Nombre del Trabajador" />
-					<listheader label="Cargo" />
-					<listheader label="Unidad Organizativa" />
-					<listheader label="Gerencia a la que Reporta" />
-				</listhead>
-				<template name="model">
-					<listitem>
-						<listcell
-							label="${each.tipoMotivo.nombreTipoMotivo}" />
-						<listcell label="${each.descripcion}" />
-					</listitem>
-				</template>
-			</listbox>
-		</groupbox>
-		<separator />
-		<div  style="background-color:#F8E0E0;" >
-		<label value= "Sección I - Evaluación de Objetivos e Indicadores" style= "font-weight:bold;"/>
-		</div>
-		<separator />
-		<listbox height="auto" id="lbxMotivosooo" mold="paging"
-				pageSize="10" 
-				emptyMessage="aquiiiii" width="auto">
-				<listhead>
-					<listheader label="Línea" />
-					<listheader label="Plan Estratégico" />
-					<listheader label="Objetivo" />
-					<listheader label="Corresponsables" />
-					<listheader label="Peso (%)" />
-					<listheader label="Total Ind. (%)" />
-					<listheader label="Resultados (%)" />
-				</listhead>
-				<template name="model">
-					<listitem>
-						<listcell label="1"></listcell>
-						<listcell height="%"> 
-						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
-						</listcell>
-					</listitem>
-				</template>
-			</listbox>
-		<!-- Botones de acción sobre l registro de la apelación-->
-		<div align="right" height="100%">
-			<button id="btnGuardar" width="auto" height="auto"
-				mold="trendy" label="Agregar Objetivo"
-				onClick="@command('registrarSolicitudApelacion', window=winRegistrarDatosInicialesApelacion) @global-command('actualizarListaSancionados')">
+	<window border="normal" height="auto" width="auto"
+		style="background-color:#8A0808;">
+		<tabbox id="tbEvaluacionEmpleado">
+			<tabs id="tabs">
+				<tab id="tbEvaluacionObjetivos"
+					label="Sección I - Evaluación Objetivos" />
+				<tab id="tbIndicadores"
+					label="Sección I - Evaluación Indicadores" />
+				<tab id="tbRectoras"
+					label="Sección II - Evaluación Competencias Rectoras" />
+				<tab id="tbEspecificas"
+					label="Sección II - Evaluación Competencias Especificas" />
+				<tab id="tbCompromisos"
+					label="Sección III - Registros de Feedback y Establecimientos de Compromisos" />
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<div style="background-color:#F8E0E0;">
+						<label value="Evaluación de Desempeño"
+							style="font-weight:bold;" />
+					</div>
+					<grid width="100%" align="center">
+						<columns visible="true">
+							<column label="#Evaluacion" width="13%"
+								style="font-size: 10px;" />
+							<column label="Fecha Creacion" width="22%"
+								style="font-size: 10px;" />
+							<column label="Revision" width="14%"
+								style="font-size: 10px;" />
+							<column label="Ficha" width="10%"
+								style="font-size: 10px;" />
+							<column label="Nombre del Trabajador"
+								width="25%" style="font-size: 10px;" />
+							<column label="Cargo" width="20%"
+								style="font-size: 10px;" />
+							<column label="Unidad Organizativa"
+								width="27%" style="font-size: 10px;" />
+							<column label="Gerencia a la que Reporta"
+								width="25%" style="font-size: 10px;" />
+						</columns>
+						<rows>
+							<row>
+								<label id="lblEvaluacionObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblFechaCreacionObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblRevisionObjetivo"
+									value="FY13-14 (1)" style="font-size: 10px;">
+								</label>
+								<label id="lblFichaObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblNombreTrabajadorObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblCargoObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblUnidadOrganizativaObjetivo"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblGerenciaObjetivo"
+									style="font-size: 10px;">
+								</label>
+							</row>
+						</rows>
+					</grid>
+						<separator />
+						<div style="background-color:#F8E0E0;">
+							<label
+								value="Sección I - Evaluación de Objetivos "
+								style="font-weight:bold;" />
+						</div>
+						<separator />
+						<groupbox id="gpxAgregarObjetivo">
+							<listbox height="auto" id="lbxObjetivos"
+								width="auto">
+								<listhead>
+									<listheader label="Línea"
+										width="5%" />
+									<listheader label="Plan Estratégico"
+										width="22%" />
+									<listheader label="Objetivo"
+										width="33%" />
+									<listheader label="Corresponsables"
+										width="13%" />
+									<listheader label="Peso (%)"
+										width="6%" />
+									<listheader label="Total Ind(%)"
+										width="8%" />
+									<listheader label="Resultados (%)"
+										width="10%" />
+									<listheader width="6%" />
+								</listhead>
+								<listitem>
+									<listcell></listcell>
+									<listcell>
+										<combobox
+											placeholder="Plan Estratégico" mold="rounded" rows="1"
+											width="100%" style="background-color:white;border:none"
+											readonly="true" id="cmbPerspectiva">
+											<template name="model">
+												<comboitem
+													context="${each.idPerspectiva}"
+													label="${each.descripcion}" />
+											</template>
+										</combobox>
+									</listcell>
+									<listcell>
+										<textbox placeholder="Objetivos"
+											mold="rounded" rows="4" width="100%" id="txtObjetivo">
+										</textbox>
+									</listcell>
+									<listcell>
+										<textbox
+											placeholder="Corresponsables" mold="rounded" rows="2"
+											width="100%" id="txtCorresponsables" />
+									</listcell>
+									<listcell>
+										<textbox value="0"
+											placeholder="Peso" mold="rounded" rows="1" width="100%"
+											readonly="true" id="txtPesoObjetivo" />
+									</listcell>
+									<listcell>
+										<textbox value="0"
+											placeholder="Total" mold="rounded" rows="1" width="100%"
+											readonly="true" id="txtTotal" />
+									</listcell>
+									<listcell>
+										<textbox value="0"
+											placeholder="Resultados" mold="rounded" rows="1" width="100%"
+											readonly="true" id="txtResultados" />
+									</listcell>
+									<listcell>
+										<button id="btnOkObjetivo" width="auto"
+											height="auto" mold="trendy"
+											image="/public/imagenes/botones/seleccionar.png"
+											style="background-color:#F8E0E0;">
+										</button>
+									</listcell>
+								</listitem>
+							</listbox>
+						</groupbox>
+						<div align="right" height="100%">
+							<button id="btnGuardar" width="auto"
+								height="auto" mold="trendy" label="Guardar"
+								image="/public/imagenes/botones/guardar.png"
+								style="background-color:#F8E0E0;">
+							</button>
+							<button id="btnAgregarObjetivo" width="auto"
+								height="auto" mold="trendy" label="Agregar"
+								image="/public/imagenes/botones/agregar.png"
+								style="background-color:#F8E0E0;">
+							</button>
+							<button id="btnEliminarObjetivo" width="auto"
+								height="auto" mold="trendy" label="Eliminar"
+								image="/public/imagenes/botones/eliminar.png">
 
-			</button>
-			<button id="btnLimpiar" width="auto" height="auto"
-				mold="trendy" label="Eliminar Objetivo" onClick="@command('cancelar')">
+							</button>
+						</div>
+					<groupbox id="gpxAgregadosObjetivo">
+						<listbox height="auto"
+							id="lbxObjetivosGuardados" width="auto">
+							<listhead>
+								<listheader label="Línea" width="5%" />
+								<listheader label="Plan Estratégico"
+									width="25%" />
+								<listheader label="Objetivo"
+									width="33%" />
+								<listheader label="Corresponsables"
+									width="13%" />
+								<listheader label="Peso (%)" width="8%" />
+								<listheader label="Total Ind(%)"
+									width="9%" />
+								<listheader label="Resultados (%)"
+									width="10%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="${each.linea}"></listcell>
+									<listcell
+										label="${each.perspectiva.descripcion}">
+									</listcell>
+									<listcell
+										label="${each.descripcionObjetivo}">
+									</listcell>
+									<listcell
+										label="${each.corresponsables}">
+									</listcell>
+									<listcell label="${each.peso}"></listcell>
+									<listcell
+										label="${each.totalInd}">
+									</listcell>
+									<listcell
+										label="${each.resultado}">
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</groupbox>
+				</tabpanel>
+				<tabpanel>
+					<div style="background-color:#F8E0E0;">
+						<label value="Evaluación de Desempeño"
+							style="font-weight:bold;" />
+					</div>
+					<grid width="100%" align="center">
+						<columns visible="true">
+							<column label="#Evaluacion" width="13%"
+								style="font-size: 10px;" />
+							<column label="Fecha Creacion" width="22%"
+								style="font-size: 10px;" />
+							<column label="Revision" width="14%"
+								style="font-size: 10px;" />
+							<column label="Ficha" width="10%"
+								style="font-size: 10px;" />
+							<column label="Nombre del Trabajador"
+								width="25%" style="font-size: 10px;" />
+							<column label="Cargo" width="20%"
+								style="font-size: 10px;" />
+							<column label="Unidad Organizativa"
+								width="27%" style="font-size: 10px;" />
+							<column label="Gerencia a la que Reporta"
+								width="25%" style="font-size: 10px;" />
+						</columns>
+						<rows>
+							<row>
+								<label id="lblEvaluacionIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblFechaCreacionIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblRevisionIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblFichaIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblNombreTrabajadorIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblCargoIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblUnidadOrganizativaIndicador"
+									style="font-size: 10px;">
+								</label>
+								<label id="lblGerenciaIndicador"
+									style="font-size: 10px;">
+								</label>
+							</row>
+						</rows>
+					</grid>
+					<separator />
+					<div style="background-color:#F8E0E0;">
+						<label
+							value="Sección I - Evaluación de Indicadores"
+							style="font-weight:bold;" />
+					</div>
+					<separator />
+					<groupbox>
+						<grid>
+							<columns>
+								<column label="" width="50%" />
+								<column label="" width="50%" />
+							</columns>
+							<rows>
+								<row>
+									<label id="lblobjetivos"
+										value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
+									<combobox id="cmbObjetivos"
+										readonly="true" placeholder="Seleccione..." width="100%"
+										cols="45" tabindex="1" mold="rounded">
+										<template name="model">
+											<comboitem
+												context="${each.idObjetivo}"
+												label="${each.descripcionObjetivo}" />
+										</template>
+									</combobox>
+								</row>
 
-			</button>
-			<button id="btnCerrar" width="auto" height="auto"
-				label="Actualizar Cálculos" mold="trendy" 
-				onClick="@command('cerrarVentana', ventana = winRegistrarDatosInicialesApelacion)">
-			</button>
-		</div>
-	</div>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox id="gpxAgregar">
+						<listbox height="auto" id="lbxAgregarIndicador"
+							mold="paging" pageSize="10" width="auto">
+							<listhead>
+								<listheader label="Línea" width="5%" />
+								<listheader label="Indicador "
+									width="23%" />
+								<listheader label="Unid. Med."
+									width="9%" />
+								<listheader label="Medición"
+									width="14%" />
+								<listheader label="Peso (%)" width="7%" />
+								<listheader label="Valor Meta"
+									width="9%" />
+								<listheader label="Valor Resultado"
+									width="12%" />
+								<listheader label="Res.Fy.Ant."
+									width="9%" />
+								<listheader label="Resultado (%)"
+									width="12%" />
+								<listheader label="Resul. Peso (%)"
+									width="12%" />
+								<listheader width="7%" />
+							</listhead>
+							<listitem>
+								<listcell label="1"></listcell>
+								<listcell>
+									<textbox placeholder="Indicador"
+										mold="rounded" rows="2" width="100%" id="txtIndicador" />
+								</listcell>
+								<listcell>
+									<combobox
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbUnidad">
+										<template name="model">
+											<comboitem
+												context="${each.idUnidad}" label="${each.descripcion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<combobox
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbMedicion">
+										<template name="model">
+											<comboitem
+												context="${each.idMedicion}"
+												label="${each.descripcionMedicion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<textbox placeholder="Peso %"
+										mold="rounded" rows="1" width="100%" id="txtPeso" />
+								</listcell>
+								<listcell>
+									<textbox placeholder="Valor Meta"
+										mold="rounded" rows="1" width="100%" id="txtValorMeta" />
+								</listcell>
+								<listcell>
+									<textbox
+										placeholder="Valor Resultado" mold="rounded" rows="1"
+										width="100%" id="txtValorResultado" />
+								</listcell>
+								<listcell>
+									<textbox placeholder="Res.Fy.Ant"
+										mold="rounded" rows="1" width="100%" id="txtResFy" />
+								</listcell>
+								<listcell>
+									<textbox placeholder="Resultado %"
+										mold="rounded" rows="1" width="100%" id="txtResultadoPorc" />
+								</listcell>
+								<listcell>
+									<textbox
+										placeholder="Resultado peso %" mold="rounded" rows="1"
+										width="100%" id="txtPesoPorc" />
+								</listcell>
+								<listcell>
+									<button id="btnOk" width="auto"
+										height="auto" mold="trendy"
+										image="/public/imagenes/botones/seleccionar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+							</listitem>
+						</listbox>
+					</groupbox>
+					<div align="right" height="100%">
+						<button id="btnAgregar" width="auto"
+							height="auto" mold="trendy" label="Agregar"
+							image="/public/imagenes/botones/agregar.png">
+						</button>
+						<button id="btnEliminar" width="auto"
+							height="auto" image="/public/imagenes/botones/eliminar.png"
+							mold="trendy" label="Eliminar" onClick="@command('cancelar')">
+						</button>
+					</div>
+					<groupbox id="gpxAgregados">
+						<listbox height="auto" id="lbxAgregados"
+							mold="paging" pageSize="10" width="auto">
+							<listhead>
+								<listheader label="Línea" width="5%" />
+								<listheader label="Indicador "
+									width="25%" />
+								<listheader label="Unid. Med."
+									width="9%" />
+								<listheader label="Medición"
+									width="11%" />
+								<listheader label="Peso (%)" width="9%" />
+								<listheader label="Valor Meta"
+									width="9%" />
+								<listheader label="Valor Resultado"
+									width="12%" />
+								<listheader label="Res.Fy.Ant."
+									width="9%" />
+								<listheader label="Resultado (%)"
+									width="10%" />
+								<listheader label="Resul. Peso (%)"
+									width="12%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="${each.linea}"></listcell>
+									<listcell
+										label="${each.descripcionIndicador}">
+									</listcell>
+									<listcell
+										label="${each.unidadMedida.descripcion}">
+									</listcell>
+									<listcell
+										label="${each.medicion.descripcionMedicion}">
+									</listcell>
+									<listcell label="${each.peso}"></listcell>
+									<listcell
+										label="${each.valorMeta}">
+									</listcell>
+									<listcell
+										label="${each.valorResultado}">
+									</listcell>
+									<listcell
+										label="${each.resultadoFyAnterior}">
+									</listcell>
+									<listcell
+										label="${each.resultadoPeso}">
+									</listcell>
+									<listcell
+										label="${each.resultadoPorc}">
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</groupbox>
+				</tabpanel>
+				<tabpanel>
+						<div style="background-color:#F8E0E0;">
+							<label value="Evaluación de Desempeño"
+								style="font-weight:bold;" />
+						</div>
+						<grid width="100%" align="center">
+							<columns visible="true">
+								<column label="#Evaluacion" width="13%"
+									style="font-size: 10px;" />
+								<column label="Fecha Creacion"
+									width="18%" style="font-size: 10px;" />
+								<column label="Revision" width="18%"
+									style="font-size: 10px;" />
+								<column label="Ficha" width="10%"
+									style="font-size: 10px;" />
+								<column label="Nombre del Trabajador"
+									width="25%" style="font-size: 10px;" />
+								<column label="Cargo" width="20%"
+									style="font-size: 10px;" />
+								<column label="Unidad Organizativa"
+									width="27%" style="font-size: 10px;" />
+								<column
+									label="Gerencia a la que Reporta" width="25%"
+									style="font-size: 10px;" />
+							</columns>
+							<rows>
+								<row>
+									<label id="lblEvaluacionRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblFechaCreacionRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblRevisionRectoras"
+										value="FY13-14 (1)" style="font-size: 10px;">
+									</label>
+									<label id="lblFichaRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblNombreTrabajadorRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblCargoRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblUnidadOrganizativaRectoras"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblGerenciaRectoras"
+										style="font-size: 10px;">
+									</label>
+								</row>
+							</rows>
+						</grid>
+						<separator />
+						<div style="background-color:#F8E0E0;">
+							<label
+								value="Sección II - Evaluación de Competencias Rectoras"
+								style="font-weight:bold;" />
+						</div>
+						<separator />
+						<listbox height="auto"
+							id="lbxCompetenciaRectora" mold="paging" pageSize="10"
+							width="auto">
+							<listhead>
+								<listheader label="Competencia" />
+								<listheader
+									label="Nivel de Dominio Requerido" />
+								<listheader
+									label="Nivel de Dominio Evidenciado" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell
+										label="${each.competencia.descripcion}">
+									</listcell>
+									<listcell
+										label="${each.idDominio}">
+									</listcell>
+									<listcell></listcell>
+								</listitem>
+							</template>
+						</listbox>
+				</tabpanel>
+				<tabpanel>
+						<div style="background-color:#F8E0E0;">
+							<label value="Evaluación de Desempeño"
+								style="font-weight:bold;" />
+						</div>
+						<grid width="100%" align="center">
+							<columns visible="true">
+								<column label="#Evaluacion" width="13%"
+									style="font-size: 10px;" />
+								<column label="Fecha Creacion"
+									width="18%" style="font-size: 10px;" />
+								<column label="Revision" width="18%"
+									style="font-size: 10px;" />
+								<column label="Ficha" width="10%"
+									style="font-size: 10px;" />
+								<column label="Nombre del Trabajador"
+									width="25%" style="font-size: 10px;" />
+								<column label="Cargo" width="20%"
+									style="font-size: 10px;" />
+								<column label="Unidad Organizativa"
+									width="27%" style="font-size: 10px;" />
+								<column
+									label="Gerencia a la que Reporta" width="25%"
+									style="font-size: 10px;" />
+							</columns>
+							<rows>
+								<row>
+									<label id="lblEvaluacion"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblFechaCreacion"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblRevision"
+										value="FY13-14 (1)" style="font-size: 10px;">
+									</label>
+									<label id="lblFicha"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblNombreTrabajador"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblCargo"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblUnidadOrganizativa"
+										style="font-size: 10px;">
+									</label>
+									<label id="lblGerencia"
+										style="font-size: 10px;">
+									</label>
+								</row>
+							</rows>
+						</grid>
+						<separator />
+						<div style="background-color:#F8E0E0;">
+							<label
+								value="Sección II - Evaluación de Competencias Específicas"
+								style="font-weight:bold;" />
+						</div>
+						<separator />
+						<listbox height="auto" id="lbxMotivosooo"
+							mold="paging" pageSize="10" emptyMessage="aquiiiii"
+							width="auto">
+							<listhead>
+								<listheader label="Competencia" />
+								<listheader
+									label="Nivel de Dominio Requerido" />
+								<listheader
+									label="Nivel de Dominio Evidenciado" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="1"></listcell>
+									<listcell height="%">
+										<textbox value="LALLA"
+											placeholder="Ej: 2" mold="rounded" rows="1" />
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
 	</window>
 </zk>
