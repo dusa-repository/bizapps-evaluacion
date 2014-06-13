@@ -35,6 +35,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -43,7 +44,6 @@ import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
-
 import sun.util.calendar.BaseCalendar.Date;
 
 import arbol.MArbol;
@@ -74,6 +74,8 @@ public class CObjetivos extends CGenerico {
 	private Button btnEliminar;
 	@Wire
 	private Button btnOk;
+	@Wire
+	private Button btnGuardar;
 	@Wire
 	private Listbox lbxEmpleado;
 	@Wire
@@ -112,13 +114,12 @@ public class CObjetivos extends CGenerico {
 			+ String.valueOf(calendario.get(Calendar.MINUTE))
 			+ String.valueOf(calendario.get(Calendar.SECOND));
 
-
 	@Override
 	public void inicializar() throws IOException {
 
 		 List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		 cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-
+		 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
@@ -151,15 +152,18 @@ public class CObjetivos extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {	
 		 gpxAgregados.setOpen(true);
-//		 Perspectiva perspectiva = cmbPerspectiva.getValue();
+		 String perspectivaCombo= cmbPerspectiva.getSelectedItem().getContext();
+		 System.out.println(perspectivaCombo);
+		 Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
 		 String objetivo =txtObjetivo.getValue();
 		 String corresponsables = txtCorresponsables.getValue();
 		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
+		 Integer linea = objetivosG.size() + 1;
 		 objetivoLista.setIdObjetivo(1);
 		 objetivoLista.setDescripcionObjetivo(objetivo);
 		 objetivoLista.setIdEvaluacion(1);
-//		 objetivoLista.setPerspectiva(perspectiva);
-		 objetivoLista.setLinea(1);
+		 objetivoLista.setPerspectiva(perspectiva);	 
+		 objetivoLista.setLinea(linea);
 		 objetivoLista.setPeso(0);
 		 objetivoLista.setResultado(0);
 		 objetivoLista.setTotalInd(0);
@@ -167,6 +171,7 @@ public class CObjetivos extends CGenerico {
 		 objetivosG.add(objetivoLista);
 		 lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
 		 gpxAgregar.setOpen(false);
+		 limpiar ();
 	
 	}
 	
@@ -175,5 +180,43 @@ public class CObjetivos extends CGenerico {
 		 cmbPerspectiva.setValue(null);
 		 txtCorresponsables.setValue("");
 	}
-
+	
+	@Listen("onClick = #btnGuardar")
+	public void Guardar() {	
+		
+		if (objetivosG.size() == 0) {
+			Messagebox.show("Debe agregar sus objetivos",
+					"Advertencia", Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+		else {
+			EvaluacionObjetivo objetivo = new EvaluacionObjetivo ();
+			Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
+//			Integer revision = 1;
+			objetivo.setIdEvaluacion(evaluacion);
+			for (int j = 0; j < objetivosG.size(); j++) {
+				Integer linea = objetivosG.get(j).getLinea();
+				String corresponsables = objetivosG.get(j).getCorresponsables();
+				String descripcionOb = objetivosG.get(j).getDescripcionObjetivo();
+				Perspectiva perspectiva = objetivosG.get(j).getPerspectiva();
+				Double peso = objetivosG.get(j).getPeso();
+				Double resultado = objetivosG.get(j).getResultado();
+				Double total = objetivosG.get(j).getTotalInd();
+				objetivo.setCorresponsables(corresponsables);
+				objetivo.setDescripcionObjetivo(descripcionOb);
+				objetivo.setLinea(linea);
+				objetivo.setPerspectiva(perspectiva);
+				objetivo.setPeso(peso);
+				objetivo.setResultado(resultado);
+				objetivo.setTotalInd(total);	
+				servicioEvaluacionObjetivo.guardar(objetivo);
+			}
+	
+			Messagebox.show("Objetivos Guardados Exitosamente",
+					"Información", Messagebox.OK,
+					Messagebox.INFORMATION);
+			limpiar ();
+			objetivosG.clear();
+		}
+	}
 }

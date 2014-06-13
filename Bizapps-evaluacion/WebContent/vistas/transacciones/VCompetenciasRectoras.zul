@@ -44,8 +44,7 @@
 				<template name="model">
 					<listitem>
 						<listcell label="${each.competencia.descripcion}"></listcell>
-						<listcell > 
-						</listcell>
+						<listcell label="${each.idDominio}"></listcell>
 						<listcell > 
 						</listcell>
 					</listitem>

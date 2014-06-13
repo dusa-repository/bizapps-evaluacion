@@ -63,10 +63,10 @@
 				pageSize="10" width="auto">
 				<listhead>
 					<listheader label="Línea" width = "5%"/>
-					<listheader label="Indicador "  width = "25%"/>
+					<listheader label="Indicador "  width = "23%"/>
 					<listheader label="Unid. Med." width = "9%"/>
-					<listheader label="Medición" width = "9%"/>
-					<listheader label="Peso (%)"  width = "9%" />
+					<listheader label="Medición" width = "14%"/>
+					<listheader label="Peso (%)"  width = "7%" />
 					<listheader label="Valor Meta"  width = "9%"/>
 					<listheader label="Valor Resultado"  width = "12%" />
 					<listheader label="Res.Fy.Ant."  width = "9%"/>
@@ -80,10 +80,26 @@
 						<textbox  placeholder = "Indicador" mold="rounded"  rows="2" width = "100%" id = "txtIndicador"/>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Unidad" mold="rounded"  rows="1" width = "100%"  id = "txtUnidad"/>
+						<combobox placeholder="Seleccione..."
+								mold="rounded" rows="1" width="100%"
+								style="background-color:white;border:none" readonly="true"
+								id="cmbUnidad">
+								<template name="model">
+									<comboitem
+										label="${each.descripcion}" />
+								</template>
+							</combobox>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Medición" mold="rounded"  rows="1" width = "100%" id = "txtMedicion"/>
+						<combobox placeholder="Seleccione..."
+								mold="rounded" rows="1" width="100%"
+								style="background-color:white;border:none" readonly="true"
+								id="cmbMedicion">
+								<template name="model">
+									<comboitem
+										label="${each.descripcionMedicion}" />
+								</template>
+							</combobox>
 						</listcell>
 						<listcell> 
 						<textbox  placeholder = "Peso %" mold="rounded"  rows="1" width = "100%" id = "txtPeso" />
@@ -128,12 +144,12 @@
 					<listheader label="Línea" width = "5%"/>
 					<listheader label="Indicador "  width = "25%"/>
 					<listheader label="Unid. Med." width = "9%"/>
-					<listheader label="Medición" width = "9%"/>
+					<listheader label="Medición" width = "11%"/>
 					<listheader label="Peso (%)"  width = "9%" />
 					<listheader label="Valor Meta"  width = "9%"/>
 					<listheader label="Valor Resultado"  width = "12%" />
 					<listheader label="Res.Fy.Ant."  width = "9%"/>
-					<listheader label="Resultado (%)"  width = "12%"/>
+					<listheader label="Resultado (%)"  width = "10%"/>
 					<listheader label="Resul. Peso (%)"  width = "12%"/>
 				</listhead>
 				<template name="model">

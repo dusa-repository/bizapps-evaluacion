@@ -49,6 +49,7 @@ import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 
 import servicio.transacciones.SEvaluacion;
+import servicio.transacciones.SEvaluacionObjetivo;
 import servicio.transacciones.SNivelCompetenciaCargo;
 
 
@@ -99,6 +100,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SUnidadMedida servicioUnidadMedida;
 	@WireVariable("SUrgencia")
 	protected SUrgencia servicioUrgencia;
+	@WireVariable("SEvaluacionObjetivo")
+	protected SEvaluacionObjetivo servicioEvaluacionObjetivo;
 
 
 	

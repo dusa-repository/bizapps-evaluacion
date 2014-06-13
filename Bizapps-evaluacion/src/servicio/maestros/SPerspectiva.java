@@ -1,13 +1,7 @@
 package servicio.maestros;
 
-
-
 import interfacedao.maestros.IPerspectivaDAO;
-
 import java.util.List;
-
-import modelo.seguridad.Arbol;
-import modelos.Empleado;
 import modelos.Perspectiva;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +15,9 @@ public class SPerspectiva {
 
 	public List<Perspectiva> buscar() {
 		return perspectivaDAO.findAll();
+	}
+	
+	public Perspectiva buscarId(Integer value) {
+		return perspectivaDAO.findByIdPerspectiva(value);
 	}
 }

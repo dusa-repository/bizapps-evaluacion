@@ -41,4 +41,22 @@ public class NivelCompetenciaCargo implements Serializable {
 		this.idDominio = idDominio;
 	}
 
+	public Competencia getCompetencia() {
+		return competencia;
+	}
+
+	public void setCompetencia(Competencia competencia) {
+		this.competencia = competencia;
+	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+	
+	
+
 }
