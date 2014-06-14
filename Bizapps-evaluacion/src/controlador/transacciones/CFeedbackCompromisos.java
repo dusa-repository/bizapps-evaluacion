@@ -10,15 +10,17 @@ import java.util.List;
 
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
-import modelos.Dominio;
+import modelos.Competencia;
 import modelos.Empleado;
 import modelos.Evaluacion;
-import modelos.NivelCompetenciaCargo;
+import modelos.EvaluacionObjetivo;
 import modelos.Perspectiva;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -26,11 +28,14 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -38,7 +43,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
-
+import org.zkoss.zul.Window;
 import sun.util.calendar.BaseCalendar.Date;
 
 import arbol.MArbol;
@@ -48,7 +53,7 @@ import controlador.maestros.CGenerico;
 import componentes.Mensaje;
 import componentes.Validador;
 
-public class CCompetenciasEspecificas extends CGenerico {
+public class CFeedbackCompromisos extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
 	Mensaje msj = new Mensaje();
@@ -64,17 +69,33 @@ public class CCompetenciasEspecificas extends CGenerico {
 	@Wire
 	private Textbox txtResultados;
 	@Wire
+	private Textbox txtFortalezas;
+	@Wire
+	private Textbox txtOportunidades;
+	@Wire
+	private Textbox txtResumen;
+	@Wire
+	private Textbox txtCompromisos;
+	@Wire
 	private Button btnAgregar;
 	@Wire
 	private Button btnEliminar;
 	@Wire
-	private Button btnCalculo;
+	private Button btnOk;
 	@Wire
-	private Listbox lbxCompetenciaEspecifica;
+	private Button btnGuardar;
+	@Wire
+	private Listbox lbxEmpleado;
 	@Wire
 	private Listbox lbxObjetivos;
 	@Wire
-	private Listbox lbxEvaluacion;
+	private Listbox lbxObjetivosGuardados;
+	@Wire
+	private Label lblEvaluacion;
+	@Wire
+	private Label lblFechaCreacion;
+	@Wire
+	private Label lblRevision;
 	@Wire
 	private Label lblFicha;
 	@Wire
@@ -86,63 +107,69 @@ public class CCompetenciasEspecificas extends CGenerico {
 	@Wire
 	private Label lblGerencia;
 	@Wire
-	private Label lblEvaluacion;
+	private Combobox cmbPerspectiva;
 	@Wire
-	private Label lblFechaCreacion;
+	private Window window;
 	@Wire
-	private Label lblRevision;
-	String tipo = "REQUERIDO";
-	ListModelList<Dominio> dominio;
+	private Groupbox gpxAgregar;
+	@Wire
+	private Groupbox gpxAgregados;
 	
 	@Override
 	public void inicializar() throws IOException {
 
+	 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
-		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
-		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(fechaHora.toString());
+		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
+		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
 		String unidadOrganizativa = empleado.getUnidadOrganizativa()
 				.getDescripcion();
 		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
 				.getDescripcion();
-		
-		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
-		List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
-		NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo ();
-		
-		nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
-		for (int j = 0; j < nivel.size(); j++) {
-			if (nivel.get(j).getCompetencia().getNivel().equals("ESPECIFICAS")) {
-				nivelRectoras = nivel.get(j);
-				nivel2.add(nivelRectoras);
-			}
-				else {
-				nivel.remove(j);
-			}
-			lbxCompetenciaEspecifica
-						.setModel(new ListModelList<NivelCompetenciaCargo>(
-								nivel2));
-		}
-		
 		lblFicha.setValue(ficha);
 		lblNombreTrabajador.setValue(nombreTrabajador);
 		lblCargo.setValue(cargo);
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
-
 	}
 
 	
-	public ListModelList<Dominio> getDominio(){
-		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
-		return dominio;
+	public void limpiar() {
+		 txtFortalezas.setValue("");
+		 txtOportunidades.setValue("");
+		 txtCompromisos.setValue("");
+		 txtResumen.setValue("");
 	}
+	
+	@Listen("onClick = #btnGuardar")
+	public void Guardar() {	
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
+		String fortalezas = txtFortalezas.getValue();
+		String oportunidades = txtOportunidades.getValue();
+		String resumen = txtResumen.getValue();
+		String compromisos = txtCompromisos.getValue();
+		Integer idEvaluacion = Integer.parseInt(lblEvaluacion.getValue());
+		Evaluacion evaluacionEmpleado = new Evaluacion();
+		evaluacionEmpleado = servicioEvaluacion.buscarIdEvaluacion(idEvaluacion, ficha);
+		evaluacionEmpleado.setCompromisos(compromisos);
+		evaluacionEmpleado.setFortalezas(fortalezas);
+		evaluacionEmpleado.setOportunidades(oportunidades);
+		evaluacionEmpleado.setResumen(resumen);
 
-
-}
+		servicioEvaluacion.guardar(evaluacionEmpleado);
+		Messagebox.show("Feedback y Compromisos Registrados Exitosamente",
+				"Información", Messagebox.OK,
+					Messagebox.INFORMATION);
+			limpiar ();
+		}
+	}

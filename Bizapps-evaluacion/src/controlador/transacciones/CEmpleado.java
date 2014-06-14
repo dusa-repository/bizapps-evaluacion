@@ -108,7 +108,7 @@ public class CEmpleado extends CGenerico {
 		for (int i = 0; i < arboles.size(); i++) {
 			String ficha = jefe.getFicha(); 	
 			if (arboles.get(i).getFicha().equals(ficha))  {
-				oneLevelNode = new Nodos(root, i, arboles.get(i).getNombre());
+				oneLevelNode = new Nodos(root, i,  "(" + arboles.get(i).getGradoAuxiliar() + ")" + "  " + arboles.get(i).getNombre());
 				root.appendChild(oneLevelNode);
 //				temp1 = arboles.get(i).getIdEmpleado();
 				temp1 = arboles.get(i).getFicha();
@@ -116,7 +116,7 @@ public class CEmpleado extends CGenerico {
 
 				for (int j = i; j < arboles.size(); j++) {
 					if (temp1.equals(arboles.get(j).getFichaSupervisor())) {
-						twoLevelNode = new Nodos(oneLevelNode, i, arboles
+						twoLevelNode = new Nodos(oneLevelNode, i, "(" + arboles.get(i).getGradoAuxiliar() + ")"  + "  " + arboles
 								.get(j).getNombre());
 						oneLevelNode.appendChild(twoLevelNode);
 //						temp2 = arboles.get(j).getIdEmpleado();
@@ -127,7 +127,7 @@ public class CEmpleado extends CGenerico {
 
 							if (temp2.equals(arboles.get(k).getFichaSupervisor())) {
 							
-								threeLevelNode = new Nodos(twoLevelNode, i,
+								threeLevelNode = new Nodos(twoLevelNode, i,"(" + arboles.get(i).getGradoAuxiliar() + ")" + "  " +
 										arboles.get(k).getNombre());
 								twoLevelNode.appendChild(threeLevelNode);
 //								temp3 = arboles.get(k).getIdEmpleado();
@@ -159,5 +159,97 @@ public class CEmpleado extends CGenerico {
 		return root;
 	}
 
+//	@Listen("onClick = #arbolPersonal")
+//	public void selectedNode() {
+//		if(arbolPersonal.getSelectedItem()!=null)
+//		{
+//		String item = String.valueOf(arbolPersonal.getSelectedItem().getValue());
+//		boolean abrir = true;
+//		Tab taba = new Tab();
+//		if (arbolPersonal.getSelectedItem().getLevel() > 0) {
+//			final Arbol arbolItem = servicioArbol.buscarPorNombreArbol(item);
+//				
+//			if (!arbolItem.getUrl().equals("inicio")) {
+//				
+//				if (String.valueOf(arbolPersonal.getSelectedItem().getValue()).equals("Consulta")) 
+//					west.setOpen(false);
+//				for (int i = 0; i < tabs.size(); i++) {
+//					if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
+//						abrir = false;
+//						taba = tabs.get(i);
+//					}
+//				}
+//				if (abrir) {
+//						Tab newTab = new Tab(arbolItem.getNombre());
+//						newTab.setClosable(true);
+//						newTab.addEventListener(Events.ON_CLOSE,
+//								new EventListener<Event>() {
+//									@Override
+//									public void onEvent(Event arg0) throws Exception {
+//										for (int i = 0; i < tabs.size(); i++) {
+//											if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
+//												if (i == (tabs.size() - 1) && tabs.size() > 1) {
+//													tabs.get(i - 1).setSelected(true);
+//												}
+//												
+//												tabs.get(i).close();
+//												tabs.remove(i);
+//											}
+//										}
+//									}
+//								});
+//						newTab.setSelected(true);
+//						Tabpanel newTabpanel = new Tabpanel();
+//						newTabpanel.appendChild(contenido);
+//						tabBox.getTabs().insertBefore(newTab, tab);
+//						newTabpanel.setParent(tabBox.getTabpanels());
+//						tabs.add(newTab);
+//				}
+//					else {
+//						msj.mensajeError(Mensaje.enUso);
+//					}
+//				}
+//				else {
+//					String ruta = "/vistas/" + arbolItem.getUrl() + ".zul";
+//					contenido = new Include();
+//					contenido.setSrc(null);
+//					contenido.setSrc(ruta);
+//					Tab newTab = new Tab(arbolItem.getNombre());
+//					newTab.setClosable(true);
+//					newTab.addEventListener(Events.ON_CLOSE,
+//							new EventListener<Event>() {
+//								@Override
+//								public void onEvent(Event arg0) throws Exception {
+//									for (int i = 0; i < tabs.size(); i++) {
+//										if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
+//											if (i == (tabs.size() - 1) && tabs.size() > 1) {
+//												tabs.get(i - 1).setSelected(true);
+//											}
+//											
+//											tabs.get(i).close();
+//											tabs.remove(i);
+//										}
+//									}
+//								
+//							});
+//					newTab.setSelected(true);
+//					Tabpanel newTabpanel = new Tabpanel();
+//					newTabpanel.appendChild(contenido);
+//					tabBox.getTabs().insertBefore(newTab, tab);
+//					newTabpanel.setParent(tabBox.getTabpanels());
+//					tabs.add(newTab);
+//					}
+//				}
+//				 else {
+//					taba.setSelected(true);
+//				}
+//			}
+//		}
+//		
+//		}
+//		tabBox2 = tabBox;
+//		contenido2 = contenido;
+//		tab2 = tab;
+//	}
 	
 }

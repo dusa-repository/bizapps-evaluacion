@@ -33,9 +33,8 @@
 		<label value= "Sección II - Evaluación de Competencias Específicas" style= "font-weight:bold;"/>
 		</div>
 		<separator />
-		<listbox height="auto" id="lbxMotivosooo" mold="paging"
-				pageSize="10" 
-				emptyMessage="aquiiiii" width="auto">
+		<listbox height="auto" id="lbxCompetenciaEspecifica"
+				mold="paging" pageSize="10" width="auto">
 				<listhead>
 					<listheader label="Competencia" />
 					<listheader label="Nivel de Dominio Requerido" />
@@ -43,9 +42,20 @@
 				</listhead>
 				<template name="model">
 					<listitem>
-						<listcell label="1"></listcell>
-						<listcell height="%"> 
-						<textbox value="LALLA" placeholder = "Ej: 2" mold="rounded"  rows="1" />
+						<listcell
+							label="${each.competencia.descripcion}">
+						</listcell>
+						<listcell
+							label="${each.dominio.descripcionDominio}">
+						</listcell>
+						<listcell>
+							<combobox  readonly="true" placeholder="Seleccione..."
+								mold="rounded" rows="1" width="100%" 
+								style="background-color:white;border:none" model="${$composer.dominio}">
+								<template name="model" >
+									<comboitem context="${each.idDominio}" label="${each.descripcionDominio}" />
+								</template>
+							</combobox>
 						</listcell>
 					</listitem>
 				</template>

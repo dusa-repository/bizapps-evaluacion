@@ -19,7 +19,7 @@
                         <menuitem label="Competencias Especificas" onClick='contenido.src="../vistas/transacciones/VCompetenciasEspecificas.zul"'  />
                     </menupopup>
                 </menu>
-        <menuitem label="Seccion III -  Registros de Feedback y Establecimientos de Compromisos" onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' />
+        <menuitem label="Seccion III -  Registros de Feedback y Establecimientos de Compromisos" onClick='contenido.src="../vistas/transacciones/VFeedbackCompromisos.zul"' />
         </menubar>
     </hbox>
     <separator></separator>

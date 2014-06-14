@@ -1,5 +1,5 @@
 <zk>
-<window border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply = "controlador.transacciones.CListaPersonal">
+<window id= "winListaPersonal" border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply = "controlador.transacciones.CListaPersonal">
 			<separator />
 		<div  style="background-color:#F8E0E0;" >
 		<label value= "Acción a Realizar" style= "font-weight:bold;"/>
@@ -8,32 +8,43 @@
 		<div align="left" height="100%">
 			<button id="btnAgregar" width="auto" height="auto"
 				mold="trendy" label="Agregar" image="/public/imagenes/botones/agregar.png" style="background-color:#F8E0E0;" 
-				 onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
+				 onClick='contenido.src="../vistas/transacciones/VItems.zul"' >
 			</button>
-			<button id="btnEliminar" width="auto" height="auto"
+			<button id="btnBuscar" width="auto" height="auto"
 				mold="trendy" label="Buscar" image="/public/imagenes/botones/buscar.png">
 			</button>
 		</div>
 		<separator></separator>
 		
-				<grid width="100%" align = "center">
-					<columns visible="true" >
-						<column label="Ficha" width="10%"  style = "font-size: 10px;" />
-						<column label="Nombre del Trabajador" width="25%" style = "font-size: 10px;" />
-						<column label="Cargo" width="20%" style = "font-size: 10px;" />
-						<column label="Unidad Organizativa" width="27%" style = "font-size: 10px;" />
-						<column label="Gerencia a la que Reporta" width="25%" style = "font-size: 10px;" />
-					</columns>
-					<rows>
-					<row>
-								<label id="lblFicha" style = "font-size: 10px;"></label>
-								<label id="lblNombreTrabajador" style = "font-size: 10px;"></label>
-								<label id="lblCargo" style = "font-size: 10px;"></label>
-								<label id="lblUnidadOrganizativa" style = "font-size: 10px;"></label>
-								<label id="lblGerencia" style = "font-size: 10px;"></label>
-						</row>
-					</rows>
-				</grid>
+					<listbox height="auto" id="lbxEvaluacion"
+				mold="paging" pageSize="10" width="auto">
+				<listhead>
+					<listheader label="Ficha" width="10%"/>
+					<listheader label="Nombre" width="30%"/>
+					<listheader label="Revisión" width="10%" />
+					<listheader label="Fecha" width="20%"/>
+					<listheader label="Estado" width="15%" />
+					<listheader label="Usuario" width="30%" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell
+							label="${each.ficha}">
+						</listcell>
+						<listcell
+							label="${each}">
+						</listcell>
+						<listcell label="${each.idRevision}">
+							</listcell>
+							<listcell label="${each.fechaCreacion}">
+							</listcell>
+							<listcell label="${each.estadoEvaluacion}">
+							</listcell>
+							<listcell label="${each.fichaEvaluador}">
+							</listcell>
+					</listitem>
+				</template>
+			</listbox>
 	</window>
 <include id = "contenido"> </include>
 </zk>

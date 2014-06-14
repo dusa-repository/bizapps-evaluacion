@@ -68,7 +68,7 @@ public class CArbol extends CGenerico {
 		String nombre = u.getNombre();
 		String apellido = u.getApellido();
 		String cedula = u.getCedula();
-		String usuario = cedula + "   " + nombre + " " + apellido;   
+		String usuario = "(" + cedula + ")" + "   " + nombre + " " + apellido;   
 		lblUsuario.setValue(usuario);
 //
 //		if (u.getImagen() == null) {

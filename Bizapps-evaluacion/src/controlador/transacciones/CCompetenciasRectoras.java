@@ -62,8 +62,6 @@ public class CCompetenciasRectoras extends CGenerico {
 	@Wire
 	private Listbox lbxObjetivos;
 	@Wire
-	private Listbox lbxEvaluacion;
-	@Wire
 	private Label lblFicha;
 	@Wire
 	private Label lblNombreTrabajador;

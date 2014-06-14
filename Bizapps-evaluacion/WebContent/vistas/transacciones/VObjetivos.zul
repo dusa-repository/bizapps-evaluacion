@@ -1,7 +1,7 @@
 <zk>
 	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;"
-		apply="controlador.transacciones.CObjetivos" id="winObjetivoModal">
+		apply="controlador.transacciones.CObjetivos" id="winObjetivo">
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -48,7 +48,7 @@
 				</row>
 			</rows>
 		</grid>
-		<div id="divEditarUsuario" class="z-groupbox-3d-hm;"
+		<div id="divObjetivos" class="z-groupbox-3d-hm;"
 			width="auto">
 			<separator />
 			<div style="background-color:#F8E0E0;">
@@ -92,8 +92,8 @@
 								mold="rounded" rows="2" width="100%" id="txtCorresponsables" />
 						</listcell>
 						<listcell>
-							<textbox value="0" placeholder="Peso"
-								mold="rounded" rows="1" width="100%" readonly="true"
+							<textbox  placeholder="Peso"
+								mold="rounded" rows="1" width="100%" 
 								id="txtPeso" />
 						</listcell>
 						<listcell>
@@ -109,7 +109,7 @@
 						<listcell>
 							<button id="btnOk" width="auto"
 								height="auto" mold="trendy"
-								image="/public/imagenes/botones/seleccionar.png"
+								image="/public/imagenes/botones/agregar.png"
 								style="background-color:#F8E0E0;">
 							</button>
 						</listcell>
