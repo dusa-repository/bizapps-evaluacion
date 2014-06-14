@@ -3,20 +3,29 @@ package controlador.transacciones;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import modelo.seguridad.Usuario;
+import modelos.Competencia;
 import modelos.Dominio;
 import modelos.Empleado;
 import modelos.NivelCompetenciaCargo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
+
 import controlador.maestros.CGenerico;
 import componentes.Mensaje;
 
@@ -65,7 +74,9 @@ public class CCompetenciasRectoras extends CGenerico {
 	@Wire
 	private Label lblGerencia;
 	@Wire
-	private Combobox cmbNivelRequerido;
+	private Combobox cmbNivelRequerido;	
+	@Wire
+	private Window wdwConductasRectoras;
 	String tipo = "REQUERIDO";
 	ListModelList<Dominio> dominio;
 
@@ -120,5 +131,43 @@ public class CCompetenciasRectoras extends CGenerico {
 		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
 		return dominio;
 	}
+	
+	@Listen("onDoubleClick = #lbxCompetenciaRectora")
+	public void mostrarDatosCatalogo() {
+			
+			
+			if (lbxCompetenciaRectora.getItemCount() != 0) {
+				
+				Listitem listItem = lbxCompetenciaRectora.getSelectedItem();	
+					
+					if ( ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getValue() == ""){
+						Messagebox.show("Debe Seleccionar un nivel de dominio",
+								"Error", Messagebox.OK,
+								Messagebox.ERROR);
+					}else{
+						String nivel = ((Combobox) ((listItem.getChildren().get(2)))
+								.getFirstChild()).getSelectedItem().getDescription();
+								
+					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("idnivel", nivel);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/vConductasRectoras.zul", null, map);
+					wdwConductasRectoras.doModal();				
+					
+					}							
+				
+			}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

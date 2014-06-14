@@ -48,6 +48,7 @@ import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 
+import servicio.transacciones.SConductaCompetencia;
 import servicio.transacciones.SEvaluacion;
 import servicio.transacciones.SEvaluacionIndicador;
 import servicio.transacciones.SEvaluacionObjetivo;
@@ -105,6 +106,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacionObjetivo servicioEvaluacionObjetivo;
 	@WireVariable("SEvaluacionIndicador")
 	protected SEvaluacionIndicador servicioEvaluacionIndicador;
+	@WireVariable("SConductaCompetencia")
+	protected SConductaCompetencia servicioConductaCompetencia;
 
 	
 	public static  List<Tab> tabs = new ArrayList<Tab>();

@@ -2,15 +2,8 @@ package servicio.maestros;
 
 
 import interfacedao.maestros.ICompetenciaDAO;
-import interfacedao.transacciones.IEvaluacionDAO;
-
 import java.util.List;
-
-import modelo.seguridad.Arbol;
 import modelos.Competencia;
-import modelos.Empleado;
-import modelos.Evaluacion;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +17,11 @@ public class SCompetencia {
 		return competenciaDAO.buscar();
 	}
 	
+	public Competencia buscarCompetencia(int id) {
+		// TODO Auto-generated method stub
+		Competencia competencia;
+		competencia = competenciaDAO.findByIdCompetencia(id);
+		return competencia;
+	}
 
 }

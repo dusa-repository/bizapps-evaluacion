@@ -6,6 +6,7 @@ import java.util.List;
 import modelo.pk.NivelCompetenciaCargoPK;
 import modelos.Cargo;
 import modelos.Competencia;
+import modelos.Dominio;
 import modelos.Empleado;
 import modelos.Evaluacion;
 import modelos.NivelCompetenciaCargo;
@@ -17,6 +18,8 @@ import org.springframework.data.repository.query.Param;
 public interface INivelCompetenciaCargoDAO extends JpaRepository<NivelCompetenciaCargo, NivelCompetenciaCargoPK> {
 	
 	public List<NivelCompetenciaCargo> findByCargo(Cargo cargo);
+	
+	public NivelCompetenciaCargo findByDominio(Dominio dominio);
 	
 	
 }

@@ -98,22 +98,22 @@
 							</combobox>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Peso %" mold="rounded"  rows="1" width = "100%" id = "txtPeso" />
+						<spinner  placeholder = "Peso %" mold="rounded"   width = "100%" id = "txtPeso" />
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Valor Meta" mold="rounded"  rows="1" width = "100%" id = "txtValorMeta" />
+						<spinner  placeholder = "Valor Meta" mold="rounded"   width = "100%" id = "txtValorMeta" />
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Valor Resultado" mold="rounded"  rows="1" width = "100%" id = "txtValorResultado"/>
+						<spinner  placeholder = "Valor Resultado" mold="rounded"   width = "100%" id = "txtValorResultado"/>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Res.Fy.Ant" mold="rounded"  rows="1" width = "100%" id = "txtResFy"/>
+						<spinner  placeholder = "Res.Fy.Ant" mold="rounded"   width = "100%" id = "txtResFy"/>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Resultado %" mold="rounded"  rows="1" width = "100%" id = "txtResultadoPorc"/>
+						<spinner  placeholder = "Resultado %" mold="rounded"   width = "100%" id = "txtResultadoPorc"/>
 						</listcell>
 						<listcell> 
-						<textbox  placeholder = "Resultado peso %" mold="rounded"  rows="1" width = "100%" id = "txtPesoPorc"/>
+						<spinner placeholder = "Resultado peso %" mold="rounded"   width = "100%" id = "txtPesoPorc"/>
 						</listcell>
 						<listcell>
 							<button id="btnOk" width="auto"

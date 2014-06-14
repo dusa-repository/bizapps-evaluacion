@@ -1,0 +1,29 @@
+<window id="wdwConductasRectoras" title="Conductas Rectoras"
+	 closable="true" apply="controlador.transacciones.CConductasRectoras">
+
+
+		<groupbox>
+
+				<listbox id="lbxConductasRectoras"  checkmark="true" 
+				width="100%" emptyMessage="No hay conductas registradas" mold="paging"
+				pageSize="10">
+						<listhead>
+							<listheader/>
+							<listheader label="Conducta" />
+							<listheader label="Observacion" />
+						</listhead>						
+						<template name="model">
+							<listitem>
+							<listcell >
+								</listcell>
+								<listcell label="${each.descripcion}">
+								</listcell>
+								<listcell>
+									<textbox width="70%" />
+								</listcell>
+
+							</listitem>
+						</template>
+					</listbox>
+		</groupbox>
+</window>

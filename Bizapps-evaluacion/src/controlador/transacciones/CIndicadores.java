@@ -36,6 +36,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -69,19 +70,19 @@ public class CIndicadores extends CGenerico {
 	@Wire
 	private Textbox txtUnidad;
 	@Wire
-	private Textbox txtPeso;
+	private Spinner txtPeso;
 	@Wire
 	private Textbox txtMedicion;
 	@Wire
-	private Textbox txtValorMeta;
+	private Spinner txtValorMeta;
 	@Wire
-	private Textbox txtValorResultado;
+	private Spinner txtValorResultado;
 	@Wire
-	private Textbox txtResFy;
+	private Spinner txtResFy;
 	@Wire
-	private Textbox txtResultadoPorc;
+	private Spinner txtResultadoPorc;
 	@Wire
-	private Textbox txtPesoPorc;
+	private Spinner txtPesoPorc;
 	@Wire
 	private Button btnAgregar;
 	@Wire
@@ -164,7 +165,15 @@ public class CIndicadores extends CGenerico {
 
 	@Listen("onClick = #btnOk")
 	public void AgregarIndicador() {
-		gpxAgregados.setOpen(true);
+		
+		
+		if (cmbObjetivos.getText().compareTo("")==0 || txtIndicador.getText().compareTo("")==0 || cmbUnidad.getText().compareTo("")==0 
+		|| cmbMedicion.getText().compareTo("")==0 || txtPeso.getText().compareTo("")==0 
+		|| txtValorMeta.getText().compareTo("")==0 || txtResFy.getText().compareTo("")==0 || txtIndicador.getText().compareTo("")==0
+		|| txtResultadoPorc.getText().compareTo("")==0 || txtPesoPorc.getText().compareTo("")==0 || txtValorMeta.getText().compareTo("")==0)
+		{
+		}	else {
+			gpxAgregados.setOpen(true);
 		String indicador = txtIndicador.getValue();
 		String unidadCombo= cmbUnidad.getSelectedItem().getContext();
 		UnidadMedida  unidad = servicioUnidadMedida.buscarUnidad(Integer.parseInt(unidadCombo));
@@ -177,7 +186,7 @@ public class CIndicadores extends CGenerico {
 		Double resFy = Double.valueOf(txtResFy.getValue());
 		Double resultadoPorc = Double.valueOf(txtResultadoPorc.getValue());
 		Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
-		Integer linea = indicadores.size() + 1;
+		Integer linea = indicadores.size() + 1;		
 		EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
 		indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
 		indicadorLista.setDescripcionIndicador(indicador);
@@ -201,17 +210,17 @@ public class CIndicadores extends CGenerico {
 		gpxAgregar.setOpen(false);
 		
 		limpiar ();
-
+		}
 	}
 
 	public void limpiar() {
 		txtIndicador.setValue("");
-		txtPeso.setValue("");
-		txtPesoPorc.setValue("");
-		txtResFy.setValue("");
-		txtResultadoPorc.setValue("");
-		txtValorMeta.setValue("");
-		txtValorResultado.setValue("");
+		txtPeso.setValue(null);
+		txtPesoPorc.setValue(null);
+		txtResFy.setValue(null);
+		txtResultadoPorc.setValue(null);
+		txtValorMeta.setValue(null);
+		txtValorResultado.setValue(null);
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
 	}

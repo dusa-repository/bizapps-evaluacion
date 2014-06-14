@@ -8,6 +8,7 @@ import java.util.List;
 
 import modelo.seguridad.Arbol;
 import modelos.Cargo;
+import modelos.Dominio;
 import modelos.Empleado;
 import modelos.Evaluacion;
 import modelos.NivelCompetenciaCargo;
@@ -23,5 +24,8 @@ public class SNivelCompetenciaCargo {
 
 	public List<NivelCompetenciaCargo> buscar(Cargo cargo) {
 		return nivelCompetenciaCargoDAO.findByCargo(cargo);
+	}
+	public NivelCompetenciaCargo buscarPorDominio(Dominio dominio) {
+		return nivelCompetenciaCargoDAO.findByDominio(dominio);
 	}
 }
