@@ -1,29 +1,59 @@
 <window id="wdwConductasRectoras" title="Conductas Rectoras"
-	 closable="true" apply="controlador.transacciones.CConductasRectoras">
+	 closable="true" apply="controlador.transacciones.CConductasRectoras" width="950px" border="normal" height="auto">
 
 
 		<groupbox>
-
+			<div >
 				<listbox id="lbxConductasRectoras"  checkmark="true" 
-				width="100%" emptyMessage="No hay conductas registradas" mold="paging"
-				pageSize="10">
+				width="auto" height="auto" 
+				emptyMessage="No hay conductas registradas" rows="10">
 						<listhead>
-							<listheader/>
-							<listheader label="Conducta" />
-							<listheader label="Observacion" />
+							<listheader width="5%" />
+							<listheader label="Conducta" width="60%" />
+							<listheader label="Observacion" width="35%" />
 						</listhead>						
 						<template name="model">
 							<listitem>
-							<listcell >
-								</listcell>
+							<listcell></listcell>
 								<listcell label="${each.descripcion}">
 								</listcell>
 								<listcell>
-									<textbox width="70%" />
+									<textbox width="75%" />
 								</listcell>
 
 							</listitem>
 						</template>
 					</listbox>
+				</div>	
+					
+					
+					
+		<separator />
+		<separator />
+
+		<panel border="normal" width="95%"
+			style="margin-left:2%;margin-right:3%">
+			<panelchildren>
+				
+					<separator />
+					<div sclass="btn-group" align="center">
+
+						<button id="btnGuardar" tabindex="5"
+							sclass="btn" label="Guardar"
+							image="/public/iconos/guardar.png">
+						</button>
+						<button id="btnCancelar"
+							label="Cancelar" sclass="btn" tabindex="5"
+							image="/public/iconos/limpiar.png">
+						</button>
+																				
+						<separator />											
+					</div>
+
+			</panelchildren>
+		</panel>		
+					
+					
 		</groupbox>
+		
 </window>

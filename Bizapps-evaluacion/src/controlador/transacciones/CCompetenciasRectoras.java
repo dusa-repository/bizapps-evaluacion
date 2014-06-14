@@ -137,7 +137,7 @@ public class CCompetenciasRectoras extends CGenerico {
 			if (lbxCompetenciaRectora.getItemCount() != 0) {
 				
 				Listitem listItem = lbxCompetenciaRectora.getSelectedItem();	
-					
+				if (listItem != null) {
 					if ( ((Combobox) ((listItem.getChildren().get(2)))
 							.getFirstChild()).getValue() == ""){
 						Messagebox.show("Debe Seleccionar un nivel de dominio",
@@ -154,7 +154,7 @@ public class CCompetenciasRectoras extends CGenerico {
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/vConductasRectoras.zul", null, map);
 					wdwConductasRectoras.doModal();				
-					
+					}
 					}							
 				
 			}
