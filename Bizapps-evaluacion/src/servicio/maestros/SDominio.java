@@ -4,7 +4,9 @@ import interfacedao.maestros.IDominioDAO;
 
 import java.util.List;
 
+import modelos.Cargo;
 import modelos.Dominio;
+import modelos.NivelCompetenciaCargo;
 import modelos.Revision;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +41,9 @@ public class SDominio {
 	}
 	
 	/* Servicio que permite buscar los dominios de acuerdo a un tipo */
+
 	public List<Dominio> buscarPorTipo(String tipo) {
-		List<Dominio> tiposDominio;
-		tiposDominio = dominioDAO.findByTipo(tipo);
-		return tiposDominio;
+		return dominioDAO.findByTipo(tipo);
 	}
 	
 	/* Servicio que permite eliminar un dominio */
