@@ -26,7 +26,13 @@ public class SEvaluacion {
 		evaluacionDAO.save(evaluacion);
 	}
 	
+	// Servicio que busca el maximo id
 	public Integer buscarId() {
 		return evaluacionDAO.buscar();
+	}
+	
+	// Servicio que busca el id de una evaluacion
+	public Evaluacion buscarIdEvaluacion(Integer id, String ficha) {
+		return evaluacionDAO.findByIdEvaluacionSecundarioAndFicha(id, ficha);
 	}
 }

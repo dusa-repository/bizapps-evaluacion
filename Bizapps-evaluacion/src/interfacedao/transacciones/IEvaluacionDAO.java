@@ -15,7 +15,8 @@ public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Long> {
 	
 	public List<Evaluacion> findByFicha(String ficha);
 	
-	 @Query("select max(idEvaluacion) from Evaluacion")
-		public Integer buscar();
+	@Query("select max(idEvaluacion) from Evaluacion")
+	public Integer buscar();
 
+	public Evaluacion findByIdEvaluacionSecundarioAndFicha (Integer id, String ficha); 
 }
