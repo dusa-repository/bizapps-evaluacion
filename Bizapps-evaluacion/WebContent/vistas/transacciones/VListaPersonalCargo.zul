@@ -1,0 +1,54 @@
+<zk>
+	<window id="winListaPersonal" border="normal" height="auto"
+		width="auto" style="background-color:#8A0808;"
+		apply="controlador.transacciones.CListaPersonalCargo">
+		<separator />
+		<div style="background-color:#F8E0E0;">
+			<label value="Acción a Realizar" style="font-weight:bold;" />
+		</div>
+		<separator />
+		<separator></separator>
+		<hbox>
+		<groupbox id="grp" closable="false">
+			<caption label="Personal a Cargo" />
+			<listbox  rows="8" height="auto" id="lbxPersonalCargo"  width="210px" emptyMessage="No tiene personal a cargo">
+			<listhead>
+				<listheader id= "header1" width="15%" />
+				<listheader id= "header" width="85%" />				
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="${each.gradoAuxiliar}"></listcell>
+					<listcell label="${each.nombre}"></listcell>				
+					
+				</listitem>
+			</template>
+		</listbox>
+		</groupbox>
+
+
+
+		<listbox height="auto" id="lbxEvaluacion" rows="8" width="auto" emptyMessage="Debe seleccionar un empleado">
+			<listhead>
+				<listheader label="Ficha" width="10%" />
+				<listheader label="Nombre" width="30%" />
+				<listheader label="Revisión" width="10%" />
+				<listheader label="Fecha" width="20%" />
+				<listheader label="Estado" width="15%" />
+				<listheader label="Usuario" width="30%" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="${each.ficha}"></listcell>
+					<listcell></listcell>
+					<listcell label="${each.idRevision}"></listcell>
+					<listcell label="${each.fechaCreacion}"></listcell>
+					<listcell label="${each.estadoEvaluacion}">
+					</listcell>
+					<listcell label="${each.fichaEvaluador}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		</hbox>
+	</window>
+</zk>
