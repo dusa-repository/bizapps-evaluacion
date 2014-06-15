@@ -14,4 +14,6 @@ public interface IEvaluacionIndicadorDAO extends JpaRepository<EvaluacionIndicad
 
 	List <EvaluacionIndicador> findByIdObjetivo (Integer idObjetivo);
 	
+	EvaluacionIndicador findByIdIndicador(Integer idIndicador);
+	
 }

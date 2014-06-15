@@ -27,4 +27,8 @@ public class SEvaluacionIndicador {
 	public List<EvaluacionIndicador> buscarIndicadores (Integer idObjetivo) {
 		return evaluacionIndicadorDAO.findByIdObjetivo(idObjetivo); 
 	}
+	
+	public EvaluacionIndicador buscarIndicadorId (Integer idIndicador) {
+		return evaluacionIndicadorDAO.findByIdIndicador(idIndicador);
+	}
 }

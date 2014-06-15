@@ -2,7 +2,8 @@
 	<separator></separator>
 	<separator></separator>
 	<window border="normal" height="auto" width="auto"
-		style="background-color:#8A0808;" 	apply="controlador.transacciones.CEvaluacionEmpleado" >
+		style="background-color:#8A0808;"
+		apply="controlador.transacciones.CEvaluacionEmpleado">
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -39,31 +40,26 @@
 					<label id="lblRevision" value="FY13-14 (1)"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblFicha"
-						style="font-size: 10px;">
+					<label id="lblFicha" style="font-size: 10px;">
 					</label>
 					<label id="lblNombreTrabajador"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblCargo"
-						style="font-size: 10px;">
+					<label id="lblCargo" style="font-size: 10px;">
 					</label>
 					<label id="lblUnidadOrganizativa"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblGerencia"
-						style="font-size: 10px;">
+					<label id="lblGerencia" style="font-size: 10px;">
 					</label>
 				</row>
 			</rows>
 		</grid>
 		<separator></separator>
 		<separator></separator>
-		<separator></separator>
-		<separator></separator>
 		<tabbox id="tbEvaluacionEmpleado">
 			<tabs id="tabs">
-				<tab id="tbEvaluacionObjetivos"  
+				<tab id="tbEvaluacionObjetivos"
 					label="Sección I - Evaluación Objetivos" />
 				<tab id="tbIndicadores"
 					label="Sección I - Evaluación Indicadores" />
@@ -108,16 +104,39 @@
 										label="${each.corresponsables}">
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
-									<listcell
-										label="${each.totalInd}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
-									<listcell
-										label="${each.resultado}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
+					<separator />
+					<separator />
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+
+								<button id="btnGuardarObjetivo"
+									tabindex="2" sclass="btn" label="Guardar"
+									image="/public/iconos/guardar.png">
+								</button>
+								<button id="btnCancelar"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/iconos/limpiar.png">
+								</button>
+
+								<separator />
+							</div>
+
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
@@ -186,60 +205,50 @@
 									<listcell
 										label="${each.valorMeta}">
 									</listcell>
-									<listcell
-										label="${each.valorResultado}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
-									<listcell
-										label="${each.resultadoFyAnterior}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
-									<listcell
-										label="${each.resultadoPeso}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
-									<listcell
-										label="${each.resultadoPorc}">
+									<listcell>
+										<textbox></textbox>
 									</listcell>
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
+					<separator />
+					<separator />
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+
+								<button id="btnGuardarIndicador"
+									tabindex="2" sclass="btn" label="Guardar"
+									image="/public/iconos/guardar.png">
+								</button>
+								<button id="btnCancelarIndicador"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/iconos/limpiar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
 					<separator />
 					<listbox height="auto" id="lbxCompetenciaRectora"
-				mold="paging" pageSize="10" width="auto">
-				<listhead>
-					<listheader label="Competencia" />
-					<listheader label="Nivel de Dominio Requerido" />
-					<listheader label="Nivel de Dominio Evidenciado" />
-				</listhead>
-				<template name="model">
-					<listitem>
-						<listcell
-							label="${each.competencia.descripcion}">
-						</listcell>
-						<listcell
-							label="${each.dominio.descripcionDominio}">
-						</listcell>
-						<listcell>
-							<combobox  readonly="true" placeholder="Seleccione..."
-								mold="rounded" rows="1" width="100%" 
-								style="background-color:white;border:none" model="${$composer.dominio}">
-								<template name="model" >
-									<comboitem description="${each.idDominio}" label="${each.descripcionDominio}" />
-								</template>
-							</combobox>
-						</listcell>
-					</listitem>
-				</template>
-			</listbox>
-				</tabpanel>
-				<tabpanel>
-					<separator />
-					<separator />
-					<listbox height="auto" id="lbxCompetenciaEspecifica"
-						mold="paging" pageSize="10" 
-						width="auto">
+						mold="paging" pageSize="10" width="auto">
 						<listhead>
 							<listheader label="Competencia" />
 							<listheader
@@ -252,9 +261,57 @@
 								<listcell
 									label="${each.competencia.descripcion}">
 								</listcell>
-								<listcell label="${each.idDominio}">
+								<listcell
+									label="${each.dominio.descripcionDominio}">
 								</listcell>
-								<listcell></listcell>
+								<listcell>
+									<combobox readonly="true"
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										model="${$composer.dominio}">
+										<template name="model">
+											<comboitem
+												description="${each.idDominio}"
+												label="${each.descripcionDominio}" />
+										</template>
+									</combobox>
+								</listcell>
+							</listitem>
+						</template>
+					</listbox>
+				</tabpanel>
+				<tabpanel>
+					<separator />
+					<separator />
+					<listbox height="auto" id="lbxCompetenciaEspecifica"
+						mold="paging" pageSize="10" width="auto">
+						<listhead>
+							<listheader label="Competencia" />
+							<listheader
+								label="Nivel de Dominio Requerido" />
+							<listheader
+								label="Nivel de Dominio Evidenciado" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell
+									label="${each.competencia.descripcion}">
+								</listcell>
+								<listcell
+									label="${each.dominio.descripcionDominio}">
+								</listcell>
+								<listcell>
+									<combobox readonly="true"
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										model="${$composer.dominio}">
+										<template name="model">
+											<comboitem
+												description="${each.idDominio}"
+												label="${each.descripcionDominio}" />
+										</template>
+									</combobox>
+								</listcell>
 							</listitem>
 						</template>
 					</listbox>
@@ -270,7 +327,7 @@
 									<label
 										value="Fortalezas Evidenciadas en el Desempeño por Competencias">
 									</label>
-									<textbox width="100%" rows="5"
+									<textbox width="100%" rows="4"
 										id="txtFortalezas">
 									</textbox>
 								</div>
@@ -279,7 +336,7 @@
 									<label
 										value="Oportunidades de Mejoras Evidenciadas en el Desempeño por Competencias">
 									</label>
-									<textbox width="100%" rows="5"
+									<textbox width="100%" rows="4"
 										id="txtOportunidades">
 									</textbox>
 								</div>
@@ -290,7 +347,7 @@
 									<label
 										value="Resumen de Actuación">
 									</label>
-									<textbox width="100%" rows="5"
+									<textbox width="100%" rows="4"
 										id="txtResumen">
 									</textbox>
 								</div>
@@ -299,25 +356,35 @@
 									<label
 										value="Compromisos Acordados entre el Empleado y el Supervisor">
 									</label>
-									<textbox width="100%" rows="5"
+									<textbox width="100%" rows="4"
 										id="txtCompromisos">
 									</textbox>
 								</div>
 							</row>
 						</rows>
 					</grid>
-					<div align="right" height="100%">
-						<button id="btnGuardar" width="auto"
-							height="auto" mold="trendy" label="Guardar"
-							image="/public/imagenes/botones/guardar.png"
-							style="background-color:#F8E0E0;">
-						</button>
-						<button id="btnImprimir" width="auto"
-							height="auto" mold="trendy" label="Imprimir"
-							image="/public/imagenes/botones/imprimir.png">
+					<separator></separator>
+					<separator></separator>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
 
-						</button>
-					</div>
+							<separator />
+							<div sclass="btn-group" align="center">
+
+								<button id="btnGuardarEvaluacion"
+									tabindex="2" sclass="btn" label="Guardar"
+									image="/public/iconos/guardar.png">
+								</button>
+								<button id="btnCancelarEvaluacion"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/iconos/limpiar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>

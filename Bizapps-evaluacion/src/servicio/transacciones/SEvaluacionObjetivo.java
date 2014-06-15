@@ -30,4 +30,8 @@ public class SEvaluacionObjetivo {
 		return evaluacionObjetivoDAO.findByIdEvaluacion(idEvaluacion); 
 	}
 
+	public EvaluacionObjetivo buscarObjetivosId (Integer idObjetivo) {
+		return evaluacionObjetivoDAO.findByIdObjetivo(idObjetivo);
+	}
+
 }

@@ -1,49 +1,55 @@
 <zk>
-<window id= "winListaPersonal" border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply = "controlador.transacciones.CListaPersonal">
-			<separator />
-		<div  style="background-color:#F8E0E0;" >
-		<label value= "Acción a Realizar" style= "font-weight:bold;"/>
+	<window id="winListaPersonal" border="normal" height="auto"
+		width="auto" style="background-color:#8A0808;"
+		apply="controlador.transacciones.CListaPersonal">
+		<separator />
+		<div style="background-color:#F8E0E0;">
+			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />
-		<div align="left" height="100%">
-			<button id="btnAgregar" width="auto" height="auto"
-				mold="trendy" label="Agregar" image="/public/imagenes/botones/agregar.png" style="background-color:#F8E0E0;" 
-				 onClick='contenido.src="../vistas/transacciones/VItems.zul"' >
-			</button>
-			<button id="btnBuscar" width="auto" height="auto"
-				mold="trendy" label="Buscar" image="/public/imagenes/botones/buscar.png">
-			</button>
-		</div>
+		<panel border="normal" width="95%"
+			style="margin-left:2%;margin-right:3%">
+			<panelchildren>
+
+				<separator />
+				<div sclass="btn-group" align="center">
+
+					<button id="btnAgregar" tabindex="3" sclass="btn"
+						label="Agregar" image="/public/iconos/agregar.png"
+						onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
+					</button>
+					<button id="btnBuscar" label="Buscar" sclass="btn"
+						tabindex="3" image="/public/iconos/catalogo.png">
+					</button>
+
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
 		<separator></separator>
-		
-					<listbox height="auto" id="lbxEvaluacion"
-				mold="paging" pageSize="10" width="auto" >
-				<listhead>
-					<listheader label="Ficha" width="10%"/>
-					<listheader label="Nombre" width="30%"/>
-					<listheader label="Revisión" width="10%" />
-					<listheader label="Fecha" width="20%"/>
-					<listheader label="Estado" width="15%" />
-					<listheader label="Usuario" width="30%" />
-				</listhead>
-				<template name="model">
-					<listitem >
-						<listcell
-							label="${each.ficha}">
-						</listcell>
-						<listcell>
-						</listcell>
-						<listcell label="${each.idRevision}">
-							</listcell>
-							<listcell label="${each.fechaCreacion}">
-							</listcell>
-							<listcell label="${each.estadoEvaluacion}">
-							</listcell>
-							<listcell label="${each.fichaEvaluador}">
-							</listcell>
-					</listitem>
-				</template>
-			</listbox>
+
+		<listbox height="auto" id="lbxEvaluacion" mold="paging"
+			pageSize="10" width="auto">
+			<listhead>
+				<listheader label="Ficha" width="10%" />
+				<listheader label="Nombre" width="30%" />
+				<listheader label="Revisión" width="10%" />
+				<listheader label="Fecha" width="20%" />
+				<listheader label="Estado" width="15%" />
+				<listheader label="Usuario" width="30%" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="${each.ficha}"></listcell>
+					<listcell> </listcell>
+					<listcell label="${each.idRevision}"></listcell>
+					<listcell label="${each.fechaCreacion}"></listcell>
+					<listcell label="${each.estadoEvaluacion}">
+					</listcell>
+					<listcell label="${each.fichaEvaluador}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
 	</window>
-<include id = "contenido"> </include>
+	<include id="contenido"></include>
 </zk>

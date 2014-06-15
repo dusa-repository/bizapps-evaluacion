@@ -68,17 +68,8 @@ public class CListaPersonal extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		
-		
-	
-
 	}
-//	
-//	public void limpiar (){
-//		txtObjetivo.setValue("");
-//		cmbPerspectiva.setValue(null);
-//		txtCorresponsables.setValue("");
-//	}
+
 	@Listen("onClick = #btnAgregar")
 	public void AgregarEvaluacion() {	
 		winListaPersonal.onClose();
