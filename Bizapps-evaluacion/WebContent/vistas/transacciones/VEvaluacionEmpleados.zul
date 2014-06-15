@@ -1,8 +1,6 @@
 <zk>
-	<separator></separator>
-	<separator></separator>
 	<window border="normal" height="auto" width="auto"
-		style="background-color:#8A0808;"
+		style="background-color:#8A0808;" id= "winEvaluacionEmpleado"
 		apply="controlador.transacciones.CEvaluacionEmpleado">
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"

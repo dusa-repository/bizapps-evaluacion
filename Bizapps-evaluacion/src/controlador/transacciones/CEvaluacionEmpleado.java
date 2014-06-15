@@ -123,24 +123,29 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		
-		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(10);
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("itemsCatalogo");
+		if (map != null) {
+			if (map.get("id") != null) {
+				Integer idEvaluacion = (Integer) map.get("id");
+				System.out.println(idEvaluacion);
+			
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEvaluacion);
 		txtCompromisos.setValue(evaluacion.getCompromisos());
 		txtFortalezas.setValue(evaluacion.getFortalezas());
 		txtOportunidades.setValue(evaluacion.getOportunidades());
 		txtResumen.setValue(evaluacion.getResumen());
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
-		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
+		String ficha = evaluacion.getFicha();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		
 		List<EvaluacionObjetivo> evaluacionObjetivo = new ArrayList<EvaluacionObjetivo> ();
-		evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(10);
+		evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEvaluacion);
 		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivo));
 		
-		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(10);
+		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEvaluacion);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivoIndicadores));
 		
 		String cargo = empleado.getCargo().getDescripcion();
@@ -148,6 +153,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				.getDescripcion();
 		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
 				.getDescripcion();
+		String nombreTrabajador = empleado.getNombre();
 
 		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
 		List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
@@ -192,8 +198,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(fechaHora.toString());
 	}
-	
-	
+		}
+	}
 	public ListModelList<Dominio> getDominio(){
 		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
 		return dominio;

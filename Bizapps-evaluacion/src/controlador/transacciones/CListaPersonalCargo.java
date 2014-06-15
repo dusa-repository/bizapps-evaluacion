@@ -35,6 +35,8 @@ public class CListaPersonalCargo extends CGenerico {
 	@Wire
 	private Window winListaPersonal;
 	@Wire
+	private Window winEvaluacionEmpleado;
+	@Wire
 	private Listbox lbxEvaluacion;
 	@Wire
 	private Listbox lbxPersonalCargo;
@@ -85,4 +87,25 @@ public class CListaPersonalCargo extends CGenerico {
 		return empleado;
 	}
 	
+	@Listen("onDoubleClick = #lbxEvaluacion")
+	public void mostrarEvaluacion() {
+			
+			
+			if (lbxEvaluacion.getItemCount() != 0) {
+				
+				Listitem listItem = lbxEvaluacion.getSelectedItem();	
+				if (listItem != null) {
+						
+					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", evaluacion.getIdEvaluacion());
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
+					winEvaluacionEmpleado.doModal();
+					winListaPersonal.onClose();
+				}
+				
+			}
+	
+}
 }
