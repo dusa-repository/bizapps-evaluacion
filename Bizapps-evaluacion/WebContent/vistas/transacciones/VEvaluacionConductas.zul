@@ -1,5 +1,4 @@
-<window id="wdwConductasRectoras" title="Conductas Rectoras"
-	 closable="true" apply="controlador.transacciones.CConductasRectoras" width="950px" border="normal" height="auto">
+<window id="wdwConductasRectoras" closable="true" apply="controlador.transacciones.CEvaluacionConductas" width="950px" border="normal" height="auto">
 
 
 		<groupbox>

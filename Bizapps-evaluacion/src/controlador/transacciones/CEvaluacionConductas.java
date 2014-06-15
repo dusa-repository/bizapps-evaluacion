@@ -30,7 +30,7 @@ import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
 import componentes.Mensaje;
 
-public class CConductasRectoras extends CGenerico {
+public class CEvaluacionConductas extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
 	Mensaje msj = new Mensaje();
@@ -72,8 +72,7 @@ public class CConductasRectoras extends CGenerico {
 				idCompetencia = (Integer) map.get("id");
 				Competencia competencia = servicioCompetencia
 						.buscarCompetencia(idCompetencia);
-
-				String titulo = wdwConductasRectoras.getTitle();
+				String titulo = (String) (map.get("titulo"));
 				wdwConductasRectoras.setTitle(titulo + " - "
 						+ competencia.getDescripcion());
 

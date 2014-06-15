@@ -19,6 +19,7 @@ import modelos.Perspectiva;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -26,11 +27,13 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -38,6 +41,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
+import org.zkoss.zul.Window;
 
 import sun.util.calendar.BaseCalendar.Date;
 
@@ -91,6 +95,8 @@ public class CCompetenciasEspecificas extends CGenerico {
 	private Label lblFechaCreacion;
 	@Wire
 	private Label lblRevision;
+	@Wire
+	private Window wdwConductasEspecificas;
 	String tipo = "REQUERIDO";
 	ListModelList<Dominio> dominio;
 	
@@ -143,6 +149,47 @@ public class CCompetenciasEspecificas extends CGenerico {
 		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
 		return dominio;
 	}
+	
+	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
+	public void mostrarDatosCatalogo() {
+			
+			
+			if (lbxCompetenciaEspecifica.getItemCount() != 0) {
+				
+				Listitem listItem = lbxCompetenciaEspecifica.getSelectedItem();	
+				if (listItem != null) {
+					if ( ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getValue() == ""){
+						Messagebox.show("Debe Seleccionar un nivel de dominio",
+								"Error", Messagebox.OK,
+								Messagebox.ERROR);
+					}else{
+						String nivel = ((Combobox) ((listItem.getChildren().get(2)))
+								.getFirstChild()).getSelectedItem().getDescription();
+								
+					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					String titulo = "Competencias Especificas";
+					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("idnivel", nivel);
+					map.put("titulo", titulo);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					wdwConductasEspecificas = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionConductas.zul", null, map);
+					wdwConductasEspecificas.doModal();				
+					}
+					}							
+				
+			}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 }
