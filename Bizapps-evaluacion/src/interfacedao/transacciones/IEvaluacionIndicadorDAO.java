@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IEvaluacionIndicadorDAO extends JpaRepository<EvaluacionIndicador, Integer> {
 
-
+	List <EvaluacionIndicador> findByIdObjetivo (Integer idObjetivo);
 	
 }

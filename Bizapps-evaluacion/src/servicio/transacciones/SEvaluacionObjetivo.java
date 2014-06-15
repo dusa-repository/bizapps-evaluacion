@@ -25,5 +25,9 @@ public class SEvaluacionObjetivo {
 	public List<EvaluacionObjetivo> buscarObjetivos (String ficha, Integer evaluacion) {
 		return evaluacionObjetivoDAO.buscarObjetivos(ficha, evaluacion); 
 	}
+	
+	public List<EvaluacionObjetivo> buscarObjetivosEvaluar (Integer idEvaluacion) {
+		return evaluacionObjetivoDAO.findByIdEvaluacion(idEvaluacion); 
+	}
 
 }

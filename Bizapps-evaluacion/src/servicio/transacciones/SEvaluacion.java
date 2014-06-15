@@ -35,4 +35,8 @@ public class SEvaluacion {
 	public Evaluacion buscarIdEvaluacion(Integer id, String ficha) {
 		return evaluacionDAO.findByIdEvaluacionSecundarioAndFicha(id, ficha);
 	}
+	
+	public Evaluacion buscarEvaluacion (Integer idEvaluacion) {
+		return evaluacionDAO.findByIdEvaluacion(idEvaluacion);
+	}
 }
