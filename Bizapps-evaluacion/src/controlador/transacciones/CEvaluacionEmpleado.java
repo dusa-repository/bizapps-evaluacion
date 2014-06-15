@@ -9,12 +9,17 @@ import java.util.LinkedList;
 import java.util.List;
 import modelo.seguridad.Usuario;
 import modelos.Competencia;
+import modelos.Dominio;
 import modelos.Empleado;
 import modelos.Evaluacion;
 import modelos.EvaluacionObjetivo;
+import modelos.NivelCompetenciaCargo;
 import modelos.Perspectiva;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
@@ -22,6 +27,8 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
@@ -33,10 +40,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static final long serialVersionUID = -5393608637902961029L;
 	Mensaje msj = new Mensaje();
 
-	
-	@Wire
-	private Textbox txtTotal;
-	@Wire
+		@Wire
 	private Textbox txtFortalezas;
 	@Wire
 	private Textbox txtOportunidades;
@@ -44,8 +48,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Textbox txtResumen;
 	@Wire
 	private Textbox txtCompromisos;
-	@Wire
-	private Textbox txtResultados;
 	@Wire
 	private Button btnGuardar;
 	@Wire
@@ -57,15 +59,41 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Listbox lbxObjetivosGuardados;
 	@Wire
-	private Listbox lbxCompetenciaRectora;
-	@Wire
 	private Listbox lbxCompetenciaEspecifica;
+	@Wire
+	private Combobox cmbObjetivos;
+	@Wire
+	private Window window;
+	@Wire
+	private Groupbox gpxAgregar;
+	@Wire
+	private Groupbox gpxAgregados;
 	@Wire
 	private Label lblEvaluacion;
 	@Wire
 	private Label lblFechaCreacion;
 	@Wire
 	private Label lblRevision;
+	@Wire
+	private Textbox txtObjetivo;
+	@Wire
+	private Textbox txtCorresponsables;
+	@Wire
+	private Textbox txtPeso;
+	@Wire
+	private Textbox txtTotal;
+	@Wire
+	private Textbox txtResultados;
+	@Wire
+	private Button btnAgregar;
+	@Wire
+	private Button btnEliminar;
+	@Wire
+	private Button btnCalculo;
+	@Wire
+	private Listbox lbxCompetenciaRectora;
+	@Wire
+	private Listbox lbxObjetivos;
 	@Wire
 	private Label lblFicha;
 	@Wire
@@ -77,137 +105,92 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Label lblGerencia;
 	@Wire
-	private Combobox cmbObjetivos;
+	private Combobox cmbNivelRequerido;	
 	@Wire
-	private Window window;
-	@Wire
-	private Groupbox gpxAgregar;
-	@Wire
-	private Groupbox gpxAgregados;
-	
-	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
-	ListModelList<Perspectiva> perspectiva;
+	private Window wdwConductasRectoras;
+	String tipo = "REQUERIDO";
+	ListModelList<Dominio> dominio;
+
 	@Override
 	public void inicializar() throws IOException {
-		 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
-		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+		
+		
+
 		String cargo = empleado.getCargo().getDescripcion();
 		String unidadOrganizativa = empleado.getUnidadOrganizativa()
 				.getDescripcion();
 		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
 				.getDescripcion();
+
+		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
+		List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
+		NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo ();
+		
+		nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
+		for (int j = 0; j < nivel.size(); j++) {
+			if (nivel.get(j).getCompetencia().getNivel().equals("RECTORAS")) {
+				nivelRectoras = nivel.get(j);
+				nivel2.add(nivelRectoras);
+			}
+				else {
+				nivel.remove(j);
+			}
+				lbxCompetenciaRectora
+						.setModel(new ListModelList<NivelCompetenciaCargo>(
+								nivel2));
+		}
+		
+		
 		lblFicha.setValue(ficha);
 		lblNombreTrabajador.setValue(nombreTrabajador);
 		lblCargo.setValue(cargo);
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
-		gpxAgregar.setOpen(false);
-		gpxAgregados.setOpen(false);
+		lblEvaluacion.setValue(numeroEvaluacion.toString());
+		lblFechaCreacion.setValue(fechaHora.toString());
 	}
-
-
-//	@Listen("onClick = #btnAgregar")
-//	public void AgregarObjetivo() {	
-//		gpxAgregar.setOpen(true);
-//	}
-//	
-//	@Listen("onClick = #btnOk")
-//	public void AgregarObjetivo2() {	
-//		 gpxAgregados.setOpen(true);
-//		 String perspectivaCombo= cmbPerspectiva.getSelectedItem().getContext();
-//		 System.out.println(perspectivaCombo);
-//		 Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
-//		 String objetivo =txtObjetivo.getValue();
-//		 String corresponsables = txtCorresponsables.getValue();
-//		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
-//		 Integer linea = objetivosG.size() + 1;
-//		 objetivoLista.setIdObjetivo(1);
-//		 objetivoLista.setDescripcionObjetivo(objetivo);
-//		 objetivoLista.setIdEvaluacion(1);
-//		 objetivoLista.setPerspectiva(perspectiva);	 
-//		 objetivoLista.setLinea(linea);
-//		 objetivoLista.setPeso(0);
-//		 objetivoLista.setResultado(0);
-//		 objetivoLista.setTotalInd(0);
-//		 objetivoLista.setCorresponsables(corresponsables);
-//		 objetivosG.add(objetivoLista);
-//		 lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
-//		 gpxAgregar.setOpen(false);
-//		 limpiar ();
-//	
-//	}
-//	
-//	public void limpiar() {
-//		 txtObjetivo.setValue("");
-//		 cmbPerspectiva.setValue(null);
-//		 txtCorresponsables.setValue("");
-//	}
-//	
-//	@Listen("onClick = #btnGuardar")
-//	public void Guardar() {	
-//		Authentication auth = SecurityContextHolder.getContext()
-//				.getAuthentication();
-//		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-//		String ficha = u.getCedula();
-//		Integer idUsuario = u.getIdUsuario();
-//		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
-//		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
-//		System.out.println(idEvaluacion);
-//		Evaluacion evaluacionEmpleado = new Evaluacion();
-//		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
-//		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
-//		evaluacionEmpleado.setFechaCreacion(fechaHora);
-//		evaluacionEmpleado.setFicha(ficha);
-//		evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
-//		evaluacionEmpleado.setIdUsuario(idUsuario);
-//		evaluacionEmpleado.setPeso(0);
-//		evaluacionEmpleado.setResultado(0);
-//		evaluacionEmpleado.setResultadoObjetivos(0);
-//		evaluacionEmpleado.setResultadoGeneral(0);
-//		evaluacionEmpleado.setResultadoFinal(0);
-//
-//		
-//		if (objetivosG.size() == 0) {
-//			Messagebox.show("Debe agregar sus objetivos",
-//					"Advertencia", Messagebox.OK,
-//					Messagebox.EXCLAMATION);
-//		}
-//		else {
-//			EvaluacionObjetivo objetivo = new EvaluacionObjetivo ();
-////			Integer revision = 1;
-//			objetivo.setIdEvaluacion(idEvaluacion);
-//			for (int j = 0; j < objetivosG.size(); j++) {
-//				Integer linea = objetivosG.get(j).getLinea();
-//				String corresponsables = objetivosG.get(j).getCorresponsables();
-//				String descripcionOb = objetivosG.get(j).getDescripcionObjetivo();
-//				Perspectiva perspectiva = objetivosG.get(j).getPerspectiva();
-//				Double peso = objetivosG.get(j).getPeso();
-//				Double resultado = objetivosG.get(j).getResultado();
-//				Double total = objetivosG.get(j).getTotalInd();
-//				objetivo.setCorresponsables(corresponsables);
-//				objetivo.setDescripcionObjetivo(descripcionOb);
-//				objetivo.setLinea(linea);
-//				objetivo.setPerspectiva(perspectiva);
-//				objetivo.setPeso(peso);
-//				objetivo.setResultado(resultado);
-//				objetivo.setTotalInd(total);	
-//				servicioEvaluacionObjetivo.guardar(objetivo);
-//			}
-//			servicioEvaluacion.guardar(evaluacionEmpleado);
-//			Messagebox.show("Objetivos Guardados Exitosamente",
-//					"Información", Messagebox.OK,
-//					Messagebox.INFORMATION);
-//			
-//			limpiar ();
-//			objetivosG.clear();
-//		}
-//	}
+	
+	
+	public ListModelList<Dominio> getDominio(){
+		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
+		return dominio;
+	}
+	
+	@Listen("onDoubleClick = #lbxCompetenciaRectora")
+	public void mostrarDatosCatalogo() {
+			
+			
+			if (lbxCompetenciaRectora.getItemCount() != 0) {
+				
+				Listitem listItem = lbxCompetenciaRectora.getSelectedItem();	
+				if (listItem != null) {
+					if ( ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getValue() == ""){
+						Messagebox.show("Debe Seleccionar un nivel de dominio",
+								"Error", Messagebox.OK,
+								Messagebox.ERROR);
+					}else{
+						String nivel = ((Combobox) ((listItem.getChildren().get(2)))
+								.getFirstChild()).getSelectedItem().getDescription();
+								
+					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("idnivel", nivel);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/vConductasRectoras.zul", null, map);
+					wdwConductasRectoras.doModal();				
+					}
+					}							
+				
+			}
+	
+}
 }

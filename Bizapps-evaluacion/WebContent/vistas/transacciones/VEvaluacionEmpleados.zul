@@ -2,7 +2,7 @@
 	<separator></separator>
 	<separator></separator>
 	<window border="normal" height="auto" width="auto"
-		style="background-color:#8A0808;">
+		style="background-color:#8A0808;" 	apply="controlador.transacciones.CEvaluacionEmpleado" >
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -207,25 +207,32 @@
 					<separator />
 					<separator />
 					<listbox height="auto" id="lbxCompetenciaRectora"
-						mold="paging" pageSize="10" width="auto">
-						<listhead>
-							<listheader label="Competencia" />
-							<listheader
-								label="Nivel de Dominio Requerido" />
-							<listheader
-								label="Nivel de Dominio Evidenciado" />
-						</listhead>
-						<template name="model">
-							<listitem>
-								<listcell
-									label="${each.competencia.descripcion}">
-								</listcell>
-								<listcell label="${each.idDominio}">
-								</listcell>
-								<listcell></listcell>
-							</listitem>
-						</template>
-					</listbox>
+				mold="paging" pageSize="10" width="auto">
+				<listhead>
+					<listheader label="Competencia" />
+					<listheader label="Nivel de Dominio Requerido" />
+					<listheader label="Nivel de Dominio Evidenciado" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell
+							label="${each.competencia.descripcion}">
+						</listcell>
+						<listcell
+							label="${each.dominio.descripcionDominio}">
+						</listcell>
+						<listcell>
+							<combobox  readonly="true" placeholder="Seleccione..."
+								mold="rounded" rows="1" width="100%" 
+								style="background-color:white;border:none" model="${$composer.dominio}">
+								<template name="model" >
+									<comboitem description="${each.idDominio}" label="${each.descripcionDominio}" />
+								</template>
+							</combobox>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
 				</tabpanel>
 				<tabpanel>
 					<separator />
