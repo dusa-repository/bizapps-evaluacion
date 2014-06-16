@@ -1,0 +1,65 @@
+<zk>
+	<window class="general" apply="controlador.reportes.CResumenMacro" id="divReporte0001">
+		<groupbox width="100%" mold="3d"
+			title="Parametros">
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="16%" />
+					<column label="" width="34%" />
+					<column label="" width="15%" />
+					<column label="" width="35%" />
+				</columns>
+				<rows>
+					<row>
+						<label class="etiqueta" value="Empresa:" />
+						<combobox id="cmbEmpresa" readonly="true"
+							value="Seleccione una Empresa" width="100%">
+								<comboitem label="Destilerias Unidas" />
+						</combobox>
+						
+						<label class="etiqueta" value="Gerencia:" />
+						<combobox id="cmbGerencia" readonly="true" value="Seleccione una Gerencia"
+							width="100%">
+							<comboitem label="TODAS" />
+							<comboitem label="GERENCIA DE RECURSOS HUMANOS" />
+							<comboitem label="GERENCIA DE PROCURA Y PLANIFICACION DE LA PRODUCCION" />
+							<comboitem label="GERENCIA DE ELABORACION" />
+							<comboitem label="GERENCIA DE ENVASADO" />
+						</combobox>
+						
+					</row>
+					<row>
+					
+					<label class="etiqueta" value="Periodo Actual:" />
+						<combobox id="cmbPeriodoActual" readonly="true"
+							value="Seleccione un Periodo" width="100%">
+							<comboitem label="FY 13-14" />
+						</combobox>
+						
+						<label class="etiqueta" value="Periodo Comparar:" />
+						<combobox id="cmbPeriodoComparar" readonly="true"
+							value="Seleccione un Periodo" width="100%">
+							<comboitem label="FY 13-14" />
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+			<div align="right" style="float: right;">
+				<button id="btnGenerar" tooltiptext="Generar"
+					image="/public/iconos/botoneraReporte/Generar.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+				<button id="btnLimpiar" tooltiptext="Limpiar"
+					image="/public/iconos/botoneraReporte/Limpiar.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+				<button id="btnSalir" tooltiptext="Salir"
+					image="/public/iconos/botoneraReporte/Salir.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+			</div>
+		</groupbox>
+		<groupbox height="100%">
+		    <charts id="chart" type="column"
+		        title="Resultados de Desempeño / Resumen Macro"
+		        subtitle=""/>
+		</groupbox>
+	</window>
+</zk>

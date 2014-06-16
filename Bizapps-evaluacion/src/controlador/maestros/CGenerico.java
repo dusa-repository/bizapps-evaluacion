@@ -44,6 +44,7 @@ import servicio.maestros.STipoFormacion;
 import servicio.maestros.SUnidadMedida;
 import servicio.maestros.SUnidadOrganizativa;
 import servicio.maestros.SUrgencia;
+import servicio.reportes.SReporte;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
@@ -114,6 +115,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacionConducta servicioEvaluacionConducta;
 	@WireVariable("SEvaluacionCompetencia")
 	protected SEvaluacionCompetencia servicioEvaluacionCompetencia;
+	@WireVariable("SReporte")
+	protected SReporte servicioReporte;
 
 	
 	public static  List<Tab> tabs = new ArrayList<Tab>();
