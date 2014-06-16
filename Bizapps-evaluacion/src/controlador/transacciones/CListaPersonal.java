@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -64,7 +65,8 @@ public class CListaPersonal extends CGenerico {
 	private Window winListaPersonal;
 	@Wire
 	private Listbox lbxEvaluacion;
-
+	@Wire
+	private Window winEvaluacionEmpleado;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -88,5 +90,25 @@ public class CListaPersonal extends CGenerico {
 				evaluacion));
 	}
 	
+	@Listen("onDoubleClick = #lbxEvaluacion")
+	public void mostrarEvaluacion() {
+			
+			
+			if (lbxEvaluacion.getItemCount() != 0) {
+				
+				Listitem listItem = lbxEvaluacion.getSelectedItem();	
+				if (listItem != null) {
+						
+					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", evaluacion.getIdEvaluacion());
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
+					winEvaluacionEmpleado.doModal();
+					winListaPersonal.onClose();
+				}
+				
+			}
 	
+}
 }

@@ -40,10 +40,7 @@ public class CArbol extends CGenerico {
 	private Include contenido;
 	@Wire
 	private Label etiqueta;
-//	@Wire
-//	private Image imagenes;
 	TreeModel _model;
-//	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 	List<String> listmenu1 = new ArrayList<String>();
 	@Wire
 	private Tab tab;
@@ -70,18 +67,6 @@ public class CArbol extends CGenerico {
 		String cedula = u.getCedula();
 		String usuario = "(" + cedula + ")" + "   " + nombre + " " + apellido;   
 		lblUsuario.setValue(usuario);
-//
-//		if (u.getImagen() == null) {
-//			imagenes.setContent(new AImage(url));
-//		} else {
-//			try {
-//				BufferedImage imag;
-//				imag = ImageIO.read(new ByteArrayInputStream(u.getImagen()));
-//				imagenes.setContent(imag);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		arbolMenu.setModel(getModel());
 
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions

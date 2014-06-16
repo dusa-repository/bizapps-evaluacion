@@ -37,7 +37,7 @@
 			</north>
 				<west border="none" style="overflow-y:scroll;background-image: url('public/imagenes/generales/gerente.png'); background-repeat:no-repeat;height=100%; width=100%">
 		</west>
-		<east width="60%" border="none">
+		<center  border="none">
 		 			<vlayout> 
 				<div height="100px" align="center">
 					<separator />
@@ -88,7 +88,7 @@
 					</groupbox>
 				</div>
 			</vlayout>
-		</east>
+		</center>
 		<south vflex="2" border="0" height="3em"
 			collapsible="false">
 			<div align="center">
