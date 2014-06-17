@@ -1,18 +1,40 @@
 <zk>
-	<div id="divVF00021" apply="controlador.transacciones.CEmpleado">
-		<groupbox mold="3d" width="20%" title="Evaluación de Desempeño">
+	<div  apply="controlador.transacciones.CEmpleado">
+		<hbox>
+		<groupbox mold="3d" width="85%" title="Evaluación de Desempeño">
 			<label value= "ARBOL DE PERSONAL " style="font-style: Arial; font-weight: bold; color: black;"></label>
 			<separator />
 			<tree id="arbolPersonal"   zclass="z-dottree" >  
 					<template name="model">
-						<treeitem context="menupopup">
+						<treeitem  context= "${each.ficha}">
 							<treerow>
-								<treecell label="${each.label}" style="font-style: Arial; font-weight: bold; color: black;" />
+								<treecell label="${each.label}"  context="${each.ficha}" style="font-style: Arial; color: black;" />
 							</treerow>
 						</treeitem>
 					</template>
 				</tree>
-			<separator />
 		</groupbox>
+		<listbox height="auto" id="lbxEvaluacion" rows="8" width="700px" emptyMessage="Debe seleccionar un empleado">
+			<listhead>
+				<listheader label="Ficha" width="10%" />
+				<listheader label="Nombre" width="30%" />
+				<listheader label="Revisión" width="10%" />
+				<listheader label="Fecha" width="20%" />
+				<listheader label="Estado" width="15%" />
+				<listheader label="Usuario" width="30%" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="${each.ficha}"></listcell>
+					<listcell></listcell>
+					<listcell label="${each.idRevision}"></listcell>
+					<listcell label="${each.fechaCreacion}"></listcell>
+					<listcell label="${each.estadoEvaluacion}">
+					</listcell>
+					<listcell label="${each.fichaEvaluador}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		</hbox>
 	</div>
 </zk>

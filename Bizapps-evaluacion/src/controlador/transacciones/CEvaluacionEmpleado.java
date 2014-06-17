@@ -94,7 +94,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Button btnAgregar;
 	@Wire
-	private Button btnEliminar;
+	private Button btnCancelar;
 	@Wire
 	private Button btnCalculo;
 	@Wire
@@ -115,6 +115,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Combobox cmbNivelRequerido;	
 	@Wire
 	private Window wdwConductasRectoras;
+	@Wire
+	private Window winEvaluacionEmpleado;
+	@Wire
+	private Groupbox gpxListaPersonal;
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
 	
@@ -128,6 +132,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		if (map != null) {
 			if (map.get("id") != null) {
 				Integer idEvaluacion = (Integer) map.get("id");
+				String fichaMap  =  (String) map.get("titulo");
+				
 				System.out.println(idEvaluacion);
 			
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEvaluacion);
@@ -154,7 +160,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
 				.getDescripcion();
 		String nombreTrabajador = empleado.getNombre();
-
+		
 		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
 		List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
 		List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
@@ -386,6 +392,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 	}
 	
-	
+	@Listen("onClick = #btnCancelar")
+	public void salir() {
 
+		winEvaluacionEmpleado.onClose();
+	}
 }

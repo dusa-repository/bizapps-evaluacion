@@ -153,11 +153,11 @@ public class CGrupo extends CGenerico {
 	}
 
 	private Nodos getFooRoot() {
-		Nodos root = new Nodos(null, 0, "");
-		Nodos oneLevelNode = new Nodos(null, 0, "");
-		Nodos twoLevelNode = new Nodos(null, 0, "");
-		Nodos threeLevelNode = new Nodos(null, 0, "");
-		Nodos fourLevelNode = new Nodos(null, 0, "");
+		Nodos root = new Nodos(null, 0, "", "");
+		Nodos oneLevelNode = new Nodos(null, 0, "", "");
+		Nodos twoLevelNode = new Nodos(null, 0, "", "");
+		Nodos threeLevelNode = new Nodos(null, 0, "", "");
+		Nodos fourLevelNode = new Nodos(null, 0, "", "");
 		List<Arbol> listaArbol = servicioArbol.listarArbol();
 		ArrayList<Arbol> arbole = new ArrayList<Arbol>();
 		List<Arbol> arboles = new ArrayList<Arbol>();
@@ -179,21 +179,21 @@ public class CGrupo extends CGenerico {
 		long temp1, temp2, temp3 = 0;
 		for (int i = 0; i < arboles.size(); i++) {
 			if (arboles.get(i).getPadre() == 0) {
-				oneLevelNode = new Nodos(root, i, arboles.get(i).getNombre());
+				oneLevelNode = new Nodos(root, i, arboles.get(i).getNombre(), "");
 				root.appendChild(oneLevelNode);
 				temp1 = arboles.get(i).getIdArbol();
 				arboles.remove(i);
 				for (int j = i; j < arboles.size(); j++) {
 					if (temp1 == arboles.get(j).getPadre()) {
 						twoLevelNode = new Nodos(oneLevelNode, i, arboles
-								.get(j).getNombre());
+								.get(j).getNombre(), "");
 						oneLevelNode.appendChild(twoLevelNode);
 						temp2 = arboles.get(j).getIdArbol();
 						arboles.remove(j);
 						for (int k = j; k < arboles.size(); k++) {
 							if (temp2 == arboles.get(k).getPadre()) {
 								threeLevelNode = new Nodos(twoLevelNode, i,
-										arboles.get(k).getNombre());
+										arboles.get(k).getNombre(), "");
 								twoLevelNode.appendChild(threeLevelNode);
 								temp3 = arboles.get(k).getIdArbol();
 								arboles.remove(k);
@@ -201,7 +201,7 @@ public class CGrupo extends CGenerico {
 									if (temp3 == arboles.get(z).getPadre()) {
 										fourLevelNode = new Nodos(
 												threeLevelNode, i, arboles.get(
-														z).getNombre());
+														z).getNombre(),"");
 										threeLevelNode
 												.appendChild(fourLevelNode);
 										arboles.remove(z);

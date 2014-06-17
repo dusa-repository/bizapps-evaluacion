@@ -27,7 +27,7 @@
 			</panelchildren>
 		</panel>
 		<separator></separator>
-
+	<groupbox id = "gpxListaPersonal" style = "color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
 		<listbox height="auto" id="lbxEvaluacion" mold="paging"
 			pageSize="10" width="auto">
 			<listhead>
@@ -50,6 +50,7 @@
 				</listitem>
 			</template>
 		</listbox>
+		</groupbox>
 	</window>
 	<include id="contenido"></include>
 </zk>

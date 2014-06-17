@@ -30,11 +30,14 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Grid;
+import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Panel;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -67,9 +70,17 @@ public class CListaPersonal extends CGenerico {
 	private Listbox lbxEvaluacion;
 	@Wire
 	private Window winEvaluacionEmpleado;
+	@Wire
+	private Groupbox gpxListaPersonal;
 
 	@Override
 	public void inicializar() throws IOException {
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
+		gpxListaPersonal.setTitle("(" + "  " + ficha + ")" + "   " + u.getNombre() + "   " + u.getApellido());
+		
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -88,6 +99,8 @@ public class CListaPersonal extends CGenerico {
 		lbxEvaluacion
 		.setModel(new ListModelList<Evaluacion>(
 				evaluacion));
+		
+	
 	}
 	
 	@Listen("onDoubleClick = #lbxEvaluacion")
@@ -102,9 +115,11 @@ public class CListaPersonal extends CGenerico {
 					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("id", evaluacion.getIdEvaluacion());
+					map.put("titulo", evaluacion.getFicha());
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
 					winEvaluacionEmpleado.doModal();
+					winEvaluacionEmpleado.setClosable(true);
 					winListaPersonal.onClose();
 				}
 				

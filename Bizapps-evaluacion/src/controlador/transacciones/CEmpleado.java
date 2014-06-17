@@ -10,6 +10,7 @@ import java.util.List;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 import modelos.Empleado;
+import modelos.Evaluacion;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,12 +23,17 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
+import org.zkoss.zul.Window;
 
 import arbol.MArbol;
 import arbol.Nodos;
@@ -40,7 +46,7 @@ public class CEmpleado extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
 	@Wire
-	private Tree arbolPersonal ;
+	private Tree arbolPersonal;
 	@Wire
 	private Include contenido;
 	@Wire
@@ -54,12 +60,28 @@ public class CEmpleado extends CGenerico {
 	private Tabbox tabBox;
 	@Wire
 	private West west;
+	@Wire
+	private Window winListaPersonal;
+	@Wire
+	private Window winEvaluacionEmpleado;
+	@Wire
+	private Listbox lbxEvaluacion;
+	@Wire
+	private Listbox lbxPersonalCargo;
+	@Wire
+	private Listheader header;
+	private static int numeroEvaluacion;
+	private static Empleado empleado;
+	Evaluacion evaluacion = new Evaluacion();
 
 	Mensaje msj = new Mensaje();
+	private static Tabbox tabBox2;
+	private static Include contenido2;
+	private static Tab tab2;
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		arbolPersonal.setModel(getModel());
 
 	}
@@ -78,27 +100,28 @@ public class CEmpleado extends CGenerico {
 	 */
 	private Nodos getFooRoot() {
 
-		Nodos root = new Nodos(null, 0, "");
-		Nodos oneLevelNode = new Nodos(null, 0, "");
-		Nodos twoLevelNode = new Nodos(null, 0, "");
-		Nodos threeLevelNode = new Nodos(null, 0, "");
-		Nodos fourLevelNode = new Nodos(null, 0, "");
-		
+		Nodos root = new Nodos(null, 0, "", "");
+		Nodos oneLevelNode = new Nodos(null, 0, "", "");
+		Nodos twoLevelNode = new Nodos(null, 0, "", "");
+		Nodos threeLevelNode = new Nodos(null, 0, "", "");
+		Nodos fourLevelNode = new Nodos(null, 0, "", "");
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 
-		List<Empleado> empleado = servicioEmpleado.BuscarPorSupervisor(u.getCedula());
+		List<Empleado> empleado = servicioEmpleado.BuscarPorSupervisor(u
+				.getCedula());
 		List<Empleado> arboles = new ArrayList<Empleado>();
 		ArrayList<Integer> ids = new ArrayList<Integer>();
-		for (int k = 0; k < empleado.size(); k++) {	
-				ids.add(empleado.get(k).getIdEmpleado());
-			
+		for (int k = 0; k < empleado.size(); k++) {
+			ids.add(empleado.get(k).getIdEmpleado());
+
 		}
 
-		Collections.sort(ids); 
+		Collections.sort(ids);
 		Empleado jefe = servicioEmpleado.buscarPorFicha(u.getCedula());
-		arboles.add(jefe); 
+		arboles.add(jefe);
 		for (int t = 0; t < ids.size(); t++) {
 			Empleado a;
 			a = servicioEmpleado.buscarPorId(ids.get(t));
@@ -106,43 +129,56 @@ public class CEmpleado extends CGenerico {
 		}
 		String temp1, temp2, temp3 = "";
 		for (int i = 0; i < arboles.size(); i++) {
-			String ficha = jefe.getFicha(); 	
-			if (arboles.get(i).getFicha().equals(ficha))  {
-				oneLevelNode = new Nodos(root, i,  "(" + arboles.get(i).getGradoAuxiliar() + ")" + "  " + arboles.get(i).getNombre());
+			String ficha = jefe.getFicha();
+			if (arboles.get(i).getFicha().equals(ficha)) {
+				oneLevelNode = new Nodos(root, i, arboles.get(i).getNombre(), arboles.get(i).getFicha());
+//				oneLevelNode = new Nodos(root, i, "("
+//						+ arboles.get(i).getGradoAuxiliar() + ")" + "  "
+//						+ arboles.get(i).getFicha());
 				root.appendChild(oneLevelNode);
-//				temp1 = arboles.get(i).getIdEmpleado();
 				temp1 = arboles.get(i).getFicha();
 				arboles.remove(i);
-
-				for (int j = i; j < arboles.size(); j++) {
-					if (temp1.equals(arboles.get(j).getFichaSupervisor())) {
-						twoLevelNode = new Nodos(oneLevelNode, i, "(" + arboles.get(i).getGradoAuxiliar() + ")"  + "  " + arboles
-								.get(j).getNombre());
+				List<Empleado> hijos = servicioEmpleado
+						.BuscarPorSupervisor(temp1);
+				for (int j = i; j < hijos.size(); j++) {
+					if (temp1.equals(hijos.get(j).getFichaSupervisor())) {
+						
+						twoLevelNode =  new Nodos(root, i, hijos.get(i).getNombre(), hijos.get(i).getFicha());
+//								new Nodos(oneLevelNode, i, "("
+//								+ hijos.get(i).getGradoAuxiliar() + ")" + "  "
+//								+ hijos.get(j).getNombre());
 						oneLevelNode.appendChild(twoLevelNode);
-//						temp2 = arboles.get(j).getIdEmpleado();
-						temp2 = arboles.get(j).getFicha();
-						arboles.remove(j);
+						temp2 = hijos.get(j).getFicha();
+						hijos.remove(j);
+						List<Empleado> hijos2 = servicioEmpleado
+								.BuscarPorSupervisor(temp2);
+						for (int k = j; k < hijos2.size(); k++) {
 
-						for (int k = j; k < arboles.size(); k++) {
+							if (temp2
+									.equals(hijos2.get(k).getFichaSupervisor())) {
 
-							if (temp2.equals(arboles.get(k).getFichaSupervisor())) {
-							
-								threeLevelNode = new Nodos(twoLevelNode, i,"(" + arboles.get(i).getGradoAuxiliar() + ")" + "  " +
-										arboles.get(k).getNombre());
+								threeLevelNode = new Nodos(root, i, hijos2.get(i).getNombre(), hijos2.get(i).getFicha());
+//										new Nodos(twoLevelNode, i, "("
+//										+ hijos2.get(i).getGradoAuxiliar()
+//										+ ")" + "  "
+//										+ hijos2.get(k).getNombre());
 								twoLevelNode.appendChild(threeLevelNode);
-//								temp3 = arboles.get(k).getIdEmpleado();
-								temp3 = arboles.get(k).getFicha();
-								arboles.remove(k);
+								temp3 = hijos2.get(k).getFicha();
+								hijos2.remove(k);
+								List<Empleado> hijos3 = servicioEmpleado
+										.BuscarPorSupervisor(temp3);
+								for (int z = k; z < hijos3.size(); z++) {
 
-								for (int z = k; z < arboles.size(); z++) {
-
-									if (temp3.equals(arboles.get(z).getFichaSupervisor())) {
-										fourLevelNode = new Nodos(
-												threeLevelNode, i, arboles.get(
-														z).getNombre());
+									if (temp3.equals(hijos3.get(z)
+											.getFichaSupervisor())) {
+										fourLevelNode = new Nodos(root, i, hijos3.get(i).getNombre(), hijos3.get(i).getFicha());
+												
+//												new Nodos(
+//												threeLevelNode, i, hijos3
+//														.get(z).getNombre());
 										threeLevelNode
 												.appendChild(fourLevelNode);
-										arboles.remove(z);
+										hijos3.remove(z);
 
 										z = z - 1;
 									}
@@ -159,97 +195,30 @@ public class CEmpleado extends CGenerico {
 		return root;
 	}
 
-//	@Listen("onClick = #arbolPersonal")
-//	public void selectedNode() {
-//		if(arbolPersonal.getSelectedItem()!=null)
-//		{
-//		String item = String.valueOf(arbolPersonal.getSelectedItem().getValue());
-//		boolean abrir = true;
-//		Tab taba = new Tab();
-//		if (arbolPersonal.getSelectedItem().getLevel() > 0) {
-//			final Arbol arbolItem = servicioArbol.buscarPorNombreArbol(item);
-//				
-//			if (!arbolItem.getUrl().equals("inicio")) {
-//				
-//				if (String.valueOf(arbolPersonal.getSelectedItem().getValue()).equals("Consulta")) 
-//					west.setOpen(false);
-//				for (int i = 0; i < tabs.size(); i++) {
-//					if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
-//						abrir = false;
-//						taba = tabs.get(i);
-//					}
-//				}
-//				if (abrir) {
-//						Tab newTab = new Tab(arbolItem.getNombre());
-//						newTab.setClosable(true);
-//						newTab.addEventListener(Events.ON_CLOSE,
-//								new EventListener<Event>() {
-//									@Override
-//									public void onEvent(Event arg0) throws Exception {
-//										for (int i = 0; i < tabs.size(); i++) {
-//											if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
-//												if (i == (tabs.size() - 1) && tabs.size() > 1) {
-//													tabs.get(i - 1).setSelected(true);
-//												}
-//												
-//												tabs.get(i).close();
-//												tabs.remove(i);
-//											}
-//										}
-//									}
-//								});
-//						newTab.setSelected(true);
-//						Tabpanel newTabpanel = new Tabpanel();
-//						newTabpanel.appendChild(contenido);
-//						tabBox.getTabs().insertBefore(newTab, tab);
-//						newTabpanel.setParent(tabBox.getTabpanels());
-//						tabs.add(newTab);
-//				}
-//					else {
-//						msj.mensajeError(Mensaje.enUso);
-//					}
-//				}
-//				else {
-//					String ruta = "/vistas/" + arbolItem.getUrl() + ".zul";
-//					contenido = new Include();
-//					contenido.setSrc(null);
-//					contenido.setSrc(ruta);
-//					Tab newTab = new Tab(arbolItem.getNombre());
-//					newTab.setClosable(true);
-//					newTab.addEventListener(Events.ON_CLOSE,
-//							new EventListener<Event>() {
-//								@Override
-//								public void onEvent(Event arg0) throws Exception {
-//									for (int i = 0; i < tabs.size(); i++) {
-//										if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
-//											if (i == (tabs.size() - 1) && tabs.size() > 1) {
-//												tabs.get(i - 1).setSelected(true);
-//											}
-//											
-//											tabs.get(i).close();
-//											tabs.remove(i);
-//										}
-//									}
-//								
-//							});
-//					newTab.setSelected(true);
-//					Tabpanel newTabpanel = new Tabpanel();
-//					newTabpanel.appendChild(contenido);
-//					tabBox.getTabs().insertBefore(newTab, tab);
-//					newTabpanel.setParent(tabBox.getTabpanels());
-//					tabs.add(newTab);
-//					}
-//				}
-//				 else {
-//					taba.setSelected(true);
-//				}
-//			}
-//		}
-//		
-//		}
-//		tabBox2 = tabBox;
-//		contenido2 = contenido;
-//		tab2 = tab;
-//	}
-	
+	@Listen("onClick = #arbolPersonal")
+	public void selectedNode() {
+		if (arbolPersonal.getSelectedItem() != null) {
+			String item = String.valueOf(arbolPersonal.getSelectedItem().getContext());
+			System.out.println(item);
+			boolean abrir = true;
+			if (arbolPersonal.getSelectedItem().getLevel() > 0) {
+				if (abrir) {
+						
+						List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
+						evaluacion = servicioEvaluacion.buscar(item);		
+						if(evaluacion.isEmpty()){
+						Messagebox.show(
+								"El empleado no tiene evaluaciones registradas",
+								"Error", Messagebox.OK, Messagebox.ERROR);
+						}else{		
+							
+						lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
+								evaluacion));		
+						}
+						
+			}
+		}
+	}
+
+}
 }

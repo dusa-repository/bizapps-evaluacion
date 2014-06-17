@@ -152,7 +152,7 @@ public class CCompetenciasRectoras extends CGenerico {
 					map.put("id", competencia.getCompetencia().getIdCompetencia());
 					map.put("idnivel", nivel);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/vConductasRectoras.zul", null, map);
+					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionConductas.zul", null, map);
 					wdwConductasRectoras.doModal();				
 					}
 					}							
