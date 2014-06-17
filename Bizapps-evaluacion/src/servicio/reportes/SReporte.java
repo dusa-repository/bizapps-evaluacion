@@ -15,7 +15,7 @@ public class SReporte {
 	private IReporteDAO servicioReporteDAO;
 
 	@SuppressWarnings("unchecked")
-	public CategoryModel getListaRe0001(Map parametros) {
+	public CategoryModel getDataResumenMacro(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
 				.getDataResumenMacro(parametros);
@@ -30,5 +30,28 @@ public class SReporte {
 		return datos;
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataCumplimientoObjetivo(Map parametros) {
 
+		CategoryModel datos = servicioReporteDAO
+				.getDataCumplimientoObjetivo(parametros);
+		
+		return datos;
+
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataResumenGeneralBrecha(Map parametros) {
+
+		CategoryModel datos = servicioReporteDAO
+				.getDataResumenGeneralBrecha(parametros);
+		
+		return datos;
+
+	}
+
+	
 }

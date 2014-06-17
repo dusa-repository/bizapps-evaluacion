@@ -1,5 +1,5 @@
 <zk>
-	<window class="general" apply="controlador.reportes.CResumenMacro" id="divReporte0001">
+	<window class="general" apply="controlador.reportes.CCumplimientoObjetivo" id="divReporte0001">
 		<groupbox width="100%" mold="3d"
 			title="Parametros">
 			<grid width="100%">
@@ -38,6 +38,7 @@
 							<comboitem id="15"	label="GERENCIA NACIONAL DE COMERCIALIZACION" />
 							<comboitem id="17"	label="GERENCIA DE TESORERIA" />
 						</combobox>
+						
 					</row>
 					<row>
 					
@@ -69,7 +70,7 @@
 		</groupbox>
 		<groupbox height="100%">
 		    <charts id="chart" type="column"
-		        title="Resultados de Desempeño / Resumen Macro"
+		        title="Resultados de Desempeño / Cumplimiento Objetivos"
 		        subtitle=""/>
 		</groupbox>
 	</window>

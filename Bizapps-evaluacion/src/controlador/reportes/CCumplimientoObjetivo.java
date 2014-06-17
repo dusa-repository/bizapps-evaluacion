@@ -23,7 +23,7 @@ import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
 
 
-public class CResumenMacro extends CGenerico {
+public class CCumplimientoObjetivo extends CGenerico {
 
     @Wire
     Charts chart;
@@ -52,20 +52,19 @@ public class CResumenMacro extends CGenerico {
     @Listen("onClick = #btnGenerar")
 	public void generarReporte() throws Exception {
     	
-    	chart.setTitle("Resultados de Desempeño / Resumen Macro");
+    	chart.setTitle("Resultados de Desempeño / Cumplimiento Objetivos");
     	String subtitulo = "Empresa: "+ cmbEmpresa.getSelectedItem().getLabel() +"/  Gerencia: " + cmbGerencia.getSelectedItem().getLabel() + "/  Periodo Actual: " + cmbPeriodoActual.getSelectedItem().getLabel() + " " ;
     	chart.setSubtitle(subtitulo);
-    	
-    	Map parametros = new HashMap();
-		parametros.put("gerencia", cmbGerencia.getSelectedItem().getId());
-
-    	 chart.setModel(servicioReporte.getDataResumenMacro(parametros));
+    
+    	 Map parametros = new HashMap();
+		 parametros.put("gerencia", cmbGerencia.getSelectedItem().getId());
+    	 chart.setModel(servicioReporte.getDataCumplimientoObjetivo(parametros));
          
     	 chart.getXAxis().setMin(0);
-         chart.getXAxis().getTitle().setText("Valoracion");
+         chart.getXAxis().getTitle().setText("Periodo");
          
          chart.getYAxis().setMin(0);
-         chart.getYAxis().getTitle().setText("Nro Evaluados");
+         chart.getYAxis().getTitle().setText("Promedio");
          
          Tooltip tooltip = chart.getTooltip();
          tooltip.setHeaderFormat("<span style=\"font-size:10px\">{point.key}</span><table>");
@@ -79,7 +78,7 @@ public class CResumenMacro extends CGenerico {
          
          chart.getPlotOptions().getSeries().setBorderWidth(0);
          chart.getPlotOptions().getSeries().getDataLabels().setEnabled(true);
-         //chart.getPlotOptions().getSeries().getDataLabels().setFormat("{point.y:.2f}%");
+         chart.getPlotOptions().getSeries().getDataLabels().setFormat("{point.y:.2f}%");
          
          chart.getPlotOptions().getColumn().setPointPadding(0.2);
          chart.getPlotOptions().getColumn().setBorderWidth(0);

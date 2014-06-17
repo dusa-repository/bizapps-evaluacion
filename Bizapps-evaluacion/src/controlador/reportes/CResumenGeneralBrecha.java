@@ -23,7 +23,7 @@ import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
 
 
-public class CResumenMacro extends CGenerico {
+public class CResumenGeneralBrecha extends CGenerico {
 
     @Wire
     Charts chart;
@@ -52,20 +52,17 @@ public class CResumenMacro extends CGenerico {
     @Listen("onClick = #btnGenerar")
 	public void generarReporte() throws Exception {
     	
-    	chart.setTitle("Resultados de Desempeño / Resumen Macro");
+    	chart.setTitle("Resultados de Desempeño / Resumen General de Brechas");
     	String subtitulo = "Empresa: "+ cmbEmpresa.getSelectedItem().getLabel() +"/  Gerencia: " + cmbGerencia.getSelectedItem().getLabel() + "/  Periodo Actual: " + cmbPeriodoActual.getSelectedItem().getLabel() + " " ;
     	chart.setSubtitle(subtitulo);
-    	
-    	Map parametros = new HashMap();
-		parametros.put("gerencia", cmbGerencia.getSelectedItem().getId());
-
-    	 chart.setModel(servicioReporte.getDataResumenMacro(parametros));
+    
+    	 chart.setModel(servicioReporte.getDataResumenGeneralBrecha(new HashMap<>()));
          
     	 chart.getXAxis().setMin(0);
-         chart.getXAxis().getTitle().setText("Valoracion");
+         chart.getXAxis().getTitle().setText("Brechas");
          
          chart.getYAxis().setMin(0);
-         chart.getYAxis().getTitle().setText("Nro Evaluados");
+         chart.getYAxis().getTitle().setText("Nro Personas");
          
          Tooltip tooltip = chart.getTooltip();
          tooltip.setHeaderFormat("<span style=\"font-size:10px\">{point.key}</span><table>");
