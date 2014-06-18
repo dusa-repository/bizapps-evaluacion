@@ -1,7 +1,6 @@
 package servicio.maestros;
 
 import interfacedao.maestros.IAreaDAO;
-import interfacedao.maestros.ICargoDAO;
 
 import java.util.List;
 
@@ -40,6 +39,10 @@ public class SArea {
 	/* Servicio que permite eliminar un area */
 	public void eliminarUnArea(int id) {
 		areaDAO.delete(id);
+	}
+	
+	public void eliminarVariasAreas(List<Area> eliminar) {
+		areaDAO.delete(eliminar);
 	}
 	
 

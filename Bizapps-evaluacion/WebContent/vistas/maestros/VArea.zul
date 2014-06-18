@@ -1,0 +1,40 @@
+<zk>
+	<style src="../public/Estilo.css" />
+	<div id="divVArea" apply="controlador.maestros.CArea">
+		<groupbox width="auto" mold="3d" title="Area (VArea)">
+			<div id="botoneraArea" />
+			<separator />
+			<groupbox id="gpxRegistroArea" width="auto" title=""
+				open="false">
+				<caption label="Nuevo" style="font-weight:bold"
+					tooltiptext="Presione para registrar una nueva area" />
+				<separator />
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="20%" />
+						<column label="" width="55%" />
+						<column label="" width="25%" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Descripción:" class="etiqueta" />
+
+							<textbox id="txtDescripcionArea" width="80%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la descripcion del area" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<separator />
+			<groupbox id="gpxDatosArea" width="auto" title="">
+				<caption label="Registros" style="font-weight:bold"
+					tooltiptext="Presione para visualizar las areas registradas" />
+				<div id="catalogoArea"
+					tooltiptext="Seleccione el area para realizar una accion" />
+			</groupbox>
+			<separator />
+			<separator />
+		</groupbox>
+	</div>
+</zk>
