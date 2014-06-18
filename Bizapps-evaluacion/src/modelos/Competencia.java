@@ -18,11 +18,14 @@ public class Competencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_competencia")
 	private int idCompetencia;
 
+	@Column(name="comentario")
 	private String comentario;
 
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="fecha_auditoria")
@@ -31,12 +34,11 @@ public class Competencia implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
+	@Column(name="nivel")
 	private String nivel;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
+	
+	@Column(name="usuario")
+	private String usuario;
 
 	public Competencia() {
 	}
@@ -88,13 +90,15 @@ public class Competencia implements Serializable {
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
 	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
+	
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+	
 
 }

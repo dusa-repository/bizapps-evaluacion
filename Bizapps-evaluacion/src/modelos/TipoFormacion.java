@@ -18,9 +18,11 @@ public class TipoFormacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_tipo_formacion")
 	private int idTipoFormacion;
 
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="fecha_auditoria")
@@ -34,10 +36,8 @@ public class TipoFormacion implements Serializable {
 	@JoinColumn(name="id_area")
 	private Area area;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
+	@Column(name="usuario")
+	private String usuario;
 
 	public TipoFormacion() {
 	}
@@ -82,12 +82,13 @@ public class TipoFormacion implements Serializable {
 		this.area = area;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
+	
 }

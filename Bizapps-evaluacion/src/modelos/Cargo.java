@@ -18,9 +18,11 @@ public class Cargo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_cargo")
 	private int idCargo;
 
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="fecha_auditoria")
@@ -35,13 +37,13 @@ public class Cargo implements Serializable {
 	@Column(name="id_empresa_auxiliar")
 	private String idEmpresaAuxiliar;
 
+	@Column(name="nomina")
 	private String nomina;
+	
+	@Column(name="usuario")
+	private String usuario;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
-
+	
 	public Cargo() {
 	}
 
@@ -100,13 +102,15 @@ public class Cargo implements Serializable {
 	public void setNomina(String nomina) {
 		this.nomina = nomina;
 	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
+	
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+	
 
 }

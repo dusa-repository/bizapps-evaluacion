@@ -19,21 +19,21 @@ public class Area implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_area")
 	private int idArea;
 
+	@Column(name="descripcion")
 	private String descripcion;
+	
+	@Column(name="usuario")
+	private String usuario;
 
 	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
 
 	//bi-directional many-to-one association to TipoFormacion
 	@OneToMany(mappedBy="area")
@@ -74,14 +74,6 @@ public class Area implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public List<TipoFormacion> getTipoFormacions() {
 		return this.tipoFormacions;
 	}
@@ -103,5 +95,14 @@ public class Area implements Serializable {
 
 		return tipoFormacion;
 	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
 
 }

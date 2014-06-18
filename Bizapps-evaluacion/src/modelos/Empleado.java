@@ -18,12 +18,14 @@ public class Empleado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_empleado")
 	private int idEmpleado;
 
 	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
+	@Column(name="ficha")
 	private String ficha;
 
 	@Column(name="ficha_supervisor")
@@ -35,7 +37,11 @@ public class Empleado implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
+	@Column(name="nombre")
 	private String nombre;
+	
+	@Column(name="usuario")
+	private String usuario;
 
 	//bi-directional many-to-one association to Cargo
 	@ManyToOne
@@ -52,11 +58,7 @@ public class Empleado implements Serializable {
 	@JoinColumn(name="id_unidad_organizativa")
 	private UnidadOrganizativa unidadOrganizativa;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
-
+	
 	public Empleado() {
 	}
 
@@ -139,13 +141,14 @@ public class Empleado implements Serializable {
 	public void setUnidadOrganizativa(UnidadOrganizativa unidadOrganizativa) {
 		this.unidadOrganizativa = unidadOrganizativa;
 	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
+	
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
+	
 }

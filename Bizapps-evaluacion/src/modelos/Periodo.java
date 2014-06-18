@@ -19,10 +19,11 @@ public class Periodo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_periodo")
 	private int idPeriodo;
 
-	@Lob
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="estado_periodo")
@@ -40,12 +41,11 @@ public class Periodo implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
+	@Column(name="nombre")
 	private String nombre;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
+	
+	@Column(name="usuario")
+	private String usuario;
 
 	//bi-directional many-to-one association to Revision
 	@OneToMany(mappedBy="periodo")
@@ -118,14 +118,6 @@ public class Periodo implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public List<Revision> getRevisions() {
 		return this.revisions;
 	}
@@ -147,5 +139,15 @@ public class Periodo implements Serializable {
 
 		return revision;
 	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 
 }

@@ -1,6 +1,8 @@
 package modelos;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 
@@ -14,10 +16,23 @@ public class Perspectiva implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_perspectiva")
 	private int idPerspectiva;
 
+	@Column(name="descripcion")
 	private String descripcion;
+	
+	@Column(name="usuario")
+	private String usuario;
+
+	@Column(name="fecha_auditoria")
+	private Timestamp fechaAuditoria;
+
+	@Column(name="hora_auditoria")
+	private String horaAuditoria;
+	
+	
 
 	public Perspectiva() {
 	}
@@ -38,4 +53,28 @@ public class Perspectiva implements Serializable {
 		this.descripcion = descripcion;
 	}
 
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public Timestamp getFechaAuditoria() {
+		return fechaAuditoria;
+	}
+
+	public void setFechaAuditoria(Timestamp fechaAuditoria) {
+		this.fechaAuditoria = fechaAuditoria;
+	}
+
+	public String getHoraAuditoria() {
+		return horaAuditoria;
+	}
+
+	public void setHoraAuditoria(String horaAuditoria) {
+		this.horaAuditoria = horaAuditoria;
+	}
+	
 }

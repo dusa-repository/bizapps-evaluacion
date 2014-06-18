@@ -19,9 +19,11 @@ public class Gerencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_gerencia")
 	private int idGerencia;
 
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="fecha_auditoria")
@@ -29,12 +31,10 @@ public class Gerencia implements Serializable {
 
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
-
+	
+	@Column(name="usuario")
+	private String usuario;
+	
 	//bi-directional many-to-one association to UnidadOrganizativa
 	@OneToMany(mappedBy="gerencia")
 	private List<UnidadOrganizativa> unidadOrganizativas;
@@ -74,14 +74,6 @@ public class Gerencia implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public List<UnidadOrganizativa> getUnidadOrganizativas() {
 		return this.unidadOrganizativas;
 	}
@@ -102,6 +94,14 @@ public class Gerencia implements Serializable {
 		unidadOrganizativa.setGerencia(null);
 
 		return unidadOrganizativa;
+	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 }

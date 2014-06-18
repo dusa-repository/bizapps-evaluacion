@@ -18,9 +18,11 @@ public class UnidadOrganizativa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_unidad_organizativa")
 	private int idUnidadOrganizativa;
 
+	@Column(name="descripcion")
 	private String descripcion;
 
 	@Column(name="fecha_auditoria")
@@ -35,20 +37,19 @@ public class UnidadOrganizativa implements Serializable {
 	@Column(name="id_unidad_organizativa_auxiliar")
 	private String idUnidadOrganizativaAuxiliar;
 
+	@Column(name="nivel")
 	private int nivel;
 
 	@Column(name="sub_nivel")
 	private int subNivel;
-
+	
+	@Column(name="usuario")
+	private String usuario;
+	
 	//bi-directional many-to-one association to Gerencia
 	@ManyToOne
 	@JoinColumn(name="id_gerencia")
 	private Gerencia gerencia;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
 
 	public UnidadOrganizativa() {
 	}
@@ -125,12 +126,14 @@ public class UnidadOrganizativa implements Serializable {
 		this.gerencia = gerencia;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+	
+	
 
 }

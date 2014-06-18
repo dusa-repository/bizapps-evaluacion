@@ -18,9 +18,11 @@ public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="id_empresa")
 	private int idEmpresa;
 
+	@Column(name="direccion")
 	private String direccion;
 
 	@Column(name="fecha_auditoria")
@@ -32,17 +34,18 @@ public class Empresa implements Serializable {
 	@Column(name="id_empresa_auxiliar")
 	private String idEmpresaAuxiliar;
 
+	@Column(name="nombre")
 	private String nombre;
 
+	@Column(name="telefono1")
 	private String telefono1;
 
+	@Column(name="telefono2")
 	private String telefono2;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
-
+	@Column(name="usuario")
+	private String usuario;
+	
 	public Empresa() {
 	}
 
@@ -109,13 +112,14 @@ public class Empresa implements Serializable {
 	public void setTelefono2(String telefono2) {
 		this.telefono2 = telefono2;
 	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
+	
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
 
 }
