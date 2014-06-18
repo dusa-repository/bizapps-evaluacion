@@ -69,7 +69,9 @@ public class ReporteDAO implements IReporteDAO {
 			}
 		}
 
-		sentencia = "SELECT periodo.nombre, evaluacion.valoracion, COUNT(evaluacion.valoracion) AS Expr1, valoracion.orden FROM  evaluacion INNER JOIN revision ON evaluacion.id_revision = revision.id_revision INNER JOIN periodo ON periodo.id_periodo = revision.id_periodo INNER JOIN valoracion ON valoracion.nombre = evaluacion.valoracion INNER JOIN empleado ON evaluacion.ficha = empleado.ficha INNER JOIN unidad_organizativa ON unidad_organizativa.id_unidad_organizativa = empleado.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = unidad_organizativa.id_gerencia WHERE (evaluacion.estado_evaluacion = 'FINALIZADA') "+ restricciones +" GROUP BY periodo.nombre, evaluacion.valoracion, valoracion.orden ORDER BY valoracion.orden ";
+		sentencia = "SELECT periodo.nombre, evaluacion.valoracion, COUNT(evaluacion.valoracion) AS Expr1, valoracion.orden FROM  evaluacion INNER JOIN revision ON evaluacion.id_revision = revision.id_revision INNER JOIN periodo ON periodo.id_periodo = revision.id_periodo INNER JOIN valoracion ON valoracion.nombre = evaluacion.valoracion INNER JOIN empleado ON evaluacion.ficha = empleado.ficha INNER JOIN unidad_organizativa ON unidad_organizativa.id_unidad_organizativa = empleado.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = unidad_organizativa.id_gerencia WHERE (evaluacion.estado_evaluacion = 'FINALIZADA') "
+				+ restricciones
+				+ " GROUP BY periodo.nombre, evaluacion.valoracion, valoracion.orden ORDER BY valoracion.orden ";
 		ordenamiento = " ";
 		agrupamiento = " ";
 
@@ -101,6 +103,7 @@ public class ReporteDAO implements IReporteDAO {
 		// TODO Auto-generated method stub
 
 		String sentencia = "";
+		String sentencia1 = "";
 		String restricciones = "";
 		String restricciones1 = "";
 		String ordenamiento = "";
@@ -113,19 +116,18 @@ public class ReporteDAO implements IReporteDAO {
 			if ((entrada.getValue().trim().compareTo("0") != 0)
 					&& (entrada.getValue().trim().compareTo("") != 0)) {
 				if (restricciones.compareTo("") == 0) {
-					restricciones += " WHERE";
-					restricciones1 += " WHERE";
+					restricciones += " AND";
 				} else {
 					restricciones += " AND";
-					restricciones1 += " AND";
 				}
 
 				switch (entrada.getKey()) {
 				case "gerencia":
-					restricciones += " pr.programa_id=" + entrada.getValue()
+					restricciones += " ge.id_gerencia=" + entrada.getValue()
 							+ "";
-					restricciones1 += " pr.programa_id=" + entrada.getValue()
-							+ "";
+					sentencia1 = "SELECT     periodo.nombre,ge.descripcion, AVG(evaluacion.resultado) AS Expr1 FROM         evaluacion INNER JOIN revision ON evaluacion.id_revision = revision.id_revision INNER JOIN periodo ON periodo.id_periodo = revision.id_periodo INNER JOIN valoracion ON valoracion.nombre=evaluacion.valoracion INNER JOIN empleado ON evaluacion.ficha = empleado.ficha INNER JOIN unidad_organizativa ON unidad_organizativa.id_unidad_organizativa = empleado.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = unidad_organizativa.id_gerencia WHERE     (evaluacion.estado_evaluacion = 'FINALIZADA') "
+							+ restricciones
+							+ " GROUP BY periodo.nombre,ge.descripcion";
 					break;
 				default:
 					break;
@@ -133,7 +135,7 @@ public class ReporteDAO implements IReporteDAO {
 			}
 		}
 
-		sentencia = "  SELECT     periodo.nombre, AVG(evaluacion.resultado) AS Expr1 FROM         evaluacion INNER JOIN revision ON evaluacion.id_revision = revision.id_revision INNER JOIN periodo ON periodo.id_periodo = revision.id_periodo INNER JOIN valoracion ON valoracion.nombre=evaluacion.valoracion WHERE     (evaluacion.estado_evaluacion = 'FINALIZADA') GROUP BY periodo.nombre ";
+		sentencia = "  SELECT     periodo.nombre, AVG(evaluacion.resultado) AS Expr1 FROM         evaluacion INNER JOIN revision ON evaluacion.id_revision = revision.id_revision INNER JOIN periodo ON periodo.id_periodo = revision.id_periodo INNER JOIN valoracion ON valoracion.nombre=evaluacion.valoracion WHERE     (evaluacion.estado_evaluacion = 'FINALIZADA')  GROUP BY periodo.nombre ";
 		ordenamiento = " ";
 		agrupamiento = " ";
 
@@ -150,13 +152,19 @@ public class ReporteDAO implements IReporteDAO {
 			// float aux = (float) ((Integer) obj[2]) *100 / sum ;
 			model.setValue((String) obj[0], "GENERAL", (double) obj[1]);
 		}
-		
-		
-		
-		
-		
-		
-		
+
+		if (sentencia1.compareTo("") != 0) {
+			qSentencia = getEntityManager().createNativeQuery(
+					sentencia1 + agrupamiento + ordenamiento);
+
+			results = qSentencia.getResultList();
+
+			for (Object[] obj : results) {
+				// float aux = (float) ((Integer) obj[2]) *100 / sum ;
+				model.setValue((String) obj[0], (String) obj[1],
+						(double) obj[2]);
+			}
+		}
 
 		return model;
 
@@ -167,7 +175,6 @@ public class ReporteDAO implements IReporteDAO {
 			Map<String, String> parametros) {
 		// TODO Auto-generated method stub
 
-		
 		String sentencia = "";
 		String restricciones = "";
 		String restricciones1 = "";
@@ -246,8 +253,7 @@ public class ReporteDAO implements IReporteDAO {
 		}
 
 		return model;
-		
-		
+
 	}
 
 }
