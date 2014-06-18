@@ -95,7 +95,7 @@ public class CListaPersonal extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-		evaluacion = servicioEvaluacion.buscar(ficha);
+		evaluacion = servicioEvaluacion.buscarPorEstado(ficha, "EN EDICION"); 
 		lbxEvaluacion
 		.setModel(new ListModelList<Evaluacion>(
 				evaluacion));
@@ -117,7 +117,7 @@ public class CListaPersonal extends CGenerico {
 					map.put("id", evaluacion.getIdEvaluacion());
 					map.put("titulo", evaluacion.getFicha());
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
+					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEnEdicion.zul", null, map);				
 					winEvaluacionEmpleado.doModal();
 					winEvaluacionEmpleado.setClosable(true);
 					winListaPersonal.onClose();

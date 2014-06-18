@@ -33,5 +33,5 @@ public class SEvaluacionObjetivo {
 	public EvaluacionObjetivo buscarObjetivosId (Integer idObjetivo) {
 		return evaluacionObjetivoDAO.findByIdObjetivo(idObjetivo);
 	}
-
+	
 }

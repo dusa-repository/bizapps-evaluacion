@@ -31,17 +31,13 @@
 		<listbox height="auto" id="lbxEvaluacion" mold="paging"
 			pageSize="10" width="auto">
 			<listhead>
-				<listheader label="Ficha" width="10%" />
-				<listheader label="Nombre" width="30%" />
-				<listheader label="Revisión" width="10%" />
-				<listheader label="Fecha" width="20%" />
-				<listheader label="Estado" width="15%" />
-				<listheader label="Usuario" width="30%" />
+				<listheader label="Revisión" width="25%" />
+				<listheader label="Fecha" width="25%" />
+				<listheader label="Estado" width="25%" />
+				<listheader label="Usuario" width="25%" />
 			</listhead>
 			<template name="model">
 				<listitem>
-					<listcell label="${each.ficha}"></listcell>
-					<listcell> </listcell>
 					<listcell label="${each.idRevision}"></listcell>
 					<listcell label="${each.fechaCreacion}"></listcell>
 					<listcell label="${each.estadoEvaluacion}">

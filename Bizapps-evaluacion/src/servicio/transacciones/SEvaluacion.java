@@ -21,6 +21,14 @@ public class SEvaluacion {
 		return evaluacionDAO.findByFicha(ficha);
 	}
 	
+	public List<Evaluacion> buscarEstado(String ficha) {
+		return evaluacionDAO.buscarEstado(ficha);
+	}
+	
+	public List<Evaluacion> buscarPorEstado(String ficha, String estado) {
+		return evaluacionDAO.findByFichaAndEstadoEvaluacion(ficha, estado);
+	}
+	
 	/* Servicio que permite guardar los datos de la evaluacion de un trabajador*/
 	public void guardar(Evaluacion evaluacion) {
 		evaluacionDAO.save(evaluacion);

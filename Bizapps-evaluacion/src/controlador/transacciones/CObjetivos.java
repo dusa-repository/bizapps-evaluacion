@@ -109,10 +109,7 @@ public class CObjetivos extends CGenerico {
 	
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	ListModelList<Perspectiva> perspectiva;
-	public String horaCreacion = String.valueOf(calendario
-			.get(Calendar.HOUR_OF_DAY))
-			+ String.valueOf(calendario.get(Calendar.MINUTE))
-			+ String.valueOf(calendario.get(Calendar.SECOND));
+
 
 	@Override
 	public void inicializar() throws IOException {
@@ -157,6 +154,7 @@ public class CObjetivos extends CGenerico {
 		 Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
 		 String objetivo =txtObjetivo.getValue();
 		 String corresponsables = txtCorresponsables.getValue();
+		 Double peso = Double.parseDouble(txtPeso.getValue());
 		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
 		 Integer linea = objetivosG.size() + 1;
 		 objetivoLista.setIdObjetivo(1);
@@ -164,7 +162,7 @@ public class CObjetivos extends CGenerico {
 		 objetivoLista.setIdEvaluacion(1);
 		 objetivoLista.setPerspectiva(perspectiva);	 
 		 objetivoLista.setLinea(linea);
-		 objetivoLista.setPeso(0);
+		 objetivoLista.setPeso(peso);
 		 objetivoLista.setResultado(0);
 		 objetivoLista.setTotalInd(0);
 		 objetivoLista.setCorresponsables(corresponsables);
@@ -190,7 +188,7 @@ public class CObjetivos extends CGenerico {
 		Integer idUsuario = u.getIdUsuario();
 		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
 		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
-		System.out.println(idEvaluacion);
+		Double peso = Double.parseDouble(txtPeso.getValue());
 		Evaluacion evaluacionEmpleado = new Evaluacion();
 		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
 		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
@@ -198,7 +196,7 @@ public class CObjetivos extends CGenerico {
 		evaluacionEmpleado.setFicha(ficha);
 		evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
 		evaluacionEmpleado.setIdUsuario(idUsuario);
-		evaluacionEmpleado.setPeso(0);
+		evaluacionEmpleado.setPeso(peso);
 		evaluacionEmpleado.setResultado(0);
 		evaluacionEmpleado.setResultadoObjetivos(0);
 		evaluacionEmpleado.setResultadoGeneral(0);
@@ -219,14 +217,14 @@ public class CObjetivos extends CGenerico {
 				String corresponsables = objetivosG.get(j).getCorresponsables();
 				String descripcionOb = objetivosG.get(j).getDescripcionObjetivo();
 				Perspectiva perspectiva = objetivosG.get(j).getPerspectiva();
-				Double peso = objetivosG.get(j).getPeso();
+				Double peso1 = objetivosG.get(j).getPeso();
 				Double resultado = objetivosG.get(j).getResultado();
 				Double total = objetivosG.get(j).getTotalInd();
 				objetivo.setCorresponsables(corresponsables);
 				objetivo.setDescripcionObjetivo(descripcionOb);
 				objetivo.setLinea(linea);
 				objetivo.setPerspectiva(perspectiva);
-				objetivo.setPeso(peso);
+				objetivo.setPeso(peso1);
 				objetivo.setResultado(resultado);
 				objetivo.setTotalInd(total);	
 				servicioEvaluacionObjetivo.guardar(objetivo);

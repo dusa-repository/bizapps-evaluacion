@@ -17,4 +17,5 @@ public interface IEvaluacionObjetivoDAO extends JpaRepository<EvaluacionObjetivo
 	List<EvaluacionObjetivo> findByIdEvaluacion(Integer idEvaluacion);
 	
 	EvaluacionObjetivo findByIdObjetivo(Integer idObjetivo);
+
 }

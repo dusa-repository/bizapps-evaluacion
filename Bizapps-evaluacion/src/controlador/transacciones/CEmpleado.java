@@ -15,17 +15,20 @@ import modelos.Evaluacion;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
@@ -70,14 +73,15 @@ public class CEmpleado extends CGenerico {
 	private Listbox lbxPersonalCargo;
 	@Wire
 	private Listheader header;
+	@Wire
+	private Groupbox gpxListaPersonalCargo;
 	private static int numeroEvaluacion;
 	private static Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
 
 	Mensaje msj = new Mensaje();
-	private static Tabbox tabBox2;
-	private static Include contenido2;
-	private static Tab tab2;
+	
+
 
 	@Override
 	public void inicializar() throws IOException {
@@ -197,6 +201,8 @@ public class CEmpleado extends CGenerico {
 
 	@Listen("onClick = #arbolPersonal")
 	public void selectedNode() {
+		lbxEvaluacion.getItems().clear();
+		gpxListaPersonalCargo.setTitle("");
 		if (arbolPersonal.getSelectedItem() != null) {
 			String item = String.valueOf(arbolPersonal.getSelectedItem().getContext());
 			System.out.println(item);
@@ -205,13 +211,14 @@ public class CEmpleado extends CGenerico {
 				if (abrir) {
 						
 						List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-						evaluacion = servicioEvaluacion.buscar(item);		
+						evaluacion = servicioEvaluacion.buscarEstado(item);	
+						
 						if(evaluacion.isEmpty()){
 						Messagebox.show(
 								"El empleado no tiene evaluaciones registradas",
 								"Error", Messagebox.OK, Messagebox.ERROR);
 						}else{		
-							
+						gpxListaPersonalCargo.setTitle("(" + "  " + item + ")" + "   " + arbolPersonal.getSelectedItem().getLabel());
 						lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
 								evaluacion));		
 						}
@@ -220,5 +227,28 @@ public class CEmpleado extends CGenerico {
 		}
 	}
 
+}
+	@Listen("onDoubleClick = #lbxEvaluacion")
+	public void mostrarEvaluacion() {
+			
+			
+			if (lbxEvaluacion.getItemCount() != 0) {
+				
+				Listitem listItem = lbxEvaluacion.getSelectedItem();	
+				if (listItem != null) {
+						
+					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", evaluacion.getIdEvaluacion());
+					map.put("titulo", evaluacion.getFicha());
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
+					winEvaluacionEmpleado.doModal();
+					winEvaluacionEmpleado.setClosable(true);
+					
+				}
+				
+			}
+	
 }
 }

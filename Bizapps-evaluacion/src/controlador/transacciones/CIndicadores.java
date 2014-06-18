@@ -72,8 +72,6 @@ public class CIndicadores extends CGenerico {
 	@Wire
 	private Spinner txtPeso;
 	@Wire
-	private Textbox txtMedicion;
-	@Wire
 	private Spinner txtValorMeta;
 	@Wire
 	private Spinner txtValorResultado;
