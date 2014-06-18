@@ -1,5 +1,6 @@
 package componentes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.zk.ui.Component;
@@ -40,6 +41,7 @@ public abstract class Catalogo<Clase> extends Window {
 					public void onEvent(Event arg0) throws Exception {
 						Events.postEvent(cGenerico, new Event("onSeleccion"));
 					}
+
 				});
 	}
 
@@ -57,7 +59,8 @@ public abstract class Catalogo<Clase> extends Window {
 				new EventListener<InputEvent>() {
 					@Override
 					public void onEvent(InputEvent e) throws Exception {
-						List<Clase> listaNueva = buscar(e.getValue(), cmbBuscarPor.getValue());
+						List<Clase> listaNueva = buscar(e.getValue(),
+								cmbBuscarPor.getValue());
 						lsbCatalogo.setModel(new ListModelList<Clase>(
 								listaNueva));
 					}
@@ -72,6 +75,10 @@ public abstract class Catalogo<Clase> extends Window {
 		lsbCatalogo.appendChild(lhdEncabezado);
 		lhdEncabezado.setVisible(true);
 		lsbCatalogo.setModel(new ListModelList<Clase>(lista));
+		lsbCatalogo.setMultiple(false);
+		lsbCatalogo.setCheckmark(false);
+		lsbCatalogo.setMultiple(true);
+		lsbCatalogo.setCheckmark(true);
 		lsbCatalogo.setItemRenderer(new ListitemRenderer<Clase>() {
 
 			@Override
@@ -85,10 +92,9 @@ public abstract class Catalogo<Clase> extends Window {
 				}
 			}
 		});
-		
 
 		this.appendChild(separador1);
-		this.appendChild(hbxBusqueda);		
+		this.appendChild(hbxBusqueda);
 		lblBuscar.setValue("Buscar Por :  ");
 		hbxBusqueda.appendChild(lblBuscar);
 		cmbBuscarPor.setModel(new ListModelList<String>(campos));
@@ -98,12 +104,57 @@ public abstract class Catalogo<Clase> extends Window {
 		this.appendChild(lsbCatalogo);
 	}
 
+	public void actualizarLista(List<Clase> lista) {
+		lsbCatalogo.setModel(new ListModelList<Clase>(lista));
+		lsbCatalogo.setMultiple(false);
+		lsbCatalogo.setCheckmark(false);
+		lsbCatalogo.setMultiple(true);
+		lsbCatalogo.setCheckmark(true);
+	}
+
+	public List<Clase> obtenerSeleccionados() {
+		List<Clase> valores = new ArrayList<Clase>();
+		boolean entro = false;
+		if (lsbCatalogo.getItemCount() != 0) {
+			final List<Listitem> list1 = lsbCatalogo.getItems();
+			for (int i = 0; i < list1.size(); i++) {
+				if (list1.get(i).isSelected()) {
+					Clase clase = list1.get(i).getValue();
+					entro = true;
+					valores.add(clase);
+				}
+			}
+			if (!entro) {
+				valores.clear();
+				return valores;
+			}
+			return valores;
+		} else
+			return null;
+	}
+
+	/**
+	 * Metodo que permite limpiar los items seleccionados en el catalogo
+	 */
+	public void limpiarSeleccion() {
+
+		lsbCatalogo.clearSelection();
+
+	}
+
 	/**
 	 * Metodo que permite llamar un servicio dependiendo el controlador que
 	 * busque, es decir que haga un filtro dentro del catalogo, ayudando asi al
 	 * usuario a encontrar el registro buscado con mayor facilidad
 	 */
 	protected abstract List<Clase> buscar(String valor, String combo);
+
+	/**
+	 * Metodo que permite llamar un servicio dependiendo el controlador que
+	 * busque, es decir que haga un filtro dentro del catalogo, ayudando asi al
+	 * usuario a encontrar el registro buscado con mayor facilidad
+	 */
+	protected abstract List<Clase> buscarCampos(List<String> valores);
 
 	/**
 	 * Metodo que permite por cada controlador indicar cuales son los registros

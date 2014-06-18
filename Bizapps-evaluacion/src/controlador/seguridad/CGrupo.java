@@ -141,6 +141,12 @@ public class CGrupo extends CGenerico {
 					Messagebox.show("No ha Seleccionado Ningun Registro",
 							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
 			}
+
+			@Override
+			public void seleccionar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botoneraGrupo.appendChild(botonera);
 	}
@@ -395,6 +401,12 @@ public class CGrupo extends CGenerico {
 					return servicioGrupo.filtroNombre(valor);
 				else
 					return servicioGrupo.buscarTodos();
+			}
+
+			@Override
+			protected List<Grupo> buscarCampos(List<String> valores) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		};
 		catalogo.setParent(catalogoGrupo);

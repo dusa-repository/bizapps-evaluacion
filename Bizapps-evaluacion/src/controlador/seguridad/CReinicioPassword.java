@@ -86,6 +86,12 @@ public class CReinicioPassword extends CGenerico {
 			@Override
 			public void eliminar() {
 			}
+
+			@Override
+			public void seleccionar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botoneraReinicio.appendChild(botonera);
