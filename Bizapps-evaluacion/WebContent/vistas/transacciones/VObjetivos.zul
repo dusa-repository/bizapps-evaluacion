@@ -117,11 +117,6 @@
 				</listbox>
 			</groupbox>
 			<div align="right" height="100%">
-				<button id="btnGuardar" width="auto" height="auto"
-					mold="trendy" label="Guardar"
-					image="/public/imagenes/botones/guardar.png"
-					style="background-color:#F8E0E0;">
-				</button>
 				<button id="btnAgregar" width="auto" height="auto"
 					mold="trendy" label="Agregar"
 					image="/public/imagenes/botones/agregar.png"

@@ -153,25 +153,57 @@ public class CObjetivos extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {	
 		 gpxAgregados.setOpen(true);
+		 Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+			String ficha = u.getCedula();
+			Integer idUsuario = u.getIdUsuario();
+			Integer idEvaluacion = servicioEvaluacion.buscarId();
+			Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
+			Double peso = Double.valueOf(txtPeso.getValue());
+			
+			if (objetivosG.size() == 0) {
+			idEvaluacion = idEvaluacion + 1; 
+			Evaluacion evaluacionEmpleado = new Evaluacion();
+			evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
+			evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
+			evaluacionEmpleado.setFechaCreacion(fechaHora);
+			evaluacionEmpleado.setFicha(ficha);
+			evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
+			evaluacionEmpleado.setIdUsuario(idUsuario);
+			evaluacionEmpleado.setPeso(peso);
+			evaluacionEmpleado.setResultado(0);
+			evaluacionEmpleado.setResultadoObjetivos(0);
+			evaluacionEmpleado.setResultadoGeneral(0);
+			evaluacionEmpleado.setResultadoFinal(0);
+			servicioEvaluacion.guardar(evaluacionEmpleado);
+			}
+			
 		 String perspectivaCombo= cmbPerspectiva.getSelectedItem().getContext();
 		 System.out.println(perspectivaCombo);
 		 Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
 		 String objetivo =txtObjetivo.getValue();
 		 String corresponsables = txtCorresponsables.getValue();
-		 Double peso = Double.valueOf(txtPeso.getValue());
+		 Double peso1 = Double.valueOf(txtPeso.getValue());
 		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
 		 Integer linea = objetivosG.size() + 1;
 		 objetivoLista.setIdObjetivo(1);
 		 objetivoLista.setDescripcionObjetivo(objetivo);
-		 objetivoLista.setIdEvaluacion(1);
+		 objetivoLista.setIdEvaluacion(idEvaluacion);
 		 objetivoLista.setPerspectiva(perspectiva);	 
 		 objetivoLista.setLinea(linea);
-		 objetivoLista.setPeso(peso);
+		 objetivoLista.setPeso(peso1);
 		 objetivoLista.setResultado(0);
 		 objetivoLista.setTotalInd(0);
 		 objetivoLista.setCorresponsables(corresponsables);
 		 objetivosG.add(objetivoLista);
 		 lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
+		 servicioEvaluacionObjetivo.guardar(objetivoLista);
+			Messagebox.show("Objetivo Guardado Exitosamente",
+					"Información", Messagebox.OK,
+					Messagebox.INFORMATION);
+			
+			limpiar ();
 		 gpxAgregar.setOpen(false);
 		 limpiar ();
 	
@@ -181,65 +213,66 @@ public class CObjetivos extends CGenerico {
 		 txtObjetivo.setValue("");
 		 cmbPerspectiva.setValue(null);
 		 txtCorresponsables.setValue("");
+		 txtPeso.setValue(null);
 	}
 	
-	@Listen("onClick = #btnGuardar")
-	public void Guardar() {	
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
-		Integer idUsuario = u.getIdUsuario();
-		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
-		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
-		Double peso = Double.valueOf(txtPeso.getValue());
-		Evaluacion evaluacionEmpleado = new Evaluacion();
-		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
-		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
-		evaluacionEmpleado.setFechaCreacion(fechaHora);
-		evaluacionEmpleado.setFicha(ficha);
-		evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
-		evaluacionEmpleado.setIdUsuario(idUsuario);
-		evaluacionEmpleado.setPeso(peso);
-		evaluacionEmpleado.setResultado(0);
-		evaluacionEmpleado.setResultadoObjetivos(0);
-		evaluacionEmpleado.setResultadoGeneral(0);
-		evaluacionEmpleado.setResultadoFinal(0);
-
-		
-		if (objetivosG.size() == 0) {
-			Messagebox.show("Debe agregar sus objetivos",
-					"Advertencia", Messagebox.OK,
-					Messagebox.EXCLAMATION);
-		}
-		else {
-			EvaluacionObjetivo objetivo = new EvaluacionObjetivo ();
-//			Integer revision = 1;
-			objetivo.setIdEvaluacion(idEvaluacion);
-			for (int j = 0; j < objetivosG.size(); j++) {
-				Integer linea = objetivosG.get(j).getLinea();
-				String corresponsables = objetivosG.get(j).getCorresponsables();
-				String descripcionOb = objetivosG.get(j).getDescripcionObjetivo();
-				Perspectiva perspectiva = objetivosG.get(j).getPerspectiva();
-				Double peso1 = objetivosG.get(j).getPeso();
-				Double resultado = objetivosG.get(j).getResultado();
-				Double total = objetivosG.get(j).getTotalInd();
-				objetivo.setCorresponsables(corresponsables);
-				objetivo.setDescripcionObjetivo(descripcionOb);
-				objetivo.setLinea(linea);
-				objetivo.setPerspectiva(perspectiva);
-				objetivo.setPeso(peso1);
-				objetivo.setResultado(resultado);
-				objetivo.setTotalInd(total);	
-				servicioEvaluacionObjetivo.guardar(objetivo);
-			}
-			servicioEvaluacion.guardar(evaluacionEmpleado);
-			Messagebox.show("Objetivos Guardados Exitosamente",
-					"Información", Messagebox.OK,
-					Messagebox.INFORMATION);
-			
-			limpiar ();
-			objetivosG.clear();
-		}
-	}
+//	@Listen("onClick = #btnGuardar")
+//	public void Guardar() {	
+//		Authentication auth = SecurityContextHolder.getContext()
+//				.getAuthentication();
+//		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+//		String ficha = u.getCedula();
+//		Integer idUsuario = u.getIdUsuario();
+//		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
+//		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
+//		Double peso = Double.valueOf(txtPeso.getValue());
+//		Evaluacion evaluacionEmpleado = new Evaluacion();
+//		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
+//		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
+//		evaluacionEmpleado.setFechaCreacion(fechaHora);
+//		evaluacionEmpleado.setFicha(ficha);
+//		evaluacionEmpleado.setIdEvaluacionSecundario(evaluacion);
+//		evaluacionEmpleado.setIdUsuario(idUsuario);
+//		evaluacionEmpleado.setPeso(peso);
+//		evaluacionEmpleado.setResultado(0);
+//		evaluacionEmpleado.setResultadoObjetivos(0);
+//		evaluacionEmpleado.setResultadoGeneral(0);
+//		evaluacionEmpleado.setResultadoFinal(0);
+//
+//		
+//		if (objetivosG.size() == 0) {
+//			Messagebox.show("Debe agregar sus objetivos",
+//					"Advertencia", Messagebox.OK,
+//					Messagebox.EXCLAMATION);
+//		}
+//		else {
+//			EvaluacionObjetivo objetivo = new EvaluacionObjetivo ();
+////			Integer revision = 1;
+//			objetivo.setIdEvaluacion(idEvaluacion);
+//			for (int j = 0; j < objetivosG.size(); j++) {
+//				Integer linea = objetivosG.get(j).getLinea();
+//				String corresponsables = objetivosG.get(j).getCorresponsables();
+//				String descripcionOb = objetivosG.get(j).getDescripcionObjetivo();
+//				Perspectiva perspectiva = objetivosG.get(j).getPerspectiva();
+//				Double peso1 = objetivosG.get(j).getPeso();
+//				Double resultado = objetivosG.get(j).getResultado();
+//				Double total = objetivosG.get(j).getTotalInd();
+//				objetivo.setCorresponsables(corresponsables);
+//				objetivo.setDescripcionObjetivo(descripcionOb);
+//				objetivo.setLinea(linea);
+//				objetivo.setPerspectiva(perspectiva);
+//				objetivo.setPeso(peso1);
+//				objetivo.setResultado(resultado);
+//				objetivo.setTotalInd(total);	
+//				servicioEvaluacionObjetivo.guardar(objetivo);
+//			}
+//			servicioEvaluacion.guardar(evaluacionEmpleado);
+//			Messagebox.show("Objetivos Guardados Exitosamente",
+//					"Información", Messagebox.OK,
+//					Messagebox.INFORMATION);
+//			
+//			limpiar ();
+//			objetivosG.clear();
+//		}
+//	}
 }
