@@ -35,6 +35,18 @@ public class UnidadMedida implements Serializable {
 
 	public UnidadMedida() {
 	}
+	
+	public UnidadMedida(int idUnidad, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria) {
+		super();
+		this.idUnidad = idUnidad;
+		this.descripcion = descripcion;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
+
+
 
 	public int getIdUnidad() {
 		return this.idUnidad;

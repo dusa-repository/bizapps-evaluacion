@@ -34,6 +34,18 @@ public class Medicion implements Serializable {
 	
 	public Medicion() {
 	}
+	
+	public Medicion(int idMedicion, String descripcionMedicion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria) {
+		super();
+		this.idMedicion = idMedicion;
+		this.descripcionMedicion = descripcionMedicion;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
+
+
 
 	public int getIdMedicion() {
 		return this.idMedicion;

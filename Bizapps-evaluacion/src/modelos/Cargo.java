@@ -46,6 +46,23 @@ public class Cargo implements Serializable {
 	
 	public Cargo() {
 	}
+	
+	public Cargo(int idCargo, String descripcion, Timestamp fechaAuditoria,
+			String horaAuditoria, String idCargoAuxiliar,
+			String idEmpresaAuxiliar, String nomina, String usuario) {
+		super();
+		this.idCargo = idCargo;
+		this.descripcion = descripcion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.idCargoAuxiliar = idCargoAuxiliar;
+		this.idEmpresaAuxiliar = idEmpresaAuxiliar;
+		this.nomina = nomina;
+		this.usuario = usuario;
+	}
+
+
+
 
 	public int getIdCargo() {
 		return this.idCargo;

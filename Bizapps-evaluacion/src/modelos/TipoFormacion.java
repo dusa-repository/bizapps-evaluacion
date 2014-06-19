@@ -41,6 +41,20 @@ public class TipoFormacion implements Serializable {
 
 	public TipoFormacion() {
 	}
+	
+	public TipoFormacion(int idTipoFormacion, String descripcion,
+			Timestamp fechaAuditoria, String horaAuditoria, Area area,
+			String usuario) {
+		super();
+		this.idTipoFormacion = idTipoFormacion;
+		this.descripcion = descripcion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.area = area;
+		this.usuario = usuario;
+	}
+
+
 
 	public int getIdTipoFormacion() {
 		return this.idTipoFormacion;

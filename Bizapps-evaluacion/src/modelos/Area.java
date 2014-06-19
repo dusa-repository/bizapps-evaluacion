@@ -41,6 +41,18 @@ public class Area implements Serializable {
 
 	public Area() {
 	}
+	
+	public Area(int idArea, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria) {
+		super();
+		this.idArea = idArea;
+		this.descripcion = descripcion;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
+
+
 
 	public int getIdArea() {
 		return this.idArea;

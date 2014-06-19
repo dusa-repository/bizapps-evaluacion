@@ -53,6 +53,24 @@ public class Periodo implements Serializable {
 
 	public Periodo() {
 	}
+	
+	public Periodo(int idPeriodo, String descripcion, String estadoPeriodo,
+			Timestamp fechaAuditoria, Timestamp fechaFin,
+			Timestamp fechaInicio, String horaAuditoria, String nombre,
+			String usuario) {
+		super();
+		this.idPeriodo = idPeriodo;
+		this.descripcion = descripcion;
+		this.estadoPeriodo = estadoPeriodo;
+		this.fechaAuditoria = fechaAuditoria;
+		this.fechaFin = fechaFin;
+		this.fechaInicio = fechaInicio;
+		this.horaAuditoria = horaAuditoria;
+		this.nombre = nombre;
+		this.usuario = usuario;
+	}
+
+
 
 	public int getIdPeriodo() {
 		return this.idPeriodo;

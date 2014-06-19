@@ -54,6 +54,25 @@ public class UnidadOrganizativa implements Serializable {
 	public UnidadOrganizativa() {
 	}
 
+	public UnidadOrganizativa(int idUnidadOrganizativa, String descripcion,
+			Timestamp fechaAuditoria, String horaAuditoria,
+			String idEmpresaAuxiliar, String idUnidadOrganizativaAuxiliar,
+			int nivel, int subNivel, String usuario, Gerencia gerencia) {
+		super();
+		this.idUnidadOrganizativa = idUnidadOrganizativa;
+		this.descripcion = descripcion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.idEmpresaAuxiliar = idEmpresaAuxiliar;
+		this.idUnidadOrganizativaAuxiliar = idUnidadOrganizativaAuxiliar;
+		this.nivel = nivel;
+		this.subNivel = subNivel;
+		this.usuario = usuario;
+		this.gerencia = gerencia;
+	}
+
+
+
 	public int getIdUnidadOrganizativa() {
 		return this.idUnidadOrganizativa;
 	}

@@ -44,6 +44,19 @@ public class Dominio implements Serializable {
 
 	public Dominio() {
 	}
+	
+	public Dominio(int idDominio, String comentario, String descripcionDominio,
+			String tipo, String usuario, Timestamp fechaAuditoria,
+			String horaAuditoria) {
+		super();
+		this.idDominio = idDominio;
+		this.comentario = comentario;
+		this.descripcionDominio = descripcionDominio;
+		this.tipo = tipo;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
 
 	public int getIdDominio() {
 		return this.idDominio;

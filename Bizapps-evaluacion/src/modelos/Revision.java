@@ -45,6 +45,21 @@ public class Revision implements Serializable {
 
 	public Revision() {
 	}
+	
+	public Revision(int idRevision, String descripcion, String estadoRevision,
+			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
+			Periodo periodo) {
+		super();
+		this.idRevision = idRevision;
+		this.descripcion = descripcion;
+		this.estadoRevision = estadoRevision;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.usuario = usuario;
+		this.periodo = periodo;
+	}
+
+
 
 	public int getIdRevision() {
 		return this.idRevision;

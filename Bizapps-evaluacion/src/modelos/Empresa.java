@@ -48,6 +48,21 @@ public class Empresa implements Serializable {
 	
 	public Empresa() {
 	}
+	
+	public Empresa(int idEmpresa, String direccion, Timestamp fechaAuditoria,
+			String horaAuditoria, String idEmpresaAuxiliar, String nombre,
+			String telefono1, String telefono2, String usuario) {
+		super();
+		this.idEmpresa = idEmpresa;
+		this.direccion = direccion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.idEmpresaAuxiliar = idEmpresaAuxiliar;
+		this.nombre = nombre;
+		this.telefono1 = telefono1;
+		this.telefono2 = telefono2;
+		this.usuario = usuario;
+	}
 
 	public int getIdEmpresa() {
 		return this.idEmpresa;

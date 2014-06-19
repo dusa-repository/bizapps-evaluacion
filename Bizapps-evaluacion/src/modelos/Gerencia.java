@@ -41,6 +41,20 @@ public class Gerencia implements Serializable {
 
 	public Gerencia() {
 	}
+	
+	public Gerencia(int idGerencia, String descripcion,
+			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
+			List<UnidadOrganizativa> unidadOrganizativas) {
+		super();
+		this.idGerencia = idGerencia;
+		this.descripcion = descripcion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.usuario = usuario;
+		this.unidadOrganizativas = unidadOrganizativas;
+	}
+
+
 
 	public int getIdGerencia() {
 		return this.idGerencia;

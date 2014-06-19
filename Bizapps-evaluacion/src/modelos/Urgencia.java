@@ -35,6 +35,18 @@ public class Urgencia implements Serializable {
 
 	public Urgencia() {
 	}
+	
+	public Urgencia(int idUrgencia, String descripcionUrgencia, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria) {
+		super();
+		this.idUrgencia = idUrgencia;
+		this.descripcionUrgencia = descripcionUrgencia;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
+
+
 
 	public int getIdUrgencia() {
 		return this.idUrgencia;

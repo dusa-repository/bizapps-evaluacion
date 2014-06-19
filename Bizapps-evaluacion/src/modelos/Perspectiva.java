@@ -32,10 +32,20 @@ public class Perspectiva implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 	
-	
-
 	public Perspectiva() {
 	}
+	
+	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria) {
+		super();
+		this.idPerspectiva = idPerspectiva;
+		this.descripcion = descripcion;
+		this.usuario = usuario;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+	}
+
+
 
 	public int getIdPerspectiva() {
 		return this.idPerspectiva;

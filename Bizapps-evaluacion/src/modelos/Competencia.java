@@ -42,6 +42,21 @@ public class Competencia implements Serializable {
 
 	public Competencia() {
 	}
+	
+	public Competencia(int idCompetencia, String comentario,
+			String descripcion, Timestamp fechaAuditoria, String horaAuditoria,
+			String nivel, String usuario) {
+		super();
+		this.idCompetencia = idCompetencia;
+		this.comentario = comentario;
+		this.descripcion = descripcion;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.nivel = nivel;
+		this.usuario = usuario;
+	}
+
+
 
 	public int getIdCompetencia() {
 		return this.idCompetencia;

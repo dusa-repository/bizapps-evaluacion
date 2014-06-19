@@ -61,6 +61,26 @@ public class Empleado implements Serializable {
 	
 	public Empleado() {
 	}
+	
+	public Empleado(int idEmpleado, Timestamp fechaAuditoria, String ficha,
+			String fichaSupervisor, int gradoAuxiliar, String horaAuditoria,
+			String nombre, String usuario, Cargo cargo, Empresa empresa,
+			UnidadOrganizativa unidadOrganizativa) {
+		super();
+		this.idEmpleado = idEmpleado;
+		this.fechaAuditoria = fechaAuditoria;
+		this.ficha = ficha;
+		this.fichaSupervisor = fichaSupervisor;
+		this.gradoAuxiliar = gradoAuxiliar;
+		this.horaAuditoria = horaAuditoria;
+		this.nombre = nombre;
+		this.usuario = usuario;
+		this.cargo = cargo;
+		this.empresa = empresa;
+		this.unidadOrganizativa = unidadOrganizativa;
+	}
+
+
 
 	public int getIdEmpleado() {
 		return this.idEmpleado;
