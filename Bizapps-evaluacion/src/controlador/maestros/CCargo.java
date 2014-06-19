@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Medicion;
+import modelos.Cargo;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -25,33 +25,39 @@ import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
 
-public class CMedicion extends CGenerico {
+public class CCargo extends CGenerico {
 
 	@Wire
-	private Div divVMedicion;
+	private Div divVCargo;
 	@Wire
-	private Div botoneraMedicion;
+	private Div botoneraCargo;
 	@Wire
-	private Groupbox gpxRegistroMedicion;
+	private Groupbox gpxRegistroCargo;
 	@Wire
-	private Textbox txtDescripcionMedicion;
+	private Textbox txtDescripcionCargo;
 	@Wire
-	private Groupbox gpxDatosMedicion;
+	private Textbox txtNominaCargo;
 	@Wire
-	private Div catalogoMedicion;
+	private Textbox txtCargoAuxiliarCargo;
+	@Wire
+	private Textbox txtEmpresaAuxiliarCargo;
+	@Wire
+	private Groupbox gpxDatosCargo;
+	@Wire
+	private Div catalogoCargo;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	private int idMedicion = 0;
+	private int idCargo = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
-	Catalogo<Medicion> catalogo;
+	Catalogo<Cargo> catalogo;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionMedicion.setFocus(true);
+		txtDescripcionCargo.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -62,31 +68,40 @@ public class CMedicion extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Medicion medicion = catalogo.objetoSeleccionadoDelCatalogo();
-						idMedicion = medicion.getIdMedicion();
-						txtDescripcionMedicion.setValue(medicion.getDescripcionMedicion());
-						txtDescripcionMedicion.setFocus(true);
+						Cargo cargo = catalogo.objetoSeleccionadoDelCatalogo();
+						idCargo = cargo.getIdCargo();
+						txtDescripcionCargo.setValue(cargo.getDescripcion());
+						txtNominaCargo.setValue(cargo.getNomina());
+						txtCargoAuxiliarCargo.setValue(cargo
+								.getIdCargoAuxiliar());
+						txtEmpresaAuxiliarCargo.setValue(cargo
+								.getIdEmpresaAuxiliar());
+
+						txtDescripcionCargo.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcionMedicion = txtDescripcionMedicion.getValue();
+
+				String descripcion = txtDescripcionCargo.getValue();
+				String nomina = txtNominaCargo.getValue();
+				String idCargoAuxiliar = txtCargoAuxiliarCargo.getValue();
+				String idEmpresaAuxiliar = txtEmpresaAuxiliarCargo.getValue();
 				String usuario = "JDE";
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Medicion medicion = new Medicion(idMedicion,descripcionMedicion,usuario,
-						fechaAuditoria, horaAuditoria);
-				servicioMedicion.guardar(medicion);
+				Cargo cargo = new Cargo(idCargo, descripcion, fechaAuditoria,
+						horaAuditoria, idCargoAuxiliar,
+						idEmpresaAuxiliar, nomina, usuario);
+				servicioCargo.guardar(cargo);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
-				catalogo.actualizarLista(servicioMedicion.buscarTodas());
-				
+				catalogo.actualizarLista(servicioCargo.buscarTodos());
+
 			}
 
 			@Override
@@ -99,16 +114,16 @@ public class CMedicion extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVMedicion, "Medición");
+				cerrarVentana(divVCargo, "Cargo");
 			}
 
 			@Override
 			public void eliminar() {
 				// TODO Auto-generated method stub
-				if (gpxDatosMedicion.isOpen()) {
+				if (gpxDatosCargo.isOpen()) {
 					/* Elimina Varios Registros */
 					if (validarSeleccion()) {
-						final List<Medicion> eliminarLista = catalogo
+						final List<Cargo> eliminarLista = catalogo
 								.obtenerSeleccionados();
 						Messagebox
 								.show("¿Desea Eliminar los "
@@ -121,18 +136,18 @@ public class CMedicion extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioMedicion
-															.eliminarVariasMediciones(eliminarLista);
+													servicioCargo
+															.eliminarVariosCargos(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													catalogo.actualizarLista(servicioMedicion
-															.buscarTodas());
+													catalogo.actualizarLista(servicioCargo
+															.buscarTodos());
 												}
 											}
 										});
 					}
 				} else {
 					/* Elimina un solo registro */
-					if (idMedicion != 0) {
+					if (idCargo != 0) {
 						Messagebox
 								.show(Mensaje.deseaEliminar,
 										"Alerta",
@@ -143,11 +158,12 @@ public class CMedicion extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioMedicion
-															.eliminarUnaMedicion(idMedicion);
+													servicioCargo
+															.eliminarUnCargo(idCargo);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioMedicion.buscarTodas());
+													catalogo.actualizarLista(servicioCargo
+															.buscarTodos());
 												}
 											}
 										});
@@ -160,36 +176,41 @@ public class CMedicion extends CGenerico {
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
-		botoneraMedicion.appendChild(botonera);
+		botoneraCargo.appendChild(botonera);
 
 	}
 
 	public void limpiarCampos() {
-		idMedicion = 0;
-		txtDescripcionMedicion.setValue("");
+		idCargo = 0;
+		txtDescripcionCargo.setValue("");
+		txtNominaCargo.setValue("");
+		txtCargoAuxiliarCargo.setValue("");
+		txtEmpresaAuxiliarCargo.setValue("");
 		catalogo.limpiarSeleccion();
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionMedicion.getText().compareTo("") != 0) {
+		if (txtDescripcionCargo.getText().compareTo("") != 0
+				|| txtNominaCargo.getText().compareTo("") != 0
+				|| txtCargoAuxiliarCargo.getText().compareTo("") != 0
+				|| txtEmpresaAuxiliarCargo.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
 	}
-	
-	
-	@Listen("onClick = #gpxRegistroMedicion")
+
+	@Listen("onClick = #gpxRegistroCargo")
 	public void abrirRegistro() {
-		gpxDatosMedicion.setOpen(false);
-		gpxRegistroMedicion.setOpen(true);
+		gpxDatosCargo.setOpen(false);
+		gpxRegistroCargo.setOpen(true);
 		mostrarBotones(false);
 
 	}
-	
-	@Listen("onOpen = #gpxDatosMedicion")
+
+	@Listen("onOpen = #gpxDatosCargo")
 	public void abrirCatalogo() {
-		gpxDatosMedicion.setOpen(false);
+		gpxDatosCargo.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
 					| Messagebox.NO, Messagebox.QUESTION,
@@ -197,12 +218,12 @@ public class CMedicion extends CGenerico {
 						public void onEvent(Event evt)
 								throws InterruptedException {
 							if (evt.getName().equals("onYes")) {
-								gpxDatosMedicion.setOpen(false);
-								gpxRegistroMedicion.setOpen(true);
+								gpxDatosCargo.setOpen(false);
+								gpxRegistroCargo.setOpen(true);
 							} else {
 								if (evt.getName().equals("onNo")) {
-									gpxDatosMedicion.setOpen(true);
-									gpxRegistroMedicion.setOpen(false);
+									gpxDatosCargo.setOpen(true);
+									gpxRegistroCargo.setOpen(false);
 									limpiarCampos();
 									mostrarBotones(true);
 								}
@@ -210,16 +231,14 @@ public class CMedicion extends CGenerico {
 						}
 					});
 		} else {
-			gpxDatosMedicion.setOpen(true);
-			gpxRegistroMedicion.setOpen(false);
+			gpxDatosCargo.setOpen(true);
+			gpxRegistroCargo.setOpen(false);
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
-		List<Medicion> seleccionados = catalogo.obtenerSeleccionados();
+		List<Cargo> seleccionados = catalogo.obtenerSeleccionados();
 		if (seleccionados == null) {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 			return false;
@@ -242,20 +261,27 @@ public class CMedicion extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Medicion> listMedicion = servicioMedicion.buscarTodas();
-		catalogo = new Catalogo<Medicion>(catalogoMedicion, "Catalogo de Mediciones",
-				listMedicion, "Código medición", "Descripción") {
+		final List<Cargo> listCargo = servicioCargo.buscarTodos();
+		catalogo = new Catalogo<Cargo>(catalogoCargo, "Catalogo de Cargos",
+				listCargo, "Código cargo", "Descripción", "Nómina",
+				"Cargo Auxiliar", "Empresa Auxiliar") {
 
 			@Override
-			protected List<Medicion> buscarCampos(List<String> valores) {
-				List<Medicion> lista = new ArrayList<Medicion>();
+			protected List<Cargo> buscarCampos(List<String> valores) {
+				List<Cargo> lista = new ArrayList<Cargo>();
 
-				for (Medicion medicion : listMedicion) {
-					if (String.valueOf(medicion.getIdMedicion()).toLowerCase()
+				for (Cargo cargo : listCargo) {
+					if (String.valueOf(cargo.getIdCargo()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& medicion.getDescripcionMedicion().toLowerCase()
-									.startsWith(valores.get(1))) {
-						lista.add(medicion);
+							&& cargo.getDescripcion().toLowerCase()
+									.startsWith(valores.get(1))
+							&& cargo.getNomina().toLowerCase()
+							.startsWith(valores.get(2))
+							&& cargo.getIdCargoAuxiliar().toLowerCase()
+							.startsWith(valores.get(3))
+							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
+							.startsWith(valores.get(4))) {
+						lista.add(cargo);
 					}
 				}
 				return lista;
@@ -263,22 +289,25 @@ public class CMedicion extends CGenerico {
 			}
 
 			@Override
-			protected String[] crearRegistros(Medicion medicion) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(medicion.getIdMedicion());
-				registros[1] = medicion.getDescripcionMedicion();
+			protected String[] crearRegistros(Cargo cargo) {
+				String[] registros = new String[5];
+				registros[0] = String.valueOf(cargo.getIdCargo());
+				registros[1] = cargo.getDescripcion();
+				registros[2] = cargo.getNomina();
+				registros[3] = cargo.getIdCargoAuxiliar();
+				registros[4] = cargo.getIdEmpresaAuxiliar();
 
 				return registros;
 			}
 
 			@Override
-			protected List<Medicion> buscar(String valor, String combo) {
+			protected List<Cargo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
 		};
-		catalogo.setParent(catalogoMedicion);
+		catalogo.setParent(catalogoCargo);
 
 	}
 

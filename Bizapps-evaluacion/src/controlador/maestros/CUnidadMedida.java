@@ -77,11 +77,11 @@ public class CUnidadMedida extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				UnidadMedida unidadMedida = new UnidadMedida();
-				unidadMedida.setDescripcion(txtDescripcionUnidadMedida.getValue());
-				unidadMedida.setUsuario("JDE");
-				unidadMedida.setFechaAuditoria(new Timestamp(new Date().getTime()));
-				unidadMedida.setHoraAuditoria(horaAuditoria);
+				String descripcion = txtDescripcionUnidadMedida.getValue();
+				String usuario = "JDE";
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
+				UnidadMedida unidadMedida = new UnidadMedida(idUnidadMedida,descripcion,usuario,
+						fechaAuditoria, horaAuditoria);
 				servicioUnidadMedida.guardar(unidadMedida);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();

@@ -1,6 +1,6 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVCargo">
+	<div id="divVCargo" apply="controlador.maestros.CCargo">
 		<groupbox width="auto" mold="3d" title="Cargo (VCargo)">
 			<div id="botoneraCargo" />
 			<separator />

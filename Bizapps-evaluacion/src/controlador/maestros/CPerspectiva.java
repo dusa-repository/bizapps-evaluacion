@@ -77,11 +77,11 @@ public class CPerspectiva extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				Perspectiva perspectiva = new Perspectiva();
-				perspectiva.setDescripcion(txtDescripcionPerspectiva.getValue());
-				perspectiva.setUsuario("JDE");
-				perspectiva.setFechaAuditoria(new Timestamp(new Date().getTime()));
-				perspectiva.setHoraAuditoria(horaAuditoria);
+				String descripcion = txtDescripcionPerspectiva.getValue();
+				String usuario = "JDE";
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
+				Perspectiva perspectiva = new Perspectiva(idPerspectiva, descripcion, usuario,
+						 fechaAuditoria, horaAuditoria);
 				servicioPerspectiva.guardar(perspectiva);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();

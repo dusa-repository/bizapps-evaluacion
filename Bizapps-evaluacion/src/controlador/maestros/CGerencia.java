@@ -77,11 +77,11 @@ public class CGerencia extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				Gerencia gerencia = new Gerencia();
-				gerencia.setDescripcion(txtDescripcionGerencia.getValue());
-				gerencia.setUsuario("JDE");
-				gerencia.setFechaAuditoria(new Timestamp(new Date().getTime()));
-				gerencia.setHoraAuditoria(horaAuditoria);
+				String descripcion = txtDescripcionGerencia.getValue();
+				String usuario = "JDE";
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
+				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
+						fechaAuditoria, horaAuditoria, usuario);
 				servicioGerencia.guardar(gerencia);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();

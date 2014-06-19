@@ -77,11 +77,12 @@ public class CUrgencia extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				Urgencia urgencia = new Urgencia();
-				urgencia.setDescripcionUrgencia(txtDescripcionUrgencia.getValue());
-				urgencia.setUsuario("JDE");
-				urgencia.setFechaAuditoria(new Timestamp(new Date().getTime()));
-				urgencia.setHoraAuditoria(horaAuditoria);
+				String descripcionUrgencia = txtDescripcionUrgencia.getValue();
+				String usuario = "JDE";
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
+				Urgencia urgencia = new Urgencia(idUrgencia,descripcionUrgencia,usuario,
+						fechaAuditoria, horaAuditoria);
+		
 				servicioUrgencia.guardar(urgencia);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();

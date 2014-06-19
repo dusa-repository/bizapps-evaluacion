@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Medicion;
+import modelos.Competencia;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -25,33 +25,37 @@ import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
 
-public class CMedicion extends CGenerico {
+public class CCompetencia extends CGenerico {
 
 	@Wire
-	private Div divVMedicion;
+	private Div divVCompetencia;
 	@Wire
-	private Div botoneraMedicion;
+	private Div botoneraCompetencia;
 	@Wire
-	private Groupbox gpxRegistroMedicion;
+	private Groupbox gpxRegistroCompetencia;
 	@Wire
-	private Textbox txtDescripcionMedicion;
+	private Textbox txtDescripcionCompetencia;
 	@Wire
-	private Groupbox gpxDatosMedicion;
+	private Textbox txtNivelCompetencia;
 	@Wire
-	private Div catalogoMedicion;
+	private Textbox txtComentarioCompetencia;
+	@Wire
+	private Groupbox gpxDatosCompetencia;
+	@Wire
+	private Div catalogoCompetencia;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	private int idMedicion = 0;
+	private int idCompetencia = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
-	Catalogo<Medicion> catalogo;
+	Catalogo<Competencia> catalogo;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionMedicion.setFocus(true);
+		txtDescripcionCompetencia.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -62,10 +66,12 @@ public class CMedicion extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Medicion medicion = catalogo.objetoSeleccionadoDelCatalogo();
-						idMedicion = medicion.getIdMedicion();
-						txtDescripcionMedicion.setValue(medicion.getDescripcionMedicion());
-						txtDescripcionMedicion.setFocus(true);
+						Competencia competencia = catalogo.objetoSeleccionadoDelCatalogo();
+						idCompetencia = competencia.getIdCompetencia();
+						txtDescripcionCompetencia.setValue(competencia.getDescripcion());
+						txtNivelCompetencia.setValue(competencia.getNivel());
+						txtComentarioCompetencia.setValue(competencia.getComentario());
+						txtDescripcionCompetencia.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
@@ -77,15 +83,18 @@ public class CMedicion extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				String descripcionMedicion = txtDescripcionMedicion.getValue();
+				String descripcion = txtDescripcionCompetencia.getValue();
+				String nivel = txtNivelCompetencia.getValue();
+				String comentario = txtComentarioCompetencia.getValue();
 				String usuario = "JDE";
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Medicion medicion = new Medicion(idMedicion,descripcionMedicion,usuario,
-						fechaAuditoria, horaAuditoria);
-				servicioMedicion.guardar(medicion);
+				Competencia competencia = new Competencia(idCompetencia,comentario,
+						 descripcion, fechaAuditoria,  horaAuditoria,
+						 nivel, usuario);
+				servicioCompetencia.guardar(competencia);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
-				catalogo.actualizarLista(servicioMedicion.buscarTodas());
+				catalogo.actualizarLista(servicioCompetencia.buscarTodas());
 				
 			}
 
@@ -99,16 +108,16 @@ public class CMedicion extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVMedicion, "Medición");
+				cerrarVentana(divVCompetencia, "Competencia");
 			}
 
 			@Override
 			public void eliminar() {
 				// TODO Auto-generated method stub
-				if (gpxDatosMedicion.isOpen()) {
+				if (gpxDatosCompetencia.isOpen()) {
 					/* Elimina Varios Registros */
 					if (validarSeleccion()) {
-						final List<Medicion> eliminarLista = catalogo
+						final List<Competencia> eliminarLista = catalogo
 								.obtenerSeleccionados();
 						Messagebox
 								.show("¿Desea Eliminar los "
@@ -121,10 +130,10 @@ public class CMedicion extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioMedicion
-															.eliminarVariasMediciones(eliminarLista);
+													servicioCompetencia
+															.eliminarVariasCompetencias(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													catalogo.actualizarLista(servicioMedicion
+													catalogo.actualizarLista(servicioCompetencia
 															.buscarTodas());
 												}
 											}
@@ -132,7 +141,7 @@ public class CMedicion extends CGenerico {
 					}
 				} else {
 					/* Elimina un solo registro */
-					if (idMedicion != 0) {
+					if (idCompetencia != 0) {
 						Messagebox
 								.show(Mensaje.deseaEliminar,
 										"Alerta",
@@ -143,11 +152,11 @@ public class CMedicion extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioMedicion
-															.eliminarUnaMedicion(idMedicion);
+													servicioCompetencia
+															.eliminarUnaCompetencia(idCompetencia);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioMedicion.buscarTodas());
+													catalogo.actualizarLista(servicioCompetencia.buscarTodas());
 												}
 											}
 										});
@@ -160,36 +169,40 @@ public class CMedicion extends CGenerico {
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
-		botoneraMedicion.appendChild(botonera);
+		botoneraCompetencia.appendChild(botonera);
 
 	}
 
 	public void limpiarCampos() {
-		idMedicion = 0;
-		txtDescripcionMedicion.setValue("");
+		idCompetencia = 0;
+		txtDescripcionCompetencia.setValue("");
+		txtNivelCompetencia.setValue("");
+		txtComentarioCompetencia.setValue("");
 		catalogo.limpiarSeleccion();
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionMedicion.getText().compareTo("") != 0) {
+		if (txtDescripcionCompetencia.getText().compareTo("") != 0
+				|| txtNivelCompetencia.getText().compareTo("") != 0
+				|| txtComentarioCompetencia.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
 	}
 	
 	
-	@Listen("onClick = #gpxRegistroMedicion")
+	@Listen("onClick = #gpxRegistroCompetencia")
 	public void abrirRegistro() {
-		gpxDatosMedicion.setOpen(false);
-		gpxRegistroMedicion.setOpen(true);
+		gpxDatosCompetencia.setOpen(false);
+		gpxRegistroCompetencia.setOpen(true);
 		mostrarBotones(false);
 
 	}
 	
-	@Listen("onOpen = #gpxDatosMedicion")
+	@Listen("onOpen = #gpxDatosCompetencia")
 	public void abrirCatalogo() {
-		gpxDatosMedicion.setOpen(false);
+		gpxDatosCompetencia.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
 					| Messagebox.NO, Messagebox.QUESTION,
@@ -197,12 +210,12 @@ public class CMedicion extends CGenerico {
 						public void onEvent(Event evt)
 								throws InterruptedException {
 							if (evt.getName().equals("onYes")) {
-								gpxDatosMedicion.setOpen(false);
-								gpxRegistroMedicion.setOpen(true);
+								gpxDatosCompetencia.setOpen(false);
+								gpxRegistroCompetencia.setOpen(true);
 							} else {
 								if (evt.getName().equals("onNo")) {
-									gpxDatosMedicion.setOpen(true);
-									gpxRegistroMedicion.setOpen(false);
+									gpxDatosCompetencia.setOpen(true);
+									gpxRegistroCompetencia.setOpen(false);
 									limpiarCampos();
 									mostrarBotones(true);
 								}
@@ -210,8 +223,8 @@ public class CMedicion extends CGenerico {
 						}
 					});
 		} else {
-			gpxDatosMedicion.setOpen(true);
-			gpxRegistroMedicion.setOpen(false);
+			gpxDatosCompetencia.setOpen(true);
+			gpxRegistroCompetencia.setOpen(false);
 			mostrarBotones(true);
 		}
 	}
@@ -219,7 +232,7 @@ public class CMedicion extends CGenerico {
 	
 
 	public boolean validarSeleccion() {
-		List<Medicion> seleccionados = catalogo.obtenerSeleccionados();
+		List<Competencia> seleccionados = catalogo.obtenerSeleccionados();
 		if (seleccionados == null) {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 			return false;
@@ -242,20 +255,24 @@ public class CMedicion extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Medicion> listMedicion = servicioMedicion.buscarTodas();
-		catalogo = new Catalogo<Medicion>(catalogoMedicion, "Catalogo de Mediciones",
-				listMedicion, "Código medición", "Descripción") {
+		final List<Competencia> listCompetencia = servicioCompetencia.buscarTodas();
+		catalogo = new Catalogo<Competencia>(catalogoCompetencia, "Catalogo de Competencias",
+				listCompetencia, "Código competencia", "Descripción" , "Nivel", "Comentario") {
 
 			@Override
-			protected List<Medicion> buscarCampos(List<String> valores) {
-				List<Medicion> lista = new ArrayList<Medicion>();
+			protected List<Competencia> buscarCampos(List<String> valores) {
+				List<Competencia> lista = new ArrayList<Competencia>();
 
-				for (Medicion medicion : listMedicion) {
-					if (String.valueOf(medicion.getIdMedicion()).toLowerCase()
+				for (Competencia competencia : listCompetencia) {
+					if (String.valueOf(competencia.getIdCompetencia()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& medicion.getDescripcionMedicion().toLowerCase()
-									.startsWith(valores.get(1))) {
-						lista.add(medicion);
+							&& competencia.getDescripcion().toLowerCase()
+									.startsWith(valores.get(1))
+							&& competencia.getNivel().toLowerCase()
+									.startsWith(valores.get(2))
+							&& competencia.getComentario().toLowerCase()
+									.startsWith(valores.get(3))) {
+						lista.add(competencia);
 					}
 				}
 				return lista;
@@ -263,23 +280,26 @@ public class CMedicion extends CGenerico {
 			}
 
 			@Override
-			protected String[] crearRegistros(Medicion medicion) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(medicion.getIdMedicion());
-				registros[1] = medicion.getDescripcionMedicion();
+			protected String[] crearRegistros(Competencia competencia) {
+				String[] registros = new String[4];
+				registros[0] = String.valueOf(competencia.getIdCompetencia());
+				registros[1] = competencia.getDescripcion();
+				registros[2] = competencia.getNivel();
+				registros[3] = competencia.getComentario();
 
 				return registros;
 			}
 
 			@Override
-			protected List<Medicion> buscar(String valor, String combo) {
+			protected List<Competencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
 		};
-		catalogo.setParent(catalogoMedicion);
+		catalogo.setParent(catalogoCompetencia);
 
 	}
 
 }
+

@@ -77,11 +77,11 @@ public class CArea extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 				
-				Area area = new Area();
-				area.setDescripcion(txtDescripcionArea.getValue());
-				area.setUsuario("JDE");
-				area.setFechaAuditoria(new Timestamp(new Date().getTime()));
-				area.setHoraAuditoria(horaAuditoria);
+				String descripcion = txtDescripcionArea.getValue();
+				String usuario = "JDE";
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
+				Area area = new Area(idArea, descripcion, usuario,
+						fechaAuditoria,horaAuditoria);
 				servicioArea.guardar(area);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();

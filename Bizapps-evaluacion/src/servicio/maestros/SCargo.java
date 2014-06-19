@@ -4,6 +4,7 @@ import interfacedao.maestros.ICargoDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,12 @@ public class SCargo {
 	public void eliminarUnCargo(int id) {
 		cargoDAO.delete(id);
 	}
+	
+	/* Servicio que permite eliminar varios cargos */
+	public void eliminarVariosCargos(List<Cargo> eliminar) {
+		cargoDAO.delete(eliminar);
+	}
+	
 	
 
 }
