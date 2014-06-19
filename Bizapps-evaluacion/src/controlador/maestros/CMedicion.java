@@ -168,6 +168,7 @@ public class CMedicion extends CGenerico {
 		idMedicion = 0;
 		txtDescripcionMedicion.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionMedicion.setFocus(true);
 
 	}
 

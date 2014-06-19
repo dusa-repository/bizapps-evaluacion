@@ -5,6 +5,7 @@ import interfacedao.maestros.ITipoFormacionDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.TipoFormacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class STipoFormacion {
 	/* Servicio que permite eliminar un tipo de formacion */
 	public void eliminarUnTipo(int id) {
 		tipoFormacionDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varios tipos de formacion*/
+	public void eliminarVariosTipos(List<TipoFormacion> eliminar) {
+		tipoFormacionDAO.delete(eliminar);
 	}
 	
 

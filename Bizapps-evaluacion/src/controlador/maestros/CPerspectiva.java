@@ -168,6 +168,7 @@ public class CPerspectiva extends CGenerico {
 		idPerspectiva = 0;
 		txtDescripcionPerspectiva.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionPerspectiva.setFocus(true);
 
 	}
 

@@ -1,6 +1,6 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVTipoFormacion">
+	<div id="divVTipoFormacion" apply="controlador.maestros.CTipoFormacion">
 		<groupbox width="auto" mold="3d"
 			title="TipoFormacion (VTipoFormacion)">
 			<div id="botoneraTipoFormacion" />

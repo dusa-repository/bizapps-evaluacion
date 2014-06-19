@@ -168,6 +168,7 @@ public class CArea extends CGenerico {
 		idArea = 0;
 		txtDescripcionArea.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionArea.setFocus(true);
 
 	}
 

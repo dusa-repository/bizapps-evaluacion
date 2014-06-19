@@ -76,7 +76,6 @@ public class CCargo extends CGenerico {
 								.getIdCargoAuxiliar());
 						txtEmpresaAuxiliarCargo.setValue(cargo
 								.getIdEmpresaAuxiliar());
-
 						txtDescripcionCargo.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -187,6 +186,7 @@ public class CCargo extends CGenerico {
 		txtCargoAuxiliarCargo.setValue("");
 		txtEmpresaAuxiliarCargo.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionCargo.setFocus(true);
 
 	}
 

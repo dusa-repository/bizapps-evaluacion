@@ -179,6 +179,7 @@ public class CCompetencia extends CGenerico {
 		txtNivelCompetencia.setValue("");
 		txtComentarioCompetencia.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionCompetencia.setFocus(true);
 
 	}
 

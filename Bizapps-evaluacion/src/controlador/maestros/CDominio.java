@@ -181,6 +181,7 @@ public class CDominio extends CGenerico {
 		txtTipoDominio.setValue("");
 		txtComentarioDominio.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionDominio.setFocus(true);
 
 	}
 

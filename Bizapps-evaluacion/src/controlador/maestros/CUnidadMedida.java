@@ -168,6 +168,7 @@ public class CUnidadMedida extends CGenerico {
 		idUnidadMedida = 0;
 		txtDescripcionUnidadMedida.setValue("");
 		catalogo.limpiarSeleccion();
+		txtDescripcionUnidadMedida.setFocus(true);
 
 	}
 
