@@ -116,8 +116,8 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<textbox placeholder="Peso"
-										mold="rounded" rows="1" width="100%" id="txtPeso" />
+									<spinner placeholder="Peso"
+										mold="rounded"  width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
 									<textbox value="0"
@@ -286,20 +286,20 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" />
+										id="txtValorResultado" readonly="true" value = "0"/>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant"
-										mold="rounded" width="100%" id="txtResFy" />
+									<spinner placeholder="Res.Fy.Ant" value = "0"
+										mold="rounded" width="100%" id="txtResFy" disabled = "true"/>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Resultado %"
-										mold="rounded" width="100%" id="txtResultadoPorc" />
+									<spinner placeholder="Resultado %" value = "0"
+										mold="rounded" width="100%" id="txtResultadoPorc" readonly="true" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" />
+										id="txtPesoPorc" readonly="true" value = "0"/>
 								</listcell>
 								<listcell>
 									<button id="btnOk2" width="auto"

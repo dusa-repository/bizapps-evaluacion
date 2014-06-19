@@ -36,6 +36,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -63,7 +64,7 @@ public class CObjetivos extends CGenerico {
 	@Wire
 	private Textbox txtCorresponsables;
 	@Wire
-	private Textbox txtPeso;
+	private Spinner txtPeso;
 	@Wire
 	private Textbox txtTotal;
 	@Wire
@@ -116,6 +117,7 @@ public class CObjetivos extends CGenerico {
 
 		 List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		 cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
+		 cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 		 
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -154,7 +156,7 @@ public class CObjetivos extends CGenerico {
 		 Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
 		 String objetivo =txtObjetivo.getValue();
 		 String corresponsables = txtCorresponsables.getValue();
-		 Double peso = Double.parseDouble(txtPeso.getValue());
+		 Double peso = Double.valueOf(txtPeso.getValue());
 		 EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo ();
 		 Integer linea = objetivosG.size() + 1;
 		 objetivoLista.setIdObjetivo(1);
@@ -188,7 +190,7 @@ public class CObjetivos extends CGenerico {
 		Integer idUsuario = u.getIdUsuario();
 		Integer evaluacion = Integer.parseInt(lblEvaluacion.getValue());
 		Integer idEvaluacion = servicioEvaluacion.buscarId()+1; 
-		Double peso = Double.parseDouble(txtPeso.getValue());
+		Double peso = Double.valueOf(txtPeso.getValue());
 		Evaluacion evaluacionEmpleado = new Evaluacion();
 		evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
 		evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");

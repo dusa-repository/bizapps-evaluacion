@@ -117,8 +117,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacionCompetencia servicioEvaluacionCompetencia;
 	@WireVariable("SReporte")
 	protected SReporte servicioReporte;
-
-	
+	protected static SimpleDateFormat formatoFecha = new SimpleDateFormat(
+			"dd-MM-yyyy");
 	public static  List<Tab> tabs = new ArrayList<Tab>();
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();

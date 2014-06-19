@@ -92,8 +92,8 @@
 								mold="rounded" rows="2" width="100%" id="txtCorresponsables" />
 						</listcell>
 						<listcell>
-							<textbox  placeholder="Peso"
-								mold="rounded" rows="1" width="100%" 
+							<spinner  placeholder="Peso"
+								mold="rounded"  width="100%" 
 								id="txtPeso" />
 						</listcell>
 						<listcell>

@@ -55,7 +55,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Textbox txtCompromisos;
 	@Wire
-	private Textbox txtIndicador; 
+	private Textbox txtIndicador;
 	@Wire
 	private Spinner txtPeso1;
 	@Wire
@@ -79,7 +79,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnOk2;
 	@Wire
-	private Button btnAgregarIndicador; 
+	private Button btnAgregarIndicador;
 	@Wire
 	private Button btnGuardarIndicador;
 	@Wire
@@ -111,7 +111,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Textbox txtCorresponsables;
 	@Wire
-	private Textbox txtPeso;
+	private Spinner txtPeso;
 	@Wire
 	private Textbox txtTotal;
 	@Wire
@@ -122,6 +122,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private Button btnCancelar;
 	@Wire
 	private Button btnCalculo;
+	@Wire
+	private Button btnCambiarEstado;
 	@Wire
 	private Listbox lbxCompetenciaRectora;
 	@Wire
@@ -162,15 +164,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 
-		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-		
 		List<Medicion> medicion = servicioMedicion.buscar();
 		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
 
 		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
 		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
-		
 
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
@@ -199,10 +197,12 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				String gerenciaReporte = empleado.getUnidadOrganizativa()
 						.getGerencia().getDescripcion();
 				String nombreTrabajador = empleado.getNombre();
-				
-				// Combo de Objetivos 
-				List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivos(ficha, numeroEvaluacion);
-				cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivo));
+
+				// Combo de Objetivos
+				List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+						.buscarObjetivos(ficha, numeroEvaluacion);
+				cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
+						evaluacionObjetivo));
 
 				// Listbox que contiene los objetivos
 				objetivosG = servicioEvaluacionObjetivo
@@ -298,6 +298,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Listen("onClick = #btnAgregar")
 	public void AgregarObjetivo() {
 		gpxAgregar.setOpen(true);
+		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
+		 cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 	}
 
 	@Listen("onClick = #btnOk")
@@ -341,7 +344,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 							.buscarId(Integer.parseInt(perspectivaCombo));
 					String objetivo = txtObjetivo.getValue();
 					String corresponsables = txtCorresponsables.getValue();
-					Double peso = Double.parseDouble(txtPeso.getValue());
+					Double peso = Double.valueOf(txtPeso.getValue());
 					EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 					Integer linea = objetivosG.size() + 1;
 					objetivoLista.setIdEvaluacion(idEvaluacion);
@@ -383,7 +386,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
 	}
-	
+
 	@Listen("onClick = #btnAgregarIndicador")
 	public void AgregarIndicador() {
 		gpxAgregarIndicador.setOpen(true);
@@ -391,57 +394,148 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
-		
-		if (cmbObjetivos.getText().compareTo("")==0 || cmbUnidad.getText().compareTo("")==0 
-		|| cmbMedicion.getText().compareTo("")==0 || txtPeso1.getText().compareTo("")==0 
-		|| txtValorMeta.getText().compareTo("")==0 || txtResFy.getText().compareTo("")==0 || txtIndicador.getText().compareTo("")==0
-		|| txtResultadoPorc.getText().compareTo("")==0 || txtPesoPorc.getText().compareTo("")==0 || txtValorMeta.getText().compareTo("")==0)
-		
+
+		if (cmbObjetivos.getText().compareTo("") == 0
+				|| cmbUnidad.getText().compareTo("") == 0
+				|| cmbMedicion.getText().compareTo("") == 0
+				|| txtPeso1.getText().compareTo("") == 0
+				|| txtValorMeta.getText().compareTo("") == 0
+				|| txtResFy.getText().compareTo("") == 0
+				|| txtIndicador.getText().compareTo("") == 0
+				|| txtResultadoPorc.getText().compareTo("") == 0
+				|| txtPesoPorc.getText().compareTo("") == 0
+				|| txtValorMeta.getText().compareTo("") == 0)
+
 		{
-			Messagebox.show("Debe llenar todos los campos",
-					"Advertencia", Messagebox.OK,
-					Messagebox.EXCLAMATION);
-		}	else {
+			Messagebox.show("Debe llenar todos los campos", "Advertencia",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		} else {
 			gpxAgregados.setOpen(true);
-		String indicador = txtIndicador.getValue();
-		String unidadCombo= cmbUnidad.getSelectedItem().getContext();
-		UnidadMedida  unidad = servicioUnidadMedida.buscarUnidad(Integer.parseInt(unidadCombo));
-		String medicionCombo= cmbMedicion.getSelectedItem().getContext();
-		Medicion medicion = servicioMedicion.buscarMedicion(Integer.parseInt(medicionCombo));
-		String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
-		Double peso = Double.valueOf(txtPeso1.getValue());
-		Double valorMeta = Double.valueOf(txtValorMeta.getValue());
-		Double valorResultado = Double.valueOf(txtValorResultado.getValue());
-		Double resFy = Double.valueOf(txtResFy.getValue());
-		Double resultadoPorc = Double.valueOf(txtResultadoPorc.getValue());
-		Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
-		Integer linea = indicadores.size() + 1;		
-		EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
-		indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
-		indicadorLista.setDescripcionIndicador(indicador);
-		indicadorLista.setMedicion(medicion);
-		indicadorLista.setUnidadMedida(unidad);
-		indicadorLista.setLinea(linea);
-		indicadorLista.setPeso(peso);
-		indicadorLista.setResultadoFyAnterior(resFy);
-		indicadorLista.setResultadoPeso(pesoPorc);
-		indicadorLista.setResultadoPorc(resultadoPorc);
-		indicadorLista.setValorMeta(valorMeta);
-		indicadorLista.setValorResultado(valorResultado);
-		indicadorLista.setTotal(0);
-		indicadores.add(indicadorLista);
-		lbxIndicadoresAgregados.setModel(new ListModelList<EvaluacionIndicador>(
-				indicadores));
-		servicioEvaluacionIndicador.guardar(indicadorLista);
-		Messagebox.show("Indicador para el objetivo" + " " + cmbObjetivos.getValue() + " " + "ha sido guardado exitosamente",
-				"Información", Messagebox.OK,
-				Messagebox.INFORMATION);
-		gpxAgregar.setOpen(false);
-		
-		limpiar ();
+			String indicador = txtIndicador.getValue();
+			String unidadCombo = cmbUnidad.getSelectedItem().getContext();
+			UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
+					.parseInt(unidadCombo));
+			String medicionCombo = cmbMedicion.getSelectedItem().getContext();
+			Medicion medicion = servicioMedicion.buscarMedicion(Integer
+					.parseInt(medicionCombo));
+			String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
+			Double peso = Double.valueOf(txtPeso1.getValue());
+			Double valorMeta = Double.valueOf(txtValorMeta.getValue());
+			Double valorResultado = Double
+					.valueOf(txtValorResultado.getValue());
+			Double resFy = Double.valueOf(txtResFy.getValue());
+			Double resultadoPorc = Double.valueOf(txtResultadoPorc.getValue());
+			Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
+			Integer linea = indicadores.size() + 1;
+			EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
+			indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
+			indicadorLista.setDescripcionIndicador(indicador);
+			indicadorLista.setMedicion(medicion);
+			indicadorLista.setUnidadMedida(unidad);
+			indicadorLista.setLinea(linea);
+			indicadorLista.setPeso(peso);
+			indicadorLista.setResultadoFyAnterior(resFy);
+			indicadorLista.setResultadoPeso(pesoPorc);
+			indicadorLista.setResultadoPorc(resultadoPorc);
+			indicadorLista.setValorMeta(valorMeta);
+			indicadorLista.setValorResultado(valorResultado);
+			indicadorLista.setTotal(0);
+			indicadores.add(indicadorLista);
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(
+							indicadores));
+			servicioEvaluacionIndicador.guardar(indicadorLista);
+			Messagebox.show(
+					"Indicador para el objetivo" + " "
+							+ cmbObjetivos.getValue() + " "
+							+ "ha sido guardado exitosamente", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+
+			limpiar();
+		}
+	}
+
+	@Listen("onClick = #btnCambiarEstado")
+	public void cambiarEstado() {
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("itemsCatalogo");
+		if (map != null) {
+			if (map.get("id") != null) {
+				Integer idEvaluacion = (Integer) map.get("id");
+				String fichaMap = (String) map.get("titulo");
+				Evaluacion evaluacion = servicioEvaluacion
+						.buscarEvaluacion(idEvaluacion);
+				System.out.println(evaluacion);
+				System.out.println(idEvaluacion);
+				Double sumaPeso = (double) 0;
+				for (int j = 0; j < objetivosG.size(); j++) {
+				Double peso = objetivosG.get(j).getPeso();
+				sumaPeso= sumaPeso + peso;
+				}
+				if (sumaPeso != 100){
+					Messagebox.show(
+							"La suma de los pesos de los objetivos debe ser igual a 100", "Información",
+							Messagebox.OK, Messagebox.INFORMATION);
+					
+				}
+				Double sumaPesoIndicador = (double) 0;
+				System.out.println(indicadores);
+				for (int k = 0; k < indicadores.size(); k++) {
+					System.out.println("entrooooooooooooooo");
+					Double peso = indicadores.get(k).getPeso();
+					System.out.println(peso);
+					sumaPesoIndicador= sumaPesoIndicador + peso;
+					System.out.println(sumaPesoIndicador);
+					}
+				System.out.println(sumaPesoIndicador);
+					if (sumaPesoIndicador != 0){
+						Messagebox.show(
+								"La suma de los pesos de los indicadores debe ser igual a 100", "Información",
+								Messagebox.OK, Messagebox.INFORMATION);
+						
+					}
+					
+					String estado = "PENDIENTE";
+					System.out.println(estado);
+					evaluacion.setEstadoEvaluacion(estado);
+					servicioEvaluacion.guardar(evaluacion);
+					Messagebox.show(
+							"La evalución ahora esta pendiente por revisar", "Información",
+							Messagebox.OK, Messagebox.INFORMATION);
+			}
+			
+		}
+	}
+
+	@Listen("onDoubleClick = #lbxObjetivosGuardados")
+	public void mostrarEvaluacion() {
+		gpxAgregar.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();	
+			if (listItem != null) {
+					
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem.getValue();
+				Integer linea = evaluacionObjetivo.getLinea();
+				String objetivo = evaluacionObjetivo.getDescripcionObjetivo();
+				String corresponsables =evaluacionObjetivo.getCorresponsables();
+				Double peso = evaluacionObjetivo.getPeso();
+				Perspectiva perspectiva = evaluacionObjetivo.getPerspectiva();
+				txtObjetivo.setValue(objetivo);
+				txtCorresponsables.setValue(corresponsables);
+//				txtPeso.setValue(peso);
+				cmbPerspectiva.setValue(perspectiva.getDescripcion());
+			}
 		}
 	}
 	
-	
-
+	@Listen("onSelect = #cmbMedicion")
+	public void mostrarResAnterior(){
+		txtResFy.setDisabled(true);
+		if (cmbMedicion.getValue().equals("CONTINUA")){
+			System.out.println("entroooooooooooo");
+			txtResFy.setDisabled(false);
+		}
+	}
 }

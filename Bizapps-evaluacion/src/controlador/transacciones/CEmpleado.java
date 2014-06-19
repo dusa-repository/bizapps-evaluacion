@@ -135,7 +135,7 @@ public class CEmpleado extends CGenerico {
 		for (int i = 0; i < arboles.size(); i++) {
 			String ficha = jefe.getFicha();
 			if (arboles.get(i).getFicha().equals(ficha)) {
-				oneLevelNode = new Nodos(root, i, arboles.get(i).getNombre(), arboles.get(i).getFicha());
+				oneLevelNode = new Nodos(root, i, arboles.get(i).getCargo().getIdCargo() + " " + arboles.get(i).getNombre(), arboles.get(i).getFicha());
 //				oneLevelNode = new Nodos(root, i, "("
 //						+ arboles.get(i).getGradoAuxiliar() + ")" + "  "
 //						+ arboles.get(i).getFicha());
@@ -147,7 +147,7 @@ public class CEmpleado extends CGenerico {
 				for (int j = i; j < hijos.size(); j++) {
 					if (temp1.equals(hijos.get(j).getFichaSupervisor())) {
 						
-						twoLevelNode =  new Nodos(root, i, hijos.get(i).getNombre(), hijos.get(i).getFicha());
+						twoLevelNode =  new Nodos(root, i, hijos.get(i).getCargo().getIdCargo() + " " + hijos.get(i).getNombre() , hijos.get(i).getFicha());
 //								new Nodos(oneLevelNode, i, "("
 //								+ hijos.get(i).getGradoAuxiliar() + ")" + "  "
 //								+ hijos.get(j).getNombre());
@@ -161,7 +161,7 @@ public class CEmpleado extends CGenerico {
 							if (temp2
 									.equals(hijos2.get(k).getFichaSupervisor())) {
 
-								threeLevelNode = new Nodos(root, i, hijos2.get(i).getNombre(), hijos2.get(i).getFicha());
+								threeLevelNode = new Nodos(root, i, hijos2.get(i).getCargo().getIdCargo() + " " + hijos2.get(i).getNombre(), hijos2.get(i).getFicha());
 //										new Nodos(twoLevelNode, i, "("
 //										+ hijos2.get(i).getGradoAuxiliar()
 //										+ ")" + "  "
@@ -175,7 +175,7 @@ public class CEmpleado extends CGenerico {
 
 									if (temp3.equals(hijos3.get(z)
 											.getFichaSupervisor())) {
-										fourLevelNode = new Nodos(root, i, hijos3.get(i).getNombre(), hijos3.get(i).getFicha());
+										fourLevelNode = new Nodos(root, i, hijos3.get(i).getCargo().getIdCargo() + " " + hijos3.get(i).getNombre(), hijos3.get(i).getFicha());
 												
 //												new Nodos(
 //												threeLevelNode, i, hijos3
