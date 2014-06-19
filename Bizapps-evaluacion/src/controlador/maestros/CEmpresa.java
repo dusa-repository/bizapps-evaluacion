@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Gerencia;
+import modelos.Empresa;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -25,33 +25,41 @@ import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
 
-public class CGerencia extends CGenerico {
+public class CEmpresa extends CGenerico {
 
 	@Wire
-	private Div divVGerencia;
+	private Div divVEmpresa;
 	@Wire
-	private Div botoneraGerencia;
+	private Div botoneraEmpresa;
 	@Wire
-	private Groupbox gpxRegistroGerencia;
+	private Groupbox gpxRegistroEmpresa;
 	@Wire
-	private Textbox txtDescripcionGerencia;
+	private Textbox txtNombreEmpresa;
 	@Wire
-	private Groupbox gpxDatosGerencia;
+	private Textbox txtDireccionEmpresa;
 	@Wire
-	private Div catalogoGerencia;
+	private Textbox txtTelefono1Empresa;
+	@Wire
+	private Textbox txtTelefono2Empresa;
+	@Wire
+	private Textbox txtEmpresaAuxiliarEmpresa;
+	@Wire
+	private Groupbox gpxDatosEmpresa;
+	@Wire
+	private Div catalogoEmpresa;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	private int idGerencia = 0;
+	private int idEmpresa = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
-	Catalogo<Gerencia> catalogo;
+	Catalogo<Empresa> catalogo;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionGerencia.setFocus(true);
+		txtNombreEmpresa.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -62,31 +70,41 @@ public class CGerencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Gerencia gerencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idGerencia = gerencia.getIdGerencia();
-						txtDescripcionGerencia.setValue(gerencia.getDescripcion());
-						txtDescripcionGerencia.setFocus(true);
+						Empresa empresa = catalogo
+								.objetoSeleccionadoDelCatalogo();
+						idEmpresa = empresa.getIdEmpresa();
+						txtNombreEmpresa.setValue(empresa.getNombre());
+						txtDireccionEmpresa.setValue(empresa.getDireccion());
+						txtTelefono1Empresa.setValue(empresa.getTelefono1());
+						txtTelefono2Empresa.setValue(empresa.getTelefono2());
+						txtEmpresaAuxiliarEmpresa.setValue(empresa
+								.getIdEmpresaAuxiliar());
+						txtNombreEmpresa.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionGerencia.getValue();
+
+				String nombre = txtNombreEmpresa.getValue();
+				String direccion = txtDireccionEmpresa.getValue();
+				String telefono1 = txtTelefono1Empresa.getValue();
+				String telefono2 = txtTelefono2Empresa.getValue();
+				String idEmpresaAuxiliar = txtEmpresaAuxiliarEmpresa.getValue();
 				String usuario = "JDE";
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
-						fechaAuditoria, horaAuditoria, usuario);
-				servicioGerencia.guardar(gerencia);
+				Empresa empresa = new Empresa(idEmpresa,direccion, fechaAuditoria,
+						 horaAuditoria, idEmpresaAuxiliar, nombre,
+						telefono1, telefono2, usuario);
+				servicioEmpresa.guardar(empresa);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
-				catalogo.actualizarLista(servicioGerencia.buscarTodas());
-				
+				catalogo.actualizarLista(servicioEmpresa.buscarTodas());
+
 			}
 
 			@Override
@@ -99,16 +117,16 @@ public class CGerencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVGerencia, "Gerencia");
+				cerrarVentana(divVEmpresa, "Empresa");
 			}
 
 			@Override
 			public void eliminar() {
 				// TODO Auto-generated method stub
-				if (gpxDatosGerencia.isOpen()) {
+				if (gpxDatosEmpresa.isOpen()) {
 					/* Elimina Varios Registros */
 					if (validarSeleccion()) {
-						final List<Gerencia> eliminarLista = catalogo
+						final List<Empresa> eliminarLista = catalogo
 								.obtenerSeleccionados();
 						Messagebox
 								.show("¿Desea Eliminar los "
@@ -121,10 +139,10 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarVariasGerencias(eliminarLista);
+													servicioEmpresa
+															.eliminarVariasEmpresas(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													catalogo.actualizarLista(servicioGerencia
+													catalogo.actualizarLista(servicioEmpresa
 															.buscarTodas());
 												}
 											}
@@ -132,7 +150,7 @@ public class CGerencia extends CGenerico {
 					}
 				} else {
 					/* Elimina un solo registro */
-					if (idGerencia != 0) {
+					if (idEmpresa != 0) {
 						Messagebox
 								.show(Mensaje.deseaEliminar,
 										"Alerta",
@@ -143,11 +161,12 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarUnaGerencia(idGerencia);
+													servicioEmpresa
+															.eliminarUnaEmpresa(idEmpresa);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioGerencia.buscarTodas());
+													catalogo.actualizarLista(servicioEmpresa
+															.buscarTodas());
 												}
 											}
 										});
@@ -160,37 +179,44 @@ public class CGerencia extends CGenerico {
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
-		botoneraGerencia.appendChild(botonera);
+		botoneraEmpresa.appendChild(botonera);
 
 	}
 
 	public void limpiarCampos() {
-		idGerencia = 0;
-		txtDescripcionGerencia.setValue("");
+		idEmpresa = 0;
+		txtNombreEmpresa.setValue("");
+		txtDireccionEmpresa.setValue("");
+		txtTelefono1Empresa.setValue("");
+		txtTelefono2Empresa.setValue("");
+		txtEmpresaAuxiliarEmpresa.setValue("");
 		catalogo.limpiarSeleccion();
-		txtDescripcionGerencia.setFocus(true);
+		txtNombreEmpresa.setFocus(true);
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionGerencia.getText().compareTo("") != 0) {
+		if (txtNombreEmpresa.getText().compareTo("") != 0
+				|| txtDireccionEmpresa.getText().compareTo("") != 0
+				|| txtTelefono1Empresa.getText().compareTo("") != 0
+				|| txtTelefono2Empresa.getText().compareTo("") != 0
+				|| txtEmpresaAuxiliarEmpresa.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
 	}
-	
-	
-	@Listen("onClick = #gpxRegistroGerencia")
+
+	@Listen("onClick = #gpxRegistroEmpresa")
 	public void abrirRegistro() {
-		gpxDatosGerencia.setOpen(false);
-		gpxRegistroGerencia.setOpen(true);
+		gpxDatosEmpresa.setOpen(false);
+		gpxRegistroEmpresa.setOpen(true);
 		mostrarBotones(false);
 
 	}
-	
-	@Listen("onOpen = #gpxDatosGerencia")
+
+	@Listen("onOpen = #gpxDatosEmpresa")
 	public void abrirCatalogo() {
-		gpxDatosGerencia.setOpen(false);
+		gpxDatosEmpresa.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
 					| Messagebox.NO, Messagebox.QUESTION,
@@ -198,12 +224,12 @@ public class CGerencia extends CGenerico {
 						public void onEvent(Event evt)
 								throws InterruptedException {
 							if (evt.getName().equals("onYes")) {
-								gpxDatosGerencia.setOpen(false);
-								gpxRegistroGerencia.setOpen(true);
+								gpxDatosEmpresa.setOpen(false);
+								gpxRegistroEmpresa.setOpen(true);
 							} else {
 								if (evt.getName().equals("onNo")) {
-									gpxDatosGerencia.setOpen(true);
-									gpxRegistroGerencia.setOpen(false);
+									gpxDatosEmpresa.setOpen(true);
+									gpxRegistroEmpresa.setOpen(false);
 									limpiarCampos();
 									mostrarBotones(true);
 								}
@@ -211,16 +237,14 @@ public class CGerencia extends CGenerico {
 						}
 					});
 		} else {
-			gpxDatosGerencia.setOpen(true);
-			gpxRegistroGerencia.setOpen(false);
+			gpxDatosEmpresa.setOpen(true);
+			gpxRegistroEmpresa.setOpen(false);
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
-		List<Gerencia> seleccionados = catalogo.obtenerSeleccionados();
+		List<Empresa> seleccionados = catalogo.obtenerSeleccionados();
 		if (seleccionados == null) {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 			return false;
@@ -243,20 +267,30 @@ public class CGerencia extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
-		catalogo = new Catalogo<Gerencia>(catalogoGerencia, "Catalogo de Gerencias",
-				listGerencia, "Código gerencia", "Descripción") {
+		final List<Empresa> listEmpresa = servicioEmpresa.buscarTodas();
+		catalogo = new Catalogo<Empresa>(catalogoEmpresa,
+				"Catalogo de Empresas", listEmpresa, "Código empresa",
+				"Nombre", "Dirección", "Teléfono 1", "Teléfono 2",
+				"Empresa Auxiliar") {
 
 			@Override
-			protected List<Gerencia> buscarCampos(List<String> valores) {
-				List<Gerencia> lista = new ArrayList<Gerencia>();
+			protected List<Empresa> buscarCampos(List<String> valores) {
+				List<Empresa> lista = new ArrayList<Empresa>();
 
-				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getIdGerencia()).toLowerCase()
+				for (Empresa empresa : listEmpresa) {
+					if (String.valueOf(empresa.getIdEmpresa()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& gerencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
-						lista.add(gerencia);
+							&& empresa.getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& empresa.getDireccion().toLowerCase()
+									.startsWith(valores.get(2))
+							&& empresa.getTelefono1().toLowerCase()
+									.startsWith(valores.get(3))
+							&& empresa.getTelefono2().toLowerCase()
+									.startsWith(valores.get(4))
+							&& empresa.getIdEmpresaAuxiliar().toLowerCase()
+									.startsWith(valores.get(5))) {
+						lista.add(empresa);
 					}
 				}
 				return lista;
@@ -264,22 +298,26 @@ public class CGerencia extends CGenerico {
 			}
 
 			@Override
-			protected String[] crearRegistros(Gerencia gerencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getIdGerencia());
-				registros[1] = gerencia.getDescripcion();
+			protected String[] crearRegistros(Empresa empresa) {
+				String[] registros = new String[6];
+				registros[0] = String.valueOf(empresa.getIdEmpresa());
+				registros[1] = empresa.getNombre();
+				registros[2] = empresa.getDireccion();
+				registros[3] = empresa.getTelefono1();
+				registros[4] = empresa.getTelefono2();
+				registros[5] = empresa.getIdEmpresaAuxiliar();
 
 				return registros;
 			}
 
 			@Override
-			protected List<Gerencia> buscar(String valor, String combo) {
+			protected List<Empresa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
 		};
-		catalogo.setParent(catalogoGerencia);
+		catalogo.setParent(catalogoEmpresa);
 
 	}
 

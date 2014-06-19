@@ -4,6 +4,7 @@ import interfacedao.maestros.IDominioDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Cargo;
 import modelos.Dominio;
 import modelos.NivelCompetenciaCargo;
@@ -49,6 +50,11 @@ public class SDominio {
 	/* Servicio que permite eliminar un dominio */
 	public void eliminarUnDominio(int id) {
 		dominioDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varios dominios */
+	public void eliminarVariosDominios(List<Dominio> eliminar) {
+		dominioDAO.delete(eliminar);
 	}
 	
 

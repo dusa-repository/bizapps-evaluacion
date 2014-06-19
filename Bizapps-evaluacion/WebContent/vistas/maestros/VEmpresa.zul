@@ -1,6 +1,6 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVEmpresa">
+	<div id="divVEmpresa" apply="controlador.maestros.CEmpresa">
 		<groupbox width="auto" mold="3d" title="Empresa (VEmpresa)">
 			<div id="botoneraEmpresa" />
 			<separator />

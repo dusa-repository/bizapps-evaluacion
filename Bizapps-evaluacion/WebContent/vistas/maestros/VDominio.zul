@@ -1,8 +1,8 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVDominio">
+	<div id="divVDominio"  apply="controlador.maestros.CDominio">
 		<groupbox width="auto" mold="3d" title="Dominio (VDominio)">
-			<div id="botoneraDominio" />
+			<div id="botoneraDominio"/>
 			<separator />
 			<groupbox id="gpxRegistroDominio" width="auto" title=""
 				open="false">

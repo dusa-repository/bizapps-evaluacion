@@ -1,6 +1,6 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVPeriodo">
+	<div id="divVPeriodo" apply="controlador.maestros.CPeriodo">
 		<groupbox width="auto" mold="3d" title="Periodo (VPeriodo)">
 			<div id="botoneraPeriodo" />
 			<separator />
@@ -47,11 +47,13 @@
 								tabindex="4" id="dtbFechaFinPeriodo" format="dd-MM-yyyy"
 								tooltiptext="Ingrese la fecha final del periodo" />
 						</row>
+						<row>
+							<label value="Estado:" class="etiqueta" />
 
-
-
-
-
+							<textbox id="txtEstadoPeriodo" width="80%"
+								maxlength="20" tabindex="1"
+								tooltiptext="Ingrese aqui el estado del periodo" />
+						</row>
 					</rows>
 				</grid>
 			</groupbox>

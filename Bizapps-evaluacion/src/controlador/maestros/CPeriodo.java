@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Gerencia;
+import modelos.Periodo;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -25,33 +25,41 @@ import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
 
-public class CGerencia extends CGenerico {
+public class CPeriodo extends CGenerico {
 
 	@Wire
-	private Div divVGerencia;
+	private Div divVPeriodo;
 	@Wire
-	private Div botoneraGerencia;
+	private Div botoneraPeriodo;
 	@Wire
-	private Groupbox gpxRegistroGerencia;
+	private Groupbox gpxRegistroPeriodo;
 	@Wire
-	private Textbox txtDescripcionGerencia;
+	private Textbox txtNombrePeriodo;
 	@Wire
-	private Groupbox gpxDatosGerencia;
+	private Textbox txtDescripcionPeriodo;
 	@Wire
-	private Div catalogoGerencia;
+	private Datebox dtbFechaInicioPeriodo;
+	@Wire
+	private Datebox dtbFechaFinPeriodo;
+	@Wire
+	private Textbox txtEstadoPeriodo;
+	@Wire
+	private Groupbox gpxDatosPeriodo;
+	@Wire
+	private Div catalogoPeriodo;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	private int idGerencia = 0;
+	private int idPeriodo = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
-	Catalogo<Gerencia> catalogo;
+	Catalogo<Periodo> catalogo;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionGerencia.setFocus(true);
+		txtNombrePeriodo.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -62,31 +70,42 @@ public class CGerencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Gerencia gerencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idGerencia = gerencia.getIdGerencia();
-						txtDescripcionGerencia.setValue(gerencia.getDescripcion());
-						txtDescripcionGerencia.setFocus(true);
+						Periodo periodo = catalogo
+								.objetoSeleccionadoDelCatalogo();
+						idPeriodo = periodo.getIdPeriodo();
+						txtNombrePeriodo.setValue(periodo.getDescripcion());
+						txtDescripcionPeriodo
+								.setValue(periodo.getDescripcion());
+						dtbFechaInicioPeriodo
+								.setValue(periodo.getFechaInicio());
+						dtbFechaFinPeriodo.setValue(periodo.getFechaFin());
+						txtEstadoPeriodo.setValue(periodo.getEstadoPeriodo());
+						txtNombrePeriodo.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionGerencia.getValue();
+
+				String nombre = txtNombrePeriodo.getValue();
+				String descripcion = txtDescripcionPeriodo.getValue();
+				Timestamp fechaInicio = new java.sql.Timestamp(dtbFechaInicioPeriodo.getValue().getTime());
+				Timestamp fechaFin = new java.sql.Timestamp(dtbFechaFinPeriodo.getValue().getTime());
 				String usuario = "JDE";
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
-						fechaAuditoria, horaAuditoria, usuario);
-				servicioGerencia.guardar(gerencia);
+				String estadoPeriodo = txtEstadoPeriodo.getValue();
+				Periodo periodo = new Periodo(idPeriodo, descripcion,
+						estadoPeriodo, fechaAuditoria, fechaFin, fechaInicio,
+						horaAuditoria, nombre, usuario);
+				servicioPeriodo.guardar(periodo);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
-				catalogo.actualizarLista(servicioGerencia.buscarTodas());
-				
+				catalogo.actualizarLista(servicioPeriodo.buscarTodos());
+
 			}
 
 			@Override
@@ -99,16 +118,16 @@ public class CGerencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVGerencia, "Gerencia");
+				cerrarVentana(divVPeriodo, "Periodo");
 			}
 
 			@Override
 			public void eliminar() {
 				// TODO Auto-generated method stub
-				if (gpxDatosGerencia.isOpen()) {
+				if (gpxDatosPeriodo.isOpen()) {
 					/* Elimina Varios Registros */
 					if (validarSeleccion()) {
-						final List<Gerencia> eliminarLista = catalogo
+						final List<Periodo> eliminarLista = catalogo
 								.obtenerSeleccionados();
 						Messagebox
 								.show("¿Desea Eliminar los "
@@ -121,18 +140,18 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarVariasGerencias(eliminarLista);
+													servicioPeriodo
+															.eliminarVariosPeriodos(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													catalogo.actualizarLista(servicioGerencia
-															.buscarTodas());
+													catalogo.actualizarLista(servicioPeriodo
+															.buscarTodos());
 												}
 											}
 										});
 					}
 				} else {
 					/* Elimina un solo registro */
-					if (idGerencia != 0) {
+					if (idPeriodo != 0) {
 						Messagebox
 								.show(Mensaje.deseaEliminar,
 										"Alerta",
@@ -143,11 +162,12 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarUnaGerencia(idGerencia);
+													servicioPeriodo
+															.eliminarUnPeriodo(idPeriodo);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioGerencia.buscarTodas());
+													catalogo.actualizarLista(servicioPeriodo
+															.buscarTodos());
 												}
 											}
 										});
@@ -160,37 +180,39 @@ public class CGerencia extends CGenerico {
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
-		botoneraGerencia.appendChild(botonera);
+		botoneraPeriodo.appendChild(botonera);
 
 	}
 
 	public void limpiarCampos() {
-		idGerencia = 0;
-		txtDescripcionGerencia.setValue("");
+		idPeriodo = 0;
+		txtNombrePeriodo.setValue("");
+		txtDescripcionPeriodo.setValue("");
+		dtbFechaInicioPeriodo.setValue(null);
+		dtbFechaFinPeriodo.setValue(null);
+		txtEstadoPeriodo.setValue("");
 		catalogo.limpiarSeleccion();
-		txtDescripcionGerencia.setFocus(true);
-
+		txtNombrePeriodo.setFocus(true);
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionGerencia.getText().compareTo("") != 0) {
+		if (txtNombrePeriodo.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
 	}
-	
-	
-	@Listen("onClick = #gpxRegistroGerencia")
+
+	@Listen("onClick = #gpxRegistroPeriodo")
 	public void abrirRegistro() {
-		gpxDatosGerencia.setOpen(false);
-		gpxRegistroGerencia.setOpen(true);
+		gpxDatosPeriodo.setOpen(false);
+		gpxRegistroPeriodo.setOpen(true);
 		mostrarBotones(false);
 
 	}
-	
-	@Listen("onOpen = #gpxDatosGerencia")
+
+	@Listen("onOpen = #gpxDatosPeriodo")
 	public void abrirCatalogo() {
-		gpxDatosGerencia.setOpen(false);
+		gpxDatosPeriodo.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
 					| Messagebox.NO, Messagebox.QUESTION,
@@ -198,12 +220,12 @@ public class CGerencia extends CGenerico {
 						public void onEvent(Event evt)
 								throws InterruptedException {
 							if (evt.getName().equals("onYes")) {
-								gpxDatosGerencia.setOpen(false);
-								gpxRegistroGerencia.setOpen(true);
+								gpxDatosPeriodo.setOpen(false);
+								gpxRegistroPeriodo.setOpen(true);
 							} else {
 								if (evt.getName().equals("onNo")) {
-									gpxDatosGerencia.setOpen(true);
-									gpxRegistroGerencia.setOpen(false);
+									gpxDatosPeriodo.setOpen(true);
+									gpxRegistroPeriodo.setOpen(false);
 									limpiarCampos();
 									mostrarBotones(true);
 								}
@@ -211,16 +233,14 @@ public class CGerencia extends CGenerico {
 						}
 					});
 		} else {
-			gpxDatosGerencia.setOpen(true);
-			gpxRegistroGerencia.setOpen(false);
+			gpxDatosPeriodo.setOpen(true);
+			gpxRegistroPeriodo.setOpen(false);
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
-		List<Gerencia> seleccionados = catalogo.obtenerSeleccionados();
+		List<Periodo> seleccionados = catalogo.obtenerSeleccionados();
 		if (seleccionados == null) {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 			return false;
@@ -243,20 +263,35 @@ public class CGerencia extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
-		catalogo = new Catalogo<Gerencia>(catalogoGerencia, "Catalogo de Gerencias",
-				listGerencia, "Código gerencia", "Descripción") {
+		final List<Periodo> listPeriodo = servicioPeriodo.buscarTodos();
+		catalogo = new Catalogo<Periodo>(catalogoPeriodo,
+				"Catalogo de Periodos", listPeriodo, "Código periodo",
+				"Nombre", "Descripción", "Fecha Inicio", "Fecha Fin", "Estado") {
 
 			@Override
-			protected List<Gerencia> buscarCampos(List<String> valores) {
-				List<Gerencia> lista = new ArrayList<Gerencia>();
+			protected List<Periodo> buscarCampos(List<String> valores) {
+				List<Periodo> lista = new ArrayList<Periodo>();
 
-				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getIdGerencia()).toLowerCase()
+				for (Periodo periodo : listPeriodo) {
+					if (String.valueOf(periodo.getIdPeriodo()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& gerencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
-						lista.add(gerencia);
+							&& periodo.getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& periodo.getDescripcion().toLowerCase()
+									.startsWith(valores.get(2))
+							&& String
+									.valueOf(
+											formatoFecha.format(periodo
+													.getFechaInicio()))
+									.toLowerCase().startsWith(valores.get(3))
+							&& String
+									.valueOf(
+											formatoFecha.format(periodo
+													.getFechaFin()))
+									.toLowerCase().startsWith(valores.get(4))
+							&& periodo.getEstadoPeriodo().toLowerCase()
+									.startsWith(valores.get(5))) {
+						lista.add(periodo);
 					}
 				}
 				return lista;
@@ -264,22 +299,26 @@ public class CGerencia extends CGenerico {
 			}
 
 			@Override
-			protected String[] crearRegistros(Gerencia gerencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getIdGerencia());
-				registros[1] = gerencia.getDescripcion();
+			protected String[] crearRegistros(Periodo periodo) {
+				String[] registros = new String[6];
+				registros[0] = String.valueOf(periodo.getIdPeriodo());
+				registros[1] = periodo.getNombre();
+				registros[2] = periodo.getDescripcion();
+				registros[3] = formatoFecha.format(periodo.getFechaInicio());
+				registros[4] = formatoFecha.format(periodo.getFechaFin());
+				registros[5] = periodo.getEstadoPeriodo();
 
 				return registros;
 			}
 
 			@Override
-			protected List<Gerencia> buscar(String valor, String combo) {
+			protected List<Periodo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
 		};
-		catalogo.setParent(catalogoGerencia);
+		catalogo.setParent(catalogoPeriodo);
 
 	}
 

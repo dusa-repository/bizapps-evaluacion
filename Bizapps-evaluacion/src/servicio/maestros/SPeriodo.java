@@ -4,6 +4,7 @@ import interfacedao.maestros.IPeriodoDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Periodo;
 import modelos.Revision;
 
@@ -39,13 +40,7 @@ public class SPeriodo {
 	}
 	
 	
-//	/* Servicio que permite buscar los periodos de acuerdo a un estado */
-//	public List<Periodo> buscarPorEstado(String estado) {
-//		List<Periodo> periodos;
-//		periodos = periodoDAO.findByEstadoPeriodo(estado);
-//		return periodos;
-//	}
-	
+
 	public String  buscarPorEstado(String estado) {
 		return  periodoDAO.findByEstadoPeriodo(estado);
 	
@@ -57,6 +52,11 @@ public class SPeriodo {
 		periodoDAO.delete(id);
 	}
 	
+	
+	/* Servicio que permite eliminar varios periodos */
+	public void eliminarVariosPeriodos(List<Periodo> eliminar) {
+		periodoDAO.delete(eliminar);
+	}
 	
 	
 	

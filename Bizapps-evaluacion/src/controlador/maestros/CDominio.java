@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Gerencia;
+import modelos.Dominio;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -25,33 +25,37 @@ import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
 
-public class CGerencia extends CGenerico {
+public class CDominio extends CGenerico {
 
 	@Wire
-	private Div divVGerencia;
+	private Div divVDominio;
 	@Wire
-	private Div botoneraGerencia;
+	private Div botoneraDominio;
 	@Wire
-	private Groupbox gpxRegistroGerencia;
+	private Groupbox gpxRegistroDominio;
 	@Wire
-	private Textbox txtDescripcionGerencia;
+	private Textbox txtDescripcionDominio;
 	@Wire
-	private Groupbox gpxDatosGerencia;
+	private Textbox txtTipoDominio;
 	@Wire
-	private Div catalogoGerencia;
+	private Textbox txtComentarioDominio;
+	@Wire
+	private Groupbox gpxDatosDominio;
+	@Wire
+	private Div catalogoDominio;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	private int idGerencia = 0;
+	private int idDominio = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
-	Catalogo<Gerencia> catalogo;
+	Catalogo<Dominio> catalogo;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionGerencia.setFocus(true);
+		txtDescripcionDominio.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -62,31 +66,37 @@ public class CGerencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Gerencia gerencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idGerencia = gerencia.getIdGerencia();
-						txtDescripcionGerencia.setValue(gerencia.getDescripcion());
-						txtDescripcionGerencia.setFocus(true);
+						Dominio dominio = catalogo
+								.objetoSeleccionadoDelCatalogo();
+						idDominio = dominio.getIdDominio();
+						txtDescripcionDominio.setValue(dominio
+								.getDescripcionDominio());
+						txtTipoDominio.setValue(dominio.getTipo());
+						txtComentarioDominio.setValue(dominio.getComentario());
+						txtDescripcionDominio.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionGerencia.getValue();
+
+				String descripcionDominio = txtDescripcionDominio.getValue();
+				String tipo = txtTipoDominio.getValue();
+				String comentario = txtComentarioDominio.getValue();
 				String usuario = "JDE";
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
-						fechaAuditoria, horaAuditoria, usuario);
-				servicioGerencia.guardar(gerencia);
+				Dominio dominio = new Dominio(idDominio, comentario,
+						descripcionDominio, tipo, usuario, fechaAuditoria,
+						horaAuditoria);
+				servicioDominio.guardar(dominio);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
-				catalogo.actualizarLista(servicioGerencia.buscarTodas());
-				
+				catalogo.actualizarLista(servicioDominio.buscarTodos());
+
 			}
 
 			@Override
@@ -99,16 +109,16 @@ public class CGerencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVGerencia, "Gerencia");
+				cerrarVentana(divVDominio, "Dominio");
 			}
 
 			@Override
 			public void eliminar() {
 				// TODO Auto-generated method stub
-				if (gpxDatosGerencia.isOpen()) {
+				if (gpxDatosDominio.isOpen()) {
 					/* Elimina Varios Registros */
 					if (validarSeleccion()) {
-						final List<Gerencia> eliminarLista = catalogo
+						final List<Dominio> eliminarLista = catalogo
 								.obtenerSeleccionados();
 						Messagebox
 								.show("¿Desea Eliminar los "
@@ -121,18 +131,18 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarVariasGerencias(eliminarLista);
+													servicioDominio
+															.eliminarVariosDominios(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													catalogo.actualizarLista(servicioGerencia
-															.buscarTodas());
+													catalogo.actualizarLista(servicioDominio
+															.buscarTodos());
 												}
 											}
 										});
 					}
 				} else {
 					/* Elimina un solo registro */
-					if (idGerencia != 0) {
+					if (idDominio != 0) {
 						Messagebox
 								.show(Mensaje.deseaEliminar,
 										"Alerta",
@@ -143,11 +153,12 @@ public class CGerencia extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGerencia
-															.eliminarUnaGerencia(idGerencia);
+													servicioDominio
+															.eliminarUnDominio(idDominio);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioGerencia.buscarTodas());
+													catalogo.actualizarLista(servicioDominio
+															.buscarTodos());
 												}
 											}
 										});
@@ -160,37 +171,39 @@ public class CGerencia extends CGenerico {
 		};
 		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
-		botoneraGerencia.appendChild(botonera);
+		botoneraDominio.appendChild(botonera);
 
 	}
 
 	public void limpiarCampos() {
-		idGerencia = 0;
-		txtDescripcionGerencia.setValue("");
+		idDominio = 0;
+		txtDescripcionDominio.setValue("");
+		txtTipoDominio.setValue("");
+		txtComentarioDominio.setValue("");
 		catalogo.limpiarSeleccion();
-		txtDescripcionGerencia.setFocus(true);
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionGerencia.getText().compareTo("") != 0) {
+		if (txtDescripcionDominio.getText().compareTo("") != 0
+				|| txtTipoDominio.getText().compareTo("") != 0
+				|| txtComentarioDominio.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
 	}
-	
-	
-	@Listen("onClick = #gpxRegistroGerencia")
+
+	@Listen("onClick = #gpxRegistroDominio")
 	public void abrirRegistro() {
-		gpxDatosGerencia.setOpen(false);
-		gpxRegistroGerencia.setOpen(true);
+		gpxDatosDominio.setOpen(false);
+		gpxRegistroDominio.setOpen(true);
 		mostrarBotones(false);
 
 	}
-	
-	@Listen("onOpen = #gpxDatosGerencia")
+
+	@Listen("onOpen = #gpxDatosDominio")
 	public void abrirCatalogo() {
-		gpxDatosGerencia.setOpen(false);
+		gpxDatosDominio.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
 					| Messagebox.NO, Messagebox.QUESTION,
@@ -198,12 +211,12 @@ public class CGerencia extends CGenerico {
 						public void onEvent(Event evt)
 								throws InterruptedException {
 							if (evt.getName().equals("onYes")) {
-								gpxDatosGerencia.setOpen(false);
-								gpxRegistroGerencia.setOpen(true);
+								gpxDatosDominio.setOpen(false);
+								gpxRegistroDominio.setOpen(true);
 							} else {
 								if (evt.getName().equals("onNo")) {
-									gpxDatosGerencia.setOpen(true);
-									gpxRegistroGerencia.setOpen(false);
+									gpxDatosDominio.setOpen(true);
+									gpxRegistroDominio.setOpen(false);
 									limpiarCampos();
 									mostrarBotones(true);
 								}
@@ -211,16 +224,14 @@ public class CGerencia extends CGenerico {
 						}
 					});
 		} else {
-			gpxDatosGerencia.setOpen(true);
-			gpxRegistroGerencia.setOpen(false);
+			gpxDatosDominio.setOpen(true);
+			gpxRegistroDominio.setOpen(false);
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
-		List<Gerencia> seleccionados = catalogo.obtenerSeleccionados();
+		List<Dominio> seleccionados = catalogo.obtenerSeleccionados();
 		if (seleccionados == null) {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 			return false;
@@ -243,20 +254,25 @@ public class CGerencia extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
-		catalogo = new Catalogo<Gerencia>(catalogoGerencia, "Catalogo de Gerencias",
-				listGerencia, "Código gerencia", "Descripción") {
+		final List<Dominio> listDominio = servicioDominio.buscarTodos();
+		catalogo = new Catalogo<Dominio>(catalogoDominio,
+				"Catalogo de Dominios", listDominio, "Código dominio",
+				"Descripción", "Tipo", "Comentario") {
 
 			@Override
-			protected List<Gerencia> buscarCampos(List<String> valores) {
-				List<Gerencia> lista = new ArrayList<Gerencia>();
+			protected List<Dominio> buscarCampos(List<String> valores) {
+				List<Dominio> lista = new ArrayList<Dominio>();
 
-				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getIdGerencia()).toLowerCase()
+				for (Dominio dominio : listDominio) {
+					if (String.valueOf(dominio.getIdDominio()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& gerencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
-						lista.add(gerencia);
+							&& dominio.getDescripcionDominio().toLowerCase()
+									.startsWith(valores.get(1))
+							&& dominio.getTipo().toLowerCase()
+									.startsWith(valores.get(2))
+							&& dominio.getComentario().toLowerCase()
+									.startsWith(valores.get(3))) {
+						lista.add(dominio);
 					}
 				}
 				return lista;
@@ -264,22 +280,24 @@ public class CGerencia extends CGenerico {
 			}
 
 			@Override
-			protected String[] crearRegistros(Gerencia gerencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getIdGerencia());
-				registros[1] = gerencia.getDescripcion();
+			protected String[] crearRegistros(Dominio dominio) {
+				String[] registros = new String[4];
+				registros[0] = String.valueOf(dominio.getIdDominio());
+				registros[1] = dominio.getDescripcionDominio();
+				registros[2] = dominio.getTipo();
+				registros[3] = dominio.getComentario();
 
 				return registros;
 			}
 
 			@Override
-			protected List<Gerencia> buscar(String valor, String combo) {
+			protected List<Dominio> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
 		};
-		catalogo.setParent(catalogoGerencia);
+		catalogo.setParent(catalogoDominio);
 
 	}
 

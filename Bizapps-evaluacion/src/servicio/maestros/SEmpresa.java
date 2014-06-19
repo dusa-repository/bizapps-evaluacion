@@ -4,6 +4,7 @@ import interfacedao.maestros.IEmpresaDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class SEmpresa {
 	/* Servicio que permite eliminar una empresa */
 	public void eliminarUnaEmpresa(int id) {
 		empresaDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias empresas */
+	public void eliminarVariasEmpresas(List<Empresa> eliminar) {
+		empresaDAO.delete(eliminar);
 	}
 	
 
