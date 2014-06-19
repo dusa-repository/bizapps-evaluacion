@@ -1,38 +1,51 @@
 <zk>
-	<div  apply="controlador.transacciones.CEmpleado">
+	<window apply="controlador.transacciones.CEmpleado" height="auto"
+		width="auto">
+		<separator />
+		<separator></separator>
 		<hbox>
-		<groupbox mold="3d" width="85%" title="Evaluación de Desempeño">
-			<label value= "ARBOL DE PERSONAL " style="font-style: Arial; font-weight: bold; color: black;"></label>
-			<separator />
-			<tree id="arbolPersonal"   zclass="z-dottree" >  
+			<groupbox mold="3d" width="95%"
+				title="Evaluación de Desempeño">
+				<label value="ARBOL DE PERSONAL A EVALUAR "
+					style="font-style: Arial; font-weight: bold; color: black;">
+				</label>
+				<separator />
+				<tree id="arbolPersonal" zclass="z-dottree" >
 					<template name="model">
-						<treeitem  context= "${each.ficha}">
+						<treeitem context="${each.ficha}" >
 							<treerow>
-								<treecell label="${each.label}"  context="${each.ficha}" style="font-style: Arial; color: black;" />
+								<treecell label="${each.label}"
+									context="${each.ficha}"
+									style="font-style: Arial; color: black;" />
 							</treerow>
 						</treeitem>
 					</template>
 				</tree>
-		</groupbox>
-		<groupbox id = "gpxListaPersonalCargo" style = "color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
-		<listbox height="100%" id="lbxEvaluacion" rows="8" width="700px" emptyMessage="Debe seleccionar un empleado">
-			<listhead>
-				<listheader label="Revisión" width="25%" />
-				<listheader label="Fecha" width="25%" />
-				<listheader label="Estado" width="25%" />
-				<listheader label="Usuario" width="25%" />
-			</listhead>
-			<template name="model">
-				<listitem>
-					<listcell label="${each.idRevision}"></listcell>
-					<listcell label="${each.fechaCreacion}"></listcell>
-					<listcell label="${each.estadoEvaluacion}">
-					</listcell>
-					<listcell label="${each.fichaEvaluador}"></listcell>
-				</listitem>
-			</template>
-		</listbox>
-		</groupbox>
+			</groupbox>
+			<groupbox id="gpxListaPersonalCargo"
+				style="color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
+				<listbox height="100%" id="lbxEvaluacion" rows="8"
+					width="700px" emptyMessage="Debe seleccionar un empleado">
+					<listhead>
+						<listheader label="Revisión" width="25%" />
+						<listheader label="Fecha" width="25%" />
+						<listheader label="Estado" width="25%" />
+						<listheader label="Usuario" width="25%" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.idRevision}"></listcell>
+							<listcell label="${each.fechaCreacion}"></listcell>
+							<listcell
+								label="${each.estadoEvaluacion}">
+							</listcell>
+							<listcell label="${each.fichaEvaluador}"></listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</groupbox>
 		</hbox>
-	</div>
+
+		<include id="contenido"></include>
+	</window>
 </zk>

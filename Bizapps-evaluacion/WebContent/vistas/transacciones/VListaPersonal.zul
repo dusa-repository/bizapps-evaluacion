@@ -18,8 +18,8 @@
 						label="Agregar" image="/public/iconos/agregar.png"
 						onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
 					</button>
-					<button id="btnBuscar" label="Buscar" sclass="btn"
-						tabindex="3" image="/public/iconos/catalogo.png">
+					<button id="btnBuscar" label="Eliminar" sclass="btn" 
+						tabindex="1" image="/public/iconos/eliminar.png">
 					</button>
 
 					<separator />
@@ -28,9 +28,9 @@
 		</panel>
 		<separator></separator>
 	<groupbox id = "gpxListaPersonal" style = "color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
-		<listbox height="auto" id="lbxEvaluacion" mold="paging"
+		<listbox height="auto" id="lbxEvaluacion" mold="paging" 
 			pageSize="10" width="auto">
-			<listhead>
+			<listhead  style = "background: #F8E0E0">
 				<listheader label="Revisión" width="25%" />
 				<listheader label="Fecha" width="25%" />
 				<listheader label="Estado" width="25%" />

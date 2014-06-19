@@ -507,7 +507,7 @@
 		<separator></separator>
 		<separator></separator>
 		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%">
+			style="margin-left:2%;margin-right:3%" id = "panBotones">
 			<panelchildren>
 
 				<separator />

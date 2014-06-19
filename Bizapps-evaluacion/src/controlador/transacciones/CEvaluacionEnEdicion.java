@@ -35,6 +35,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Panel;
 import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -78,6 +79,10 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private Button btnOk;
 	@Wire
 	private Button btnOk2;
+	@Wire
+	private Button btnEliminar;
+	@Wire
+	private Button btnEliminar2;
 	@Wire
 	private Button btnAgregarIndicador;
 	@Wire
@@ -154,6 +159,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private Combobox cmbUnidad;
 	@Wire
 	private Combobox cmbMedicion;
+	@Wire
+	private Panel panBotones;
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -181,6 +188,20 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 				Evaluacion evaluacion = servicioEvaluacion
 						.buscarEvaluacion(idEvaluacion);
+				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")){
+					btnAgregar.setVisible(true);
+					btnEliminar.setVisible(true);
+					btnAgregarIndicador.setVisible(true);
+					btnEliminar2.setVisible(true);
+					panBotones.setVisible(true);
+				}
+				else{
+					btnAgregar.setVisible(false);
+					btnEliminar.setVisible(false);
+					btnAgregarIndicador.setVisible(false);
+					btnEliminar2.setVisible(false);
+					panBotones.setVisible(false);
+				}
 				txtCompromisos.setValue(evaluacion.getCompromisos());
 				txtFortalezas.setValue(evaluacion.getFortalezas());
 				txtOportunidades.setValue(evaluacion.getOportunidades());

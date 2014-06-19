@@ -1,0 +1,25 @@
+<zk>
+	<window apply="controlador.transacciones.CEmpleadoAgregar" height="auto"
+		width="auto">
+		<separator />
+		<separator></separator>
+			<groupbox mold="3d" width="40%"
+				title="Evaluación de Desempeño">
+				<label value="ARBOL DE PERSONAL "
+					style="font-style: Arial; font-weight: bold; color: black;">
+				</label>
+				<separator />
+				<tree id="arbolPersonalAgregar" zclass="z-dottree">
+					<template name="model">
+						<treeitem context="${each.ficha}">
+							<treerow>
+								<treecell label="${each.label}"
+									context="${each.ficha}"
+									style="font-style: Arial; color: black;" />
+							</treerow>
+						</treeitem>
+					</template>
+				</tree>
+			</groupbox>
+	</window>
+</zk>

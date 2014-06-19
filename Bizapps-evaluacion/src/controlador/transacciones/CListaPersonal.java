@@ -80,6 +80,11 @@ public class CListaPersonal extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		gpxListaPersonal.setTitle("(" + "  " + ficha + ")" + "   " + u.getNombre() + "   " + u.getApellido());
+		List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
+		evaluacion = servicioEvaluacion.buscar(ficha); 
+		lbxEvaluacion
+		.setModel(new ListModelList<Evaluacion>(
+				evaluacion));
 		
 	}
 
@@ -88,20 +93,6 @@ public class CListaPersonal extends CGenerico {
 		winListaPersonal.onClose();
 	}
 	
-	@Listen("onClick = #btnBuscar")
-	public void BuscarEvaluacion() {	
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
-		List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-		evaluacion = servicioEvaluacion.buscarPorEstado(ficha, "EN EDICION"); 
-		lbxEvaluacion
-		.setModel(new ListModelList<Evaluacion>(
-				evaluacion));
-		
-	
-	}
 	
 	@Listen("onDoubleClick = #lbxEvaluacion")
 	public void mostrarEvaluacion() {
