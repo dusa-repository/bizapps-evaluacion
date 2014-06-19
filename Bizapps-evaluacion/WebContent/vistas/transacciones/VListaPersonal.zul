@@ -2,6 +2,14 @@
 	<window id="winListaPersonal" border="normal" height="auto"
 		width="auto" style="background-color:#8A0808;"
 		apply="controlador.transacciones.CListaPersonal">
+		<!-- Formato de fecha día-Mes-Año, sin hora -->
+		<zscript>
+	<![CDATA[
+	import java.text.SimpleDateFormat;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+]]>
+	</zscript>
+		<!-- Fin de Formato de fecha día-Mes-Año, sin hora -->
 		<separator />
 		<div style="background-color:#F8E0E0;">
 			<label value="Acción a Realizar" style="font-weight:bold;" />
@@ -39,7 +47,7 @@
 			<template name="model">
 				<listitem>
 					<listcell label="${each.idRevision}"></listcell>
-					<listcell label="${each.fechaCreacion}"></listcell>
+					<listcell label="${sdf.format(each.fechaCreacion)}"></listcell>
 					<listcell label="${each.estadoEvaluacion}">
 					</listcell>
 					<listcell label="${each.fichaEvaluador}"></listcell>

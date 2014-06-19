@@ -111,7 +111,7 @@ public class CCompetenciasEspecificas extends CGenerico {
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
+		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 		String cargo = empleado.getCargo().getDescripcion();
 		String unidadOrganizativa = empleado.getUnidadOrganizativa()
 				.getDescripcion();

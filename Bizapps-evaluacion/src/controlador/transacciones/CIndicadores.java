@@ -147,7 +147,7 @@ public class CIndicadores extends CGenerico {
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
+		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 //		lblRevision.setValue(revision);
 		gpxAgregar.setOpen(false);
 		gpxAgregados.setOpen(false);

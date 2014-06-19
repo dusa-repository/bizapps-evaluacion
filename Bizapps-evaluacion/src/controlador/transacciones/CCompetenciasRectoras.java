@@ -121,7 +121,7 @@ public class CCompetenciasRectoras extends CGenerico {
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
+		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 	}
 	
 	

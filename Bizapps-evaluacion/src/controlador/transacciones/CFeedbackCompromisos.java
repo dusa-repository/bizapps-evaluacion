@@ -125,7 +125,7 @@ public class CFeedbackCompromisos extends CGenerico {
 		String ficha = u.getCedula();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
+		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();

@@ -1,6 +1,14 @@
 <zk>
 	<window apply="controlador.transacciones.CEmpleado" height="auto"
 		width="auto">
+		<!-- Formato de fecha día-Mes-Año, sin hora -->
+		<zscript>
+	<![CDATA[
+	import java.text.SimpleDateFormat;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+]]>
+	</zscript>
+		<!-- Fin de Formato de fecha día-Mes-Año, sin hora -->
 		<separator />
 		<separator></separator>
 		<hbox>
@@ -10,9 +18,9 @@
 					style="font-style: Arial; font-weight: bold; color: black;">
 				</label>
 				<separator />
-				<tree id="arbolPersonal" zclass="z-dottree" >
+				<tree id="arbolPersonal" zclass="z-dottree">
 					<template name="model">
-						<treeitem context="${each.ficha}" >
+						<treeitem context="${each.ficha}">
 							<treerow>
 								<treecell label="${each.label}"
 									context="${each.ficha}"
@@ -35,7 +43,7 @@
 					<template name="model">
 						<listitem>
 							<listcell label="${each.idRevision}"></listcell>
-							<listcell label="${each.fechaCreacion}"></listcell>
+							<listcell label="${sdf.format(each.fechaCreacion)}"></listcell>
 							<listcell
 								label="${each.estadoEvaluacion}">
 							</listcell>

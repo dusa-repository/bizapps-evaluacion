@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -111,6 +112,7 @@ public class CObjetivos extends CGenerico {
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	ListModelList<Perspectiva> perspectiva;
 
+	
 
 	@Override
 	public void inicializar() throws IOException {
@@ -125,7 +127,7 @@ public class CObjetivos extends CGenerico {
 		String ficha = u.getCedula();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(fechaHora.toString());
+		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
