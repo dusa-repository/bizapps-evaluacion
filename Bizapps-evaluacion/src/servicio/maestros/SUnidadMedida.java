@@ -3,6 +3,7 @@ package servicio.maestros;
 import interfacedao.maestros.IUnidadMedidaDAO;
 import java.util.List;
 
+import modelos.Area;
 import modelos.Perspectiva;
 import modelos.UnidadMedida;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,11 @@ public class SUnidadMedida {
 	/* Servicio que permite eliminar una unidad de medida */
 	public void eliminarUnaUnidad(int id) {
 		unidadMedidaDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias areas */
+	public void eliminarVariasUnidades(List<UnidadMedida> eliminar) {
+		unidadMedidaDAO.delete(eliminar);
 	}
 	
 

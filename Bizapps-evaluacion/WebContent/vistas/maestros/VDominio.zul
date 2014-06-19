@@ -1,0 +1,55 @@
+<zk>
+	<style src="../public/Estilo.css" />
+	<div id="divVDominio">
+		<groupbox width="auto" mold="3d" title="Dominio (VDominio)">
+			<div id="botoneraDominio" />
+			<separator />
+			<groupbox id="gpxRegistroDominio" width="auto" title=""
+				open="false">
+				<caption label="Nuevo" style="font-weight:bold"
+					tooltiptext="Presione para registrar un nuevo dominio" />
+				<separator />
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="20%" />
+						<column label="" width="55%" />
+						<column label="" width="25%" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Descripción:" class="etiqueta" />
+
+							<textbox id="txtDescripcionDominio" width="50%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la descripcion del dominio" />
+						</row>
+						<row>
+							<label value="Tipo:" class="etiqueta" />
+
+							<textbox id="txtTipoDominio" width="50%"
+								maxlength="50" tabindex="2"
+								tooltiptext="Ingrese aqui el tipo de dominio" />
+						</row>
+						<row>
+							<label value="Comentario:" class="etiqueta" />
+
+							<textbox id="txtComentarioDominio"
+								width="50%" maxlength="5000" tabindex="3" rows="4" cols="100"
+								tooltiptext="Ingrese aqui el comentario del dominio" />
+						</row>
+						
+					</rows>
+				</grid>
+			</groupbox>
+			<separator />
+			<groupbox id="gpxDatosDominio" width="auto" title="">
+				<caption label="Registros" style="font-weight:bold"
+					tooltiptext="Presione para visualizar los dominios registrados" />
+				<div id="catalogoDominio"
+					tooltiptext="Seleccione el dominio para realizar una accion" />
+			</groupbox>
+			<separator />
+			<separator />
+		</groupbox>
+	</div>
+</zk>

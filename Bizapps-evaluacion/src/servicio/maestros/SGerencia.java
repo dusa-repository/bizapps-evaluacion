@@ -41,5 +41,10 @@ public class SGerencia {
 		gerenciaDAO.delete(id);
 	}
 	
+	/* Servicio que permite eliminar varias gerencias */
+	public void eliminarVariasGerencias(List<Gerencia> eliminar) {
+		gerenciaDAO.delete(eliminar);
+	}
+	
 
 }

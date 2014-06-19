@@ -41,6 +41,7 @@ public class SArea {
 		areaDAO.delete(id);
 	}
 	
+	/* Servicio que permite eliminar varias areas */
 	public void eliminarVariasAreas(List<Area> eliminar) {
 		areaDAO.delete(eliminar);
 	}

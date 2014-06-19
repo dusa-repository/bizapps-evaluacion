@@ -3,6 +3,7 @@ package servicio.maestros;
 import interfacedao.maestros.IMedicionDAO;
 import java.util.List;
 
+import modelos.Area;
 import modelos.Medicion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class SMedicion {
 	public void eliminarUnaMedicion(int id) {
 		medicionDAO.delete(id);
 	}
+	
+	/* Servicio que permite eliminar varias mediciones */
+	public void eliminarVariasMediciones(List<Medicion> eliminar) {
+		medicionDAO.delete(eliminar);
+	}
+	
 	
 	public List<Medicion> buscar() {
 		return medicionDAO.findAll();

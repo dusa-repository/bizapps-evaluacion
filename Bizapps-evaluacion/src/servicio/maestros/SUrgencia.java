@@ -5,6 +5,7 @@ import interfacedao.maestros.IUrgenciaDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Urgencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class SUrgencia {
 	/* Servicio que permite eliminar una urgencia */
 	public void eliminarUnaUrgencia(int id) {
 		urgenciaDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias urgencias */
+	public void eliminarVariasUrgencias(List<Urgencia> eliminar) {
+		urgenciaDAO.delete(eliminar);
 	}
 	
 

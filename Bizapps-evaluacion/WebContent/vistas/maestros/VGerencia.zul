@@ -1,0 +1,40 @@
+<zk>
+	<style src="../public/Estilo.css" />
+	<div id="divVGerencia" apply="controlador.maestros.CGerencia">
+		<groupbox width="auto" mold="3d" title="Gerencia (VGerencia)">
+			<div id="botoneraGerencia" />
+			<separator />
+			<groupbox id="gpxRegistroGerencia" width="auto" title=""
+				open="false">
+				<caption label="Nuevo" style="font-weight:bold"
+					tooltiptext="Presione para registrar una nueva gerencia" />
+				<separator />
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="20%" />
+						<column label="" width="55%" />
+						<column label="" width="25%" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Descripción:" class="etiqueta" />
+
+							<textbox id="txtDescripcionGerencia" width="80%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la descripcion de la gerencia" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<separator />
+			<groupbox id="gpxDatosGerencia" width="auto" title="">
+				<caption label="Registros" style="font-weight:bold"
+					tooltiptext="Presione para visua+lizar las gerencias registradas" />
+				<div id="catalogoGerencia"
+					tooltiptext="Seleccione la gerencia para realizar una accion" />
+			</groupbox>
+			<separator />
+			<separator />
+		</groupbox>
+	</div>
+</zk>

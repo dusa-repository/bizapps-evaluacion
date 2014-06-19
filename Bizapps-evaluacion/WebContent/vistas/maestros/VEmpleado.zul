@@ -1,0 +1,102 @@
+<zk>
+	<style src="../public/Estilo.css" />
+	<div id="divVEmpleado">
+		<groupbox width="auto" mold="3d" title="Empleado (VEmpleado)">
+			<div id="botoneraEmpleado" />
+			<separator />
+			<groupbox id="gpxRegistroEmpleado" width="auto" title=""
+				open="false">
+				<caption label="Nuevo" style="font-weight:bold"
+					tooltiptext="Presione para registrar un nuevo empleado" />
+				<separator />
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="20%" />
+						<column label="" width="45%" />
+						<column label="" width="15%" />
+						<column label="" width="20%" />
+					</columns>
+					<rows>
+						<row>
+							<label class="etiqueta"
+								value="Código Empresa:" />
+							<textbox id="txtEmpresaEmpleado"
+								width="100%" maxlength="100"
+								tooltiptext="Ingrese el codigo de la empresa" />
+							<button id="btnBuscarEmpresa" label=""
+								tooltiptext="Catalogo de codigos de empresas"
+								image="/public/imagenes/botones/buscar.png" />
+							<label id="lblEmpresaEmpleado" />
+						</row>
+						<row>
+							<label class="etiqueta"
+								value="Código Cargo:" />
+							<textbox id="txtCargoEmpleado" width="100%"
+								maxlength="100" tooltiptext="Ingrese el codigo del cargo" />
+							<button id="btnBuscarCargo" label=""
+								tooltiptext="Catalogo de codigos de cargos"
+								image="/public/imagenes/botones/buscar.png" />
+							<label id="lblCargoEmpleado" />
+						</row>
+						<row>
+							<label class="etiqueta"
+								value="Código Unidad Organizativa:" />
+							<textbox id="txtUnidadEmpleado" width="100%"
+								maxlength="100" tooltiptext="Ingrese el codigo del cargo" />
+							<button id="btnBuscarUnidad" label=""
+								tooltiptext="Catalogo de codigos de cargos"
+								image="/public/imagenes/botones/buscar.png" />
+							<label id="lblUnidadEmpleado" />
+						</row>
+						<row>
+							<label value="Nombre:" class="etiqueta" />
+
+							<textbox id="txtNombreEmpleado" width="100%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui el nombre del empleado" />
+						</row>
+						<row>
+							<label value="Ficha:" class="etiqueta" />
+
+							<textbox id="txtFichaEmpleado" width="100%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la ficha del empleado" />
+						</row>
+						<row>
+							<label value="Ficha Supervisor:"
+								class="etiqueta" />
+
+							<textbox id="txtFichaSupervisorEmpleado"
+								width="100%" maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la ficha del supervisor del empleado" />
+						</row>
+						<row>
+							<label value="Grado Auxiliar:"
+								class="etiqueta" />
+
+							<textbox id="txtGradoAuxiliarEmpleado"
+								width="100%" maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui el grado auxiliar del empleado" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<separator />
+			<groupbox id="gpxDatosTipoFormacion" width="auto"
+				title="">
+				<caption label="Registros" style="font-weight:bold"
+					tooltiptext="Presione para visualizar los tipos de formacion registrados" />
+				<div id="catalogoTipoFormacion"
+					tooltiptext="Seleccione el tipo de formacion para realizar una accion" />
+			</groupbox>
+			<separator />
+			<separator />
+		</groupbox>
+		<div id="divCatalogoEmpresa"
+			tooltiptext="Click para Seleccionar un Codigo" />
+			<div id="divCatalogoCargo"
+			tooltiptext="Click para Seleccionar un Codigo" />
+			<div id="divUnidadOrganizativa"
+			tooltiptext="Click para Seleccionar un Codigo" />
+	</div>
+</zk>

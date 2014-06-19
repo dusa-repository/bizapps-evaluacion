@@ -2,6 +2,8 @@ package servicio.maestros;
 
 import interfacedao.maestros.IPerspectivaDAO;
 import java.util.List;
+
+import modelos.Area;
 import modelos.Perspectiva;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,11 @@ public class SPerspectiva {
 	@Autowired
 	private IPerspectivaDAO perspectivaDAO;
 
+	/* Servicio que permite guardar los datos de una perspectiva*/
+	public void guardar(Perspectiva perspectiva) {
+		perspectivaDAO.save(perspectiva);
+	}
+	
 	public List<Perspectiva> buscar() {
 		return perspectivaDAO.findAll();
 	}
@@ -20,4 +27,16 @@ public class SPerspectiva {
 	public Perspectiva buscarId(Integer value) {
 		return perspectivaDAO.findByIdPerspectiva(value);
 	}
+	
+	/* Servicio que permite eliminar una perspectiva */
+	public void eliminarUnaPerspectiva(int id) {
+		perspectivaDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias perspectivas */
+	public void eliminarVariasPerspectivas(List<Perspectiva> eliminar) {
+		perspectivaDAO.delete(eliminar);
+	}
+	
+	
 }

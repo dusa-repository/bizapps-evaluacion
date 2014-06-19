@@ -1,0 +1,56 @@
+<zk>
+	<style src="../public/Estilo.css" />
+	<div id="divVTipoFormacion">
+		<groupbox width="auto" mold="3d"
+			title="TipoFormacion (VTipoFormacion)">
+			<div id="botoneraTipoFormacion" />
+			<separator />
+			<groupbox id="gpxRegistroTipoFormacion" width="auto"
+				title="" open="false">
+				<caption label="Nuevo" style="font-weight:bold"
+					tooltiptext="Presione para registrar un nuevo tipo de formacion" />
+				<separator />
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="20%" />
+						<column label="" width="45%" />
+						<column label="" width="15%" />
+						<column label="" width="20%" />
+					</columns>
+					<rows>
+						<row>
+							<label class="etiqueta"
+								value="Código Área:" />
+							<textbox id="txtAreaTipoFormacion" width="100%"
+								maxlength="100" tooltiptext="Ingrese el codigo del area" />
+							<button id="btnBuscarArea" label=""
+								tooltiptext="Catalogo de codigos de area"
+								image="/public/imagenes/botones/buscar.png" />
+							<label id="lblAreaTipoFormacion" />
+						</row>
+						<row>
+							<label value="Descripción:"
+								class="etiqueta" />
+
+							<textbox id="txtDescripcionTipoFormacion" width="100%"
+								 maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la descripcion del tipo de formacion" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<separator />
+			<groupbox id="gpxDatosTipoFormacion" width="auto"
+				title="">
+				<caption label="Registros" style="font-weight:bold"
+					tooltiptext="Presione para visualizar los tipos de formacion registrados" />
+				<div id="catalogoTipoFormacion"
+					tooltiptext="Seleccione el tipo de formacion para realizar una accion" />
+			</groupbox>
+			<separator />
+			<separator />
+		</groupbox>
+		<div id="divCatalogoArea"
+			tooltiptext="Click para Seleccionar un Codigo" />
+	</div>
+</zk>
