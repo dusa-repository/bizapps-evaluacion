@@ -4,6 +4,7 @@ import interfacedao.maestros.IRevisionDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.Revision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,14 @@ public class SRevision {
 		return revisiones;
 	}
 	
-	
-
 	/* Servicio que permite eliminar una revision */
 	public void eliminarUnaRevision(int id) {
 		revisionDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias revisiones */
+	public void eliminarVariasRevisiones(List<Revision> eliminar) {
+		revisionDAO.delete(eliminar);
 	}
 	
 

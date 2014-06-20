@@ -2,7 +2,7 @@
 	<style src="../public/Estilo.css" />
 	<div id="divVUnidadMedida" apply="controlador.maestros.CUnidadMedida">
 		<groupbox width="auto" mold="3d"
-			title="UnidadMedida (VUnidadMedida)">
+			title="Unidad de Medida (VUnidadMedida)">
 			<div id="botoneraUnidadMedida" />
 			<separator />
 			<groupbox id="gpxRegistroUnidadMedida" width="auto" title=""

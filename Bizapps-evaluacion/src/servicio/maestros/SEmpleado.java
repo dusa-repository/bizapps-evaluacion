@@ -7,6 +7,7 @@ import interfacedao.maestros.IEmpleadoDAO;
 import java.util.List;
 
 import modelo.seguridad.Arbol;
+import modelos.Area;
 import modelos.Empleado;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,16 @@ public class SEmpleado {
 	@Autowired
 	private IEmpleadoDAO empleadoDAO;
 
+	/* Servicio que permite guardar los datos de un empleado*/
+	public void guardar(Empleado empleado) {
+		empleadoDAO.save(empleado);
+	}
+	
+	/* Servicio que permite buscar todos los empleados */
+	public List<Empleado> buscarTodos() {
+		return empleadoDAO.findAll();
+	}
+	
 	public Empleado buscar(int id) {
 
 		return empleadoDAO.findOne(id);
@@ -45,6 +56,17 @@ public class SEmpleado {
 
 	public List<Empleado> BuscarPorSupervisor(String ficha) {
 		return empleadoDAO.findByFichaSupervisor(ficha);
+	}
+	
+	
+	/* Servicio que permite eliminar un empleado */
+	public void eliminarUnEmpleado(int id) {
+		empleadoDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varios empleados */
+	public void eliminarVariosEmpleados(List<Empleado> eliminar) {
+		empleadoDAO.delete(eliminar);
 	}
 
 }

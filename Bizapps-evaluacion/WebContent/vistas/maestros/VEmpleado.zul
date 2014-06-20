@@ -1,6 +1,6 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVEmpleado">
+	<div id="divVEmpleado" apply="controlador.maestros.CEmpleado">
 		<groupbox width="auto" mold="3d" title="Empleado (VEmpleado)">
 			<div id="botoneraEmpleado" />
 			<separator />
@@ -18,9 +18,16 @@
 					</columns>
 					<rows>
 						<row>
-							<label class="etiqueta"
-								value="Código Empresa:" />
-							<textbox id="txtEmpresaEmpleado"
+							<hbox>
+								<label class="etiqueta"
+									value="Código Empresa:" />
+								<space />
+								<label value="*"
+									style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtEmpresaEmpleado" tabindex="1"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico"
 								width="100%" maxlength="100"
 								tooltiptext="Ingrese el codigo de la empresa" />
 							<button id="btnBuscarEmpresa" label=""
@@ -29,9 +36,16 @@
 							<label id="lblEmpresaEmpleado" />
 						</row>
 						<row>
-							<label class="etiqueta"
-								value="Código Cargo:" />
-							<textbox id="txtCargoEmpleado" width="100%"
+							<hbox>
+								<label class="etiqueta"
+									value="Código Cargo:" />
+								<space />
+								<label value="*"
+									style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtCargoEmpleado" width="100%" tabindex="2"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico"
 								maxlength="100" tooltiptext="Ingrese el codigo del cargo" />
 							<button id="btnBuscarCargo" label=""
 								tooltiptext="Catalogo de codigos de cargos"
@@ -39,9 +53,16 @@
 							<label id="lblCargoEmpleado" />
 						</row>
 						<row>
-							<label class="etiqueta"
-								value="Código Unidad Organizativa:" />
-							<textbox id="txtUnidadEmpleado" width="100%"
+							<hbox>
+								<label class="etiqueta"
+									value="Código Unidad Organizativa:" />
+								<space />
+								<label value="*"
+									style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtUnidadEmpleado" width="100%" tabindex="3"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico"
 								maxlength="100" tooltiptext="Ingrese el codigo del cargo" />
 							<button id="btnBuscarUnidad" label=""
 								tooltiptext="Catalogo de codigos de cargos"
@@ -52,41 +73,41 @@
 							<label value="Nombre:" class="etiqueta" />
 
 							<textbox id="txtNombreEmpleado" width="100%"
-								maxlength="100" tabindex="1"
+								maxlength="100" tabindex="4"
 								tooltiptext="Ingrese aqui el nombre del empleado" />
 						</row>
 						<row>
 							<label value="Ficha:" class="etiqueta" />
 
 							<textbox id="txtFichaEmpleado" width="100%"
-								maxlength="100" tabindex="1"
+								maxlength="100" tabindex="5"
 								tooltiptext="Ingrese aqui la ficha del empleado" />
 						</row>
 						<row>
 							<label value="Ficha Supervisor:"
 								class="etiqueta" />
 
-							<textbox id="txtFichaSupervisorEmpleado"
-								width="100%" maxlength="100" tabindex="1"
+							<textbox id="txtFichaSupervisorEmpleado" tabindex="6"
+								width="100%" maxlength="100" 
 								tooltiptext="Ingrese aqui la ficha del supervisor del empleado" />
 						</row>
 						<row>
 							<label value="Grado Auxiliar:"
 								class="etiqueta" />
 
-							<textbox id="txtGradoAuxiliarEmpleado"
-								width="100%" maxlength="100" tabindex="1"
+							<textbox id="txtGradoAuxiliarEmpleado" tabindex="7"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico"
+								width="100%" maxlength="100"
 								tooltiptext="Ingrese aqui el grado auxiliar del empleado" />
 						</row>
 					</rows>
 				</grid>
 			</groupbox>
 			<separator />
-			<groupbox id="gpxDatosTipoFormacion" width="auto"
-				title="">
+			<groupbox id="gpxDatosEmpleado" width="auto" title="">
 				<caption label="Registros" style="font-weight:bold"
 					tooltiptext="Presione para visualizar los tipos de formacion registrados" />
-				<div id="catalogoTipoFormacion"
+				<div id="catalogoEmpleado"
 					tooltiptext="Seleccione el tipo de formacion para realizar una accion" />
 			</groupbox>
 			<separator />
@@ -94,9 +115,9 @@
 		</groupbox>
 		<div id="divCatalogoEmpresa"
 			tooltiptext="Click para Seleccionar un Codigo" />
-			<div id="divCatalogoCargo"
+		<div id="divCatalogoCargo"
 			tooltiptext="Click para Seleccionar un Codigo" />
-			<div id="divUnidadOrganizativa"
+		<div id="divUnidadOrganizativa"
 			tooltiptext="Click para Seleccionar un Codigo" />
 	</div>
 </zk>

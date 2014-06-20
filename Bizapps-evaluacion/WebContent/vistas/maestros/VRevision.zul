@@ -1,12 +1,11 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVRevision">
-		<groupbox width="auto" mold="3d"
-			title="Revision (VRevision)">
+	<div id="divVRevision" apply="controlador.maestros.CRevision">
+		<groupbox width="auto" mold="3d" title="Revisión (VRevision)">
 			<div id="botoneraRevision" />
 			<separator />
-			<groupbox id="gpxRegistroRevision" width="auto"
-				title="" open="false">
+			<groupbox id="gpxRegistroRevision" width="auto" title=""
+				open="false">
 				<caption label="Nuevo" style="font-weight:bold"
 					tooltiptext="Presione para registrar una nueva revision" />
 				<separator />
@@ -19,10 +18,18 @@
 					</columns>
 					<rows>
 						<row>
-							<label class="etiqueta"
-								value="Código Periodo:" />
-							<textbox id="txtPeriodoRevision" width="100%"
-								maxlength="100" tooltiptext="Ingrese el codigo del periodo" />
+							<hbox>
+								<label class="etiqueta"
+									value="Código Periodo:" />
+								<space />
+								<label value="*"
+									style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtPeriodoRevision"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del periodo debe ser numérico"
+								width="100%" maxlength="100"
+								tooltiptext="Ingrese el codigo del periodo" />
 							<button id="btnBuscarPeriodo" label=""
 								tooltiptext="Catalogo de codigos de periodos"
 								image="/public/imagenes/botones/buscar.png" />
@@ -32,16 +39,22 @@
 							<label value="Descripción:"
 								class="etiqueta" />
 
-							<textbox id="txtDescripcionRevision" width="100%"
-								 maxlength="100" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion del tipo de formacion" />
+							<textbox id="txtDescripcionRevision"
+								width="100%" maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui la descripcion de la revision" />
+						</row>
+						<row>
+							<label value="Estado:" class="etiqueta" />
+
+							<textbox id="txtEstadoRevision" width="100%"
+								maxlength="100" tabindex="1"
+								tooltiptext="Ingrese aqui el estado de la revision" />
 						</row>
 					</rows>
 				</grid>
 			</groupbox>
 			<separator />
-			<groupbox id="gpxDatosRevision" width="auto"
-				title="">
+			<groupbox id="gpxDatosRevision" width="auto" title="">
 				<caption label="Registros" style="font-weight:bold"
 					tooltiptext="Presione para visualizar las revisiones registradas" />
 				<div id="catalogoRevision"

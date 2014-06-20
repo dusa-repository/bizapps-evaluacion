@@ -1,7 +1,7 @@
 <zk>
 	<style src="../public/Estilo.css" />
 	<div id="divVMedicion" apply="controlador.maestros.CMedicion">
-		<groupbox width="auto" mold="3d" title="Medicion (VMedicion)">
+		<groupbox width="auto" mold="3d" title="Medición (VMedicion)">
 			<div id="botoneraMedicion" />
 			<separator />
 			<groupbox id="gpxRegistroMedicion" width="auto" title=""

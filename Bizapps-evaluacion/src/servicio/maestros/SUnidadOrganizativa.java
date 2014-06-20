@@ -4,6 +4,7 @@ import interfacedao.maestros.IUnidadOrganizativaDAO;
 
 import java.util.List;
 
+import modelos.Area;
 import modelos.UnidadOrganizativa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class SUnidadOrganizativa {
 	/* Servicio que permite eliminar una unidad organizativa */
 	public void eliminarUnaUnidad(int id) {
 		unidadOrganizativaDAO.delete(id);
+	}
+	
+	/* Servicio que permite eliminar varias unidades organizativas */
+	public void eliminarVariasUnidades(List<UnidadOrganizativa> eliminar) {
+		unidadOrganizativaDAO.delete(eliminar);
 	}
 
 }

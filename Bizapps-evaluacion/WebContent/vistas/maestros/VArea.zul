@@ -1,7 +1,7 @@
 <zk>
 	<style src="../public/Estilo.css" />
 	<div id="divVArea" apply="controlador.maestros.CArea">
-		<groupbox width="auto" mold="3d" title="Area (VArea)">
+		<groupbox width="auto" mold="3d" title="Área (VArea)">
 			<div id="botoneraArea" />
 			<separator />
 			<groupbox id="gpxRegistroArea" width="auto" title=""

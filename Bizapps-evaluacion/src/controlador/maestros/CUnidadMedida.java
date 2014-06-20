@@ -99,7 +99,7 @@ public class CUnidadMedida extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVUnidadMedida, "UnidadMedida");
+				cerrarVentana(divVUnidadMedida, "Unidad de Medida");
 			}
 
 			@Override

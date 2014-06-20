@@ -1,8 +1,9 @@
 <zk>
 	<style src="../public/Estilo.css" />
-	<div id="divVUnidadOrganizativa">
+	<div id="divVUnidadOrganizativa"
+		apply="controlador.maestros.CUnidadOrganizativa">
 		<groupbox width="auto" mold="3d"
-			title="UnidadOrganizativa (VUnidadOrganizativa)">
+			title="Unidad Organizativa (VUnidadOrganizativa)">
 			<div id="botoneraUnidadOrganizativa" />
 			<separator />
 			<groupbox id="gpxRegistroUnidadOrganizativa" width="auto"
@@ -19,9 +20,16 @@
 					</columns>
 					<rows>
 						<row>
-							<label class="etiqueta"
-								value="Código Gerencia:" />
+							<hbox>
+								<label class="etiqueta"
+									value="Código Gerencia:" />
+								<space />
+								<label value="*"
+									style="font-weight:bold;color:red">
+								</label>
+							</hbox>
 							<textbox id="txtGerenciaUnidadOrganizativa"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la gerencia debe ser numérico"
 								tabindex="1" width="100%" maxlength="100"
 								tooltiptext="Ingrese el codigo de la gerencia" />
 							<button id="btnBuscarGerencia" label=""
@@ -42,25 +50,30 @@
 							<label value="Nivel:" class="etiqueta" />
 
 							<textbox id="txtNivelUnidadOrganizativa"
-								width="100%" tabindex="3"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El nivel debe ser numérico" width="100%"
+								tabindex="3"
 								tooltiptext="Ingrese aqui el nivel de la unidad organizativa" />
 						</row>
 						<row>
 							<label value="Sub-nivel:" class="etiqueta" />
 
 							<textbox id="txtSubNivelUnidadOrganizativa"
-								width="100%" tabindex="4"
+								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El sub-nivel debe ser numérico" width="100%"
+								tabindex="4"
 								tooltiptext="Ingrese aqui el sub-nivel de la unidad organizativa" />
 						</row>
 						<row>
-							<label value="Empresa auxiliar:" class="etiqueta" />
+							<label value="Empresa auxiliar:"
+								class="etiqueta" />
 
-							<textbox id="txtEmpresaAuxiliarUnidadOrganizativa"
-								width="100%" tabindex="5"
+							<textbox
+								id="txtEmpresaAuxiliarUnidadOrganizativa" width="100%"
+								tabindex="5"
 								tooltiptext="Ingrese aqui la empresa auxiliar de la unidad organizativa" />
 						</row>
 						<row>
-							<label value="Unidad organizativa auxiliar:" class="etiqueta" />
+							<label value="Unidad organizativa auxiliar:"
+								class="etiqueta" />
 
 							<textbox id="txtUnidadOrganizativaAuxiliar"
 								width="100%" tabindex="5"
@@ -80,7 +93,7 @@
 			<separator />
 			<separator />
 		</groupbox>
-		<div id="divCatalogoArea"
+		<div id="divCatalogoGerencia"
 			tooltiptext="Click para Seleccionar un Codigo" />
 	</div>
 </zk>

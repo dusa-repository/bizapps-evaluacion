@@ -99,7 +99,7 @@ public class CMedicion extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVMedicion, "Medición");
+				cerrarVentana(divVMedicion, "Medicion");
 			}
 
 			@Override
