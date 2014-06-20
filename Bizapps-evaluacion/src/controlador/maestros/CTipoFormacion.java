@@ -361,7 +361,7 @@ public class CTipoFormacion extends CGenerico {
 	@Listen("onClick = #btnBuscarArea")
 	public void mostrarCatalogoArea() {
 		final List<Area> listArea = servicioArea.buscarTodas();
-		catalogoArea = new Catalogo<Area>(catalogoArea, "Catalogo de Areas",
+		catalogoArea = new Catalogo<Area>(divCatalogoArea, "Catalogo de Areas",
 				listArea, "Código área", "Descripción") {
 
 			@Override

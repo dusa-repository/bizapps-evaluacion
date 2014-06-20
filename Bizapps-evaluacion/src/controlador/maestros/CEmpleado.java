@@ -73,7 +73,7 @@ public class CEmpleado extends CGenerico {
 	@Wire
 	private Div divCatalogoCargo;
 	@Wire
-	private Div divUnidadOrganizativa;
+	private Div divCatalogoUnidad;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	private int idEmpleado = 0;
@@ -481,5 +481,209 @@ public class CEmpleado extends CGenerico {
 		}
 
 	}
+	
+	
+	@Listen("onClick = #btnBuscarEmpresa")
+	public void mostrarCatalogoEmpresa() {
+		final List<Empresa> listEmpresa = servicioEmpresa.buscarTodas();
+		catalogoEmpresa = new Catalogo<Empresa>(divCatalogoEmpresa,
+				"Catalogo de Empresas", listEmpresa, "Código empresa",
+				"Nombre", "Dirección", "Teléfono 1", "Teléfono 2",
+				"Empresa Auxiliar") {
+
+			@Override
+			protected List<Empresa> buscarCampos(List<String> valores) {
+				List<Empresa> lista = new ArrayList<Empresa>();
+
+				for (Empresa empresa : listEmpresa) {
+					if (String.valueOf(empresa.getIdEmpresa()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& empresa.getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& empresa.getDireccion().toLowerCase()
+									.startsWith(valores.get(2))
+							&& empresa.getTelefono1().toLowerCase()
+									.startsWith(valores.get(3))
+							&& empresa.getTelefono2().toLowerCase()
+									.startsWith(valores.get(4))
+							&& empresa.getIdEmpresaAuxiliar().toLowerCase()
+									.startsWith(valores.get(5))) {
+						lista.add(empresa);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(Empresa empresa) {
+				String[] registros = new String[6];
+				registros[0] = String.valueOf(empresa.getIdEmpresa());
+				registros[1] = empresa.getNombre();
+				registros[2] = empresa.getDireccion();
+				registros[3] = empresa.getTelefono1();
+				registros[4] = empresa.getTelefono2();
+				registros[5] = empresa.getIdEmpresaAuxiliar();
+
+				return registros;
+			}
+
+			@Override
+			protected List<Empresa> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		};
+
+		catalogoEmpresa.setParent(divCatalogoEmpresa);
+		catalogoEmpresa.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoEmpresa")
+	public void seleccionEmpresa() {
+		Empresa empresa = catalogoEmpresa.objetoSeleccionadoDelCatalogo();
+		txtEmpresaEmpleado.setValue(String.valueOf(empresa.getIdEmpresa()));
+		lblEmpresaEmpleado.setValue(empresa.getNombre());
+		catalogoEmpresa.setParent(null);
+	}
+	
+	@Listen("onClick = #btnBuscarCargo")
+	public void mostrarCatalogoCargo() {
+		final List<Cargo> listCargo = servicioCargo.buscarTodos();
+		catalogoCargo = new Catalogo<Cargo>(divCatalogoCargo, "Catalogo de Cargos",
+				listCargo, "Código cargo", "Descripción", "Nómina",
+				"Cargo Auxiliar", "Empresa Auxiliar") {
+
+			@Override
+			protected List<Cargo> buscarCampos(List<String> valores) {
+				List<Cargo> lista = new ArrayList<Cargo>();
+
+				for (Cargo cargo : listCargo) {
+					if (String.valueOf(cargo.getIdCargo()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& cargo.getDescripcion().toLowerCase()
+									.startsWith(valores.get(1))
+							&& cargo.getNomina().toLowerCase()
+							.startsWith(valores.get(2))
+							&& cargo.getIdCargoAuxiliar().toLowerCase()
+							.startsWith(valores.get(3))
+							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
+							.startsWith(valores.get(4))) {
+						lista.add(cargo);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(Cargo cargo) {
+				String[] registros = new String[5];
+				registros[0] = String.valueOf(cargo.getIdCargo());
+				registros[1] = cargo.getDescripcion();
+				registros[2] = cargo.getNomina();
+				registros[3] = cargo.getIdCargoAuxiliar();
+				registros[4] = cargo.getIdEmpresaAuxiliar();
+
+				return registros;
+			}
+
+			@Override
+			protected List<Cargo> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		};
+
+		catalogoCargo.setParent(divCatalogoCargo);
+		catalogoCargo.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoCargo")
+	public void seleccionCargo() {
+		Cargo cargo = catalogoCargo.objetoSeleccionadoDelCatalogo();
+		txtCargoEmpleado.setValue(String.valueOf(cargo.getIdCargo()));
+		lblCargoEmpleado.setValue(cargo.getDescripcion());
+		catalogoCargo.setParent(null);
+	}
+	
+	
+	@Listen("onClick = #btnBuscarUnidad")
+	public void mostrarCatalogoUnidad() {
+		final List<UnidadOrganizativa> listUnidadOrganizativa = servicioUnidadOrganizativa
+				.buscarTodas();
+		catalogoUnidad = new Catalogo<UnidadOrganizativa>(divCatalogoUnidad,
+				"Catalogo de UnidadOrganizativas", listUnidadOrganizativa,
+				"Código Unidad", "Código Gerencia", "Descripción", "Nivel",
+				"Sub-Nivel", "Empresa Auxiliar", "Unidad Organizativa Auxiliar") {
+
+			@Override
+			protected List<UnidadOrganizativa> buscarCampos(List<String> valores) {
+				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
+
+				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
+					if (String.valueOf(unidad.getIdUnidadOrganizativa())
+							.toLowerCase().startsWith(valores.get(0))
+							&& String
+									.valueOf(
+											unidad.getGerencia()
+													.getIdGerencia())
+									.toLowerCase().startsWith(valores.get(1))
+							&& unidad.getDescripcion().toLowerCase()
+									.startsWith(valores.get(2))
+							&& String.valueOf(unidad.getNivel()).toLowerCase()
+									.startsWith(valores.get(3))
+							&& String.valueOf(unidad.getSubNivel())
+									.toLowerCase().startsWith(valores.get(4))
+							&& unidad.getIdEmpresaAuxiliar().toLowerCase()
+									.startsWith(valores.get(5))
+							&& unidad.getIdUnidadOrganizativaAuxiliar()
+									.toLowerCase().startsWith(valores.get(6))) {
+						lista.add(unidad);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(UnidadOrganizativa unidad) {
+				String[] registros = new String[7];
+				registros[0] = String.valueOf(unidad.getIdUnidadOrganizativa());
+				registros[1] = String.valueOf(unidad.getGerencia()
+						.getIdGerencia());
+				registros[2] = unidad.getDescripcion();
+				registros[3] = String.valueOf(unidad.getNivel());
+				registros[4] = String.valueOf(unidad.getSubNivel());
+				registros[5] = String.valueOf(unidad.getIdEmpresaAuxiliar());
+				registros[6] = String.valueOf(unidad
+						.getIdUnidadOrganizativaAuxiliar());
+				return registros;
+			}
+
+			@Override
+			protected List<UnidadOrganizativa> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		};
+
+		catalogoUnidad.setParent(divCatalogoUnidad);
+		catalogoUnidad.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoUnidad")
+	public void seleccionUnidad() {
+		UnidadOrganizativa unidad = catalogoUnidad.objetoSeleccionadoDelCatalogo();
+		txtUnidadEmpleado.setValue(String.valueOf(unidad.getIdUnidadOrganizativa()));
+		lblUnidadEmpleado.setValue(unidad.getDescripcion());
+		catalogoUnidad.setParent(null);
+	}
+	
+	
+	
 
 }

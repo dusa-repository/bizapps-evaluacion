@@ -117,7 +117,7 @@
 			tooltiptext="Click para Seleccionar un Codigo" />
 		<div id="divCatalogoCargo"
 			tooltiptext="Click para Seleccionar un Codigo" />
-		<div id="divUnidadOrganizativa"
+		<div id="divCatalogoUnidad"
 			tooltiptext="Click para Seleccionar un Codigo" />
 	</div>
 </zk>
