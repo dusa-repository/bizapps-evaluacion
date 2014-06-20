@@ -30,9 +30,9 @@ public abstract class Catalogo<Clase> extends Window {
 	public Catalogo(final Component cGenerico, String titulo,
 			List<Clase> lista, String... campos) {
 		super(titulo, "2", true);
-		this.setId("cmpCatalogo");
+		this.setId("cmpCatalogo" + titulo);
 		this.setStyle("background-header:#FF7925; background: #f4f2f2");
-		setWidth("60%");
+		setWidth("80%");
 		crearLista(lista, campos);
 		lsbCatalogo.addEventListener(Events.ON_SELECT,
 				new EventListener<Event>() {
