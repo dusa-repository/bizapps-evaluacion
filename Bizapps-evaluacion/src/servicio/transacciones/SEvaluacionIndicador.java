@@ -31,4 +31,12 @@ public class SEvaluacionIndicador {
 	public EvaluacionIndicador buscarIndicadorId (Integer idIndicador) {
 		return evaluacionIndicadorDAO.findByIdIndicador(idIndicador);
 	}
+	
+	public void eliminarUno(Integer id) {
+		evaluacionIndicadorDAO.delete(id);
+	}
+	
+	public void eliminarVarios(List<EvaluacionIndicador> evaluacionIndicador) {
+		evaluacionIndicadorDAO.delete(evaluacionIndicador);
+	}
 }

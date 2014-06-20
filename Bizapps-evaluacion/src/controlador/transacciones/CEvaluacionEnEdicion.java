@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
@@ -37,6 +38,7 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Panel;
 import org.zkoss.zul.Spinner;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
@@ -161,6 +163,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private Combobox cmbMedicion;
 	@Wire
 	private Panel panBotones;
+	@Wire
+	private Tab tbIndicadores;
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -293,6 +297,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		gpxAgregarIndicador.setOpen(false);
 		gpxAgregados.setOpen(false);
 	}
+	
+	
 
 	public ListModelList<Dominio> getDominio() {
 		dominio = new ListModelList<Dominio>(
@@ -570,29 +576,29 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	}
 	
 	//Validar lo del comboooooo
-/*private void EvaluacionObjetivoActualizar(){
-	List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-	cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-	String perspectivaCombo = cmbPerspectiva.getSelectedItem().getContext();
-	Perspectiva perspectiva1 = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
-	String objetivo = txtObjetivo.getValue();
-	String corresponsables = txtCorresponsables.getValue();
-	Double peso = Double.valueOf(txtPeso.getValue());
-	EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
-	objetivoLista.setDescripcionObjetivo(objetivo);
-	//objetivoLista.setPerspectiva(perspectiva1);
-	objetivoLista.setPeso(peso);
-	objetivoLista.setCorresponsables(corresponsables);
-	servicioEvaluacionObjetivo.guardar(objetivoLista);
-	List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);	
-	lbxObjetivosGuardados.getItems().clear();
-	lbxObjetivosGuardados
-			.setModel(new ListModelList<EvaluacionObjetivo>(
-					evaluacionObje));
-	
-	gpxAgregar.setOpen(false);
-	
-}*/
+//private void EvaluacionObjetivoActualizar(){
+//	List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+//	cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
+//	String perspectivaCombo = cmbPerspectiva.getSelectedItem().getContext();
+//	Perspectiva perspectiva1 = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
+//	String objetivo = txtObjetivo.getValue();
+//	String corresponsables = txtCorresponsables.getValue();
+//	Double peso = Double.valueOf(txtPeso.getValue());
+//	EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
+//	objetivoLista.setDescripcionObjetivo(objetivo);
+//	objetivoLista.setPerspectiva(perspectiva1);
+//	objetivoLista.setPeso(peso);
+//	objetivoLista.setCorresponsables(corresponsables);
+//	servicioEvaluacionObjetivo.guardar(objetivoLista);
+//	List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);	
+//	lbxObjetivosGuardados.getItems().clear();
+//	lbxObjetivosGuardados
+//			.setModel(new ListModelList<EvaluacionObjetivo>(
+//					evaluacionObje));
+//	
+//	gpxAgregar.setOpen(false);
+//	
+//}
 	
 	@Listen("onSelect = #cmbMedicion")
 	public void mostrarResAnterior(){
@@ -602,4 +608,22 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			txtResFy.setDisabled(false);
 		}
 	}
+	
+	@Listen("onClick = #lbxObjetivosGuardados")
+	public void mostrarPestannaIndicadores() {
+		tbIndicadores.setSelected(true);
+		gpxAgregados.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();	
+			if (listItem != null) {				
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+				lbxIndicadoresAgregados
+				.setModel(new ListModelList<EvaluacionIndicador>(
+						indicadores));
+			}
+		}
+	}
 }
+

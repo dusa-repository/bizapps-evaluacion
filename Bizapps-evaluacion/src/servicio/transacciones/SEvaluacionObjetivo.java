@@ -34,4 +34,13 @@ public class SEvaluacionObjetivo {
 		return evaluacionObjetivoDAO.findByIdObjetivo(idObjetivo);
 	}
 	
+	public void eliminarUno(Integer id) {
+		evaluacionObjetivoDAO.delete(id);
+	}
+	
+
+	public void eliminarVarios(List<EvaluacionObjetivo> evaluacionObjetivo) {
+		evaluacionObjetivoDAO.delete(evaluacionObjetivo);
+	}
+	
 }

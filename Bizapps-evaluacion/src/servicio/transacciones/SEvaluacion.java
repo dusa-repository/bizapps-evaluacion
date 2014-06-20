@@ -47,4 +47,8 @@ public class SEvaluacion {
 	public Evaluacion buscarEvaluacion (Integer idEvaluacion) {
 		return evaluacionDAO.findByIdEvaluacion(idEvaluacion);
 	}
+	
+	public void eliminarUno(Integer id) {
+		evaluacionDAO.delete(id);
+	}
 }

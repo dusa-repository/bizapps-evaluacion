@@ -13,6 +13,7 @@ import modelo.seguridad.Usuario;
 import modelos.Competencia;
 import modelos.Empleado;
 import modelos.Evaluacion;
+import modelos.EvaluacionIndicador;
 import modelos.EvaluacionObjetivo;
 import modelos.NivelCompetenciaCargo;
 import modelos.Perspectiva;
@@ -37,6 +38,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Panel;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
@@ -59,7 +61,7 @@ import componentes.Validador;
 public class CListaPersonal extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
-		Mensaje msj = new Mensaje();
+	Mensaje msj = new Mensaje();
 
 	private Button btnAgregar;
 	@Wire
@@ -72,6 +74,9 @@ public class CListaPersonal extends CGenerico {
 	private Window winEvaluacionEmpleado;
 	@Wire
 	private Groupbox gpxListaPersonal;
+	private static int idEva;
+	private static String fichaE;
+	List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
 
 	@Override
 	public void inicializar() throws IOException {
@@ -79,42 +84,86 @@ public class CListaPersonal extends CGenerico {
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		gpxListaPersonal.setTitle("(" + "  " + ficha + ")" + "   " + u.getNombre() + "   " + u.getApellido());
-		List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-		evaluacion = servicioEvaluacion.buscar(ficha); 
-		lbxEvaluacion
-		.setModel(new ListModelList<Evaluacion>(
-				evaluacion));
-		
+		fichaE = ficha;
+		gpxListaPersonal.setTitle("(" + "  " + ficha + ")" + "   "
+				+ u.getNombre() + "   " + u.getApellido());
+		evaluacion = servicioEvaluacion.buscar(ficha);
+		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion));
+
 	}
 
 	@Listen("onClick = #btnAgregar")
-	public void AgregarEvaluacion() {	
+	public void AgregarEvaluacion() {
 		winListaPersonal.onClose();
 	}
-	
-	
+
+	@Listen("onClick = #btnEliminar")
+	public void eliminar() {
+		if (lbxEvaluacion.getItemCount() != 0) {
+
+			Listitem listItem = lbxEvaluacion.getSelectedItem();
+			if (listItem != null) {
+
+				Evaluacion evaluacionE = (Evaluacion) listItem.getValue();
+				Integer id = evaluacionE.getIdEvaluacion();
+				idEva = id;
+				Messagebox.show(Mensaje.deseaEliminar, "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+											.buscarObjetivosEvaluar(idEva);
+									for (int i = 0; i < evaluacionObjetivo
+											.size(); i++) {
+										Integer idObjetivo = evaluacionObjetivo
+												.get(i).getIdObjetivo();
+										List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+												.buscarIndicadores(idObjetivo);
+										servicioEvaluacionIndicador.eliminarVarios(evaluacionIndicador);
+									}
+									servicioEvaluacion.eliminarUno(idEva);
+									servicioEvaluacionObjetivo
+											.eliminarVarios(evaluacionObjetivo);
+									msj.mensajeInformacion(Mensaje.eliminado);
+									lbxEvaluacion.getItems().clear();
+									evaluacion = servicioEvaluacion
+											.buscar(fichaE);
+									lbxEvaluacion
+											.setModel(new ListModelList<Evaluacion>(
+													evaluacion));
+								}
+							}
+						});
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+
+		}
+	}
+
 	@Listen("onDoubleClick = #lbxEvaluacion")
 	public void mostrarEvaluacion() {
-			
-			
-			if (lbxEvaluacion.getItemCount() != 0) {
-				
-				Listitem listItem = lbxEvaluacion.getSelectedItem();	
-				if (listItem != null) {
-						
-					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
-					final HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", evaluacion.getIdEvaluacion());
-					map.put("titulo", evaluacion.getFicha());
-					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEnEdicion.zul", null, map);				
-					winEvaluacionEmpleado.doModal();
-					winEvaluacionEmpleado.setClosable(true);
-					winListaPersonal.onClose();
-				}
-				
+
+		if (lbxEvaluacion.getItemCount() != 0) {
+
+			Listitem listItem = lbxEvaluacion.getSelectedItem();
+			if (listItem != null) {
+
+				Evaluacion evaluacion = (Evaluacion) listItem.getValue();
+				final HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("id", evaluacion.getIdEvaluacion());
+				map.put("titulo", evaluacion.getFicha());
+				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+				winEvaluacionEmpleado = (Window) Executions.createComponents(
+						"/vistas/transacciones/VEvaluacionEnEdicion.zul", null,
+						map);
+				winEvaluacionEmpleado.doModal();
+				winEvaluacionEmpleado.setClosable(true);
+				winListaPersonal.onClose();
 			}
-	
-}
+
+		}
+
+	}
 }

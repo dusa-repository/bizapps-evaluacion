@@ -6,7 +6,7 @@ import modelos.Evaluacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Long> {
+public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 	
 	
 	public List<Evaluacion> findByFicha(String ficha);
