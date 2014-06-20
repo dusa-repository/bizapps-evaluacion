@@ -66,7 +66,7 @@ public class CEmpleadoAgregar extends CGenerico {
 	@Wire
 	private Window winListaPersonal;
 	@Wire
-	private Window winEvaluacionEmpleado;
+	private Window winEvaluacionEmpleadoAgregar;
 	@Wire
 	private Listbox lbxEvaluacion;
 	@Wire
@@ -80,8 +80,6 @@ public class CEmpleadoAgregar extends CGenerico {
 	Evaluacion evaluacion = new Evaluacion();
 
 	Mensaje msj = new Mensaje();
-	
-
 
 	@Override
 	public void inicializar() throws IOException {
@@ -135,10 +133,12 @@ public class CEmpleadoAgregar extends CGenerico {
 		for (int i = 0; i < arboles.size(); i++) {
 			String ficha = jefe.getFicha();
 			if (arboles.get(i).getFicha().equals(ficha)) {
-				oneLevelNode = new Nodos(root, i,"(" + arboles.get(i).getGradoAuxiliar() + ")" + " " + arboles.get(i).getNombre(), arboles.get(i).getFicha());
-//				oneLevelNode = new Nodos(root, i, "("
-//						+ arboles.get(i).getGradoAuxiliar() + ")" + "  "
-//						+ arboles.get(i).getFicha());
+				oneLevelNode = new Nodos(root, i, "("
+						+ arboles.get(i).getGradoAuxiliar() + ")" + " "
+						+ arboles.get(i).getNombre(), arboles.get(i).getFicha());
+				// oneLevelNode = new Nodos(root, i, "("
+				// + arboles.get(i).getGradoAuxiliar() + ")" + "  "
+				// + arboles.get(i).getFicha());
 				root.appendChild(oneLevelNode);
 				temp1 = arboles.get(i).getFicha();
 				arboles.remove(i);
@@ -146,11 +146,14 @@ public class CEmpleadoAgregar extends CGenerico {
 						.BuscarPorSupervisor(temp1);
 				for (int j = i; j < hijos.size(); j++) {
 					if (temp1.equals(hijos.get(j).getFichaSupervisor())) {
-						
-						twoLevelNode =  new Nodos(root, i, "(" + hijos.get(i).getGradoAuxiliar() + ")"  + " " + hijos.get(i).getNombre() , hijos.get(i).getFicha());
-//								new Nodos(oneLevelNode, i, "("
-//								+ hijos.get(i).getGradoAuxiliar() + ")" + "  "
-//								+ hijos.get(j).getNombre());
+
+						twoLevelNode = new Nodos(root, i, "("
+								+ hijos.get(i).getGradoAuxiliar() + ")" + " "
+								+ hijos.get(i).getNombre(), hijos.get(i)
+								.getFicha());
+						// new Nodos(oneLevelNode, i, "("
+						// + hijos.get(i).getGradoAuxiliar() + ")" + "  "
+						// + hijos.get(j).getNombre());
 						oneLevelNode.appendChild(twoLevelNode);
 						temp2 = hijos.get(j).getFicha();
 						hijos.remove(j);
@@ -161,11 +164,15 @@ public class CEmpleadoAgregar extends CGenerico {
 							if (temp2
 									.equals(hijos2.get(k).getFichaSupervisor())) {
 
-								threeLevelNode = new Nodos(root, i, "(" + hijos2.get(i).getGradoAuxiliar() + ")" + " " + hijos2.get(i).getNombre(), hijos2.get(i).getFicha());
-//										new Nodos(twoLevelNode, i, "("
-//										+ hijos2.get(i).getGradoAuxiliar()
-//										+ ")" + "  "
-//										+ hijos2.get(k).getNombre());
+								threeLevelNode = new Nodos(root, i,
+										"(" + hijos2.get(i).getGradoAuxiliar()
+												+ ")" + " "
+												+ hijos2.get(i).getNombre(),
+										hijos2.get(i).getFicha());
+								// new Nodos(twoLevelNode, i, "("
+								// + hijos2.get(i).getGradoAuxiliar()
+								// + ")" + "  "
+								// + hijos2.get(k).getNombre());
 								twoLevelNode.appendChild(threeLevelNode);
 								temp3 = hijos2.get(k).getFicha();
 								hijos2.remove(k);
@@ -175,11 +182,16 @@ public class CEmpleadoAgregar extends CGenerico {
 
 									if (temp3.equals(hijos3.get(z)
 											.getFichaSupervisor())) {
-										fourLevelNode = new Nodos(root, i, "(" + hijos3.get(i).getGradoAuxiliar() + ")" + " " + hijos3.get(i).getNombre(), hijos3.get(i).getFicha());
-												
-//												new Nodos(
-//												threeLevelNode, i, hijos3
-//														.get(z).getNombre());
+										fourLevelNode = new Nodos(root, i, "("
+												+ hijos3.get(i)
+														.getGradoAuxiliar()
+												+ ")" + " "
+												+ hijos3.get(i).getNombre(),
+												hijos3.get(i).getFicha());
+
+										// new Nodos(
+										// threeLevelNode, i, hijos3
+										// .get(z).getNombre());
 										threeLevelNode
 												.appendChild(fourLevelNode);
 										hijos3.remove(z);
@@ -201,54 +213,19 @@ public class CEmpleadoAgregar extends CGenerico {
 
 	@Listen("onClick = #arbolPersonalAgregar")
 	public void selectedNode() {
-		lbxEvaluacion.getItems().clear();
-		gpxListaPersonalCargo.setTitle("");
 		if (arbolPersonalAgregar.getSelectedItem() != null) {
-			String item = String.valueOf(arbolPersonalAgregar.getSelectedItem().getContext());
-			System.out.println(item);
-			boolean abrir = true;
-			if (arbolPersonalAgregar.getSelectedItem().getLevel() > 0) {
-				if (abrir) {
-						
-						List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-						evaluacion = servicioEvaluacion.buscarEstado(item);	
-						
-						if(evaluacion.isEmpty()){
-						Messagebox.show(
-								"El empleado no tiene evaluaciones registradas",
-								"Error", Messagebox.OK, Messagebox.ERROR);
-						}else{		
-						gpxListaPersonalCargo.setTitle("(" + "  " + item + ")" + "   " + arbolPersonalAgregar.getSelectedItem().getLabel());
-						lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
-								evaluacion));		
-						}
-						
-			}
+			String item = String.valueOf(arbolPersonalAgregar.getSelectedItem()
+					.getContext());
+			final HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ficha", item);
+			Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+			winEvaluacionEmpleadoAgregar = (Window) Executions
+					.createComponents(
+							"/vistas/transacciones/VPersonalAgregarEvaluacion.zul",
+							null, map);
+			winEvaluacionEmpleadoAgregar.doModal();
+			winEvaluacionEmpleadoAgregar.setClosable(true);
+
 		}
 	}
-
-}
-	@Listen("onDoubleClick = #lbxEvaluacion")
-	public void mostrarEvaluacion() {
-			
-			
-			if (lbxEvaluacion.getItemCount() != 0) {
-				
-				Listitem listItem = lbxEvaluacion.getSelectedItem();	
-				if (listItem != null) {
-						
-					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
-					final HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", evaluacion.getIdEvaluacion());
-					map.put("titulo", evaluacion.getFicha());
-					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
-					winEvaluacionEmpleado.doModal();
-					winEvaluacionEmpleado.setClosable(true);
-					
-				}
-				
-			}
-	
-}
 }
