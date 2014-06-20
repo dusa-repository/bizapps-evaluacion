@@ -76,6 +76,7 @@ public class CListaPersonal extends CGenerico {
 	private Groupbox gpxListaPersonal;
 	private static int idEva;
 	private static String fichaE;
+	private static Evaluacion eva;
 	List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
 
 	@Override
@@ -105,6 +106,7 @@ public class CListaPersonal extends CGenerico {
 			if (listItem != null) {
 
 				Evaluacion evaluacionE = (Evaluacion) listItem.getValue();
+				eva = evaluacionE;
 				Integer id = evaluacionE.getIdEvaluacion();
 				idEva = id;
 				Messagebox.show(Mensaje.deseaEliminar, "Alerta", Messagebox.OK
@@ -113,6 +115,7 @@ public class CListaPersonal extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
+									if (eva.getEstadoEvaluacion().equals("EDICION")){
 									List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 											.buscarObjetivosEvaluar(idEva);
 									for (int i = 0; i < evaluacionObjetivo
@@ -133,6 +136,13 @@ public class CListaPersonal extends CGenerico {
 									lbxEvaluacion
 											.setModel(new ListModelList<Evaluacion>(
 													evaluacion));
+								}
+									else{
+										Messagebox.show("No puede Eliminar la Evaluación",
+												"Alerta", Messagebox.OK,
+												Messagebox.EXCLAMATION);
+								}
+								
 								}
 							}
 						});
