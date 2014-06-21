@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import modelo.maestros.Competencia;
+import modelo.maestros.Dominio;
+import modelo.maestros.Empleado;
+import modelo.maestros.NivelCompetenciaCargo;
 import modelo.seguridad.Usuario;
-import modelos.Competencia;
-import modelos.Dominio;
-import modelos.Empleado;
-import modelos.NivelCompetenciaCargo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;

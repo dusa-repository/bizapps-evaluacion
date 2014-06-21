@@ -3,9 +3,10 @@ package servicio.maestros;
 import interfacedao.maestros.IUnidadMedidaDAO;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Perspectiva;
-import modelos.UnidadMedida;
+import modelo.maestros.Area;
+import modelo.maestros.Perspectiva;
+import modelo.maestros.UnidadMedida;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

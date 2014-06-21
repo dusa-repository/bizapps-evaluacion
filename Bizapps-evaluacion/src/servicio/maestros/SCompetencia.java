@@ -4,8 +4,9 @@ package servicio.maestros;
 import interfacedao.maestros.ICompetenciaDAO;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Competencia;
+import modelo.maestros.Area;
+import modelo.maestros.Competencia;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

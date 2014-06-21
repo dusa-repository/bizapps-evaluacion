@@ -1,4 +1,4 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -7,21 +7,21 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the unidad_medida database table.
+ * The persistent class for the urgencia database table.
  * 
  */
 @Entity
-@Table(name="unidad_medida")
-public class UnidadMedida implements Serializable {
+@Table(name="urgencia")
+public class Urgencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_unidad")
-	private int idUnidad;
+	@Column(name="id_urgencia")
+	private int idUrgencia;
 
-	@Column(name="descripcion")
-	private String descripcion;
+	@Column(name="descripcion_urgencia")
+	private String descripcionUrgencia;
 	
 	@Column(name="usuario")
 	private String usuario;
@@ -33,14 +33,14 @@ public class UnidadMedida implements Serializable {
 	private String horaAuditoria;
 	
 
-	public UnidadMedida() {
+	public Urgencia() {
 	}
 	
-	public UnidadMedida(int idUnidad, String descripcion, String usuario,
+	public Urgencia(int idUrgencia, String descripcionUrgencia, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idUnidad = idUnidad;
-		this.descripcion = descripcion;
+		this.idUrgencia = idUrgencia;
+		this.descripcionUrgencia = descripcionUrgencia;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -48,20 +48,20 @@ public class UnidadMedida implements Serializable {
 
 
 
-	public int getIdUnidad() {
-		return this.idUnidad;
+	public int getIdUrgencia() {
+		return this.idUrgencia;
 	}
 
-	public void setIdUnidad(int idUnidad) {
-		this.idUnidad = idUnidad;
+	public void setIdUrgencia(int idUrgencia) {
+		this.idUrgencia = idUrgencia;
 	}
 
-	public String getDescripcion() {
-		return this.descripcion;
+	public String getDescripcionUrgencia() {
+		return this.descripcionUrgencia;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setDescripcionUrgencia(String descripcionUrgencia) {
+		this.descripcionUrgencia = descripcionUrgencia;
 	}
 
 	public String getUsuario() {

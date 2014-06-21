@@ -5,8 +5,9 @@ package servicio.transacciones;
 import interfacedao.transacciones.IEvaluacionDAO;
 
 import java.util.List;
-import modelos.Evaluacion;
-import modelos.EvaluacionObjetivo;
+
+import modelo.maestros.Evaluacion;
+import modelo.maestros.EvaluacionObjetivo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

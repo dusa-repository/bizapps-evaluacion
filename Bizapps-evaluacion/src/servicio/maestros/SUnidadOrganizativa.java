@@ -4,8 +4,9 @@ import interfacedao.maestros.IUnidadOrganizativaDAO;
 
 import java.util.List;
 
-import modelos.Area;
-import modelos.UnidadOrganizativa;
+import modelo.maestros.Area;
+import modelo.maestros.UnidadOrganizativa;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

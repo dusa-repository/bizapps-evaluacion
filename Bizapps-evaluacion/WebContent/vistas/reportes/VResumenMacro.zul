@@ -14,7 +14,9 @@
 						<label class="etiqueta" value="Empresa:" />
 						<combobox id="cmbEmpresa" readonly="true"
 							value="Seleccione una Empresa" width="100%">
-								<comboitem label="Destilerias Unidas" />
+							<template name="model">
+								<comboitem label="${each.nombre}" id="${each.id}A" />
+							</template>
 						</combobox>
 						
 						<label class="etiqueta" value="Gerencia:" />

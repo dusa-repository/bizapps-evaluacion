@@ -1,4 +1,4 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -9,64 +9,59 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the revision database table.
+ * The persistent class for the tipo_formacion database table.
  * 
  */
 @Entity
-@Table(name="revision")
-public class Revision implements Serializable {
+@Table(name="tipo_formacion")
+public class TipoFormacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_revision")
-	private int idRevision;
+	@Column(name="id_tipo_formacion")
+	private int idTipoFormacion;
 
 	@Column(name="descripcion")
 	private String descripcion;
-
-	@Column(name="estado_revision")
-	private String estadoRevision;
 
 	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
-	
+
+	//bi-directional many-to-one association to Area
+	@ManyToOne
+	@JoinColumn(name="id_area")
+	private Area area;
+
 	@Column(name="usuario")
 	private String usuario;
 
-	//bi-directional many-to-one association to Periodo
-	@ManyToOne
-	@JoinColumn(name="id_periodo")
-	private Periodo periodo;
-
-
-	public Revision() {
+	public TipoFormacion() {
 	}
 	
-	public Revision(int idRevision, String descripcion, String estadoRevision,
-			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
-			Periodo periodo) {
+	public TipoFormacion(int idTipoFormacion, String descripcion,
+			Timestamp fechaAuditoria, String horaAuditoria, Area area,
+			String usuario) {
 		super();
-		this.idRevision = idRevision;
+		this.idTipoFormacion = idTipoFormacion;
 		this.descripcion = descripcion;
-		this.estadoRevision = estadoRevision;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
+		this.area = area;
 		this.usuario = usuario;
-		this.periodo = periodo;
 	}
 
 
 
-	public int getIdRevision() {
-		return this.idRevision;
+	public int getIdTipoFormacion() {
+		return this.idTipoFormacion;
 	}
 
-	public void setIdRevision(int idRevision) {
-		this.idRevision = idRevision;
+	public void setIdTipoFormacion(int idTipoFormacion) {
+		this.idTipoFormacion = idTipoFormacion;
 	}
 
 	public String getDescripcion() {
@@ -75,14 +70,6 @@ public class Revision implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	public String getEstadoRevision() {
-		return this.estadoRevision;
-	}
-
-	public void setEstadoRevision(String estadoRevision) {
-		this.estadoRevision = estadoRevision;
 	}
 
 	public Timestamp getFechaAuditoria() {
@@ -101,12 +88,12 @@ public class Revision implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public Periodo getPeriodo() {
-		return this.periodo;
+	public Area getArea() {
+		return this.area;
 	}
 
-	public void setPeriodo(Periodo periodo) {
-		this.periodo = periodo;
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
 	public String getUsuario() {
@@ -116,8 +103,6 @@ public class Revision implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
 
+	
 }

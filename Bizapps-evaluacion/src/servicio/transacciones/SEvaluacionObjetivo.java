@@ -6,8 +6,9 @@ import interfacedao.transacciones.IEvaluacionObjetivoDAO;
 
 import java.util.List;
 
-import modelos.EvaluacionObjetivo;
-import modelos.TipoFormacion;
+import modelo.maestros.EvaluacionObjetivo;
+import modelo.maestros.TipoFormacion;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

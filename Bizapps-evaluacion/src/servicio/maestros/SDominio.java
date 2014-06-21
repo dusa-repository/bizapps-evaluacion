@@ -4,11 +4,11 @@ import interfacedao.maestros.IDominioDAO;
 
 import java.util.List;
 
-import modelos.Area;
-import modelos.Cargo;
-import modelos.Dominio;
-import modelos.NivelCompetenciaCargo;
-import modelos.Revision;
+import modelo.maestros.Area;
+import modelo.maestros.Cargo;
+import modelo.maestros.Dominio;
+import modelo.maestros.NivelCompetenciaCargo;
+import modelo.maestros.Revision;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -9,18 +9,21 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the tipo_formacion database table.
+ * The persistent class for the competencia database table.
  * 
  */
 @Entity
-@Table(name="tipo_formacion")
-public class TipoFormacion implements Serializable {
+@Table(name="competencia")
+public class Competencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_tipo_formacion")
-	private int idTipoFormacion;
+	@Column(name="id_competencia")
+	private int idCompetencia;
+
+	@Column(name="comentario")
+	private String comentario;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -31,37 +34,44 @@ public class TipoFormacion implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
-	//bi-directional many-to-one association to Area
-	@ManyToOne
-	@JoinColumn(name="id_area")
-	private Area area;
-
+	@Column(name="nivel")
+	private String nivel;
+	
 	@Column(name="usuario")
 	private String usuario;
 
-	public TipoFormacion() {
+	public Competencia() {
 	}
 	
-	public TipoFormacion(int idTipoFormacion, String descripcion,
-			Timestamp fechaAuditoria, String horaAuditoria, Area area,
-			String usuario) {
+	public Competencia(int idCompetencia, String comentario,
+			String descripcion, Timestamp fechaAuditoria, String horaAuditoria,
+			String nivel, String usuario) {
 		super();
-		this.idTipoFormacion = idTipoFormacion;
+		this.idCompetencia = idCompetencia;
+		this.comentario = comentario;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
-		this.area = area;
+		this.nivel = nivel;
 		this.usuario = usuario;
 	}
 
 
 
-	public int getIdTipoFormacion() {
-		return this.idTipoFormacion;
+	public int getIdCompetencia() {
+		return this.idCompetencia;
 	}
 
-	public void setIdTipoFormacion(int idTipoFormacion) {
-		this.idTipoFormacion = idTipoFormacion;
+	public void setIdCompetencia(int idCompetencia) {
+		this.idCompetencia = idCompetencia;
+	}
+
+	public String getComentario() {
+		return this.comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
 	public String getDescripcion() {
@@ -88,14 +98,14 @@ public class TipoFormacion implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public Area getArea() {
-		return this.area;
+	public String getNivel() {
+		return this.nivel;
 	}
 
-	public void setArea(Area area) {
-		this.area = area;
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
-
+	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -105,4 +115,5 @@ public class TipoFormacion implements Serializable {
 	}
 
 	
+
 }

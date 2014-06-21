@@ -4,7 +4,8 @@ import interfacedao.maestros.IAreaDAO;
 
 import java.util.List;
 
-import modelos.Area;
+import modelo.maestros.Area;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -7,18 +7,18 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the perspectiva database table.
+ * The persistent class for the unidad_medida database table.
  * 
  */
 @Entity
-@Table(name="perspectiva")
-public class Perspectiva implements Serializable {
+@Table(name="unidad_medida")
+public class UnidadMedida implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_perspectiva")
-	private int idPerspectiva;
+	@Column(name="id_unidad")
+	private int idUnidad;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -32,13 +32,14 @@ public class Perspectiva implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 	
-	public Perspectiva() {
+
+	public UnidadMedida() {
 	}
 	
-	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
+	public UnidadMedida(int idUnidad, String descripcion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idPerspectiva = idPerspectiva;
+		this.idUnidad = idUnidad;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
@@ -47,12 +48,12 @@ public class Perspectiva implements Serializable {
 
 
 
-	public int getIdPerspectiva() {
-		return this.idPerspectiva;
+	public int getIdUnidad() {
+		return this.idUnidad;
 	}
 
-	public void setIdPerspectiva(int idPerspectiva) {
-		this.idPerspectiva = idPerspectiva;
+	public void setIdUnidad(int idUnidad) {
+		this.idUnidad = idUnidad;
 	}
 
 	public String getDescripcion() {

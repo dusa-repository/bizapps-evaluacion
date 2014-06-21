@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Periodo;
-import modelos.Revision;
+import modelo.maestros.Area;
+import modelo.maestros.Periodo;
+import modelo.maestros.Revision;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;

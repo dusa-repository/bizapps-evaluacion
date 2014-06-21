@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import modelo.maestros.Empresa;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -18,6 +19,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Window;
 
 import controlador.maestros.CGenerico;
@@ -94,6 +96,16 @@ public class CResumenMacro extends CGenerico {
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	private void comboEmpresa() {
+		List<Empresa> empresas = servicioEmpresa.buscarTodas();
+		Empresa empresaAuxiliar = new modelo.maestros.Empresa();
+		empresaAuxiliar.setIdEmpresa(0);
+		empresaAuxiliar.setNombre("TODAS");
+		empresas.add(empresaAuxiliar);
+		cmbEmpresa.setModel(new ListModelList<Empresa>(empresas));
 	}
     
 }

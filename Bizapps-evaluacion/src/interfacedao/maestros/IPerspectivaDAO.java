@@ -2,8 +2,9 @@ package interfacedao.maestros;
 
 import java.util.ArrayList;
 import java.util.List;
-import modelos.Empleado;
-import modelos.Perspectiva;
+
+import modelo.maestros.Empleado;
+import modelo.maestros.Perspectiva;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

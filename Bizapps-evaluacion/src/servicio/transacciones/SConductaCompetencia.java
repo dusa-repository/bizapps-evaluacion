@@ -5,8 +5,9 @@ import interfacedao.maestros.ICompetenciaDAO;
 import interfacedao.transacciones.IConductaCompetenciaDAO;
 
 import java.util.List;
-import modelos.Competencia;
-import modelos.ConductaCompetencia;
+
+import modelo.maestros.Competencia;
+import modelo.maestros.ConductaCompetencia;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -3,8 +3,8 @@ package servicio.maestros;
 import interfacedao.maestros.IPerspectivaDAO;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Perspectiva;
+import modelo.maestros.Area;
+import modelo.maestros.Perspectiva;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

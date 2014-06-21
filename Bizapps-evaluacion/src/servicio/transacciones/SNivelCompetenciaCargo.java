@@ -6,12 +6,12 @@ import interfacedao.transacciones.INivelCompetenciaCargoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Cargo;
+import modelo.maestros.Dominio;
+import modelo.maestros.Empleado;
+import modelo.maestros.Evaluacion;
+import modelo.maestros.NivelCompetenciaCargo;
 import modelo.seguridad.Arbol;
-import modelos.Cargo;
-import modelos.Dominio;
-import modelos.Empleado;
-import modelos.Evaluacion;
-import modelos.NivelCompetenciaCargo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

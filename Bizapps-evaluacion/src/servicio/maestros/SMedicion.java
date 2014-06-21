@@ -3,8 +3,9 @@ package servicio.maestros;
 import interfacedao.maestros.IMedicionDAO;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Medicion;
+import modelo.maestros.Area;
+import modelo.maestros.Medicion;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

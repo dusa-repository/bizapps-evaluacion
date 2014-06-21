@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 
-import modelos.Cargo;
-import modelos.Competencia;
-import modelos.Empresa;
-import modelos.Gerencia;
-import modelos.Periodo;
-import modelos.Revision;
-import modelos.UnidadOrganizativa;
+import modelo.maestros.Cargo;
+import modelo.maestros.Competencia;
+import modelo.maestros.Empresa;
+import modelo.maestros.Gerencia;
+import modelo.maestros.Periodo;
+import modelo.maestros.Revision;
+import modelo.maestros.UnidadOrganizativa;
 
 import java.sql.Timestamp;
 import java.util.List;

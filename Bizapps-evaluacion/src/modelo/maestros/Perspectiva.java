@@ -1,4 +1,4 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -7,21 +7,21 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the medicion database table.
+ * The persistent class for the perspectiva database table.
  * 
  */
 @Entity
-@Table(name="medicion")
-public class Medicion implements Serializable {
+@Table(name="perspectiva")
+public class Perspectiva implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_medicion")
-	private int idMedicion;
+	@Column(name="id_perspectiva")
+	private int idPerspectiva;
 
-	@Column(name="descripcion_medicion")
-	private String descripcionMedicion;
+	@Column(name="descripcion")
+	private String descripcion;
 	
 	@Column(name="usuario")
 	private String usuario;
@@ -32,14 +32,14 @@ public class Medicion implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 	
-	public Medicion() {
+	public Perspectiva() {
 	}
 	
-	public Medicion(int idMedicion, String descripcionMedicion, String usuario,
+	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idMedicion = idMedicion;
-		this.descripcionMedicion = descripcionMedicion;
+		this.idPerspectiva = idPerspectiva;
+		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -47,22 +47,22 @@ public class Medicion implements Serializable {
 
 
 
-	public int getIdMedicion() {
-		return this.idMedicion;
+	public int getIdPerspectiva() {
+		return this.idPerspectiva;
 	}
 
-	public void setIdMedicion(int idMedicion) {
-		this.idMedicion = idMedicion;
+	public void setIdPerspectiva(int idPerspectiva) {
+		this.idPerspectiva = idPerspectiva;
 	}
 
-	public String getDescripcionMedicion() {
-		return this.descripcionMedicion;
+	public String getDescripcion() {
+		return this.descripcion;
 	}
 
-	public void setDescripcionMedicion(String descripcionMedicion) {
-		this.descripcionMedicion = descripcionMedicion;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -87,5 +87,4 @@ public class Medicion implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 	
-
 }

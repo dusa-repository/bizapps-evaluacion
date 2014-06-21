@@ -3,8 +3,8 @@ package modelo.pk;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import modelos.Cargo;
-import modelos.Competencia;
+import modelo.maestros.Cargo;
+import modelo.maestros.Competencia;
 
 /**
  * The primary key class for the nivel_competencia_cargo database table.

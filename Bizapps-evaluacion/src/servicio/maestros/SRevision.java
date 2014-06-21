@@ -4,8 +4,9 @@ import interfacedao.maestros.IRevisionDAO;
 
 import java.util.List;
 
-import modelos.Area;
-import modelos.Revision;
+import modelo.maestros.Area;
+import modelo.maestros.Revision;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

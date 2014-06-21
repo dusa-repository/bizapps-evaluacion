@@ -3,8 +3,8 @@ package interfacedao.maestros;
 
 import java.util.List;
 
-import modelos.Perspectiva;
-import modelos.UnidadMedida;
+import modelo.maestros.Perspectiva;
+import modelo.maestros.UnidadMedida;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

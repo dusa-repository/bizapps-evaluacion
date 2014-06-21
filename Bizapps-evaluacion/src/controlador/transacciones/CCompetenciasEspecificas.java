@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import modelo.maestros.Dominio;
+import modelo.maestros.Empleado;
+import modelo.maestros.Evaluacion;
+import modelo.maestros.NivelCompetenciaCargo;
+import modelo.maestros.Perspectiva;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
-import modelos.Dominio;
-import modelos.Empleado;
-import modelos.Evaluacion;
-import modelos.NivelCompetenciaCargo;
-import modelos.Perspectiva;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

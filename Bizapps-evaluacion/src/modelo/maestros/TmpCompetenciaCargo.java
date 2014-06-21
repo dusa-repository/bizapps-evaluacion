@@ -1,3 +1,4 @@
+package modelo.maestros;
 //package modelos;
 //
 //import java.io.Serializable;

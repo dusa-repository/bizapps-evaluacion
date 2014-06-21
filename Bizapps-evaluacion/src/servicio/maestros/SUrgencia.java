@@ -5,8 +5,9 @@ import interfacedao.maestros.IUrgenciaDAO;
 
 import java.util.List;
 
-import modelos.Area;
-import modelos.Urgencia;
+import modelo.maestros.Area;
+import modelo.maestros.Urgencia;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

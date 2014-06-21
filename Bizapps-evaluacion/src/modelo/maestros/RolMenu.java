@@ -1,24 +1,24 @@
-package modelos;
+package modelo.maestros;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import modelo.pk.RolMenuPK;
+
 import java.sql.Time;
 
 
 /**
- * The persistent class for the rol database table.
+ * The persistent class for the rol_menu database table.
  * 
  */
 @Entity
-@Table(name="rol")
-public class Rol implements Serializable {
+@Table(name="rol_menu")
+public class RolMenu implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="id_rol")
-	private int idRol;
-
-	private String descripcion;
+	@EmbeddedId
+	private RolMenuPK id;
 
 	@Column(name="fecha_auditoria")
 	private Time fechaAuditoria;
@@ -26,23 +26,15 @@ public class Rol implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
-	public Rol() {
+	public RolMenu() {
 	}
 
-	public int getIdRol() {
-		return this.idRol;
+	public RolMenuPK getId() {
+		return this.id;
 	}
 
-	public void setIdRol(int idRol) {
-		this.idRol = idRol;
-	}
-
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setId(RolMenuPK id) {
+		this.id = id;
 	}
 
 	public Time getFechaAuditoria() {

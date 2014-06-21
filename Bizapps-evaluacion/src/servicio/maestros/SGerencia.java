@@ -4,7 +4,8 @@ import interfacedao.maestros.IGerenciaDAO;
 
 import java.util.List;
 
-import modelos.Gerencia;
+import modelo.maestros.Gerencia;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modelos.Area;
-import modelos.Cargo;
-import modelos.Empleado;
-import modelos.Empresa;
-import modelos.UnidadOrganizativa;
+import modelo.maestros.Area;
+import modelo.maestros.Cargo;
+import modelo.maestros.Empleado;
+import modelo.maestros.Empresa;
+import modelo.maestros.UnidadOrganizativa;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;

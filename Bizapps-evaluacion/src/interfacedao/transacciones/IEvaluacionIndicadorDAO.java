@@ -3,9 +3,9 @@ package interfacedao.transacciones;
 
 import java.util.List;
 
-import modelos.EvaluacionIndicador;
-import modelos.EvaluacionObjetivo;
-import modelos.TipoFormacion;
+import modelo.maestros.EvaluacionIndicador;
+import modelo.maestros.EvaluacionObjetivo;
+import modelo.maestros.TipoFormacion;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
