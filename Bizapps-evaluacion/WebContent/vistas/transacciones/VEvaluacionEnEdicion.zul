@@ -259,7 +259,7 @@
 										readonly="true" id="cmbUnidad">
 										<template name="model">
 											<comboitem
-												context="${each.idUnidad}" label="${each.descripcion}" />
+												context="${each.id}" label="${each.descripcion}" />
 										</template>
 									</combobox>
 								</listcell>
@@ -270,7 +270,7 @@
 										readonly="true" id="cmbMedicion">
 										<template name="model">
 											<comboitem
-												context="${each.idMedicion}"
+												context="${each.id}"
 												label="${each.descripcionMedicion}" />
 										</template>
 									</combobox>
@@ -405,7 +405,7 @@
 										model="${$composer.dominio}">
 										<template name="model">
 											<comboitem
-												description="${each.idDominio}"
+												description="${each.id}"
 												label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
@@ -442,7 +442,7 @@
 										model="${$composer.dominio}">
 										<template name="model">
 											<comboitem
-												description="${each.idDominio}"
+												description="${each.id}"
 												label="${each.descripcionDominio}" />
 										</template>
 									</combobox>

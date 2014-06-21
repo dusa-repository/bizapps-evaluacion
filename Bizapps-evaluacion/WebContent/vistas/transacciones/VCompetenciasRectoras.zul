@@ -79,7 +79,7 @@
 								mold="rounded" rows="1" width="100%" 
 								style="background-color:white;border:none" model="${$composer.dominio}">
 								<template name="model" >
-									<comboitem description="${each.idDominio}" label="${each.descripcionDominio}" />
+									<comboitem description="${each.id}" label="${each.descripcionDominio}" />
 								</template>
 							</combobox>
 						</listcell>

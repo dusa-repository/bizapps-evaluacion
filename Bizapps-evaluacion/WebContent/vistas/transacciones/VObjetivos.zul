@@ -77,7 +77,7 @@
 								style="background-color:white;border:none" readonly="true"
 								id="cmbPerspectiva">
 								<template name="model">
-									<comboitem context="${each.idPerspectiva}"
+									<comboitem context="${each.id}"
 										label="${each.descripcion}" />
 								</template>
 							</combobox>

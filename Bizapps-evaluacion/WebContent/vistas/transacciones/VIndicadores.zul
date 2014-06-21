@@ -81,7 +81,7 @@
 								style="background-color:white;border:none" readonly="true"
 								id="cmbUnidad">
 								<template name="model">
-									<comboitem context="${each.idUnidad}"
+									<comboitem context="${each.id}"
 										label="${each.descripcion}" />
 								</template>
 							</combobox>
@@ -92,7 +92,7 @@
 								style="background-color:white;border:none" readonly="true"
 								id="cmbMedicion">
 								<template name="model">
-									<comboitem context="${each.idMedicion}"
+									<comboitem context="${each.id}"
 										label="${each.descripcionMedicion}" />
 								</template>
 							</combobox>
