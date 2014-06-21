@@ -92,7 +92,7 @@
 								mold="rounded" rows="2" width="100%" id="txtCorresponsables" />
 						</listcell>
 						<listcell>
-							<spinner  placeholder="Peso"
+							<spinner  placeholder="Peso" constraint = "min 0"
 								mold="rounded"  width="100%" 
 								id="txtPeso" />
 						</listcell>

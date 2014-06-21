@@ -28,6 +28,10 @@ public class SPerspectiva {
 		return perspectivaDAO.findById(value);
 	}
 	
+	public Perspectiva buscarNombre(String value) {
+		return perspectivaDAO.findByDescripcion(value);
+	}
+	
 	/* Servicio que permite eliminar una perspectiva */
 	public void eliminarUnaPerspectiva(int id) {
 		perspectivaDAO.delete(id);

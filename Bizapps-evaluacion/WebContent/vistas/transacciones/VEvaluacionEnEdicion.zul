@@ -116,7 +116,7 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso"
+									<spinner placeholder="Peso" constraint = "min 0"
 										mold="rounded"  width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
@@ -276,30 +276,30 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %"
+									<spinner placeholder="Peso %" constraint = "min 0"
 										mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Valor Meta"
+									<spinner placeholder="Valor Meta" constraint = "min 0"
 										mold="rounded" width="100%" id="txtValorMeta" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" readonly="true" value = "0"/>
+										id="txtValorResultado" readonly="true" value = "0" constraint = "min 0"/>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant" value = "0"
+									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
 										mold="rounded" width="100%" id="txtResFy" disabled = "true"/>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Resultado %" value = "0"
+									<spinner placeholder="Resultado %" value = "0" constraint = "min 0"
 										mold="rounded" width="100%" id="txtResultadoPorc" readonly="true" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" readonly="true" value = "0"/>
+										id="txtPesoPorc" readonly="true" value = "0" constraint = "min 0"/>
 								</listcell>
 								<listcell>
 									<button id="btnOk2" width="auto"

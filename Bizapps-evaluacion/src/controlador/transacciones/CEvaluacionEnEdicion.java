@@ -176,6 +176,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private static int idEva;
 	private static boolean bool = false;
 	private static int idObjetivo;
+	private static String pers;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -324,7 +325,6 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
-
 		winEvaluacionEmpleado.onClose();
 	}
 
@@ -371,7 +371,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 							Messagebox.EXCLAMATION);
 				} else {
 					if(idObjetivo!= 0){
-						//EvaluacionObjetivoActualizar();
+						EvaluacionObjetivoActualizar();
 					}else {
 						String perspectivaCombo = cmbPerspectiva.getSelectedItem()
 								.getContext();
@@ -572,34 +572,31 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				int peso1 = peso.intValue();
 				txtPeso.setValue(peso1);
 				cmbPerspectiva.setValue(perspectiva.getDescripcion());
+				pers = perspectiva.getDescripcion();
+				cmbPerspectiva.setDisabled(true);
 			}
 		}
 	}
 	
-	//Validar lo del comboooooo
-//private void EvaluacionObjetivoActualizar(){
-//	List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-//	cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-//	String perspectivaCombo = cmbPerspectiva.getSelectedItem().getContext();
-//	Perspectiva perspectiva1 = servicioPerspectiva.buscarId(Integer.parseInt(perspectivaCombo));
-//	String objetivo = txtObjetivo.getValue();
-//	String corresponsables = txtCorresponsables.getValue();
-//	Double peso = Double.valueOf(txtPeso.getValue());
-//	EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
-//	objetivoLista.setDescripcionObjetivo(objetivo);
-//	objetivoLista.setPerspectiva(perspectiva1);
-//	objetivoLista.setPeso(peso);
-//	objetivoLista.setCorresponsables(corresponsables);
-//	servicioEvaluacionObjetivo.guardar(objetivoLista);
-//	List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);	
-//	lbxObjetivosGuardados.getItems().clear();
-//	lbxObjetivosGuardados
-//			.setModel(new ListModelList<EvaluacionObjetivo>(
-//					evaluacionObje));
-//	
-//	gpxAgregar.setOpen(false);
-//	
-//}
+	private void EvaluacionObjetivoActualizar() {
+		Perspectiva perspectiva1 = servicioPerspectiva.buscarNombre(pers);
+		String objetivo = txtObjetivo.getValue();
+		String corresponsables = txtCorresponsables.getValue();
+		Double peso = Double.valueOf(txtPeso.getValue());
+		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
+				.buscarObjetivosId(idObjetivo);
+		objetivoLista.setDescripcionObjetivo(objetivo);
+		objetivoLista.setPerspectiva(perspectiva1);
+		objetivoLista.setPeso(peso);
+		objetivoLista.setCorresponsables(corresponsables);
+		servicioEvaluacionObjetivo.guardar(objetivoLista);
+		List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		lbxObjetivosGuardados.getItems().clear();
+		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
+				evaluacionObje));
+		gpxAgregar.setOpen(false);
+	}
 	
 	@Listen("onSelect = #cmbMedicion")
 	public void mostrarResAnterior(){
