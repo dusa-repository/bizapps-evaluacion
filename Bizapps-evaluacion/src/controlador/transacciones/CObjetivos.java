@@ -165,7 +165,7 @@ public class CObjetivos extends CGenerico {
 			if (objetivosG.size() == 0) {
 			idEvaluacion = idEvaluacion + 1; 
 			Evaluacion evaluacionEmpleado = new Evaluacion();
-			evaluacionEmpleado.setIdEvaluacion(idEvaluacion);
+			evaluacionEmpleado.setId(idEvaluacion);
 			evaluacionEmpleado.setEstadoEvaluacion("EN EDICION");
 			evaluacionEmpleado.setFechaCreacion(fechaHora);
 			evaluacionEmpleado.setFicha(ficha);

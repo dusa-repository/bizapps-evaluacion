@@ -63,7 +63,7 @@ public class CUrgencia extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Urgencia urgencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idUrgencia = urgencia.getIdUrgencia();
+						idUrgencia = urgencia.getId();
 						txtDescripcionUrgencia.setValue(urgencia.getDescripcionUrgencia());
 						txtDescripcionUrgencia.setFocus(true);
 					} else
@@ -253,7 +253,7 @@ public class CUrgencia extends CGenerico {
 				List<Urgencia> lista = new ArrayList<Urgencia>();
 
 				for (Urgencia urgencia : listUrgencia) {
-					if (String.valueOf(urgencia.getIdUrgencia()).toLowerCase()
+					if (String.valueOf(urgencia.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& urgencia.getDescripcionUrgencia().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -267,7 +267,7 @@ public class CUrgencia extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Urgencia urgencia) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(urgencia.getIdUrgencia());
+				registros[0] = String.valueOf(urgencia.getId());
 				registros[1] = urgencia.getDescripcionUrgencia();
 
 				return registros;

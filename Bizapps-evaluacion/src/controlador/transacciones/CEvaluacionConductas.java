@@ -116,7 +116,7 @@ public class CEvaluacionConductas extends CGenerico {
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
 		evaluacionCompetenciaPk.setIdCompetencia(idCompetencia);
-		evaluacionCompetenciaPk.setIdEvaluacion(evaluacion.getIdEvaluacion());
+		evaluacionCompetenciaPk.setIdEvaluacion(evaluacion.getId());
 		evaluacionCompetencia.setId(evaluacionCompetenciaPk);
 		evaluacionCompetencia.setIdDominio(idDominio);
 		boolean campoBlanco = false;
@@ -149,9 +149,9 @@ public class CEvaluacionConductas extends CGenerico {
 				String observacion = ((Textbox) ((listItem.getChildren().get(2)))
 						.getFirstChild()).getValue();					
 				evaluacionConductaPk.setIdConducta(conductaCompe
-						.getIdConducta());
+						.getId());
 				evaluacionConductaPk.setIdEvaluacion(evaluacion
-						.getIdEvaluacion());
+						.getId());
 				evaluacionConducta.setId(evaluacionConductaPk);
 				evaluacionConducta.setObservacion(observacion);
 				servicioEvaluacionConducta.guardar(evaluacionConducta);

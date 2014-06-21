@@ -63,7 +63,7 @@ public class CGerencia extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Gerencia gerencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idGerencia = gerencia.getIdGerencia();
+						idGerencia = gerencia.getId();
 						txtDescripcionGerencia.setValue(gerencia.getDescripcion());
 						txtDescripcionGerencia.setFocus(true);
 					} else
@@ -252,7 +252,7 @@ public class CGerencia extends CGenerico {
 				List<Gerencia> lista = new ArrayList<Gerencia>();
 
 				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getIdGerencia()).toLowerCase()
+					if (String.valueOf(gerencia.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& gerencia.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -266,7 +266,7 @@ public class CGerencia extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Gerencia gerencia) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getIdGerencia());
+				registros[0] = String.valueOf(gerencia.getId());
 				registros[1] = gerencia.getDescripcion();
 
 				return registros;

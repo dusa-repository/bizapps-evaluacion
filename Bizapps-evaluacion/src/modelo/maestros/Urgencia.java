@@ -18,7 +18,7 @@ public class Urgencia implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_urgencia")
-	private int idUrgencia;
+	private int id;
 
 	@Column(name="descripcion_urgencia")
 	private String descripcionUrgencia;
@@ -39,7 +39,7 @@ public class Urgencia implements Serializable {
 	public Urgencia(int idUrgencia, String descripcionUrgencia, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idUrgencia = idUrgencia;
+		this.id = idUrgencia;
 		this.descripcionUrgencia = descripcionUrgencia;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
@@ -48,12 +48,12 @@ public class Urgencia implements Serializable {
 
 
 
-	public int getIdUrgencia() {
-		return this.idUrgencia;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdUrgencia(int idUrgencia) {
-		this.idUrgencia = idUrgencia;
+	public void setId(int idUrgencia) {
+		this.id = idUrgencia;
 	}
 
 	public String getDescripcionUrgencia() {

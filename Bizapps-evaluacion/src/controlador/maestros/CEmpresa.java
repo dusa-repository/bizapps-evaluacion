@@ -73,7 +73,7 @@ public class CEmpresa extends CGenerico {
 						abrirRegistro();
 						Empresa empresa = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idEmpresa = empresa.getIdEmpresa();
+						idEmpresa = empresa.getId();
 						txtNombreEmpresa.setValue(empresa.getNombre());
 						txtDireccionEmpresa.setValue(empresa.getDireccion());
 						txtTelefono1Empresa.setValue(empresa.getTelefono1());
@@ -279,7 +279,7 @@ public class CEmpresa extends CGenerico {
 				List<Empresa> lista = new ArrayList<Empresa>();
 
 				for (Empresa empresa : listEmpresa) {
-					if (String.valueOf(empresa.getIdEmpresa()).toLowerCase()
+					if (String.valueOf(empresa.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& empresa.getNombre().toLowerCase()
 									.startsWith(valores.get(1))
@@ -301,7 +301,7 @@ public class CEmpresa extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Empresa empresa) {
 				String[] registros = new String[6];
-				registros[0] = String.valueOf(empresa.getIdEmpresa());
+				registros[0] = String.valueOf(empresa.getId());
 				registros[1] = empresa.getNombre();
 				registros[2] = empresa.getDireccion();
 				registros[3] = empresa.getTelefono1();

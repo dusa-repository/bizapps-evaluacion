@@ -21,7 +21,7 @@ public class Area implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_area")
-	private int idArea;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -45,7 +45,7 @@ public class Area implements Serializable {
 	public Area(int idArea, String descripcion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idArea = idArea;
+		this.id = idArea;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
@@ -54,12 +54,12 @@ public class Area implements Serializable {
 
 
 
-	public int getIdArea() {
-		return this.idArea;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdArea(int idArea) {
-		this.idArea = idArea;
+	public void setId(int idArea) {
+		this.id = idArea;
 	}
 
 	public String getDescripcion() {

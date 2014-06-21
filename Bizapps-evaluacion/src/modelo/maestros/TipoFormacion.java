@@ -20,7 +20,7 @@ public class TipoFormacion implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_tipo_formacion")
-	private int idTipoFormacion;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -46,7 +46,7 @@ public class TipoFormacion implements Serializable {
 			Timestamp fechaAuditoria, String horaAuditoria, Area area,
 			String usuario) {
 		super();
-		this.idTipoFormacion = idTipoFormacion;
+		this.id = idTipoFormacion;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -56,12 +56,12 @@ public class TipoFormacion implements Serializable {
 
 
 
-	public int getIdTipoFormacion() {
-		return this.idTipoFormacion;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdTipoFormacion(int idTipoFormacion) {
-		this.idTipoFormacion = idTipoFormacion;
+	public void setId(int idTipoFormacion) {
+		this.id = idTipoFormacion;
 	}
 
 	public String getDescripcion() {

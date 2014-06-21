@@ -67,7 +67,7 @@ public class CCompetencia extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Competencia competencia = catalogo.objetoSeleccionadoDelCatalogo();
-						idCompetencia = competencia.getIdCompetencia();
+						idCompetencia = competencia.getId();
 						txtDescripcionCompetencia.setValue(competencia.getDescripcion());
 						txtNivelCompetencia.setValue(competencia.getNivel());
 						txtComentarioCompetencia.setValue(competencia.getComentario());
@@ -265,7 +265,7 @@ public class CCompetencia extends CGenerico {
 				List<Competencia> lista = new ArrayList<Competencia>();
 
 				for (Competencia competencia : listCompetencia) {
-					if (String.valueOf(competencia.getIdCompetencia()).toLowerCase()
+					if (String.valueOf(competencia.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& competencia.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))
@@ -283,7 +283,7 @@ public class CCompetencia extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Competencia competencia) {
 				String[] registros = new String[4];
-				registros[0] = String.valueOf(competencia.getIdCompetencia());
+				registros[0] = String.valueOf(competencia.getId());
 				registros[1] = competencia.getDescripcion();
 				registros[2] = competencia.getNivel();
 				registros[3] = competencia.getComentario();

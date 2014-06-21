@@ -21,7 +21,7 @@ public class Periodo implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_periodo")
-	private int idPeriodo;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -59,7 +59,7 @@ public class Periodo implements Serializable {
 			Timestamp fechaInicio, String horaAuditoria, String nombre,
 			String usuario) {
 		super();
-		this.idPeriodo = idPeriodo;
+		this.id = idPeriodo;
 		this.descripcion = descripcion;
 		this.estadoPeriodo = estadoPeriodo;
 		this.fechaAuditoria = fechaAuditoria;
@@ -72,12 +72,12 @@ public class Periodo implements Serializable {
 
 
 
-	public int getIdPeriodo() {
-		return this.idPeriodo;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdPeriodo(int idPeriodo) {
-		this.idPeriodo = idPeriodo;
+	public void setId(int idPeriodo) {
+		this.id = idPeriodo;
 	}
 
 	public String getDescripcion() {

@@ -18,7 +18,7 @@ public class Perspectiva implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_perspectiva")
-	private int idPerspectiva;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -38,7 +38,7 @@ public class Perspectiva implements Serializable {
 	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idPerspectiva = idPerspectiva;
+		this.id = idPerspectiva;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
@@ -47,12 +47,12 @@ public class Perspectiva implements Serializable {
 
 
 
-	public int getIdPerspectiva() {
-		return this.idPerspectiva;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdPerspectiva(int idPerspectiva) {
-		this.idPerspectiva = idPerspectiva;
+	public void setId(int idPerspectiva) {
+		this.id = idPerspectiva;
 	}
 
 	public String getDescripcion() {

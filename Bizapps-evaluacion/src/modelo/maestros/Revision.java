@@ -20,7 +20,7 @@ public class Revision implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_revision")
-	private int idRevision;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -50,7 +50,7 @@ public class Revision implements Serializable {
 			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
 			Periodo periodo) {
 		super();
-		this.idRevision = idRevision;
+		this.id = idRevision;
 		this.descripcion = descripcion;
 		this.estadoRevision = estadoRevision;
 		this.fechaAuditoria = fechaAuditoria;
@@ -61,12 +61,12 @@ public class Revision implements Serializable {
 
 
 
-	public int getIdRevision() {
-		return this.idRevision;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdRevision(int idRevision) {
-		this.idRevision = idRevision;
+	public void setId(int idRevision) {
+		this.id = idRevision;
 	}
 
 	public String getDescripcion() {

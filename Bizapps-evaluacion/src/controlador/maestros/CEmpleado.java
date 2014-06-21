@@ -102,18 +102,18 @@ public class CEmpleado extends CGenerico {
 						abrirRegistro();
 						Empleado empleado = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idEmpleado = empleado.getIdEmpleado();
+						idEmpleado = empleado.getId();
 						txtEmpresaEmpleado.setValue(String.valueOf(empleado
-								.getEmpresa().getIdEmpresa()));
+								.getEmpresa().getId()));
 						lblEmpresaEmpleado.setValue(empleado.getEmpresa()
 								.getNombre());
 						txtCargoEmpleado.setValue(String.valueOf(empleado
-								.getCargo().getIdCargo()));
+								.getCargo().getId()));
 						lblCargoEmpleado.setValue(empleado.getCargo()
 								.getDescripcion());
 						txtUnidadEmpleado.setValue(String.valueOf(empleado
 								.getUnidadOrganizativa()
-								.getIdUnidadOrganizativa()));
+								.getId()));
 						lblUnidadEmpleado.setValue(empleado
 								.getUnidadOrganizativa().getDescripcion());
 						txtNombreEmpleado.setValue(empleado.getNombre());
@@ -392,19 +392,19 @@ public class CEmpleado extends CGenerico {
 				List<Empleado> lista = new ArrayList<Empleado>();
 
 				for (Empleado empleado : listEmpleado) {
-					if (String.valueOf(empleado.getIdEmpleado()).toLowerCase()
+					if (String.valueOf(empleado.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& String
 									.valueOf(
 											empleado.getEmpresa()
-													.getIdEmpresa())
+													.getId())
 									.toLowerCase().startsWith(valores.get(1))
-							&& String.valueOf(empleado.getCargo().getIdCargo())
+							&& String.valueOf(empleado.getCargo().getId())
 									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
 											empleado.getUnidadOrganizativa()
-													.getIdUnidadOrganizativa())
+													.getId())
 									.toLowerCase().startsWith(valores.get(3))
 							&& empleado.getNombre().toLowerCase()
 									.startsWith(valores.get(4))
@@ -424,12 +424,12 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Empleado empleado) {
 				String[] registros = new String[8];
-				registros[0] = String.valueOf(empleado.getIdEmpleado());
+				registros[0] = String.valueOf(empleado.getId());
 				registros[1] = String.valueOf(empleado.getEmpresa()
-						.getIdEmpresa());
-				registros[2] = String.valueOf(empleado.getCargo().getIdCargo());
+						.getId());
+				registros[2] = String.valueOf(empleado.getCargo().getId());
 				registros[3] = String.valueOf(empleado.getUnidadOrganizativa()
-						.getIdUnidadOrganizativa());
+						.getId());
 				registros[4] = empleado.getNombre();
 				registros[5] = empleado.getFicha();
 				registros[6] = empleado.getFichaSupervisor();
@@ -496,7 +496,7 @@ public class CEmpleado extends CGenerico {
 				List<Empresa> lista = new ArrayList<Empresa>();
 
 				for (Empresa empresa : listEmpresa) {
-					if (String.valueOf(empresa.getIdEmpresa()).toLowerCase()
+					if (String.valueOf(empresa.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& empresa.getNombre().toLowerCase()
 									.startsWith(valores.get(1))
@@ -518,7 +518,7 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Empresa empresa) {
 				String[] registros = new String[6];
-				registros[0] = String.valueOf(empresa.getIdEmpresa());
+				registros[0] = String.valueOf(empresa.getId());
 				registros[1] = empresa.getNombre();
 				registros[2] = empresa.getDireccion();
 				registros[3] = empresa.getTelefono1();
@@ -543,7 +543,7 @@ public class CEmpleado extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoEmpresa")
 	public void seleccionEmpresa() {
 		Empresa empresa = catalogoEmpresa.objetoSeleccionadoDelCatalogo();
-		txtEmpresaEmpleado.setValue(String.valueOf(empresa.getIdEmpresa()));
+		txtEmpresaEmpleado.setValue(String.valueOf(empresa.getId()));
 		lblEmpresaEmpleado.setValue(empresa.getNombre());
 		catalogoEmpresa.setParent(null);
 	}
@@ -560,7 +560,7 @@ public class CEmpleado extends CGenerico {
 				List<Cargo> lista = new ArrayList<Cargo>();
 
 				for (Cargo cargo : listCargo) {
-					if (String.valueOf(cargo.getIdCargo()).toLowerCase()
+					if (String.valueOf(cargo.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& cargo.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))
@@ -580,7 +580,7 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Cargo cargo) {
 				String[] registros = new String[5];
-				registros[0] = String.valueOf(cargo.getIdCargo());
+				registros[0] = String.valueOf(cargo.getId());
 				registros[1] = cargo.getDescripcion();
 				registros[2] = cargo.getNomina();
 				registros[3] = cargo.getIdCargoAuxiliar();
@@ -604,7 +604,7 @@ public class CEmpleado extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoCargo")
 	public void seleccionCargo() {
 		Cargo cargo = catalogoCargo.objetoSeleccionadoDelCatalogo();
-		txtCargoEmpleado.setValue(String.valueOf(cargo.getIdCargo()));
+		txtCargoEmpleado.setValue(String.valueOf(cargo.getId()));
 		lblCargoEmpleado.setValue(cargo.getDescripcion());
 		catalogoCargo.setParent(null);
 	}
@@ -624,12 +624,12 @@ public class CEmpleado extends CGenerico {
 				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
 
 				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
-					if (String.valueOf(unidad.getIdUnidadOrganizativa())
+					if (String.valueOf(unidad.getId())
 							.toLowerCase().startsWith(valores.get(0))
 							&& String
 									.valueOf(
 											unidad.getGerencia()
-													.getIdGerencia())
+													.getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& unidad.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))
@@ -651,9 +651,9 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
 				String[] registros = new String[7];
-				registros[0] = String.valueOf(unidad.getIdUnidadOrganizativa());
+				registros[0] = String.valueOf(unidad.getId());
 				registros[1] = String.valueOf(unidad.getGerencia()
-						.getIdGerencia());
+						.getId());
 				registros[2] = unidad.getDescripcion();
 				registros[3] = String.valueOf(unidad.getNivel());
 				registros[4] = String.valueOf(unidad.getSubNivel());
@@ -678,7 +678,7 @@ public class CEmpleado extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoUnidad")
 	public void seleccionUnidad() {
 		UnidadOrganizativa unidad = catalogoUnidad.objetoSeleccionadoDelCatalogo();
-		txtUnidadEmpleado.setValue(String.valueOf(unidad.getIdUnidadOrganizativa()));
+		txtUnidadEmpleado.setValue(String.valueOf(unidad.getId()));
 		lblUnidadEmpleado.setValue(unidad.getDescripcion());
 		catalogoUnidad.setParent(null);
 	}

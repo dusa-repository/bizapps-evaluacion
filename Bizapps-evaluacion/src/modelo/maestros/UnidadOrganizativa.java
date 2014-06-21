@@ -20,7 +20,7 @@ public class UnidadOrganizativa implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_unidad_organizativa")
-	private int idUnidadOrganizativa;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -59,7 +59,7 @@ public class UnidadOrganizativa implements Serializable {
 			String idEmpresaAuxiliar, String idUnidadOrganizativaAuxiliar,
 			int nivel, int subNivel, String usuario, Gerencia gerencia) {
 		super();
-		this.idUnidadOrganizativa = idUnidadOrganizativa;
+		this.id = idUnidadOrganizativa;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -73,12 +73,12 @@ public class UnidadOrganizativa implements Serializable {
 
 
 
-	public int getIdUnidadOrganizativa() {
-		return this.idUnidadOrganizativa;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdUnidadOrganizativa(int idUnidadOrganizativa) {
-		this.idUnidadOrganizativa = idUnidadOrganizativa;
+	public void setId(int idUnidadOrganizativa) {
+		this.id = idUnidadOrganizativa;
 	}
 
 	public String getDescripcion() {

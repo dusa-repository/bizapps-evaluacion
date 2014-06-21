@@ -69,7 +69,7 @@ public class CCargo extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Cargo cargo = catalogo.objetoSeleccionadoDelCatalogo();
-						idCargo = cargo.getIdCargo();
+						idCargo = cargo.getId();
 						txtDescripcionCargo.setValue(cargo.getDescripcion());
 						txtNominaCargo.setValue(cargo.getNomina());
 						txtCargoAuxiliarCargo.setValue(cargo
@@ -271,7 +271,7 @@ public class CCargo extends CGenerico {
 				List<Cargo> lista = new ArrayList<Cargo>();
 
 				for (Cargo cargo : listCargo) {
-					if (String.valueOf(cargo.getIdCargo()).toLowerCase()
+					if (String.valueOf(cargo.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& cargo.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))
@@ -291,7 +291,7 @@ public class CCargo extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Cargo cargo) {
 				String[] registros = new String[5];
-				registros[0] = String.valueOf(cargo.getIdCargo());
+				registros[0] = String.valueOf(cargo.getId());
 				registros[1] = cargo.getDescripcion();
 				registros[2] = cargo.getNomina();
 				registros[3] = cargo.getIdCargoAuxiliar();

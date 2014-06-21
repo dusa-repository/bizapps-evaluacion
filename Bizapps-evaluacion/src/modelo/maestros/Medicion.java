@@ -18,7 +18,7 @@ public class Medicion implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_medicion")
-	private int idMedicion;
+	private int id;
 
 	@Column(name="descripcion_medicion")
 	private String descripcionMedicion;
@@ -38,7 +38,7 @@ public class Medicion implements Serializable {
 	public Medicion(int idMedicion, String descripcionMedicion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria) {
 		super();
-		this.idMedicion = idMedicion;
+		this.id = idMedicion;
 		this.descripcionMedicion = descripcionMedicion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
@@ -47,12 +47,12 @@ public class Medicion implements Serializable {
 
 
 
-	public int getIdMedicion() {
-		return this.idMedicion;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdMedicion(int idMedicion) {
-		this.idMedicion = idMedicion;
+	public void setId(int idMedicion) {
+		this.id = idMedicion;
 	}
 
 	public String getDescripcionMedicion() {

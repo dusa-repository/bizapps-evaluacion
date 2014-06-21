@@ -150,7 +150,7 @@ public class CCompetenciasRectoras extends CGenerico {
 								
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionConductas.zul", null, map);

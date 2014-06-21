@@ -18,7 +18,7 @@ public class Dominio implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_dominio")
-	private int idDominio;
+	private int id;
 
 	@Column(name="comentario")
 	private String comentario;
@@ -49,7 +49,7 @@ public class Dominio implements Serializable {
 			String tipo, String usuario, Timestamp fechaAuditoria,
 			String horaAuditoria) {
 		super();
-		this.idDominio = idDominio;
+		this.id = idDominio;
 		this.comentario = comentario;
 		this.descripcionDominio = descripcionDominio;
 		this.tipo = tipo;
@@ -58,12 +58,12 @@ public class Dominio implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public int getIdDominio() {
-		return this.idDominio;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdDominio(int idDominio) {
-		this.idDominio = idDominio;
+	public void setId(int idDominio) {
+		this.id = idDominio;
 	}
 
 	public String getComentario() {

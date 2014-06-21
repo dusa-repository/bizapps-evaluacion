@@ -15,7 +15,7 @@ public class ConductaCompetencia implements Serializable {
 
 	@Id
 	@Column(name="id_conducta")
-	private int idConducta;
+	private int id;
 
 	private String descripcion;
 
@@ -30,12 +30,12 @@ public class ConductaCompetencia implements Serializable {
 	public ConductaCompetencia() {
 	}
 
-	public int getIdConducta() {
-		return this.idConducta;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdConducta(int idConducta) {
-		this.idConducta = idConducta;
+	public void setId(int idConducta) {
+		this.id = idConducta;
 	}
 
 	public String getDescripcion() {

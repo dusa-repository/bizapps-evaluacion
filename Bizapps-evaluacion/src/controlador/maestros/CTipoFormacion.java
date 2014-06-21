@@ -76,13 +76,13 @@ public class CTipoFormacion extends CGenerico {
 						abrirRegistro();
 						TipoFormacion tipoFormacion = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idTipoFormacion = tipoFormacion.getIdTipoFormacion();
+						idTipoFormacion = tipoFormacion.getId();
 						txtDescripcionTipoFormacion.setValue(tipoFormacion
 								.getDescripcion());
 						txtAreaTipoFormacion.setValue(String
-								.valueOf(tipoFormacion.getArea().getIdArea()));
+								.valueOf(tipoFormacion.getArea().getId()));
 						lblAreaTipoFormacion.setValue(servicioArea.buscarArea(
-								tipoFormacion.getArea().getIdArea())
+								tipoFormacion.getArea().getId())
 								.getDescripcion());
 						txtDescripcionTipoFormacion.setFocus(true);
 					} else
@@ -309,11 +309,11 @@ public class CTipoFormacion extends CGenerico {
 				List<TipoFormacion> lista = new ArrayList<TipoFormacion>();
 
 				for (TipoFormacion tipoFormacion : listTipoFormacion) {
-					if (String.valueOf(tipoFormacion.getIdTipoFormacion())
+					if (String.valueOf(tipoFormacion.getId())
 							.toLowerCase().startsWith(valores.get(0))
 							&& String
 									.valueOf(
-											tipoFormacion.getArea().getIdArea())
+											tipoFormacion.getArea().getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& tipoFormacion.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))) {
@@ -328,9 +328,9 @@ public class CTipoFormacion extends CGenerico {
 			protected String[] crearRegistros(TipoFormacion tipoFormacion) {
 				String[] registros = new String[3];
 				registros[0] = String.valueOf(tipoFormacion
-						.getIdTipoFormacion());
+						.getId());
 				registros[1] = String.valueOf(tipoFormacion.getArea()
-						.getIdArea());
+						.getId());
 				registros[2] = tipoFormacion.getDescripcion();
 
 				return registros;
@@ -369,7 +369,7 @@ public class CTipoFormacion extends CGenerico {
 				List<Area> lista = new ArrayList<Area>();
 
 				for (Area area : listArea) {
-					if (String.valueOf(area.getIdArea()).toLowerCase()
+					if (String.valueOf(area.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& area.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -383,7 +383,7 @@ public class CTipoFormacion extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Area area) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(area.getIdArea());
+				registros[0] = String.valueOf(area.getId());
 				registros[1] = area.getDescripcion();
 
 				return registros;
@@ -404,7 +404,7 @@ public class CTipoFormacion extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoArea")
 	public void seleccionArea() {
 		Area area = catalogoArea.objetoSeleccionadoDelCatalogo();
-		txtAreaTipoFormacion.setValue(String.valueOf(area.getIdArea()));
+		txtAreaTipoFormacion.setValue(String.valueOf(area.getId()));
 		lblAreaTipoFormacion.setValue(area.getDescripcion());
 		catalogoArea.setParent(null);
 	}

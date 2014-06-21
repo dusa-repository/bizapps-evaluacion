@@ -63,7 +63,7 @@ public class CArea extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Area area = catalogo.objetoSeleccionadoDelCatalogo();
-						idArea = area.getIdArea();
+						idArea = area.getId();
 						txtDescripcionArea.setValue(area.getDescripcion());
 						txtDescripcionArea.setFocus(true);
 					} else
@@ -252,7 +252,7 @@ public class CArea extends CGenerico {
 				List<Area> lista = new ArrayList<Area>();
 
 				for (Area area : listArea) {
-					if (String.valueOf(area.getIdArea()).toLowerCase()
+					if (String.valueOf(area.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& area.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -266,7 +266,7 @@ public class CArea extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Area area) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(area.getIdArea());
+				registros[0] = String.valueOf(area.getId());
 				registros[1] = area.getDescripcion();
 
 				return registros;

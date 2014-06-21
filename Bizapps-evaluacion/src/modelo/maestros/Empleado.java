@@ -20,7 +20,7 @@ public class Empleado implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_empleado")
-	private int idEmpleado;
+	private int id;
 
 	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
@@ -67,7 +67,7 @@ public class Empleado implements Serializable {
 			String nombre, String usuario, Cargo cargo, Empresa empresa,
 			UnidadOrganizativa unidadOrganizativa) {
 		super();
-		this.idEmpleado = idEmpleado;
+		this.id = idEmpleado;
 		this.fechaAuditoria = fechaAuditoria;
 		this.ficha = ficha;
 		this.fichaSupervisor = fichaSupervisor;
@@ -82,12 +82,12 @@ public class Empleado implements Serializable {
 
 
 
-	public int getIdEmpleado() {
-		return this.idEmpleado;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdEmpleado(int idEmpleado) {
-		this.idEmpleado = idEmpleado;
+	public void setId(int idEmpleado) {
+		this.id = idEmpleado;
 	}
 
 	public Timestamp getFechaAuditoria() {

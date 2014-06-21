@@ -231,7 +231,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 						String titulo = "Competencias Rectoras";
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
@@ -274,7 +274,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					String titulo = "Competencias Especificas";
-					map.put("id", competencia.getCompetencia().getIdCompetencia());
+					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);

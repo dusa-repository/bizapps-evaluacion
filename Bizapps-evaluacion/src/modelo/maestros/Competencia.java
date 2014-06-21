@@ -20,7 +20,7 @@ public class Competencia implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_competencia")
-	private int idCompetencia;
+	private int id;
 
 	@Column(name="comentario")
 	private String comentario;
@@ -47,7 +47,7 @@ public class Competencia implements Serializable {
 			String descripcion, Timestamp fechaAuditoria, String horaAuditoria,
 			String nivel, String usuario) {
 		super();
-		this.idCompetencia = idCompetencia;
+		this.id = idCompetencia;
 		this.comentario = comentario;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
@@ -58,12 +58,12 @@ public class Competencia implements Serializable {
 
 
 
-	public int getIdCompetencia() {
-		return this.idCompetencia;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdCompetencia(int idCompetencia) {
-		this.idCompetencia = idCompetencia;
+	public void setId(int idCompetencia) {
+		this.id = idCompetencia;
 	}
 
 	public String getComentario() {

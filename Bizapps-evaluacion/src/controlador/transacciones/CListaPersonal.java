@@ -107,7 +107,7 @@ public class CListaPersonal extends CGenerico {
 
 				Evaluacion evaluacionE = (Evaluacion) listItem.getValue();
 				eva = evaluacionE;
-				Integer id = evaluacionE.getIdEvaluacion();
+				Integer id = evaluacionE.getId();
 				idEva = id;
 				Messagebox.show(Mensaje.deseaEliminar, "Alerta", Messagebox.OK
 						| Messagebox.CANCEL, Messagebox.QUESTION,
@@ -162,7 +162,7 @@ public class CListaPersonal extends CGenerico {
 
 				Evaluacion evaluacion = (Evaluacion) listItem.getValue();
 				final HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("id", evaluacion.getIdEvaluacion());
+				map.put("id", evaluacion.getId());
 				map.put("titulo", evaluacion.getFicha());
 				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 				winEvaluacionEmpleado = (Window) Executions.createComponents(

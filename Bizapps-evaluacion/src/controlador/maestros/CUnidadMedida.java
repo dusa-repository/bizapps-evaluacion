@@ -63,7 +63,7 @@ public class CUnidadMedida extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						UnidadMedida unidadMedida = catalogo.objetoSeleccionadoDelCatalogo();
-						idUnidadMedida = unidadMedida.getIdUnidad();
+						idUnidadMedida = unidadMedida.getId();
 						txtDescripcionUnidadMedida.setValue(unidadMedida.getDescripcion());
 						txtDescripcionUnidadMedida.setFocus(true);
 					} else
@@ -252,7 +252,7 @@ public class CUnidadMedida extends CGenerico {
 				List<UnidadMedida> lista = new ArrayList<UnidadMedida>();
 
 				for (UnidadMedida unidadMedida : listUnidadMedida) {
-					if (String.valueOf(unidadMedida.getIdUnidad()).toLowerCase()
+					if (String.valueOf(unidadMedida.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& unidadMedida.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -266,7 +266,7 @@ public class CUnidadMedida extends CGenerico {
 			@Override
 			protected String[] crearRegistros(UnidadMedida unidadMedida) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(unidadMedida.getIdUnidad());
+				registros[0] = String.valueOf(unidadMedida.getId());
 				registros[1] = unidadMedida.getDescripcion();
 
 				return registros;

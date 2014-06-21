@@ -63,7 +63,7 @@ public class CPerspectiva extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Perspectiva perspectiva = catalogo.objetoSeleccionadoDelCatalogo();
-						idPerspectiva = perspectiva.getIdPerspectiva();
+						idPerspectiva = perspectiva.getId();
 						txtDescripcionPerspectiva.setValue(perspectiva.getDescripcion());
 						txtDescripcionPerspectiva.setFocus(true);
 					} else
@@ -252,7 +252,7 @@ public class CPerspectiva extends CGenerico {
 				List<Perspectiva> lista = new ArrayList<Perspectiva>();
 
 				for (Perspectiva perspectiva : listPerspectiva) {
-					if (String.valueOf(perspectiva.getIdPerspectiva()).toLowerCase()
+					if (String.valueOf(perspectiva.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& perspectiva.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -266,7 +266,7 @@ public class CPerspectiva extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Perspectiva perspectiva) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(perspectiva.getIdPerspectiva());
+				registros[0] = String.valueOf(perspectiva.getId());
 				registros[1] = perspectiva.getDescripcion();
 
 				return registros;

@@ -20,7 +20,7 @@ public class Empresa implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_empresa")
-	private int idEmpresa;
+	private int id;
 
 	@Column(name="direccion")
 	private String direccion;
@@ -53,7 +53,7 @@ public class Empresa implements Serializable {
 			String horaAuditoria, String idEmpresaAuxiliar, String nombre,
 			String telefono1, String telefono2, String usuario) {
 		super();
-		this.idEmpresa = idEmpresa;
+		this.id = idEmpresa;
 		this.direccion = direccion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -64,12 +64,12 @@ public class Empresa implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public int getIdEmpresa() {
-		return this.idEmpresa;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdEmpresa(int idEmpresa) {
-		this.idEmpresa = idEmpresa;
+	public void getId(int idEmpresa) {
+		this.id = idEmpresa;
 	}
 
 	public String getDireccion() {

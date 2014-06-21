@@ -78,11 +78,11 @@ public class CRevision extends CGenerico {
 						abrirRegistro();
 						Revision revision = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idRevision = revision.getIdRevision();
+						idRevision = revision.getId();
 						txtDescripcionRevision.setValue(revision
 								.getDescripcion());
 						txtPeriodoRevision.setValue(String.valueOf(revision
-								.getPeriodo().getIdPeriodo()));
+								.getPeriodo().getId()));
 						lblPeriodoRevision.setValue(revision.getPeriodo()
 								.getDescripcion());
 						txtEstadoRevision
@@ -314,12 +314,12 @@ public class CRevision extends CGenerico {
 				List<Revision> lista = new ArrayList<Revision>();
 
 				for (Revision revision : listRevision) {
-					if (String.valueOf(revision.getIdRevision()).toLowerCase()
+					if (String.valueOf(revision.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& String
 									.valueOf(
 											revision.getPeriodo()
-													.getIdPeriodo())
+													.getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& revision.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))
@@ -335,9 +335,9 @@ public class CRevision extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Revision revision) {
 				String[] registros = new String[4];
-				registros[0] = String.valueOf(revision.getIdRevision());
+				registros[0] = String.valueOf(revision.getId());
 				registros[1] = String.valueOf(revision.getPeriodo()
-						.getIdPeriodo());
+						.getId());
 				registros[2] = revision.getDescripcion();
 				registros[3] = revision.getEstadoRevision();
 
@@ -379,7 +379,7 @@ public class CRevision extends CGenerico {
 				List<Periodo> lista = new ArrayList<Periodo>();
 
 				for (Periodo periodo : listPeriodo) {
-					if (String.valueOf(periodo.getIdPeriodo()).toLowerCase()
+					if (String.valueOf(periodo.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& periodo.getNombre().toLowerCase()
 									.startsWith(valores.get(1))
@@ -407,7 +407,7 @@ public class CRevision extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Periodo periodo) {
 				String[] registros = new String[6];
-				registros[0] = String.valueOf(periodo.getIdPeriodo());
+				registros[0] = String.valueOf(periodo.getId());
 				registros[1] = periodo.getNombre();
 				registros[2] = periodo.getDescripcion();
 				registros[3] = formatoFecha.format(periodo.getFechaInicio());
@@ -432,7 +432,7 @@ public class CRevision extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoPeriodo")
 	public void seleccionPeriodo() {
 		Periodo periodo = catalogoPeriodo.objetoSeleccionadoDelCatalogo();
-		txtPeriodoRevision.setValue(String.valueOf(periodo.getIdPeriodo()));
+		txtPeriodoRevision.setValue(String.valueOf(periodo.getId()));
 		lblPeriodoRevision.setValue(periodo.getDescripcion());
 		catalogoPeriodo.setParent(null);
 	}

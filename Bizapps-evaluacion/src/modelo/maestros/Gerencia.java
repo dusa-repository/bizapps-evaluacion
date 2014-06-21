@@ -21,7 +21,7 @@ public class Gerencia implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_gerencia")
-	private int idGerencia;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -45,7 +45,7 @@ public class Gerencia implements Serializable {
 	public Gerencia(int idGerencia, String descripcion,
 			Timestamp fechaAuditoria, String horaAuditoria, String usuario) {
 		super();
-		this.idGerencia = idGerencia;
+		this.id = idGerencia;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -54,12 +54,12 @@ public class Gerencia implements Serializable {
 
 
 
-	public int getIdGerencia() {
-		return this.idGerencia;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdGerencia(int idGerencia) {
-		this.idGerencia = idGerencia;
+	public void setId(int idGerencia) {
+		this.id = idGerencia;
 	}
 
 	public String getDescripcion() {

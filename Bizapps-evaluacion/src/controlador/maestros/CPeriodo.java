@@ -72,7 +72,7 @@ public class CPeriodo extends CGenerico {
 						abrirRegistro();
 						Periodo periodo = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idPeriodo = periodo.getIdPeriodo();
+						idPeriodo = periodo.getId();
 						txtNombrePeriodo.setValue(periodo.getDescripcion());
 						txtDescripcionPeriodo
 								.setValue(periodo.getDescripcion());
@@ -273,7 +273,7 @@ public class CPeriodo extends CGenerico {
 				List<Periodo> lista = new ArrayList<Periodo>();
 
 				for (Periodo periodo : listPeriodo) {
-					if (String.valueOf(periodo.getIdPeriodo()).toLowerCase()
+					if (String.valueOf(periodo.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& periodo.getNombre().toLowerCase()
 									.startsWith(valores.get(1))
@@ -301,7 +301,7 @@ public class CPeriodo extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Periodo periodo) {
 				String[] registros = new String[6];
-				registros[0] = String.valueOf(periodo.getIdPeriodo());
+				registros[0] = String.valueOf(periodo.getId());
 				registros[1] = periodo.getNombre();
 				registros[2] = periodo.getDescripcion();
 				registros[3] = formatoFecha.format(periodo.getFechaInicio());

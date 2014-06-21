@@ -63,7 +63,7 @@ public class CMedicion extends CGenerico {
 						mostrarBotones(false);
 						abrirRegistro();
 						Medicion medicion = catalogo.objetoSeleccionadoDelCatalogo();
-						idMedicion = medicion.getIdMedicion();
+						idMedicion = medicion.getId();
 						txtDescripcionMedicion.setValue(medicion.getDescripcionMedicion());
 						txtDescripcionMedicion.setFocus(true);
 					} else
@@ -252,7 +252,7 @@ public class CMedicion extends CGenerico {
 				List<Medicion> lista = new ArrayList<Medicion>();
 
 				for (Medicion medicion : listMedicion) {
-					if (String.valueOf(medicion.getIdMedicion()).toLowerCase()
+					if (String.valueOf(medicion.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& medicion.getDescripcionMedicion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -266,7 +266,7 @@ public class CMedicion extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Medicion medicion) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(medicion.getIdMedicion());
+				registros[0] = String.valueOf(medicion.getId());
 				registros[1] = medicion.getDescripcionMedicion();
 
 				return registros;

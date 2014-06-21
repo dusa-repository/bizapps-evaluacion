@@ -83,12 +83,12 @@ public class CUnidadOrganizativa extends CGenerico {
 						abrirRegistro();
 						UnidadOrganizativa unidad = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idUnidadOrganizativa = unidad.getIdUnidadOrganizativa();
+						idUnidadOrganizativa = unidad.getId();
 						txtGerenciaUnidadOrganizativa.setValue(String
-								.valueOf(unidad.getGerencia().getIdGerencia()));
+								.valueOf(unidad.getGerencia().getId()));
 						lblGerenciaUnidadOrganizativa.setValue(servicioGerencia
 								.buscarGerencia(
-										unidad.getGerencia().getIdGerencia())
+										unidad.getGerencia().getId())
 								.getDescripcion());
 						txtDescripcionUnidadOrganizativa.setValue(unidad
 								.getDescripcion());
@@ -365,12 +365,12 @@ public class CUnidadOrganizativa extends CGenerico {
 				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
 
 				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
-					if (String.valueOf(unidad.getIdUnidadOrganizativa())
+					if (String.valueOf(unidad.getId())
 							.toLowerCase().startsWith(valores.get(0))
 							&& String
 									.valueOf(
 											unidad.getGerencia()
-													.getIdGerencia())
+													.getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& unidad.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))
@@ -392,9 +392,9 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
 				String[] registros = new String[7];
-				registros[0] = String.valueOf(unidad.getIdUnidadOrganizativa());
+				registros[0] = String.valueOf(unidad.getId());
 				registros[1] = String.valueOf(unidad.getGerencia()
-						.getIdGerencia());
+						.getId());
 				registros[2] = unidad.getDescripcion();
 				registros[3] = String.valueOf(unidad.getNivel());
 				registros[4] = String.valueOf(unidad.getSubNivel());
@@ -438,7 +438,7 @@ public class CUnidadOrganizativa extends CGenerico {
 				List<Gerencia> lista = new ArrayList<Gerencia>();
 
 				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getIdGerencia()).toLowerCase()
+					if (String.valueOf(gerencia.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& gerencia.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))) {
@@ -452,7 +452,7 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Gerencia gerencia) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getIdGerencia());
+				registros[0] = String.valueOf(gerencia.getId());
 				registros[1] = gerencia.getDescripcion();
 
 				return registros;
@@ -474,7 +474,7 @@ public class CUnidadOrganizativa extends CGenerico {
 	public void seleccionGerencia() {
 		Gerencia gerencia = catalogoGerencia.objetoSeleccionadoDelCatalogo();
 		txtGerenciaUnidadOrganizativa.setValue(String.valueOf(gerencia
-				.getIdGerencia()));
+				.getId()));
 		lblGerenciaUnidadOrganizativa.setValue(gerencia.getDescripcion());
 		catalogoGerencia.setParent(null);
 	}

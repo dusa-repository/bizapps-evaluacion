@@ -95,14 +95,14 @@ public class CResumenMacro extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
-		
+		comboEmpresa();
 	}
 	
 	
 	private void comboEmpresa() {
 		List<Empresa> empresas = servicioEmpresa.buscarTodas();
 		Empresa empresaAuxiliar = new modelo.maestros.Empresa();
-		empresaAuxiliar.setIdEmpresa(0);
+		empresaAuxiliar.getId(0);
 		empresaAuxiliar.setNombre("TODAS");
 		empresas.add(empresaAuxiliar);
 		cmbEmpresa.setModel(new ListModelList<Empresa>(empresas));

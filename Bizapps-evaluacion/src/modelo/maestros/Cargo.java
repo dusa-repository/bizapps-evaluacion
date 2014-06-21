@@ -20,7 +20,7 @@ public class Cargo implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_cargo")
-	private int idCargo;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -51,7 +51,7 @@ public class Cargo implements Serializable {
 			String horaAuditoria, String idCargoAuxiliar,
 			String idEmpresaAuxiliar, String nomina, String usuario) {
 		super();
-		this.idCargo = idCargo;
+		this.id = idCargo;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -64,12 +64,12 @@ public class Cargo implements Serializable {
 
 
 
-	public int getIdCargo() {
-		return this.idCargo;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdCargo(int idCargo) {
-		this.idCargo = idCargo;
+	public void setId(int idCargo) {
+		this.id = idCargo;
 	}
 
 	public String getDescripcion() {

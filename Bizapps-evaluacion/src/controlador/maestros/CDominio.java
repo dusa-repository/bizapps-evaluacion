@@ -68,7 +68,7 @@ public class CDominio extends CGenerico {
 						abrirRegistro();
 						Dominio dominio = catalogo
 								.objetoSeleccionadoDelCatalogo();
-						idDominio = dominio.getIdDominio();
+						idDominio = dominio.getId();
 						txtDescripcionDominio.setValue(dominio
 								.getDescripcionDominio());
 						txtTipoDominio.setValue(dominio.getTipo());
@@ -265,7 +265,7 @@ public class CDominio extends CGenerico {
 				List<Dominio> lista = new ArrayList<Dominio>();
 
 				for (Dominio dominio : listDominio) {
-					if (String.valueOf(dominio.getIdDominio()).toLowerCase()
+					if (String.valueOf(dominio.getId()).toLowerCase()
 							.startsWith(valores.get(0))
 							&& dominio.getDescripcionDominio().toLowerCase()
 									.startsWith(valores.get(1))
@@ -283,7 +283,7 @@ public class CDominio extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Dominio dominio) {
 				String[] registros = new String[4];
-				registros[0] = String.valueOf(dominio.getIdDominio());
+				registros[0] = String.valueOf(dominio.getId());
 				registros[1] = dominio.getDescripcionDominio();
 				registros[2] = dominio.getTipo();
 				registros[3] = dominio.getComentario();
