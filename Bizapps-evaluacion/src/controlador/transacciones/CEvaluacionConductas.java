@@ -116,7 +116,7 @@ public class CEvaluacionConductas extends CGenerico {
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
 		evaluacionCompetenciaPk.setIdCompetencia(idCompetencia);
-		evaluacionCompetenciaPk.setIdEvaluacion(evaluacion.getId());
+		evaluacionCompetenciaPk.setIdEvaluacion(evaluacion.getIdEvaluacion());
 		evaluacionCompetencia.setId(evaluacionCompetenciaPk);
 		evaluacionCompetencia.setIdDominio(idDominio);
 		boolean campoBlanco = false;
@@ -151,7 +151,7 @@ public class CEvaluacionConductas extends CGenerico {
 				evaluacionConductaPk.setIdConducta(conductaCompe
 						.getId());
 				evaluacionConductaPk.setIdEvaluacion(evaluacion
-						.getId());
+						.getIdEvaluacion());
 				evaluacionConducta.setId(evaluacionConductaPk);
 				evaluacionConducta.setObservacion(observacion);
 				servicioEvaluacionConducta.guardar(evaluacionConducta);

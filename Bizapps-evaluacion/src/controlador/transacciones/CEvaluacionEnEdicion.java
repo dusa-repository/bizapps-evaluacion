@@ -354,7 +354,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 				Evaluacion evaluacion = servicioEvaluacion
 						.buscarEvaluacion(idEvaluacion);
-				evaluacion.setId(idEvaluacion);
+				evaluacion.setIdEvaluacion(idEvaluacion);
 				evaluacion.setEstadoEvaluacion("EN EDICION");
 				evaluacion.setFechaCreacion(fechaHora);
 				evaluacion.setFicha(ficha);

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import modelo.maestros.Empresa;
+import modelo.maestros.Gerencia;
+import modelo.maestros.Periodo;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -36,7 +38,7 @@ public class CResumenMacro extends CGenerico {
     @Wire
 	private Combobox cmbGerencia;
     @Wire
-	private Combobox cmbPeriodoActual;
+	private Combobox cmbPeriodo;
     @Wire
 	private Combobox cmbPeriodoComparar;
     @Wire
@@ -55,11 +57,11 @@ public class CResumenMacro extends CGenerico {
 	public void generarReporte() throws Exception {
     	
     	chart.setTitle("Resultados de Desempeño / Resumen Macro");
-    	String subtitulo = "Empresa: "+ cmbEmpresa.getSelectedItem().getLabel() +"/  Gerencia: " + cmbGerencia.getSelectedItem().getLabel() + "/  Periodo Actual: " + cmbPeriodoActual.getSelectedItem().getLabel() + " " ;
+    	String subtitulo = "Empresa: "+ cmbEmpresa.getSelectedItem().getLabel() +"/  Gerencia: " + cmbGerencia.getSelectedItem().getLabel() + "/  Periodo Actual: " + cmbPeriodo.getSelectedItem().getLabel() + " " ;
     	chart.setSubtitle(subtitulo);
     	
     	Map parametros = new HashMap();
-		parametros.put("gerencia", cmbGerencia.getSelectedItem().getId());
+		parametros.put("gerencia", cmbGerencia.getSelectedItem().getId().substring(0, cmbGerencia.getSelectedItem().getId().length()-1));
 
     	 chart.setModel(servicioReporte.getDataResumenMacro(parametros));
          
@@ -96,16 +98,40 @@ public class CResumenMacro extends CGenerico {
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 		comboEmpresa();
+		comboGerencia();
+		comboPeriodo();
 	}
 	
 	
 	private void comboEmpresa() {
 		List<Empresa> empresas = servicioEmpresa.buscarTodas();
-		Empresa empresaAuxiliar = new modelo.maestros.Empresa();
-		empresaAuxiliar.getId(0);
+		Empresa empresaAuxiliar = new Empresa();
+		empresaAuxiliar.setId(0);
 		empresaAuxiliar.setNombre("TODAS");
 		empresas.add(empresaAuxiliar);
 		cmbEmpresa.setModel(new ListModelList<Empresa>(empresas));
 	}
+	
+	private void comboGerencia() {
+		List<Gerencia> gerencias = servicioGerencia.buscarTodas();
+		Gerencia gerenciaAuxiliar = new Gerencia();
+		gerenciaAuxiliar.setId(0);
+		gerenciaAuxiliar.setDescripcion("TODAS");
+		gerencias.add(gerenciaAuxiliar);
+		cmbGerencia.setModel(new ListModelList<Gerencia>(gerencias));
+	}
+	
+	private void comboPeriodo() {
+		List<Periodo> periodos = servicioPeriodo.buscarTodos();
+		/*Periodo periodoAuxiliar = new Periodo();
+		periodoAuxiliar.setId(0);
+		periodoAuxiliar.setDescripcion("TODAS");
+		periodos.add(periodoAuxiliar);*/
+		cmbPeriodo.setModel(new ListModelList<Periodo>(periodos));
+		cmbPeriodoComparar.setModel(new ListModelList<Periodo>(periodos));
+	}
+	
+	
+	
     
 }

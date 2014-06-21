@@ -317,7 +317,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
 		Integer idEvaluacion = servicioEvaluacion.buscarId() + 1;
 		Evaluacion evaluacion = new Evaluacion();
-		evaluacion.setId(idEvaluacion);
+		evaluacion.setIdEvaluacion(idEvaluacion);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
 		evaluacion.setFechaCreacion(fechaHora);
 		evaluacion.setFicha(fichaE);

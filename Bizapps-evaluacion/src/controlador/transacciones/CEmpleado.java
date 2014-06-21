@@ -239,7 +239,7 @@ public class CEmpleado extends CGenerico {
 						
 					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", evaluacion.getId());
+					map.put("id", evaluacion.getIdEvaluacion());
 					map.put("titulo", evaluacion.getFicha());
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				

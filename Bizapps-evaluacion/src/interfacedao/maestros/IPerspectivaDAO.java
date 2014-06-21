@@ -14,6 +14,6 @@ public interface IPerspectivaDAO extends JpaRepository<Perspectiva, Integer> {
 	
 	 public List<Perspectiva> findAll();
 	 
-	 Perspectiva findByIdPerspectiva (Integer value);
+	 Perspectiva findById (Integer value);
 
 	 }

@@ -22,5 +22,5 @@ public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 
 	public Evaluacion findByIdEvaluacionSecundarioAndFicha (Integer id, String ficha); 
 	
-	public Evaluacion findByIdEvaluacion (Integer idEvaluacion);
+	public Evaluacion findByIdEvaluacion(Integer idEvaluacion);
 }

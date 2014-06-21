@@ -25,7 +25,7 @@ public class SPerspectiva {
 	}
 	
 	public Perspectiva buscarId(Integer value) {
-		return perspectivaDAO.findByIdPerspectiva(value);
+		return perspectivaDAO.findById(value);
 	}
 	
 	/* Servicio que permite eliminar una perspectiva */

@@ -17,7 +17,7 @@ public class Evaluacion implements Serializable {
 
 	@Id
 	@Column(name="id_evaluacion")
-	private int id;
+	private int idEvaluacion;
 
 	private String comentario;
 
@@ -88,12 +88,12 @@ public class Evaluacion implements Serializable {
 	public Evaluacion() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getIdEvaluacion() {
+		return this.idEvaluacion;
 	}
 
-	public void setId(int idEvaluacion) {
-		this.id = idEvaluacion;
+	public void setIdEvaluacion(int idEvaluacion) {
+		this.idEvaluacion = idEvaluacion;
 	}
 
 	public String getComentario() {

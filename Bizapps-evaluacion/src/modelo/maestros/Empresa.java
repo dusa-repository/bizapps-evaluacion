@@ -68,7 +68,7 @@ public class Empresa implements Serializable {
 		return this.id;
 	}
 
-	public void getId(int idEmpresa) {
+	public void setId(int idEmpresa) {
 		this.id = idEmpresa;
 	}
 

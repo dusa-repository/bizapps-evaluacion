@@ -13,6 +13,6 @@ public interface ICompetenciaDAO extends JpaRepository<Competencia, Integer> {
 	 @Query("select a from Competencia a where a.nivel = 'RECTORAS'")
 		public List<Competencia> buscar();
 	 
-	 public Competencia findByIdCompetencia(int id);
+	 public Competencia findById(int id);
 }
 	

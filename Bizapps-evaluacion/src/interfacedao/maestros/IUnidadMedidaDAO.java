@@ -15,6 +15,6 @@ public interface IUnidadMedidaDAO extends JpaRepository<UnidadMedida, Integer> {
 
 	 public List<UnidadMedida> findAll();
 
-	 UnidadMedida findByIdUnidad (Integer value);
+	 UnidadMedida findById(Integer value);
 	
 }

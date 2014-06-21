@@ -15,5 +15,5 @@ public interface IMedicionDAO extends JpaRepository<Medicion, Integer> {
 
 	 public List<Medicion> findAll();
 
-	 Medicion findByIdMedicion (Integer value);
+	 Medicion findById (Integer value);
 }

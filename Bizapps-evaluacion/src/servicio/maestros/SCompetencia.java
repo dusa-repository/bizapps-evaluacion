@@ -44,7 +44,7 @@ public class SCompetencia {
 	public Competencia buscarCompetencia(int id) {
 		// TODO Auto-generated method stub
 		Competencia competencia;
-		competencia = competenciaDAO.findByIdCompetencia(id);
+		competencia = competenciaDAO.findById(id);
 		return competencia;
 	}
 
