@@ -1,6 +1,29 @@
 <zk>
 	<window border="normal" height="auto" width="auto"
-		style="background-color:#8A0808;" id="winCompromisos" apply = "controlador.transacciones.CFeedbackCompromisos" >
+		style="background-color:#8A0808;" id="winCompromisos"
+		apply="controlador.transacciones.CFeedbackCompromisos">
+
+		<div style="background-color:#F8E0E0;">
+			<label value="Acción a Realizar" style="font-weight:bold;" />
+		</div>
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="left">
+					<button id="btnGuardar" label="Guardar" style="margin-left:5px; height:28px"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnEliminar" label="Eliminar" style="height:28px"
+						image="/public/imagenes/botones/eliminar.png">
+
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
+		<separator />
+
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -32,8 +55,7 @@
 					<label id="lblFechaCreacion"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblRevision"
-						style="font-size: 10px;">
+					<label id="lblRevision" style="font-size: 10px;">
 					</label>
 					<label id="lblFicha" style="font-size: 10px;"></label>
 					<label id="lblNombreTrabajador"
@@ -61,40 +83,36 @@
 						<label
 							value="Fortalezas Evidenciadas en el Desempeño por Competencias">
 						</label>
-						<textbox width="100%" rows="5" id = "txtFortalezas"></textbox>
+						<textbox width="100%" rows="5"
+							id="txtFortalezas">
+						</textbox>
 					</div>
 					<div style="background-color:#E6E6E6;">
 						<label
 							value="Oportunidades de Mejoras Evidenciadas en el Desempeño por Competencias">
 						</label>
-						<textbox width="100%" rows="5" id = "txtOportunidades"></textbox>
+						<textbox width="100%" rows="5"
+							id="txtOportunidades">
+						</textbox>
 					</div>
 				</row>
 				<row>
 					<div style="background-color:#E6E6E6;">
 						<label value="Resumen de Actuación"></label>
-						<textbox width="100%" rows="5" id= "txtResumen"></textbox>
+						<textbox width="100%" rows="5"
+							id="txtResumen">
+						</textbox>
 					</div>
 					<div style="background-color:#E6E6E6;">
 						<label
 							value="Compromisos Acordados entre el Empleado y el Supervisor">
 						</label>
-						<textbox width="100%" rows="5" id = "txtCompromisos" ></textbox>
+						<textbox width="100%" rows="5"
+							id="txtCompromisos">
+						</textbox>
 					</div>
 				</row>
 			</rows>
 		</grid>
-		<div align="right" height="100%">
-			<button id="btnGuardar" width="auto" height="auto"
-				mold="trendy" label="Guardar"
-				image="/public/imagenes/botones/guardar.png"
-				style="background-color:#F8E0E0;">
-			</button>
-			<button id="btnEliminar" width="auto" height="auto"
-				mold="trendy" label="Imprimir"
-				image="/public/imagenes/botones/imprimir.png">
-
-			</button>
-		</div>
 	</window>
 </zk>

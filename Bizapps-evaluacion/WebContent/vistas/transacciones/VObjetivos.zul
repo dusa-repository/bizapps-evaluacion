@@ -2,6 +2,29 @@
 	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;"
 		apply="controlador.transacciones.CObjetivos" id="winObjetivo">
+
+		<div style="background-color:#F8E0E0;">
+			<label value="Acción a Realizar" style="font-weight:bold;" />
+		</div>
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="left">
+					<button id="btnAgregar" label="Agregar"
+						tooltiptext="Agregar" image="/public/imagenes/botones/annadir.png"
+						style="margin-left:5px">
+					</button>
+					<button id="btnEliminar" label="Eliminar"
+						style="height:28px" tooltiptext="Eliminar"
+						image="/public/imagenes/botones/eliminar.png">
+
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
+		<separator />
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -48,8 +71,7 @@
 				</row>
 			</rows>
 		</grid>
-		<div id="divObjetivos" class="z-groupbox-3d-hm;"
-			width="auto">
+		<div id="divObjetivos" class="z-groupbox-3d-hm;" width="auto">
 			<separator />
 			<div style="background-color:#F8E0E0;">
 				<label value="Sección I - Evaluación de Objetivos "
@@ -92,9 +114,8 @@
 								mold="rounded" rows="2" width="100%" id="txtCorresponsables" />
 						</listcell>
 						<listcell>
-							<spinner  placeholder="Peso" constraint = "min 0"
-								mold="rounded"  width="100%" 
-								id="txtPeso" />
+							<spinner placeholder="Peso"
+								constraint="min 0" mold="rounded" width="100%" id="txtPeso" />
 						</listcell>
 						<listcell>
 							<textbox value="0" placeholder="Total"
@@ -109,27 +130,15 @@
 						<listcell>
 							<button id="btnOk" width="auto"
 								height="auto" mold="trendy"
-								image="/public/imagenes/botones/agregar.png"
+								image="/public/imagenes/botones/seleccionar.png"
 								style="background-color:#F8E0E0;">
 							</button>
 						</listcell>
 					</listitem>
 				</listbox>
 			</groupbox>
-			<div align="right" height="100%">
-				<button id="btnAgregar" width="auto" height="auto"
-					mold="trendy" label="Agregar"
-					image="/public/imagenes/botones/agregar.png"
-					style="background-color:#F8E0E0;">
-				</button>
-				<button id="btnEliminar" width="auto" height="auto"
-					mold="trendy" label="Eliminar"
-					image="/public/imagenes/botones/eliminar.png">
-
-				</button>
-			</div>
 		</div>
-		<groupbox id = "gpxAgregados">
+		<groupbox id="gpxAgregados">
 			<listbox height="auto" id="lbxObjetivosGuardados"
 				width="auto">
 				<listhead>
@@ -144,7 +153,9 @@
 				<template name="model">
 					<listitem>
 						<listcell label="${each.linea}"></listcell>
-						<listcell label="${each.perspectiva.descripcion}"></listcell>
+						<listcell
+							label="${each.perspectiva.descripcion}">
+						</listcell>
 						<listcell label="${each.descripcionObjetivo}">
 						</listcell>
 						<listcell label="${each.corresponsables}">

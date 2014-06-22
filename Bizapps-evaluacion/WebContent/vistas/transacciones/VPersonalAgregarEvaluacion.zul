@@ -1,7 +1,31 @@
 <zk>
-	<window border="normal" height="auto" width="auto"
+	<window border="normal" height="auto" width="95%"
 		style="background-color:#8A0808;" id="winEvaluacionEmpleadoAgregar"
 		apply="controlador.transacciones.CEvaluacionAgregar">
+
+		<div style="background-color:#F8E0E0;">
+			<label value="Acción a Realizar" style="font-weight:bold;" />
+		</div>
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="left">
+					<button id="btnCambiarEstado" label="Guardar"
+						style="margin-left:5px; height:28px"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnCancelar" label="Salir"
+						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
+		<separator />
+
+
 		<div style="background-color:#F8E0E0;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
@@ -116,8 +140,8 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso" constraint = "min 0"
-										mold="rounded"  width="100%" id="txtPeso" />
+									<spinner placeholder="Peso"
+										constraint="min 0" mold="rounded" width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
 									<textbox value="0"
@@ -132,25 +156,16 @@
 								<listcell>
 									<button id="btnOk" width="auto"
 										height="auto" mold="trendy"
-										image="/public/imagenes/botones/agregar.png"
+										image="/public/imagenes/botones/seleccionar.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
 							</listitem>
 						</listbox>
 					</groupbox>
-					<div align="right" height="100%">
-						<button id="btnAgregar" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png"
-							style="background-color:#F8E0E0;">
-						</button>
-						<button id="btnEliminar" width="auto"
-							height="auto" mold="trendy" label="Eliminar"
-							image="/public/imagenes/botones/eliminar.png">
 
-						</button>
-					</div>
+					<separator></separator>
+
 					<groupbox id="gpxObjetivosAgregados">
 						<listbox height="auto"
 							id="lbxObjetivosGuardados" width="auto">
@@ -192,6 +207,18 @@
 						</listbox>
 					</groupbox>
 					<separator />
+					<separator />
+
+					<div align="right" height="100%">
+						<button id="btnAgregar" style="heigth:27px"
+							label="Agregar" image="/public/imagenes/botones/annadir.png">
+						</button>
+						<button id="btnEliminar" width="auto"
+							height="auto" label="Eliminar"
+							image="/public/imagenes/botones/eliminar.png">
+
+						</button>
+					</div>
 					<separator />
 				</tabpanel>
 				<!-- contenedor de indicadores -->
@@ -270,60 +297,70 @@
 										readonly="true" id="cmbMedicion">
 										<template name="model">
 											<comboitem
-												context="${each.id}"
-												label="${each.descripcionMedicion}" />
+												context="${each.id}" label="${each.descripcionMedicion}" />
 										</template>
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %" constraint = "min 0"
-										mold="rounded" width="100%" id="txtPeso1" />
+									<spinner placeholder="Peso %"
+										constraint="min 0" mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Valor Meta" constraint = "min 0"
-										mold="rounded" width="100%" id="txtValorMeta" />
+									<spinner placeholder="Valor Meta"
+										constraint="min 0" mold="rounded" width="100%"
+										id="txtValorMeta" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" readonly="true" value = "0" constraint = "min 0"/>
+										id="txtValorResultado" readonly="true" value="0"
+										constraint="min 0" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
-										mold="rounded" width="100%" id="txtResFy" disabled = "true"/>
+									<spinner placeholder="Res.Fy.Ant"
+										value="0" constraint="min 0" mold="rounded" width="100%"
+										id="txtResFy" disabled="true" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Resultado %" value = "0" constraint = "min 0"
-										mold="rounded" width="100%" id="txtResultadoPorc" readonly="true" />
+									<spinner placeholder="Resultado %"
+										value="0" constraint="min 0" mold="rounded" width="100%"
+										id="txtResultadoPorc" readonly="true" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" readonly="true" value = "0" constraint = "min 0"/>
+										id="txtPesoPorc" readonly="true" value="0" constraint="min 0" />
 								</listcell>
 								<listcell>
 									<button id="btnOk2" width="auto"
 										height="auto" mold="trendy"
-										image="/public/imagenes/botones/agregar.png"
+										image="/public/imagenes/botones/seleccionar.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
 							</listitem>
 						</listbox>
 					</groupbox>
+					<separator />
+					<separator />
+
 					<div align="right" height="100%">
 						<button id="btnAgregarIndicador" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png">
+							height="auto" label="Agregar" style="height:27px"
+							image="/public/imagenes/botones/annadir.png">
 						</button>
-						<button id="btnEliminar2" width="auto"
-							height="auto" image="/public/imagenes/botones/eliminar.png"
-							mold="trendy" label="Eliminar" onClick="@command('cancelar')">
+						<button id="btnEliminar2"
+							image="/public/imagenes/botones/eliminar.png" label="Eliminar"
+							onClick="@command('cancelar')">
 						</button>
 					</div>
+
+					<separator />
+					
 					<groupbox id="gpxAgregados">
-						<listbox height="auto" id="lbxIndicadoresAgregados"
-							mold="paging" pageSize="10" width="auto">
+						<listbox height="auto"
+							id="lbxIndicadoresAgregados" mold="paging" pageSize="10"
+							width="auto">
 							<listhead>
 								<listheader label="Línea" width="5%" />
 								<listheader label="Indicador "
@@ -377,6 +414,7 @@
 						</listbox>
 					</groupbox>
 				</tabpanel>
+
 				<tabpanel>
 					<!-- 				Contenedor de competencias rectoras  -->
 					<separator />
@@ -499,38 +537,20 @@
 							</row>
 						</rows>
 					</grid>
+					<separator />
+					<separator />
 					<div align="right" height="100%">
-						<button id="btnGuardarCompromisos" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png"
-							style="background-color:#F8E0E0;">
+						<button id="btnGuardarCompromisos"
+							label="Agregar" image="/public/imagenes/botones/annadir.png"
+							style="height:27px">
 						</button>
-						</div>
+					</div>
 					<separator></separator>
 					<separator></separator>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
 		<separator></separator>
-		<separator></separator>
-		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%" id = "panBotones">
-			<panelchildren>
 
-				<separator />
-				<div sclass="btn-group" align="center">
-
-					<button id="btnCambiarEstado" tabindex="2"
-						sclass="btn" label="Guardar" image="/public/iconos/guardar.png">
-					</button>
-					<button id="btnCancelar" label="Cancelar"
-						sclass="btn" tabindex="2" image="/public/iconos/limpiar.png">
-					</button>
-
-					<separator />
-				</div>
-
-			</panelchildren>
-		</panel>
 	</window>
 </zk>

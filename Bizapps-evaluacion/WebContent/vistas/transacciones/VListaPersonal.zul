@@ -15,45 +15,50 @@
 			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />
-		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%">
+		<panel border="normal" width="100%">
 			<panelchildren>
-
 				<separator />
-				<div sclass="btn-group" align="center">
-
-					<button id="btnAgregar" tabindex="3" sclass="btn"
-						label="Agregar" image="/public/iconos/agregar.png"
+				<div align="left">
+					<button id="btnAgregar" tabindex="3"
+						tooltiptext="Agregar" style="margin-left:5px; height:27px"
+						label="Agregar" image="/public/imagenes/botones/annadir.png"
 						onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
 					</button>
-					<button id="btnEliminar" label="Eliminar" sclass="btn" 
-						tabindex="1" image="/public/iconos/eliminar.png">
+					<button id="btnEliminar" label="Eliminar"
+						tooltiptext="Eliminar" tabindex="1"
+						image="/public/imagenes/botones/eliminar.png">
 					</button>
-
+					<button id="btnSalir" label="Salir"
+						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
+					</button>
 					<separator />
 				</div>
 			</panelchildren>
 		</panel>
 		<separator></separator>
-	<groupbox id = "gpxListaPersonal" style = "color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
-		<listbox height="auto" id="lbxEvaluacion" mold="paging" 
-			pageSize="10" width="auto">
-			<listhead  style = "background: #F8E0E0">
-				<listheader label="Revisión" width="25%" />
-				<listheader label="Fecha" width="25%" />
-				<listheader label="Estado" width="25%" />
-				<listheader label="Usuario" width="25%" />
-			</listhead>
-			<template name="model">
-				<listitem>
-					<listcell label="${each.idRevision}"></listcell>
-					<listcell label="${sdf.format(each.fechaCreacion)}"></listcell>
-					<listcell label="${each.estadoEvaluacion}">
-					</listcell>
-					<listcell label="${each.fichaEvaluador}"></listcell>
-				</listitem>
-			</template>
-		</listbox>
+		<groupbox id="gpxListaPersonal"
+			style="color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
+			<listbox height="auto" id="lbxEvaluacion" mold="paging"
+				pageSize="10" width="auto">
+				<listhead style="background: #F8E0E0">
+					<listheader label="Revisión" width="25%" />
+					<listheader label="Fecha" width="25%" />
+					<listheader label="Estado" width="25%" />
+					<listheader label="Usuario" width="25%" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each.idRevision}"></listcell>
+						<listcell
+							label="${sdf.format(each.fechaCreacion)}">
+						</listcell>
+						<listcell label="${each.estadoEvaluacion}">
+						</listcell>
+						<listcell label="${each.fichaEvaluador}"></listcell>
+					</listitem>
+				</template>
+			</listbox>
 		</groupbox>
 	</window>
 	<include id="contenido"></include>

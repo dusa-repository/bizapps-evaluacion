@@ -37,6 +37,8 @@ public abstract class Botonera extends Hbox {
 		btnSalir.setLabel("Salir");
 		btnSeleccionar.setLabel("Seleccionar");
 		
+		btnSalir.setStyle("width: 80px");
+		
 		btnGuardar.setTooltiptext("Guardar");
 		btnEliminar.setTooltiptext("Eliminar");
 		btnLimpiar.setTooltiptext("Limpiar");

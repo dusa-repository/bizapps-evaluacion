@@ -1,23 +1,28 @@
 <zk>
-	<window  border="normal" height="auto"
-		width="auto" style="background-color:#8A0808;">
+	<window border="normal" height="auto" width="auto"
+		style="background-color:#8A0808;">
 		<separator />
 		<div style="background-color:#F8E0E0;">
 			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />
-		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%">
+		<panel border="normal" width="100%">
 			<panelchildren>
-
 				<separator />
-				<div sclass="btn-group" align="center">
-
-					<button id="btnAgregar" tabindex="3" sclass="btn"
-						label="Agregar" image="/public/iconos/agregar.png" onClick='contenido.src="../vistas/transacciones/VArbolPersonalAgregar.zul"' >
+				<div align="left">
+					<button id="btnAgregar" tabindex="3"
+						style="margin-left:5px; height:27px" label="Agregar"
+						image="/public/imagenes/botones/annadir.png"
+						onClick='contenido.src="../vistas/transacciones/VArbolPersonalAgregar.zul"'>
 					</button>
-					<button id="btnBuscar" label="Buscar" sclass="btn"
-						tabindex="3" image="/public/iconos/catalogo.png" onClick='contenido.src="../vistas/transacciones/VArbolPersonal.zul"'>
+					<button id="btnBuscar" label="Buscar"
+						style="height:27px" tabindex="3"
+						image="/public/imagenes/botones/buscar.png"
+						onClick='contenido.src="../vistas/transacciones/VArbolPersonal.zul"'>
+					</button>
+					<button id="btnSalir" label="Salir"
+						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
 					</button>
 
 					<separator />
