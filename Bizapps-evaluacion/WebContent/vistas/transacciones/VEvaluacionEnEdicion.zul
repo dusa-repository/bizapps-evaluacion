@@ -514,10 +514,10 @@
 				<div sclass="btn-group" align="center">
 
 					<button id="btnCambiarEstado" tabindex="2"
-						sclass="btn" label="Guardar" image="/public/iconos/guardar.png">
+						sclass="btn" label="Guardar" image="/public/imagenes/botones/guardar.png">
 					</button>
 					<button id="btnCancelar" label="Cancelar"
-						sclass="btn" tabindex="2" image="/public/iconos/limpiar.png">
+						sclass="btn" tabindex="2" image="/public/imagenes/botones/cancelar.png">
 					</button>
 
 					<separator />

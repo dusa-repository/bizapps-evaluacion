@@ -386,11 +386,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				|| cmbMedicion.getText().compareTo("") == 0
 				|| txtPeso1.getText().compareTo("") == 0
 				|| txtValorMeta.getText().compareTo("") == 0
-				|| txtResFy.getText().compareTo("") == 0
-				|| txtIndicador.getText().compareTo("") == 0
-				|| txtResultadoPorc.getText().compareTo("") == 0
-				|| txtPesoPorc.getText().compareTo("") == 0
-				|| txtValorMeta.getText().compareTo("") == 0)
+				|| txtIndicador.getText().compareTo("") == 0)
 
 		{
 			Messagebox.show("Debe llenar todos los campos", "Advertencia",
@@ -420,11 +416,11 @@ public class CEvaluacionAgregar extends CGenerico {
 			indicadorLista.setUnidadMedida(unidad);
 			indicadorLista.setLinea(linea);
 			indicadorLista.setPeso(peso);
-			indicadorLista.setResultadoFyAnterior(resFy);
-			indicadorLista.setResultadoPeso(pesoPorc);
-			indicadorLista.setResultadoPorc(resultadoPorc);
+			indicadorLista.setResultadoFyAnterior(0);
+			indicadorLista.setResultadoPeso(0);
+			indicadorLista.setResultadoPorc(0);
 			indicadorLista.setValorMeta(valorMeta);
-			indicadorLista.setValorResultado(valorResultado);
+			indicadorLista.setValorResultado(0);
 			indicadorLista.setTotal(0);
 			indicadores.add(indicadorLista);
 			lbxIndicadoresAgregados
@@ -443,13 +439,13 @@ public class CEvaluacionAgregar extends CGenerico {
 	}
 
 
-	@Listen("onSelect = #cmbMedicion")
-	public void mostrarResAnterior() {
-		txtResFy.setDisabled(true);
-		if (cmbMedicion.getValue().equals("CONTINUA")) {
-			txtResFy.setDisabled(false);
-		}
-	}
+//	@Listen("onSelect = #cmbMedicion")
+//	public void mostrarResAnterior() {
+//		txtResFy.setDisabled(true);
+//		if (cmbMedicion.getValue().equals("CONTINUA")) {
+//			txtResFy.setDisabled(false);
+//		}
+//	}
 
 	@Listen("onClick = #btnGuardarCompromisos")
 	public void guardarComportamiento() {

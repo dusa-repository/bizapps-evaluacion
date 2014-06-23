@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.Case;
+
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Dominio;
@@ -19,6 +21,8 @@ import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
 import modelo.seguridad.Usuario;
+
+import org.hibernate.hql.internal.ast.tree.CaseNode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;
@@ -33,6 +37,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
@@ -52,6 +57,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Textbox txtResumen;
 	@Wire
 	private Textbox txtCompromisos;
+	@Wire
+	private Textbox txtValorResultado;
+	@Wire
+	private Textbox txtAnterior;
 	@Wire
 	private Button btnGuardar;
 	@Wire
@@ -122,6 +131,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Groupbox gpxListaPersonal;
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
+	private static Integer resultadoPorc;
+	private static Double valor;
 	
 	
 
@@ -337,6 +348,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 	}
 	
 	@Listen("onClick = #btnGuardarIndicador")
+	public void prueba () {
+		evaluar ();
+	}
+	
+//	@Listen("onClick = #btnGuardarIndicador")
 	public void guardarIndicadores() {
 
 		boolean campoBlanco = false;
@@ -398,4 +414,95 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 		winEvaluacionEmpleado.onClose();
 	}
+
+	public void evaluar (){
+	
+		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
+			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
+			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
+			Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);
+			Integer valorResultado = ((Spinner) ((listItem.getChildren().get(6)))
+					.getFirstChild()).getValue();
+			Integer resultadoFyAnterior = ((Spinner) ((listItem.getChildren().get(7)))
+					.getFirstChild()).getValue();
+			String resultado = ((Textbox) ((listItem.getChildren().get(8)))
+					.getFirstChild()).getValue();
+			String resultadoPeso = ((Textbox) ((listItem.getChildren().get(9)))
+					.getFirstChild()).getValue();
+			if(EvaluacionI.getMedicion().getDescripcionMedicion().equals("CONTINUA")) {
+				if ((valorResultado) < EvaluacionI.getValorMeta()) {
+	                if ((valorResultado) >= (resultadoFyAnterior)) {
+	                	resultado =   "85";
+	                }
+	                else{
+	                	resultado=   "0";
+	                    }
+	                }
+				else {
+	                   if ((valorResultado) > EvaluacionI.getValorMeta()) {
+	                	   resultado =  "115";
+	                    }
+	                   else {
+	                       if ((valorResultado) == EvaluacionI.getValorMeta()){
+	                    	   resultado =  "100";
+	                       }
+	                   }
+				}
+			}
+			else{
+						valor = ((valorResultado / EvaluacionI.getValorMeta()) * 100);
+						System.out.println("valor" +valor);
+						Integer valor1= valor.intValue();
+						System.out.println("valor1" +valor1);
+				        resultado  = calcularPorcentajeMetaIndicado(valor1).toString();
+				        System.out.println("resultado" +resultado);
+				            }
+			
+			resultadoPeso = String.valueOf((Double.parseDouble(resultado) * (EvaluacionI.getPeso()) / 100));
+			((Textbox) ((listItem.getChildren().get(8)))
+					.getFirstChild()).setValue((resultado));
+			((Textbox) ((listItem.getChildren().get(9)))
+					.getFirstChild()).setValue((resultadoPeso));
+		}
+		
+	}
+
+	public Integer calcularPorcentajeMetaIndicado (Integer valor) {
+		System.out.println("pasooooo");
+		switch (valor) {
+			case   1:
+				if (valor < 0)
+				valor =   0;
+			break;
+			case 2:
+				if (valor >= 0 && valor <= 24)
+					valor =  0;
+			break;
+			case 3:
+				if (valor >= 25 && valor <= 49)
+					valor =  25;
+			break;
+			case 4:
+				if (valor >= 50 && valor <= 84)
+					valor = 50;
+			break;
+			case 5:
+				if (valor >= 85 && valor <= 94)
+					System.out.println("entrooo");
+				valor =  85;
+			break;
+			case 6:
+				if (valor >= 95 && valor <= 100)
+					valor =  100;
+			break;
+			case 7:
+				if (valor <= 101)
+					valor =  115;
+			break;
+		default:
+			break;
+		
+	}
+		return valor;
+}
 }

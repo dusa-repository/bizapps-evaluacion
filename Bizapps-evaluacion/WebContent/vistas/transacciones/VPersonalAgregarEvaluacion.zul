@@ -319,7 +319,7 @@
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant"
 										value="0" constraint="min 0" mold="rounded" width="100%"
-										id="txtResFy" disabled="true" />
+										id="txtResFy"  />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Resultado %"

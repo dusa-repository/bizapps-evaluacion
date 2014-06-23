@@ -123,11 +123,11 @@
 
 								<button id="btnGuardarObjetivo"
 									tabindex="2" sclass="btn" label="Guardar"
-									image="/public/iconos/guardar.png">
+									image="/public/imagenes/botones/guardar.png">
 								</button>
 								<button id="btnCancelar"
 									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/iconos/limpiar.png">
+									image="/public/imagenes/botones/cancelar.png">
 								</button>
 
 								<separator />
@@ -181,7 +181,7 @@
 								<listheader label="Valor Resultado"
 									width="12%" />
 								<listheader label="Res.Fy.Ant."
-									width="9%" />
+									width="12%" />
 								<listheader label="Resultado (%)"
 									width="10%" />
 								<listheader label="Resul. Peso (%)"
@@ -204,16 +204,16 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<textbox></textbox>
+										<spinner></spinner>
 									</listcell>
 									<listcell>
-										<textbox></textbox>
+										<spinner></spinner>
 									</listcell>
 									<listcell>
-										<textbox></textbox>
+										<textbox disabled = "true"></textbox>
 									</listcell>
 									<listcell>
-										<textbox></textbox>
+										<textbox disabled = "true"></textbox>
 									</listcell>
 								</listitem>
 							</template>
@@ -230,11 +230,11 @@
 
 								<button id="btnGuardarIndicador"
 									tabindex="2" sclass="btn" label="Guardar"
-									image="/public/iconos/guardar.png">
+									image="/public/imagenes/botones/guardar.png">
 								</button>
 								<button id="btnCancelarIndicador"
 									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/iconos/limpiar.png">
+									image="/public/imagenes/botones/cancelar.png">
 								</button>
 
 								<separator />
@@ -372,11 +372,11 @@
 
 								<button id="btnGuardarEvaluacion"
 									tabindex="2" sclass="btn" label="Guardar"
-									image="/public/iconos/guardar.png">
+									image="/public/imagenes/botones/guardar.png">
 								</button>
 								<button id="btnCancelarEvaluacion"
 									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/iconos/limpiar.png">
+									image="/public/imagenes/botones/cancelar.png">
 								</button>
 
 								<separator />
