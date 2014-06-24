@@ -210,17 +210,16 @@
 										<spinner constraint = "min 0" value = "0" ></spinner>
 									</listcell>
 									<listcell>
-										<textbox  disabled = "true"/>
+										<textbox  disabled = "true"  onChange= '$composer.cambio'/>
 									</listcell>
 									<listcell>
-<!-- 									onchange ='$composer.cambio' -->
-										<textbox disabled = "true" />
+										<textbox disabled = "true" onChange='$composer.cambio' />
 									</listcell>
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
-					<separator />
+					<separator /> 
 					<separator />
 					<panel border="normal" width="95%"
 						style="margin-left:2%;margin-right:3%">

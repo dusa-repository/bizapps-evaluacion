@@ -101,7 +101,7 @@
 										readonly="true" id="cmbPerspectiva">
 										<template name="model">
 											<comboitem
-												context="${each.idPerspectiva}" label="${each.descripcion}" />
+												context="${each.id}" label="${each.descripcion}" />
 										</template>
 									</combobox>
 								</listcell>

@@ -28,7 +28,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
@@ -220,8 +222,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 	
 	
 	public Double getCambio() {
-		evaluar ();
+		evaluarIndicadores ();
 		return cambio;
+		
 	}
 
 	public ListModelList<Dominio> getDominio(){
@@ -355,7 +358,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	
 	@Listen("onClick = #btnGuardarIndicador")
 	public void prueba () {
-		evaluar ();
+		evaluarIndicadores ();
 	}
 	
 //	@Listen("onClick = #btnGuardarIndicador")
@@ -422,7 +425,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		winEvaluacionEmpleado.onClose();
 	}
 
-	public void evaluar (){
+	public void evaluarIndicadores (){
 	
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
@@ -471,14 +474,26 @@ public class CEvaluacionEmpleado extends CGenerico {
 			((Textbox) ((listItem.getChildren().get(9)))
 					.getFirstChild()).setValue((resultadoPeso));
 			total = total + Double.parseDouble(resultadoPeso);
+			for (int j = 0; j < lbxObjetivosGuardados.getItems().size(); j++) {
+				List<Listitem> listItem3 = lbxObjetivosGuardados.getItems();
+				EvaluacionObjetivo EvaluacionO = listItem3.get(j).getValue();
+				Double peso = EvaluacionO.getPeso();
+				Integer idObjetivo =EvaluacionO.getIdObjetivo();
+				Integer idObjetivo1 = EvaluacionI.getIdObjetivo();
+				System.out.println(idObjetivo);
+				System.out.println(idObjetivo1);
+				if (idObjetivo.equals(idObjetivo1)){
+				Double totalInd = (total * peso)/100;
+				String total = totalInd.toString();
+				((Textbox) ((listItem3.get(j).getChildren().get(5)))
+						.getFirstChild()).setValue(total);
 			System.out.println(total);
-			
+				}
+			}
 		}
-		
 	}
 
 	public Integer calcularPorcentajeMetaIndicado (Integer valor) {
-		System.out.println("pasooooo");
 		if (valor < 0)
 			valor =   0;
 		if  (valor >= 0 && valor <= 24)
@@ -496,43 +511,4 @@ public class CEvaluacionEmpleado extends CGenerico {
 		System.out.println(valor);
 		return valor;
 	}
-		
-//		switch (valor) {
-//			case    0..24:
-//				if (valor < 0)
-//				valor =   0;
-//			break;
-//			case 2:
-//				if (valor >= 0 && valor <= 24)
-//					valor =  0;
-//			break;
-//			case 3:
-//				if (valor >= 25 && valor <= 49)
-//					valor =  25;
-//			break;
-//			case 4:
-//				if (valor >= 50 && valor <= 84)
-//					valor = 50;
-//			break;
-//			case 90:
-//				if (valor >= 85 && valor <= 94)
-//					System.out.println("entrooo");
-//				valor =  85;
-//			break;
-//			case 6:
-//				if (valor >= 95 && valor <= 100)
-//					valor =  100;
-//			break;
-//			case 7:
-//				if (valor <= 101)
-//					valor =  115;
-//			break;
-//		default:
-//			break;
-//		
-//	}
-//		return valor;
-//}
-	
-
 }

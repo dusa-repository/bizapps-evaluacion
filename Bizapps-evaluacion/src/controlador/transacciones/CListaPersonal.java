@@ -115,7 +115,7 @@ public class CListaPersonal extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									if (eva.getEstadoEvaluacion().equals("EDICION")){
+									if (eva.getEstadoEvaluacion().equals("EN EDICION")){
 									List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 											.buscarObjetivosEvaluar(idEva);
 									for (int i = 0; i < evaluacionObjetivo

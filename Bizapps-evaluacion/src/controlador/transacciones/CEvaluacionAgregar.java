@@ -314,8 +314,17 @@ public class CEvaluacionAgregar extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
-		Integer idEvaluacion = servicioEvaluacion.buscarId() + 1;
+		Integer numeroEvaluacion;
+		Integer idEvaluacion;
+		if (objetivosG.size() == 0) {
+			idEvaluacion = servicioEvaluacion.buscarId() + 1;
+			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
+		}
+		else{
+			idEvaluacion = servicioEvaluacion.buscarId();
+			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size();
+		}
+		
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEvaluacion);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
