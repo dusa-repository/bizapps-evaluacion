@@ -102,6 +102,8 @@ public class CDataGeneralCsv extends CGenerico {
 											.length() - 1));
 
 			parametros.put("estado_evaluacion", "FINALIZADA");
+			
+			listaData.getItems().clear();
 
 			List<BeanDataGeneralCsv> listaExportarCSV = servicioReporte
 					.getDataGeneralCsv(parametros);
