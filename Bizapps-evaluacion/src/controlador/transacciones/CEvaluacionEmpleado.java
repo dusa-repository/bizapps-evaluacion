@@ -131,10 +131,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Groupbox gpxListaPersonal;
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
-	private static Integer resultadoPorc;
 	private static Double valor;
-	
-	
+	private static Double total = 0.0;
+	private Double cambio;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -218,6 +217,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 	}
 		}
 	}
+	
+	
+	public Double getCambio() {
+		evaluar ();
+		return cambio;
+	}
+
 	public ListModelList<Dominio> getDominio(){
 		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
 		return dominio;
@@ -385,9 +391,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Integer idIndicador = EvaluacionI.getIdIndicador();
 				Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);
 				EvaluacionIndicador indicadores = listItem2.get(i).getValue();
-				String valorResultado = ((Textbox) ((listItem.getChildren().get(6)))
+				Integer valorResultado = ((Spinner) ((listItem.getChildren().get(6)))
 						.getFirstChild()).getValue();
-				String resAnt = ((Textbox) ((listItem.getChildren().get(7)))
+				Integer resultadoFyAnterior = ((Spinner) ((listItem.getChildren().get(7)))
 						.getFirstChild()).getValue();
 				String resultado = ((Textbox) ((listItem.getChildren().get(8)))
 						.getFirstChild()).getValue();
@@ -395,10 +401,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 						.getFirstChild()).getValue();
 				
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador.buscarIndicadorId(idIndicador);
-				indicador.setValorResultado(Double.parseDouble(valorResultado));
-				indicador.setResultadoFyAnterior(Double.parseDouble(resAnt));
+				indicador.setValorResultado(valorResultado);
+				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
 				indicador.setResultadoPeso(Double.parseDouble(resultadoPeso));
+				indicador.setTotal(total);
 				servicioEvaluacionIndicador.guardar(indicador);
 				}
 			
@@ -463,46 +470,69 @@ public class CEvaluacionEmpleado extends CGenerico {
 					.getFirstChild()).setValue((resultado));
 			((Textbox) ((listItem.getChildren().get(9)))
 					.getFirstChild()).setValue((resultadoPeso));
+			total = total + Double.parseDouble(resultadoPeso);
+			System.out.println(total);
+			
 		}
 		
 	}
 
 	public Integer calcularPorcentajeMetaIndicado (Integer valor) {
 		System.out.println("pasooooo");
-		switch (valor) {
-			case   1:
-				if (valor < 0)
-				valor =   0;
-			break;
-			case 2:
-				if (valor >= 0 && valor <= 24)
-					valor =  0;
-			break;
-			case 3:
-				if (valor >= 25 && valor <= 49)
-					valor =  25;
-			break;
-			case 4:
-				if (valor >= 50 && valor <= 84)
-					valor = 50;
-			break;
-			case 5:
-				if (valor >= 85 && valor <= 94)
-					System.out.println("entrooo");
-				valor =  85;
-			break;
-			case 6:
-				if (valor >= 95 && valor <= 100)
-					valor =  100;
-			break;
-			case 7:
-				if (valor <= 101)
-					valor =  115;
-			break;
-		default:
-			break;
-		
-	}
+		if (valor < 0)
+			valor =   0;
+		if  (valor >= 0 && valor <= 24)
+			valor =  0;
+		if (valor >= 25 && valor <= 49)
+			valor =  25;
+		if (valor >= 50 && valor <= 84)
+			valor = 50;
+		if (valor >= 85 && valor <= 94)
+			valor =  85;
+		if (valor >= 95 && valor <= 100)
+			valor =  100;
+		if (valor >= 101)
+			valor =  115;
+		System.out.println(valor);
 		return valor;
-}
+	}
+		
+//		switch (valor) {
+//			case    0..24:
+//				if (valor < 0)
+//				valor =   0;
+//			break;
+//			case 2:
+//				if (valor >= 0 && valor <= 24)
+//					valor =  0;
+//			break;
+//			case 3:
+//				if (valor >= 25 && valor <= 49)
+//					valor =  25;
+//			break;
+//			case 4:
+//				if (valor >= 50 && valor <= 84)
+//					valor = 50;
+//			break;
+//			case 90:
+//				if (valor >= 85 && valor <= 94)
+//					System.out.println("entrooo");
+//				valor =  85;
+//			break;
+//			case 6:
+//				if (valor >= 95 && valor <= 100)
+//					valor =  100;
+//			break;
+//			case 7:
+//				if (valor <= 101)
+//					valor =  115;
+//			break;
+//		default:
+//			break;
+//		
+//	}
+//		return valor;
+//}
+	
+
 }

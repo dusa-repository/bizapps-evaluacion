@@ -204,16 +204,17 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<spinner></spinner>
+										<spinner  constraint = "min 0" ></spinner>
 									</listcell>
 									<listcell>
-										<spinner></spinner>
+										<spinner constraint = "min 0" value = "0" ></spinner>
 									</listcell>
 									<listcell>
-										<textbox disabled = "true"></textbox>
+										<textbox  disabled = "true"/>
 									</listcell>
 									<listcell>
-										<textbox disabled = "true"></textbox>
+<!-- 									onchange ='$composer.cambio' -->
+										<textbox disabled = "true" />
 									</listcell>
 								</listitem>
 							</template>
