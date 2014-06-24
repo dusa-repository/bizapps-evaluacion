@@ -1,5 +1,5 @@
 <zk>
-	<window class="general" apply="controlador.reportes.CResumenMacro" id="divReporte0001">
+	<window class="general" apply="controlador.reportes.periodo.CResumenMacro" id="winResumenMacro">
 		<groupbox width="100%" mold="3d"
 			title="Parametros">
 			<grid width="100%">
@@ -11,34 +11,34 @@
 				</columns>
 				<rows>
 					<row>
-						<label class="etiqueta" value="Empresa:" />
-						<combobox id="cmbEmpresa" readonly="true"
-							value="Seleccione una Empresa" width="100%">
-							<template name="model">
-								<comboitem label="${each.nombre}" id="${each.id}A" />
-							</template>
-						</combobox>
-						
-						<label class="etiqueta" value="Gerencia:" />
-						<combobox id="cmbGerencia" readonly="true" value="Seleccione una Gerencia"
-							width="100%">
-							<template name="model">
-								<comboitem label="${each.descripcion}" id="${each.id}B" />
-							</template>
-						</combobox>
-					</row>
-					<row>
 					<label class="etiqueta" value="Periodo:" />
 						<combobox id="cmbPeriodo" readonly="true"
 							value="Seleccione un Periodo" width="100%">
 							<template name="model">
-								<comboitem label="${each.descripcion}" id="${each.id}C" />
+								<comboitem label="${each.descripcion}" id="${each.id}A" />
 							</template>
 						</combobox>
 						
 						<label class="etiqueta" value="Periodo Comparar:" />
 						<combobox id="cmbPeriodoComparar" readonly="true"
 							value="Seleccione un Periodo" width="100%">
+							<template name="model">
+								<comboitem label="${each.descripcion}" id="${each.id}B" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+						<label class="etiqueta" value="Empresa:" />
+						<combobox id="cmbEmpresa" readonly="true"
+							value="Seleccione una Empresa" width="100%">
+							<template name="model">
+								<comboitem label="${each.nombre}" id="${each.id}C" />
+							</template>
+						</combobox>
+						
+						<label class="etiqueta" value="Gerencia:" />
+						<combobox id="cmbGerencia" readonly="true" value="Seleccione una Gerencia"
+							width="100%">
 							<template name="model">
 								<comboitem label="${each.descripcion}" id="${each.id}D" />
 							</template>
@@ -49,15 +49,7 @@
 						<combobox id="cmbUnidadOrganizativa" readonly="true"
 							value="Seleccione una Unidad Organizativa" width="100%">
 							<template name="model">
-								<comboitem label="${each.descripcion}" id="${each.id}C" />
-							</template>
-						</combobox>
-						
-						<label class="etiqueta" value="Competencia:" />
-						<combobox id="cmbCompetencia" readonly="true"
-							value="Seleccione una Competencia" width="100%">
-							<template name="model">
-								<comboitem label="${each.descripcion}" id="${each.id}D" />
+								<comboitem label="${each.descripcion}" id="${each.id}E" />
 							</template>
 						</combobox>
 					</row>
@@ -75,7 +67,7 @@
 					class="btnCatalogo" />
 			</div>
 		</groupbox>
-		<groupbox height="100%">
+		<groupbox height="100%" width="100%">
 		    <charts id="chart" type="column"
 		        title="Resultados de Desempeño / Resumen Macro"
 		        subtitle=""/>

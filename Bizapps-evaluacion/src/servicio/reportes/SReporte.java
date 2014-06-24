@@ -2,7 +2,10 @@ package servicio.reportes;
 
 import interfacedao.reportes.IReporteDAO;
 
+import java.util.List;
 import java.util.Map;
+
+import modelo.reportes.BeanDataGeneralCsv;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,15 +21,8 @@ public class SReporte {
 	public CategoryModel getDataResumenMacro(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
-				.getDataResumenMacro(parametros);
-
-		/*
-		 * if (listaBeanRe0001.size() == 0) {
-		 * Messagebox.show(Mensaje.noExistenRegistrosParaEstaConsulta, "ALERTA",
-		 * Messagebox.OK, Messagebox.EXCLAMATION); } return (List<BeanRe0001>)
-		 * listaBeanRe0001;
-		 */
-
+				.getDataResumenMacroPeriodo(parametros);
+		
 		return datos;
 
 	}
@@ -36,7 +32,7 @@ public class SReporte {
 	public CategoryModel getDataCumplimientoObjetivo(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
-				.getDataCumplimientoObjetivo(parametros);
+				.getDataCumplimientoObjetivoPeriodo(parametros);
 		
 		return datos;
 
@@ -47,7 +43,29 @@ public class SReporte {
 	public CategoryModel getDataResumenGeneralBrecha(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
-				.getDataResumenGeneralBrecha(parametros);
+				.getDataResumenGeneralBrechaPeriodo(parametros);
+		
+		return datos;
+
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataEvaluadosBrecha(Map parametros) {
+
+		CategoryModel datos = servicioReporteDAO
+				.getDataEvaluadosBrecha(parametros);
+		
+		return datos;
+
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<BeanDataGeneralCsv> getDataGeneralCsv(Map parametros) {
+
+		List<BeanDataGeneralCsv> datos = servicioReporteDAO
+				.getDataGeneralCsv(parametros);
 		
 		return datos;
 

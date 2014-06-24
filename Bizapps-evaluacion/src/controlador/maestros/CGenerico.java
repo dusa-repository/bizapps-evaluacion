@@ -25,6 +25,7 @@ import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Tab;
+import org.zkoss.zul.Window;
 
 import arbol.CArbol;
 
@@ -130,6 +131,11 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			+ String.valueOf(calendario.get(Calendar.SECOND));
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
+	
+	/* Titulos de Mensaje */
+	public String informacion = "INFORMACION";
+	public String alerta = "ALERTA";
+
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -141,6 +147,19 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 
 	public void cerrarVentana(Div div, String id) {
 		div.setVisible(false);
+		for(int i =0; i<tabs.size();i++){
+			if(tabs.get(i).getLabel().equals(id)){
+				if(i==(tabs.size()-1)&& tabs.size()>1){
+					tabs.get(i-1).setSelected(true);
+				}
+				tabs.get(i).onClose();
+				tabs.remove(i);
+			}
+		}
+	}
+	
+	public void cerrarWindow(Window win, String id) {
+		win.setVisible(false);
 		for(int i =0; i<tabs.size();i++){
 			if(tabs.get(i).getLabel().equals(id)){
 				if(i==(tabs.size()-1)&& tabs.size()>1){

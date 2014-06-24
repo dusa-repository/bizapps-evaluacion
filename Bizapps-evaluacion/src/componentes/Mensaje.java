@@ -22,6 +22,13 @@ public class Mensaje {
 	public static String correoInvalido = "El Correo es Invalido.";
 	public static String telefonoInvalido = "El número de Teléfono es invalido.";
 	public static String contrasennasInvalidas = "Las contraseñas no coinciden.";
+	public static String seleccionarPrograma = "Las contraseñas no coinciden.";
+	
+	public static String seleccionarEmpresa = "Debe seleccionar una Empresa";
+	public static String seleccionarPeriodo = "Debe seleccionar un Periodo";
+	public static String seleccionarUnidadOrganizativa = "Debe seleccionar una Unidad Organizativa";
+	public static String seleccionarGerencia = "Debe seleccionar una Gerencia";
+	public static String seleccionarCompetencia = "Debe seleccionar una Competencia";
 	
 	public void mensajeInformacion(String msj) {
 	      Messagebox.show(msj, "Informacion",
