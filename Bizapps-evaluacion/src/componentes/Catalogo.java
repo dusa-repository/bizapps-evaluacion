@@ -63,6 +63,11 @@ public abstract class Catalogo<Clase> extends Window {
 								cmbBuscarPor.getValue());
 						lsbCatalogo.setModel(new ListModelList<Clase>(
 								listaNueva));
+						lsbCatalogo.setMultiple(false);
+						lsbCatalogo.setCheckmark(false);
+						lsbCatalogo.setMultiple(true);
+						lsbCatalogo.setCheckmark(true);
+						
 					}
 				});
 		lsbCatalogo = new Listbox();
@@ -101,6 +106,10 @@ public abstract class Catalogo<Clase> extends Window {
 		hbxBusqueda.appendChild(cmbBuscarPor);
 		hbxBusqueda.appendChild(txtBuscar);
 		this.appendChild(separador2);
+		lsbCatalogo.setMultiple(false);
+		lsbCatalogo.setCheckmark(false);
+		lsbCatalogo.setMultiple(true);
+		lsbCatalogo.setCheckmark(true);
 		this.appendChild(lsbCatalogo);
 	}
 
