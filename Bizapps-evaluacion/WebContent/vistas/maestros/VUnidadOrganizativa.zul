@@ -29,7 +29,6 @@
 								</label>
 							</hbox>
 							<textbox id="txtGerenciaUnidadOrganizativa"
-								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la gerencia debe ser numérico"
 								tabindex="1" width="100%" maxlength="100"
 								tooltiptext="Ingrese el codigo de la gerencia" />
 							<button id="btnBuscarGerencia" label=""
@@ -50,16 +49,14 @@
 							<label value="Nivel:" class="etiqueta" />
 
 							<textbox id="txtNivelUnidadOrganizativa"
-								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El nivel debe ser numérico" width="100%"
-								tabindex="3"
+								width="100%" tabindex="3"
 								tooltiptext="Ingrese aqui el nivel de la unidad organizativa" />
 						</row>
 						<row>
 							<label value="Sub-nivel:" class="etiqueta" />
 
 							<textbox id="txtSubNivelUnidadOrganizativa"
-								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El sub-nivel debe ser numérico" width="100%"
-								tabindex="4"
+								width="100%" tabindex="4"
 								tooltiptext="Ingrese aqui el sub-nivel de la unidad organizativa" />
 						</row>
 						<row>
@@ -76,7 +73,7 @@
 								class="etiqueta" />
 
 							<textbox id="txtUnidadOrganizativaAuxiliar"
-								width="100%" tabindex="5"
+								width="100%" tabindex="6"
 								tooltiptext="Ingrese aqui la unidad organizativa auxiliar" />
 						</row>
 					</rows>

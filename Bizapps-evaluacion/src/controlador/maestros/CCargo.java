@@ -91,7 +91,7 @@ public class CCargo extends CGenerico {
 				String nomina = txtNominaCargo.getValue();
 				String idCargoAuxiliar = txtCargoAuxiliarCargo.getValue();
 				String idEmpresaAuxiliar = txtEmpresaAuxiliarCargo.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Cargo cargo = new Cargo(idCargo, descripcion, fechaAuditoria,
 						horaAuditoria, idCargoAuxiliar,
@@ -303,8 +303,21 @@ public class CCargo extends CGenerico {
 			@Override
 			protected List<Cargo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código cargo"))
+					return servicioCargo.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioCargo.filtroDescripcion(valor);
+				else if (combo.equals("Nómina"))
+					return servicioCargo.filtroNomina(valor);
+				else if (combo.equals("Cargo Auxiliar"))
+					return servicioCargo.filtroCargoAuxiliar(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioCargo.filtroEmpresaAuxiliar(valor);
+				else
+					return servicioCargo.buscarTodos();
 			}
+			
+			
 
 		};
 		catalogo.setParent(catalogoCargo);

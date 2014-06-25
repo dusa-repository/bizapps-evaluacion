@@ -26,8 +26,7 @@
 									style="font-weight:bold;color:red">
 								</label>
 							</hbox>
-							<textbox id="txtPeriodoRevision"
-								constraint="/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del periodo debe ser numérico"
+							<textbox id="txtPeriodoRevision" tabindex="1"
 								width="100%" maxlength="100"
 								tooltiptext="Ingrese el codigo del periodo" />
 							<button id="btnBuscarPeriodo" label=""
@@ -40,14 +39,14 @@
 								class="etiqueta" />
 
 							<textbox id="txtDescripcionRevision"
-								width="100%" maxlength="100" tabindex="1"
+								width="100%" maxlength="100" tabindex="2"
 								tooltiptext="Ingrese aqui la descripcion de la revision" />
 						</row>
 						<row>
 							<label value="Estado:" class="etiqueta" />
 
 							<textbox id="txtEstadoRevision" width="100%"
-								maxlength="100" tabindex="1"
+								maxlength="100" tabindex="3"
 								tooltiptext="Ingrese aqui el estado de la revision" />
 						</row>
 					</rows>

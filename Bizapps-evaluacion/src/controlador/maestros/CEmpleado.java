@@ -89,7 +89,15 @@ public class CEmpleado extends CGenerico {
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtNombreEmpleado.setFocus(true);
+		txtEmpresaEmpleado.setFocus(true);
+		txtEmpresaEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
+		txtCargoEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
+		txtUnidadEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
+		txtGradoAuxiliarEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -112,8 +120,7 @@ public class CEmpleado extends CGenerico {
 						lblCargoEmpleado.setValue(empleado.getCargo()
 								.getDescripcion());
 						txtUnidadEmpleado.setValue(String.valueOf(empleado
-								.getUnidadOrganizativa()
-								.getId()));
+								.getUnidadOrganizativa().getId()));
 						lblUnidadEmpleado.setValue(empleado
 								.getUnidadOrganizativa().getDescripcion());
 						txtNombreEmpleado.setValue(empleado.getNombre());
@@ -156,7 +163,7 @@ public class CEmpleado extends CGenerico {
 							gradoAuxiliar = Integer
 									.valueOf(txtGradoAuxiliarEmpleado
 											.getValue());
-						String usuario = "JDE";
+						String usuario = nombreUsuarioSesion();
 						Timestamp fechaAuditoria = new Timestamp(
 								new Date().getTime());
 						Empleado empleado = new Empleado(idEmpleado,
@@ -169,8 +176,16 @@ public class CEmpleado extends CGenerico {
 						catalogo.actualizarLista(servicioEmpleado.buscarTodos());
 					} else {
 
-						msj.mensajeAlerta(Mensaje.claveRTNoEsta);
-						txtEmpresaEmpleado.setFocus(true);
+						if (empresa == null) {
+							msj.mensajeAlerta(Mensaje.codigoEmpresa);
+							txtEmpresaEmpleado.setFocus(true);
+						} else if (cargo == null) {
+							msj.mensajeAlerta(Mensaje.codigoCargo);
+							txtCargoEmpleado.setFocus(true);
+						} else if (unidadOrganizativa == null) {
+							msj.mensajeAlerta(Mensaje.codigoUnidad);
+							txtUnidadEmpleado.setFocus(true);
+						}
 
 					}
 
@@ -301,6 +316,14 @@ public class CEmpleado extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosEmpleado.setOpen(false);
 		gpxRegistroEmpleado.setOpen(true);
+		txtEmpresaEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
+		txtCargoEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
+		txtUnidadEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
+		txtGradoAuxiliarEmpleado
+		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarBotones(false);
 
 	}
@@ -308,9 +331,13 @@ public class CEmpleado extends CGenerico {
 	@Listen("onOpen = #gpxDatosEmpleado")
 	public void abrirCatalogo() {
 		txtEmpresaEmpleado.setConstraint("");
+		txtEmpresaEmpleado.setValue("");
 		txtCargoEmpleado.setConstraint("");
+		txtCargoEmpleado.setValue("");
 		txtUnidadEmpleado.setConstraint("");
+		txtUnidadEmpleado.setValue("");
 		txtGradoAuxiliarEmpleado.setConstraint("");
+		txtGradoAuxiliarEmpleado.setValue("");
 		gpxDatosEmpleado.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -384,8 +411,8 @@ public class CEmpleado extends CGenerico {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogo = new Catalogo<Empleado>(catalogoEmpleado,
 				"Catalogo de Empleados", listEmpleado, "Código empleado",
-				"Código Empresa", "Código Cargo", "Código Unidad Organizativa",
-				"Nombre", "Ficha", "Ficha Supervisor", "Grado Auxiliar") {
+				"Código Empresa", "Código Cargo", "Código Unidad", "Nombre",
+				"Ficha", "Ficha Supervisor", "Grado Auxiliar") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
@@ -394,18 +421,15 @@ public class CEmpleado extends CGenerico {
 				for (Empleado empleado : listEmpleado) {
 					if (String.valueOf(empleado.getId()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& String
-									.valueOf(
-											empleado.getEmpresa()
-													.getId())
+							&& String.valueOf(empleado.getEmpresa().getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& String.valueOf(empleado.getCargo().getId())
 									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
 											empleado.getUnidadOrganizativa()
-													.getId())
-									.toLowerCase().startsWith(valores.get(3))
+													.getId()).toLowerCase()
+									.startsWith(valores.get(3))
 							&& empleado.getNombre().toLowerCase()
 									.startsWith(valores.get(4))
 							&& empleado.getFicha().toLowerCase()
@@ -425,8 +449,7 @@ public class CEmpleado extends CGenerico {
 			protected String[] crearRegistros(Empleado empleado) {
 				String[] registros = new String[8];
 				registros[0] = String.valueOf(empleado.getId());
-				registros[1] = String.valueOf(empleado.getEmpresa()
-						.getId());
+				registros[1] = String.valueOf(empleado.getEmpresa().getId());
 				registros[2] = String.valueOf(empleado.getCargo().getId());
 				registros[3] = String.valueOf(empleado.getUnidadOrganizativa()
 						.getId());
@@ -441,7 +464,24 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected List<Empleado> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código empleado"))
+					return servicioEmpleado.filtroId(valor);
+				else if (combo.equals("Código Empresa"))
+					return servicioEmpleado.filtroEmpresa(valor);
+				else if (combo.equals("Código Cargo"))
+					return servicioEmpleado.filtroCargo(valor);
+				else if (combo.equals("Código"))
+					return servicioEmpleado.filtroUnidadOrganizativa(valor);
+				else if (combo.equals("Nombre"))
+					return servicioEmpleado.filtroNombre(valor);
+				else if (combo.equals("Ficha"))
+					return servicioEmpleado.filtroFicha(valor);
+				else if (combo.equals("Ficha Supervisor"))
+					return servicioEmpleado.filtroFichaSupervisor(valor);
+				else if (combo.equals("Grado Auxiliar"))
+					return servicioEmpleado.filtroGradoAuxiliar(valor);
+				else
+					return servicioEmpleado.buscarTodos();
 			}
 
 		};
@@ -454,7 +494,7 @@ public class CEmpleado extends CGenerico {
 		Empresa empresa = servicioEmpresa.buscarEmpresa(Integer
 				.valueOf(txtEmpresaEmpleado.getValue()));
 		if (empresa == null) {
-			msj.mensajeAlerta(Mensaje.claveRTNoEsta);
+			msj.mensajeAlerta(Mensaje.codigoEmpresa);
 			txtEmpresaEmpleado.setFocus(true);
 		}
 
@@ -465,8 +505,8 @@ public class CEmpleado extends CGenerico {
 		Cargo cargo = servicioCargo.buscarCargo(Integer
 				.valueOf(txtCargoEmpleado.getValue()));
 		if (cargo == null) {
-			msj.mensajeAlerta(Mensaje.claveRTNoEsta);
-			txtEmpresaEmpleado.setFocus(true);
+			msj.mensajeAlerta(Mensaje.codigoCargo);
+			txtCargoEmpleado.setFocus(true);
 		}
 
 	}
@@ -476,13 +516,12 @@ public class CEmpleado extends CGenerico {
 		UnidadOrganizativa unidad = servicioUnidadOrganizativa
 				.buscarUnidad(Integer.valueOf(txtUnidadEmpleado.getValue()));
 		if (unidad == null) {
-			msj.mensajeAlerta(Mensaje.claveRTNoEsta);
-			txtEmpresaEmpleado.setFocus(true);
+			msj.mensajeAlerta(Mensaje.codigoUnidad);
+			txtUnidadEmpleado.setFocus(true);
 		}
 
 	}
-	
-	
+
 	@Listen("onClick = #btnBuscarEmpresa")
 	public void mostrarCatalogoEmpresa() {
 		final List<Empresa> listEmpresa = servicioEmpresa.buscarTodas();
@@ -531,7 +570,20 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected List<Empresa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código empresa"))
+					return servicioEmpresa.filtroId(valor);
+				else if (combo.equals("Nombre"))
+					return servicioEmpresa.filtroNombre(valor);
+				else if (combo.equals("Dirección"))
+					return servicioEmpresa.filtroDireccion(valor);
+				else if (combo.equals("Teléfono 1"))
+					return servicioEmpresa.filtroTelefono1(valor);
+				else if (combo.equals("Teléfono 2"))
+					return servicioEmpresa.filtroTelefono2(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioEmpresa.filtroEmpresaAuxiliar(valor);
+				else
+					return servicioEmpresa.buscarTodas();
 			}
 
 		};
@@ -547,13 +599,13 @@ public class CEmpleado extends CGenerico {
 		lblEmpresaEmpleado.setValue(empresa.getNombre());
 		catalogoEmpresa.setParent(null);
 	}
-	
+
 	@Listen("onClick = #btnBuscarCargo")
 	public void mostrarCatalogoCargo() {
 		final List<Cargo> listCargo = servicioCargo.buscarTodos();
-		catalogoCargo = new Catalogo<Cargo>(divCatalogoCargo, "Catalogo de Cargos",
-				listCargo, "Código cargo", "Descripción", "Nómina",
-				"Cargo Auxiliar", "Empresa Auxiliar") {
+		catalogoCargo = new Catalogo<Cargo>(divCatalogoCargo,
+				"Catalogo de Cargos", listCargo, "Código cargo", "Descripción",
+				"Nómina", "Cargo Auxiliar", "Empresa Auxiliar") {
 
 			@Override
 			protected List<Cargo> buscarCampos(List<String> valores) {
@@ -565,11 +617,11 @@ public class CEmpleado extends CGenerico {
 							&& cargo.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))
 							&& cargo.getNomina().toLowerCase()
-							.startsWith(valores.get(2))
+									.startsWith(valores.get(2))
 							&& cargo.getIdCargoAuxiliar().toLowerCase()
-							.startsWith(valores.get(3))
+									.startsWith(valores.get(3))
 							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
-							.startsWith(valores.get(4))) {
+									.startsWith(valores.get(4))) {
 						lista.add(cargo);
 					}
 				}
@@ -592,7 +644,18 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected List<Cargo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código cargo"))
+					return servicioCargo.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioCargo.filtroDescripcion(valor);
+				else if (combo.equals("Nómina"))
+					return servicioCargo.filtroNomina(valor);
+				else if (combo.equals("Cargo Auxiliar"))
+					return servicioCargo.filtroCargoAuxiliar(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioCargo.filtroEmpresaAuxiliar(valor);
+				else
+					return servicioCargo.buscarTodos();
 			}
 
 		};
@@ -608,8 +671,7 @@ public class CEmpleado extends CGenerico {
 		lblCargoEmpleado.setValue(cargo.getDescripcion());
 		catalogoCargo.setParent(null);
 	}
-	
-	
+
 	@Listen("onClick = #btnBuscarUnidad")
 	public void mostrarCatalogoUnidad() {
 		final List<UnidadOrganizativa> listUnidadOrganizativa = servicioUnidadOrganizativa
@@ -617,19 +679,16 @@ public class CEmpleado extends CGenerico {
 		catalogoUnidad = new Catalogo<UnidadOrganizativa>(divCatalogoUnidad,
 				"Catalogo de UnidadOrganizativas", listUnidadOrganizativa,
 				"Código Unidad", "Código Gerencia", "Descripción", "Nivel",
-				"Sub-Nivel", "Empresa Auxiliar", "Unidad Organizativa Auxiliar") {
+				"Sub-Nivel", "Empresa Auxiliar", "Unidad Auxiliar") {
 
 			@Override
 			protected List<UnidadOrganizativa> buscarCampos(List<String> valores) {
 				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
 
 				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
-					if (String.valueOf(unidad.getId())
-							.toLowerCase().startsWith(valores.get(0))
-							&& String
-									.valueOf(
-											unidad.getGerencia()
-													.getId())
+					if (String.valueOf(unidad.getId()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& String.valueOf(unidad.getGerencia().getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& unidad.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))
@@ -652,8 +711,7 @@ public class CEmpleado extends CGenerico {
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
 				String[] registros = new String[7];
 				registros[0] = String.valueOf(unidad.getId());
-				registros[1] = String.valueOf(unidad.getGerencia()
-						.getId());
+				registros[1] = String.valueOf(unidad.getGerencia().getId());
 				registros[2] = unidad.getDescripcion();
 				registros[3] = String.valueOf(unidad.getNivel());
 				registros[4] = String.valueOf(unidad.getSubNivel());
@@ -666,7 +724,24 @@ public class CEmpleado extends CGenerico {
 			@Override
 			protected List<UnidadOrganizativa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código Unidad"))
+					return servicioUnidadOrganizativa.filtroId(valor);
+				else if (combo.equals("Código Gerencia"))
+					return servicioUnidadOrganizativa.filtroGerencia(valor);
+				else if (combo.equals("Descripción"))
+					return servicioUnidadOrganizativa.filtroDescripcion(valor);
+				else if (combo.equals("Nivel"))
+					return servicioUnidadOrganizativa.filtroNivel(valor);
+				else if (combo.equals("Sub-Nivel"))
+					return servicioUnidadOrganizativa.filtroSubNivel(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioUnidadOrganizativa
+							.filtroEmpresaAuxiliar(valor);
+				else if (combo.equals("Unidad Auxiliar"))
+					return servicioUnidadOrganizativa
+							.filtroUnidadAuxiliar(valor);
+				else
+					return servicioUnidadOrganizativa.buscarTodas();
 			}
 
 		};
@@ -677,13 +752,11 @@ public class CEmpleado extends CGenerico {
 
 	@Listen("onSeleccion = #divCatalogoUnidad")
 	public void seleccionUnidad() {
-		UnidadOrganizativa unidad = catalogoUnidad.objetoSeleccionadoDelCatalogo();
+		UnidadOrganizativa unidad = catalogoUnidad
+				.objetoSeleccionadoDelCatalogo();
 		txtUnidadEmpleado.setValue(String.valueOf(unidad.getId()));
 		lblUnidadEmpleado.setValue(unidad.getDescripcion());
 		catalogoUnidad.setParent(null);
 	}
-	
-	
-	
 
 }

@@ -78,7 +78,7 @@ public class CUrgencia extends CGenerico {
 				// TODO Auto-generated method stub
 				
 				String descripcionUrgencia = txtDescripcionUrgencia.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Urgencia urgencia = new Urgencia(idUrgencia,descripcionUrgencia,usuario,
 						fechaAuditoria, horaAuditoria);
@@ -185,6 +185,7 @@ public class CUrgencia extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosUrgencia.setOpen(false);
 		gpxRegistroUrgencia.setOpen(true);
+		txtDescripcionUrgencia.setFocus(true);
 		mostrarBotones(false);
 
 	}
@@ -276,7 +277,12 @@ public class CUrgencia extends CGenerico {
 			@Override
 			protected List<Urgencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código Urgencia"))
+					return servicioUrgencia.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioUrgencia.filtroDescripcion(valor);
+				else
+					return servicioUrgencia.buscarTodas();
 			}
 
 		};

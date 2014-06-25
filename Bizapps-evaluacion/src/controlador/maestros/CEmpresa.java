@@ -96,7 +96,7 @@ public class CEmpresa extends CGenerico {
 				String telefono1 = txtTelefono1Empresa.getValue();
 				String telefono2 = txtTelefono2Empresa.getValue();
 				String idEmpresaAuxiliar = txtEmpresaAuxiliarEmpresa.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Empresa empresa = new Empresa(idEmpresa,direccion, fechaAuditoria,
 						 horaAuditoria, idEmpresaAuxiliar, nombre,
@@ -314,7 +314,20 @@ public class CEmpresa extends CGenerico {
 			@Override
 			protected List<Empresa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código empresa"))
+					return servicioEmpresa.filtroId(valor);
+				else if (combo.equals("Nombre"))
+					return servicioEmpresa.filtroNombre(valor);
+				else if (combo.equals("Dirección"))
+					return servicioEmpresa.filtroDireccion(valor);
+				else if (combo.equals("Teléfono 1"))
+					return servicioEmpresa.filtroTelefono1(valor);
+				else if (combo.equals("Teléfono 2"))
+					return servicioEmpresa.filtroTelefono2(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioEmpresa.filtroEmpresaAuxiliar(valor);
+				else
+					return servicioEmpresa.buscarTodas();
 			}
 
 		};

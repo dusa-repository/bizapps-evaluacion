@@ -70,7 +70,7 @@ public class CUnidadOrganizativa extends CGenerico {
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionUnidadOrganizativa.setFocus(true);
+		txtGerenciaUnidadOrganizativa.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -87,8 +87,7 @@ public class CUnidadOrganizativa extends CGenerico {
 						txtGerenciaUnidadOrganizativa.setValue(String
 								.valueOf(unidad.getGerencia().getId()));
 						lblGerenciaUnidadOrganizativa.setValue(servicioGerencia
-								.buscarGerencia(
-										unidad.getGerencia().getId())
+								.buscarGerencia(unidad.getGerencia().getId())
 								.getDescripcion());
 						txtDescripcionUnidadOrganizativa.setValue(unidad
 								.getDescripcion());
@@ -123,20 +122,18 @@ public class CUnidadOrganizativa extends CGenerico {
 
 						int nivel = 0;
 						int subNivel = 0;
-						if(txtNivelUnidadOrganizativa
-								.getValue() != null)
+						if (txtNivelUnidadOrganizativa.getValue() != null)
 							nivel = Integer.valueOf(txtNivelUnidadOrganizativa
-								.getValue());
-						if(txtSubNivelUnidadOrganizativa
-										.getValue() != null)
+									.getValue());
+						if (txtSubNivelUnidadOrganizativa.getValue() != null)
 							subNivel = Integer
-								.valueOf(txtSubNivelUnidadOrganizativa
-										.getValue());
+									.valueOf(txtSubNivelUnidadOrganizativa
+											.getValue());
 						String idEmpresaAuxiliar = txtEmpresaAuxiliarUnidadOrganizativa
 								.getValue();
 						String idUnidadOrganizativaAuxiliar = txtUnidadOrganizativaAuxiliar
 								.getValue();
-						String usuario = "JDE";
+						String usuario = nombreUsuarioSesion();
 						Timestamp fechaAuditoria = new Timestamp(
 								new Date().getTime());
 						UnidadOrganizativa unidad = new UnidadOrganizativa(
@@ -152,7 +149,7 @@ public class CUnidadOrganizativa extends CGenerico {
 								.buscarTodas());
 					} else {
 
-						msj.mensajeAlerta(Mensaje.claveRTNoEsta);
+						msj.mensajeAlerta(Mensaje.codigoGerencia);
 						txtGerenciaUnidadOrganizativa.setFocus(true);
 					}
 				}
@@ -274,6 +271,12 @@ public class CUnidadOrganizativa extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosUnidadOrganizativa.setOpen(false);
 		gpxRegistroUnidadOrganizativa.setOpen(true);
+		txtGerenciaUnidadOrganizativa
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la gerencia debe ser numérico");
+		txtNivelUnidadOrganizativa
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El nivel debe ser numérico");
+		txtSubNivelUnidadOrganizativa
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El sub-nivel debe ser numérico");
 		mostrarBotones(false);
 
 	}
@@ -281,8 +284,11 @@ public class CUnidadOrganizativa extends CGenerico {
 	@Listen("onOpen = #gpxDatosUnidadOrganizativa")
 	public void abrirCatalogo() {
 		txtGerenciaUnidadOrganizativa.setConstraint("");
+		txtGerenciaUnidadOrganizativa.setValue("");
 		txtNivelUnidadOrganizativa.setConstraint("");
+		txtNivelUnidadOrganizativa.setValue("");
 		txtSubNivelUnidadOrganizativa.setConstraint("");
+		txtSubNivelUnidadOrganizativa.setValue("");
 		gpxDatosUnidadOrganizativa.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -358,19 +364,16 @@ public class CUnidadOrganizativa extends CGenerico {
 		catalogo = new Catalogo<UnidadOrganizativa>(catalogoUnidadOrganizativa,
 				"Catalogo de UnidadOrganizativas", listUnidadOrganizativa,
 				"Código Unidad", "Código Gerencia", "Descripción", "Nivel",
-				"Sub-Nivel", "Empresa Auxiliar", "Unidad Organizativa Auxiliar") {
+				"Sub-Nivel", "Empresa Auxiliar", "Unidad Auxiliar") {
 
 			@Override
 			protected List<UnidadOrganizativa> buscarCampos(List<String> valores) {
 				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
 
 				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
-					if (String.valueOf(unidad.getId())
-							.toLowerCase().startsWith(valores.get(0))
-							&& String
-									.valueOf(
-											unidad.getGerencia()
-													.getId())
+					if (String.valueOf(unidad.getId()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& String.valueOf(unidad.getGerencia().getId())
 									.toLowerCase().startsWith(valores.get(1))
 							&& unidad.getDescripcion().toLowerCase()
 									.startsWith(valores.get(2))
@@ -393,8 +396,7 @@ public class CUnidadOrganizativa extends CGenerico {
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
 				String[] registros = new String[7];
 				registros[0] = String.valueOf(unidad.getId());
-				registros[1] = String.valueOf(unidad.getGerencia()
-						.getId());
+				registros[1] = String.valueOf(unidad.getGerencia().getId());
 				registros[2] = unidad.getDescripcion();
 				registros[3] = String.valueOf(unidad.getNivel());
 				registros[4] = String.valueOf(unidad.getSubNivel());
@@ -407,7 +409,24 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected List<UnidadOrganizativa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código Unidad"))
+					return servicioUnidadOrganizativa.filtroId(valor);
+				else if (combo.equals("Código Gerencia"))
+					return servicioUnidadOrganizativa.filtroGerencia(valor);
+				else if (combo.equals("Descripción"))
+					return servicioUnidadOrganizativa.filtroDescripcion(valor);
+				else if (combo.equals("Nivel"))
+					return servicioUnidadOrganizativa.filtroNivel(valor);
+				else if (combo.equals("Sub-Nivel"))
+					return servicioUnidadOrganizativa.filtroSubNivel(valor);
+				else if (combo.equals("Empresa Auxiliar"))
+					return servicioUnidadOrganizativa
+							.filtroEmpresaAuxiliar(valor);
+				else if (combo.equals("Unidad Auxiliar"))
+					return servicioUnidadOrganizativa
+							.filtroUnidadAuxiliar(valor);
+				else
+					return servicioUnidadOrganizativa.buscarTodas();
 			}
 
 		};
@@ -420,7 +439,7 @@ public class CUnidadOrganizativa extends CGenerico {
 		Gerencia gerencia = servicioGerencia.buscarGerencia(Integer
 				.valueOf(txtGerenciaUnidadOrganizativa.getValue()));
 		if (gerencia == null) {
-			msj.mensajeAlerta(Mensaje.claveRTNoEsta);
+			msj.mensajeAlerta(Mensaje.codigoGerencia);
 			txtGerenciaUnidadOrganizativa.setFocus(true);
 		}
 
@@ -429,7 +448,7 @@ public class CUnidadOrganizativa extends CGenerico {
 	@Listen("onClick = #btnBuscarGerencia")
 	public void mostrarCatalogoGerencia() {
 		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
-		catalogoGerencia = new Catalogo<Gerencia>(catalogoGerencia,
+		catalogoGerencia = new Catalogo<Gerencia>(divCatalogoGerencia,
 				"Catalogo de Gerencias", listGerencia, "Código gerencia",
 				"Descripción") {
 
@@ -461,7 +480,12 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected List<Gerencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código gerencia"))
+					return servicioGerencia.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioGerencia.filtroDescripcion(valor);
+				else
+					return servicioGerencia.buscarTodas();
 			}
 
 		};
@@ -473,8 +497,8 @@ public class CUnidadOrganizativa extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoGerencia")
 	public void seleccionGerencia() {
 		Gerencia gerencia = catalogoGerencia.objetoSeleccionadoDelCatalogo();
-		txtGerenciaUnidadOrganizativa.setValue(String.valueOf(gerencia
-				.getId()));
+		txtGerenciaUnidadOrganizativa
+				.setValue(String.valueOf(gerencia.getId()));
 		lblGerenciaUnidadOrganizativa.setValue(gerencia.getDescripcion());
 		catalogoGerencia.setParent(null);
 	}

@@ -95,7 +95,7 @@ public class CPeriodo extends CGenerico {
 				String descripcion = txtDescripcionPeriodo.getValue();
 				Timestamp fechaInicio = new java.sql.Timestamp(dtbFechaInicioPeriodo.getValue().getTime());
 				Timestamp fechaFin = new java.sql.Timestamp(dtbFechaFinPeriodo.getValue().getTime());
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				String estadoPeriodo = txtEstadoPeriodo.getValue();
 				Periodo periodo = new Periodo(idPeriodo, descripcion,
@@ -314,7 +314,20 @@ public class CPeriodo extends CGenerico {
 			@Override
 			protected List<Periodo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código periodo"))
+					return servicioPeriodo.filtroId(valor);
+				else if (combo.equals("Nombre"))
+					return servicioPeriodo.filtroNombre(valor);
+				else if (combo.equals("Descripción"))
+					return servicioPeriodo.filtroDescripcion(valor);
+				else if (combo.equals("Fecha Inicio"))
+					return servicioPeriodo.filtroFechaInicio(valor);
+				else if (combo.equals("Fecha Fin"))
+					return servicioPeriodo.filtroFechaFin(valor);
+				else if (combo.equals("Estado"))
+					return servicioPeriodo.filtroEstado(valor);
+				else
+					return servicioPeriodo.buscarTodos();
 			}
 
 		};

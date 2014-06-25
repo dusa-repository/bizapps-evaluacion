@@ -78,7 +78,7 @@ public class CPerspectiva extends CGenerico {
 				// TODO Auto-generated method stub
 				
 				String descripcion = txtDescripcionPerspectiva.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Perspectiva perspectiva = new Perspectiva(idPerspectiva, descripcion, usuario,
 						 fechaAuditoria, horaAuditoria);
@@ -275,7 +275,12 @@ public class CPerspectiva extends CGenerico {
 			@Override
 			protected List<Perspectiva> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código perspectiva"))
+					return servicioPerspectiva.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioPerspectiva.filtroDescripcion(valor);
+				else
+					return servicioPerspectiva.buscar();
 			}
 
 		};

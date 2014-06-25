@@ -78,7 +78,7 @@ public class CUnidadMedida extends CGenerico {
 				// TODO Auto-generated method stub
 				
 				String descripcion = txtDescripcionUnidadMedida.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				UnidadMedida unidadMedida = new UnidadMedida(idUnidadMedida,descripcion,usuario,
 						fechaAuditoria, horaAuditoria);
@@ -245,7 +245,7 @@ public class CUnidadMedida extends CGenerico {
 
 		final List<UnidadMedida> listUnidadMedida = servicioUnidadMedida.buscarTodas();
 		catalogo = new Catalogo<UnidadMedida>(catalogoUnidadMedida, "Catalogo de Unidades de Medidas",
-				listUnidadMedida, "Código Unidad de Medida", "Descripción") {
+				listUnidadMedida, "Código Unidad Medida", "Descripción") {
 
 			@Override
 			protected List<UnidadMedida> buscarCampos(List<String> valores) {
@@ -275,7 +275,12 @@ public class CUnidadMedida extends CGenerico {
 			@Override
 			protected List<UnidadMedida> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código Unidad Medida"))
+					return servicioUnidadMedida.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioUnidadMedida.filtroDescripcion(valor);
+				else
+					return servicioUnidadMedida.buscarTodas();
 			}
 
 		};

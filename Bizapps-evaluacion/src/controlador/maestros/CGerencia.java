@@ -78,7 +78,7 @@ public class CGerencia extends CGenerico {
 				// TODO Auto-generated method stub
 				
 				String descripcion = txtDescripcionGerencia.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
 						fechaAuditoria, horaAuditoria, usuario);
@@ -275,7 +275,12 @@ public class CGerencia extends CGenerico {
 			@Override
 			protected List<Gerencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código gerencia"))
+					return servicioGerencia.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioGerencia.filtroDescripcion(valor);
+				else
+					return servicioGerencia.buscarTodas();
 			}
 
 		};

@@ -70,23 +70,22 @@ public class CArea extends CGenerico {
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
 
-
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
+
 				String descripcion = txtDescripcionArea.getValue();
-				String usuario = "JDE";
+				String usuario =  nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Area area = new Area(idArea, descripcion, usuario,
-						fechaAuditoria,horaAuditoria);
+						fechaAuditoria, horaAuditoria);
 				servicioArea.guardar(area);
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
 				catalogo.actualizarLista(servicioArea.buscarTodas());
-				
+
 			}
 
 			@Override
@@ -147,7 +146,8 @@ public class CArea extends CGenerico {
 															.eliminarUnArea(idArea);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioArea.buscarTodas());
+													catalogo.actualizarLista(servicioArea
+															.buscarTodas());
 												}
 											}
 										});
@@ -178,8 +178,7 @@ public class CArea extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
 	@Listen("onClick = #gpxRegistroArea")
 	public void abrirRegistro() {
 		gpxDatosArea.setOpen(false);
@@ -187,7 +186,7 @@ public class CArea extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosArea")
 	public void abrirCatalogo() {
 		gpxDatosArea.setOpen(false);
@@ -216,8 +215,6 @@ public class CArea extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<Area> seleccionados = catalogo.obtenerSeleccionados();
@@ -275,7 +272,12 @@ public class CArea extends CGenerico {
 			@Override
 			protected List<Area> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código área"))
+					return servicioArea.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioArea.filtroNombre(valor);
+				else
+					return servicioArea.buscarTodas();
 			}
 
 		};

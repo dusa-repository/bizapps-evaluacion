@@ -87,7 +87,7 @@ public class CDominio extends CGenerico {
 				String descripcionDominio = txtDescripcionDominio.getValue();
 				String tipo = txtTipoDominio.getValue();
 				String comentario = txtComentarioDominio.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Dominio dominio = new Dominio(idDominio, comentario,
 						descripcionDominio, tipo, usuario, fechaAuditoria,
@@ -294,7 +294,16 @@ public class CDominio extends CGenerico {
 			@Override
 			protected List<Dominio> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código dominio"))
+					return servicioDominio.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioDominio.filtroDescripcion(valor);
+				else if (combo.equals("Tipo"))
+					return servicioDominio.filtroTipo(valor);
+				else if (combo.equals("Comentario"))
+					return servicioDominio.filtroComentario(valor);
+				else
+					return servicioDominio.buscarTodos();
 			}
 
 		};

@@ -86,7 +86,7 @@ public class CCompetencia extends CGenerico {
 				String descripcion = txtDescripcionCompetencia.getValue();
 				String nivel = txtNivelCompetencia.getValue();
 				String comentario = txtComentarioCompetencia.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Competencia competencia = new Competencia(idCompetencia,comentario,
 						 descripcion, fechaAuditoria,  horaAuditoria,
@@ -294,7 +294,16 @@ public class CCompetencia extends CGenerico {
 			@Override
 			protected List<Competencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código competencia"))
+					return servicioCompetencia.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioCompetencia.filtroDescripcion(valor);
+				else if (combo.equals("Nivel"))
+					return servicioCompetencia.filtroNivel(valor);
+				else if (combo.equals("Comentario"))
+					return servicioCompetencia.filtroComentario(valor);
+				else
+					return servicioCompetencia.buscarTodas();
 			}
 
 		};

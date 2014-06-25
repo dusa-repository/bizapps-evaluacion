@@ -78,7 +78,7 @@ public class CMedicion extends CGenerico {
 				// TODO Auto-generated method stub
 				
 				String descripcionMedicion = txtDescripcionMedicion.getValue();
-				String usuario = "JDE";
+				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				Medicion medicion = new Medicion(idMedicion,descripcionMedicion,usuario,
 						fechaAuditoria, horaAuditoria);
@@ -275,7 +275,12 @@ public class CMedicion extends CGenerico {
 			@Override
 			protected List<Medicion> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				return null;
+				if (combo.equals("Código medición"))
+					return servicioMedicion.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioMedicion.filtroDescripcion(valor);
+				else
+					return servicioMedicion.buscarTodas();
 			}
 
 		};
