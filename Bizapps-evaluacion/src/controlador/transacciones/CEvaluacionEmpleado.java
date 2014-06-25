@@ -144,6 +144,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static Double valor = 0.0;
 	private static Double total = 0.0;
 	private static Double totalObjetivo = 0.0;
+	private static Double totalInd = 0.0;
+	private static Evaluacion evaluacion1;
 	private Double cambio;
 
 	@Override
@@ -159,6 +161,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				System.out.println(idEvaluacion);
 			
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEvaluacion);
+		evaluacion1 = evaluacion;
 		txtCompromisos.setValue(evaluacion.getCompromisos());
 		txtFortalezas.setValue(evaluacion.getFortalezas());
 		txtOportunidades.setValue(evaluacion.getOportunidades());
@@ -340,11 +343,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 					"Error", Messagebox.OK, Messagebox.ERROR);
 
 		} else {
+		
 			List<EvaluacionObjetivo> evaluacionesO = new ArrayList<EvaluacionObjetivo>();
 
 			for (int i = 0; i < lbxObjetivosGuardados.getItems().size(); i++) {
 				List<Listitem> listItem2 = lbxObjetivosGuardados.getItems();
 				EvaluacionObjetivo EvaluacionO = listItem2.get(i).getValue();
+				
 				Integer idObjetivo = EvaluacionO.getIdObjetivo();
 				Listitem listItem = lbxObjetivosGuardados.getItemAtIndex(i);
 				EvaluacionObjetivo objetivos = listItem2.get(i).getValue();
@@ -492,22 +497,27 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Integer idObjetivo =EvaluacionO.getIdObjetivo();
 				Integer idObjetivo1 = EvaluacionI.getIdObjetivo();
 				if (idObjetivo.equals(idObjetivo1)){
-				Double totalInd = (total * peso)/100;
-				System.out.println("total" +totalInd);
-				totalObjetivo = totalObjetivo + totalInd;
-				System.out.println("total1" +totalObjetivo);
+				totalInd = 0.0;
+				totalInd = (total * peso)/100;
 				String total = totalInd.toString();
 				((Textbox) ((listItem3.get(j).getChildren().get(5)))
 						.getFirstChild()).setValue(total);
 				
 				}
-				String resultadoO = totalObjetivo.toString();	
-				((Textbox) ((listItem3.get(j).getChildren().get(6)))
-						.getFirstChild()).setValue(resultadoO);
-				System.out.println("p"+resultadoO);
 			}
 			
 		}
+		for (int k= 0; k < lbxObjetivosGuardados.getItems().size(); k++) {
+			List<Listitem> listItem4 = lbxObjetivosGuardados.getItems();
+			String resultadoO = ((Textbox) ((listItem4.get(k).getChildren().get(5)))
+					.getFirstChild()).getValue();
+			totalObjetivo = totalObjetivo + Double.parseDouble(resultadoO);
+			String resultado = totalObjetivo.toString();
+			if (lbxObjetivosGuardados.getItems().size()-1 == k){
+			((Textbox) ((listItem4.get(k).getChildren().get(6)))
+					.getFirstChild()).setValue(resultado);
+			}
+			}
 	}
 
 	public Integer calcularPorcentajeMetaIndicado (Integer valor) {
