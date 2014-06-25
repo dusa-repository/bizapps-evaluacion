@@ -4,6 +4,7 @@ import interfacedao.maestros.IPerspectivaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Perspectiva;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,24 @@ public class SPerspectiva {
 	/* Servicio que permite eliminar varias perspectivas */
 	public void eliminarVariasPerspectivas(List<Perspectiva> eliminar) {
 		perspectivaDAO.delete(eliminar);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las perspectivas de una lista de acuerdo al
+	 * id
+	 */
+	public List<Perspectiva> filtroId(String valor) {
+		return perspectivaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las perspectivas de una lista de acuerdo a la
+	 * descripcion
+	 */
+	public List<Perspectiva> filtroDescripcion(String valor) {
+		return perspectivaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	

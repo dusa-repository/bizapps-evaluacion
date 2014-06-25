@@ -12,6 +12,11 @@ public interface IUrgenciaDAO extends JpaRepository<Urgencia, Integer> {
 
 	Urgencia findByDescripcionUrgencia(String descripcion);
 
+	public List<Urgencia> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Urgencia> findByDescripcionUrgenciaStartingWithAllIgnoreCase(
+			String valor);
+
 
 	
 }

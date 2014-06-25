@@ -14,6 +14,14 @@ public interface IDominioDAO extends JpaRepository<Dominio, Integer> {
 
 	public List<Dominio> findByTipo(String tipo);
 
+	public List<Dominio> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Dominio> findByDescripcionDominioStartingWithAllIgnoreCase(String valor);
+
+	public List<Dominio> findByTipoStartingWithAllIgnoreCase(String valor);
+
+	public List<Dominio> findByComentarioStartingWithAllIgnoreCase(String valor);
+
 
 	
 }

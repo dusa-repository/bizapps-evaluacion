@@ -6,6 +6,7 @@ import interfacedao.maestros.ITipoFormacionDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.TipoFormacion;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,31 @@ public class STipoFormacion {
 	public void eliminarVariosTipos(List<TipoFormacion> eliminar) {
 		tipoFormacionDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar los tipos de formacion de una lista de acuerdo al
+	 * id
+	 */
+	public List<TipoFormacion> filtroId(String valor) {
+		return tipoFormacionDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los tipos de formacion de una lista de acuerdo al
+	 * codigo del area
+	 */
+	public List<TipoFormacion> filtroArea(String valor) {
+		return tipoFormacionDAO.findByAreaStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los tipos de formacion de una lista de acuerdo al
+	 * codigo del area
+	 */
+	public List<TipoFormacion> filtroDescripcion(String valor) {
+		return tipoFormacionDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
 	
 
 }

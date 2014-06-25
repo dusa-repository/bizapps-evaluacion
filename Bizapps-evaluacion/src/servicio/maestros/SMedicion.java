@@ -4,6 +4,7 @@ import interfacedao.maestros.IMedicionDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Gerencia;
 import modelo.maestros.Medicion;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,22 @@ public class SMedicion {
 	public List<Medicion> buscar() {
 		return medicionDAO.findAll();
 	}
+	
+	/*
+	 * Servicio que permite filtrar las mediciones de una lista de acuerdo al
+	 * id
+	 */
+	public List<Medicion> filtroId(String valor) {
+		return medicionDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las mediciones de una lista de acuerdo a la
+	 * descripcion
+	 */
+	public List<Medicion> filtroDescripcion(String valor) {
+		return medicionDAO.findByDescripcionMedicionStartingWithAllIgnoreCase(valor);
+	}
+	
 
 }

@@ -12,6 +12,10 @@ public interface IGerenciaDAO extends JpaRepository<Gerencia, Integer> {
 
 	Gerencia findByDescripcion(String descripcion);
 
+	public List<Gerencia> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Gerencia> findByDescripcionStartingWithAllIgnoreCase(String valor);
+
 	
 	
 }

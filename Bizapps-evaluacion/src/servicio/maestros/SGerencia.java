@@ -4,6 +4,7 @@ import interfacedao.maestros.IGerenciaDAO;
 
 import java.util.List;
 
+import modelo.maestros.Dominio;
 import modelo.maestros.Gerencia;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,23 @@ public class SGerencia {
 	public void eliminarVariasGerencias(List<Gerencia> eliminar) {
 		gerenciaDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar las gerencias de una lista de acuerdo al
+	 * id
+	 */
+	public List<Gerencia> filtroId(String valor) {
+		return gerenciaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las gerencias de una lista de acuerdo al
+	 * id
+	 */
+	public List<Gerencia> filtroDescripcion(String valor) {
+		return gerenciaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+
 	
 
 }

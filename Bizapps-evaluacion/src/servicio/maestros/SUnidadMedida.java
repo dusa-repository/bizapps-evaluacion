@@ -4,6 +4,7 @@ import interfacedao.maestros.IUnidadMedidaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Perspectiva;
 import modelo.maestros.UnidadMedida;
 
@@ -48,10 +49,26 @@ public class SUnidadMedida {
 		unidadMedidaDAO.delete(eliminar);
 	}
 	
-
 	public List<UnidadMedida> buscar() {
 		return unidadMedidaDAO.findAll();
 	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades de medida de una lista de acuerdo al
+	 * id
+	 */
+	public List<UnidadMedida> filtroId(String valor) {
+		return unidadMedidaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades de medida de una lista de acuerdo a la
+	 * descripcion
+	 */
+	public List<UnidadMedida> filtroDescripcion(String valor) {
+		return unidadMedidaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+
 
 
 }

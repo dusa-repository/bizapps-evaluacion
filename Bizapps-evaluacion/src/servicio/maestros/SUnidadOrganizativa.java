@@ -5,6 +5,7 @@ import interfacedao.maestros.IUnidadOrganizativaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.UnidadOrganizativa;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,63 @@ public class SUnidadOrganizativa {
 	public void eliminarVariasUnidades(List<UnidadOrganizativa> eliminar) {
 		unidadOrganizativaDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * id
+	 */
+	public List<UnidadOrganizativa> filtroId(String valor) {
+		return unidadOrganizativaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroDescripcion(String valor) {
+		return unidadOrganizativaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroGerencia(String valor) {
+		return unidadOrganizativaDAO.findByGerenciaStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroNivel(String valor) {
+		return unidadOrganizativaDAO.findByNivelStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroSubNivel(String valor) {
+		return unidadOrganizativaDAO.findBySubNivelStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroEmpresaAuxiliar(String valor) {
+		return unidadOrganizativaDAO.findByIdEmpresaAuxiliarStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las unidades organizativas de una lista de acuerdo al
+	 * codigo de gerencia
+	 */
+	public List<UnidadOrganizativa> filtroUnidadAuxiliar(String valor) {
+		return unidadOrganizativaDAO.findByIdUnidadOrganizativaAuxiliarStartingWithAllIgnoreCase(valor);
+	}
+
 
 }

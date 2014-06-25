@@ -5,6 +5,7 @@ import interfacedao.maestros.IPeriodoDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 
@@ -57,6 +58,56 @@ public class SPeriodo {
 	public void eliminarVariosPeriodos(List<Periodo> eliminar) {
 		periodoDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo al
+	 * id
+	 */
+	public List<Periodo> filtroId(String valor) {
+		return periodoDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo al
+	 * nombre
+	 */
+	public List<Periodo> filtroNombre(String valor) {
+		return periodoDAO.findByNombreStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo a la
+	 * descripcion
+	 */
+	public List<Periodo> filtroDescripcion(String valor) {
+		return periodoDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo a la
+	 * fecha de inicio
+	 */
+	public List<Periodo> filtroFechaInicio(String valor) {
+		return periodoDAO.findByFechaInicioStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo a la
+	 * fecha fin
+	 */
+	public List<Periodo> filtroFechaFin(String valor) {
+		return periodoDAO.findByFechaFinStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los periodos de una lista de acuerdo al
+	 * estado
+	 */
+	public List<Periodo> filtroEstado(String valor) {
+		return periodoDAO.findByEstadoPeriodoStartingWithAllIgnoreCase(valor);
+	}
+
+
 	
 	
 	

@@ -5,6 +5,7 @@ import interfacedao.maestros.IEmpresaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Empresa;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,59 @@ public class SEmpresa {
 	public void eliminarVariasEmpresas(List<Empresa> eliminar) {
 		empresaDAO.delete(eliminar);
 	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo al
+	 * id
+	 */
+	public List<Empresa> filtroId(String valor) {
+		return empresaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo al
+	 * nombre
+	 */
+	public List<Empresa> filtroNombre(String valor) {
+		return empresaDAO.findByNombreStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo a la
+	 * direccion
+	 */
+	public List<Empresa> filtroDireccion(String valor) {
+		return empresaDAO.findByDireccionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo al
+	 * telefono 1
+	 */
+	public List<Empresa> filtroTelefono1(String valor) {
+		return empresaDAO.findByTelefono1StartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo al
+	 * telefono 2
+	 */
+	public List<Empresa> filtroTelefono2(String valor) {
+		return empresaDAO.findByTelefono2StartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las empresas de una lista de acuerdo a la
+	 * empresa auxiliar
+	 */
+	public List<Empresa> filtroEmpresaAuxiliar(String valor) {
+		return empresaDAO.findByIdEmpresaAuxiliarStartingWithAllIgnoreCase(valor);
+	}
+
+
+
 	
 
 }

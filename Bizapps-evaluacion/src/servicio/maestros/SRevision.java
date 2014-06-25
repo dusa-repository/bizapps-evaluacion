@@ -5,6 +5,7 @@ import interfacedao.maestros.IRevisionDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Revision;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,43 @@ public class SRevision {
 	public void eliminarVariasRevisiones(List<Revision> eliminar) {
 		revisionDAO.delete(eliminar);
 	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las revisiones de una lista de acuerdo al
+	 * id
+	 */
+	public List<Revision> filtroId(String valor) {
+		return revisionDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar las revisiones de una lista de acuerdo al
+	 * periodo
+	 */
+	public List<Revision> filtroPeriodo(String valor) {
+		return revisionDAO.findByPeriodoStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las revisiones de una lista de acuerdo al
+	 * periodo
+	 */
+	public List<Revision> filtroDescripcion(String valor) {
+		return revisionDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las revisiones de una lista de acuerdo al
+	 * estado
+	 */
+	public List<Revision> filtroEstado(String valor) {
+		return revisionDAO.findByEstadoRevisionStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	
 	
 
 }

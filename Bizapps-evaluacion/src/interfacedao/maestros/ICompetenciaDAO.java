@@ -14,5 +14,15 @@ public interface ICompetenciaDAO extends JpaRepository<Competencia, Integer> {
 		public List<Competencia> buscar();
 	 
 	 public Competencia findById(int id);
+
+	public List<Competencia> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Competencia> findByDescripcionStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<Competencia> findByNivelStartingWithAllIgnoreCase(String valor);
+
+	public List<Competencia> findByComentarioStartingWithAllIgnoreCase(
+			String valor);
 }
 	

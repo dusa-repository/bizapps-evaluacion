@@ -6,6 +6,7 @@ import interfacedao.maestros.IUrgenciaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Urgencia;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,24 @@ public class SUrgencia {
 	public void eliminarVariasUrgencias(List<Urgencia> eliminar) {
 		urgenciaDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar las urgencias de una lista de acuerdo al
+	 * id
+	 */
+	public List<Urgencia> filtroId(String valor) {
+		return urgenciaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar las urgencias de una lista de acuerdo a la
+	 * descripcion
+	 */
+	public List<Urgencia> filtroDescripcion(String valor) {
+		return urgenciaDAO.findByDescripcionUrgenciaStartingWithAllIgnoreCase(valor);
+	}
+
+	
 	
 
 }

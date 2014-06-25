@@ -7,6 +7,7 @@ import interfacedao.maestros.IEmpleadoDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.seguridad.Arbol;
 
@@ -68,5 +69,69 @@ public class SEmpleado {
 	public void eliminarVariosEmpleados(List<Empleado> eliminar) {
 		empleadoDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo al
+	 * id
+	 */
+	public List<Empleado> filtroId(String valor) {
+		return empleadoDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo a
+	 * la empresa
+	 */
+	public List<Empleado> filtroEmpresa(String valor) {
+		return empleadoDAO.findByEmpresaStartingWithAllIgnoreCase(valor);
+	}
+
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo al
+	 * cargo
+	 */
+	public List<Empleado> filtroCargo(String valor) {
+		return empleadoDAO.findByCargoStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo a la
+	 * unidad organizativa
+	 */
+	public List<Empleado> filtroNombre(String valor) {
+		return empleadoDAO.findByNombreStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo al nombre
+	 */
+	public List<Empleado> filtroUnidadOrganizativa(String valor) {
+		return empleadoDAO.findByUnidadOrganizativaStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo a la ficha
+	 */
+	public List<Empleado> filtroFicha(String valor) {
+		return empleadoDAO.findByFichaStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo al grado auxiliar
+	 */
+	public List<Empleado> filtroGradoAuxiliar(String valor) {
+		return empleadoDAO.findByGradoAuxiliarStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los empleados de una lista de acuerdo a la ficha del supervisor
+	 */
+	public List<Empleado> filtroFichaSupervisor(String valor) {
+		return empleadoDAO.findByFichaSupervisorStartingWithAllIgnoreCase(valor);
+	}
+	
+		
 
 }

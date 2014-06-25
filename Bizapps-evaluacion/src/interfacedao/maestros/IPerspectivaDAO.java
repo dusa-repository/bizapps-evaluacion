@@ -18,4 +18,9 @@ public interface IPerspectivaDAO extends JpaRepository<Perspectiva, Integer> {
 
 	public Perspectiva findByDescripcion(String value);
 
+	public List<Perspectiva> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Perspectiva> findByDescripcionStartingWithAllIgnoreCase(
+			String valor);
+
 	 }

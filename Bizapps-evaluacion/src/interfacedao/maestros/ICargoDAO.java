@@ -12,5 +12,15 @@ public interface ICargoDAO extends JpaRepository<Cargo, Integer> {
 
 	Cargo findByDescripcion(String descripcion);
 
+	public List<Cargo> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<Cargo> findByDescripcionStartingWithAllIgnoreCase(String valor);
+
+	public List<Cargo> findByNominaStartingWithAllIgnoreCase(String valor);
+
+	public List<Cargo> findByIdCargoAuxiliarStartingWithAllIgnoreCase(String valor);
+
+	public List<Cargo> findByIdEmpresaAuxiliarStartingWithAllIgnoreCase(String valor);
+
 	
 }

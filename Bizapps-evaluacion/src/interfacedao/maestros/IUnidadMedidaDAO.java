@@ -16,5 +16,9 @@ public interface IUnidadMedidaDAO extends JpaRepository<UnidadMedida, Integer> {
 	 public List<UnidadMedida> findAll();
 
 	 UnidadMedida findById(Integer value);
+
+	public List<UnidadMedida> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<UnidadMedida> findByDescripcionStartingWithAllIgnoreCase(String valor);
 	
 }

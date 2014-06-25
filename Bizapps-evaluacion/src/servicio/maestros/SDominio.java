@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.maestros.Area;
 import modelo.maestros.Cargo;
+import modelo.maestros.Competencia;
 import modelo.maestros.Dominio;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Revision;
@@ -56,6 +57,41 @@ public class SDominio {
 	public void eliminarVariosDominios(List<Dominio> eliminar) {
 		dominioDAO.delete(eliminar);
 	}
+	
+	/*
+	 * Servicio que permite filtrar los dominios de una lista de acuerdo al
+	 * id
+	 */
+	public List<Dominio> filtroId(String valor) {
+		return dominioDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+
+	/*
+	 * Servicio que permite filtrar los dominios de una lista de acuerdo a
+	 * la descripcion
+	 */
+	public List<Dominio> filtroDescripcion(String valor) {
+		return dominioDAO.findByDescripcionDominioStartingWithAllIgnoreCase(valor);
+	}
+
+	/*
+	 * Servicio que permite filtrar los dominios de una lista de acuerdo al
+	 * tipo
+	 */
+	public List<Dominio> filtroTipo(String valor) {
+		return dominioDAO.findByTipoStartingWithAllIgnoreCase(valor);
+	}
+	
+	/*
+	 * Servicio que permite filtrar los dominios de una lista de acuerdo al
+	 * comentario
+	 */
+	public List<Dominio> filtroComentario(String valor) {
+		return dominioDAO.findByComentarioStartingWithAllIgnoreCase(valor);
+	}
+
+	
+	
 	
 
 }

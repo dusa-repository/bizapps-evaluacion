@@ -12,6 +12,12 @@ public interface ITipoFormacionDAO extends JpaRepository<TipoFormacion, Integer>
 
 	TipoFormacion findByDescripcion(String descripcion);
 
+	public List<TipoFormacion> findByIdStartingWithAllIgnoreCase(String valor);
+
+	public List<TipoFormacion> findByAreaStartingWithAllIgnoreCase(String valor);
+
+	public List<TipoFormacion> findByDescripcionStartingWithAllIgnoreCase(String valor);
+
 
 	
 }
