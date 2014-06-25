@@ -287,7 +287,7 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" readonly="true" value = "0" constraint = "min 0"/>
+										id="txtValorResultado" disabled="true" value = "0" constraint = "min 0"/>
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
@@ -295,12 +295,12 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Resultado %" value = "0" constraint = "min 0"
-										mold="rounded" width="100%" id="txtResultadoPorc" readonly="true" />
+										mold="rounded" width="100%" id="txtResultadoPorc" disabled="true" />
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" readonly="true" value = "0" constraint = "min 0"/>
+										id="txtPesoPorc" disabled="true" value = "0" constraint = "min 0"/>
 								</listcell>
 								<listcell>
 									<button id="btnOk2" width="auto"
