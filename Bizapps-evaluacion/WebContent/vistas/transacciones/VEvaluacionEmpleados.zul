@@ -234,7 +234,7 @@
 								</button>
 								<button id="btnCalcular"
 									 sclass="btn" label="Calcular"
-									image="/public/imagenes/botones/generar.png">
+									image="/public/imagenes/botones/exportar.png">
 								</button>
 								<button id="btnCancelarIndicador"
 									label="Cancelar" sclass="btn" tabindex="2"
