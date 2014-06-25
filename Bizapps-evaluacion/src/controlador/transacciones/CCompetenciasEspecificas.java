@@ -13,6 +13,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -99,15 +100,16 @@ public class CCompetenciasEspecificas extends CGenerico {
 	private Window wdwConductasEspecificas;
 	String tipo = "REQUERIDO";
 	ListModelList<Dominio> dominio;
+	public static Revision revision;
 	
 	@Override
 	public void inicializar() throws IOException {
-
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
@@ -135,7 +137,7 @@ public class CCompetenciasEspecificas extends CGenerico {
 						.setModel(new ListModelList<NivelCompetenciaCargo>(
 								nivel2));
 		}
-		
+		lblRevision.setValue(revision.getDescripcion());
 		lblFicha.setValue(ficha);
 		lblNombreTrabajador.setValue(nombreTrabajador);
 		lblCargo.setValue(cargo);

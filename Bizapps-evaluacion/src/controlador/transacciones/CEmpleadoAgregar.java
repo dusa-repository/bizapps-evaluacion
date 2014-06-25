@@ -9,6 +9,7 @@ import java.util.List;
 
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -78,6 +79,7 @@ public class CEmpleadoAgregar extends CGenerico {
 	private static int numeroEvaluacion;
 	private static Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
+	public static Revision revision;
 
 	Mensaje msj = new Mensaje();
 

@@ -7,8 +7,8 @@
 				<grid width="100%" align = "center">
 					<columns visible="true" >
 						<column label="#Evaluacion" width="13%" style = "font-size: 10px;"/>
-						<column label="Fecha Creacion" width="18%" style = "font-size: 10px;" />
-						<column label="Revision" width="18%" style = "font-size: 10px;" />
+						<column label="Fecha Creacion" width="15%" style = "font-size: 10px;" />
+						<column label="Revision" width="21%" style = "font-size: 10px;" />
 						<column label="Ficha" width="10%"  style = "font-size: 10px;" />
 						<column label="Nombre del Trabajador" width="25%" style = "font-size: 10px;" />
 						<column label="Cargo" width="20%" style = "font-size: 10px;" />
@@ -19,7 +19,7 @@
 					<row>
 								<label id="lblEvaluacion" style = "font-size: 10px;"></label>
 								<label id="lblFechaCreacion" style = "font-size: 10px;"></label>
-								<label id="lblRevision" value = "FY13-14 (1)" style = "font-size: 10px;"></label>
+								<label id="lblRevision" style = "font-size: 10px;"></label>
 								<label id="lblFicha" style = "font-size: 10px;"></label>
 								<label id="lblNombreTrabajador" style = "font-size: 10px;"></label>
 								<label id="lblCargo" style = "font-size: 10px;"></label>

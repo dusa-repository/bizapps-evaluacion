@@ -39,9 +39,9 @@ public class SRevision {
 	}
 	
 	
-	/* Servicio que permite buscar las revisiones de acuerdo a un estado */
-	public List<Revision> buscarPorEstado(String estado) {
-		List<Revision> revisiones;
+	/* Servicio que permite buscar la revision de acuerdo a un estado */
+	public Revision buscarPorEstado(String estado) {
+		Revision revisiones;
 		revisiones = revisionDAO.findByEstadoRevision(estado);
 		return revisiones;
 	}

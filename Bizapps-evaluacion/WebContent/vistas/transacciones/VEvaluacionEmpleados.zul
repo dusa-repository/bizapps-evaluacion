@@ -35,7 +35,7 @@
 					<label id="lblFechaCreacion"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblRevision" value="FY13-14 (1)"
+					<label id="lblRevision" 
 						style="font-size: 10px;">
 					</label>
 					<label id="lblFicha" style="font-size: 10px;">
@@ -269,7 +269,7 @@
 										model="${$composer.dominio}">
 										<template name="model">
 											<comboitem
-												description="${each.idDominio}"
+												description="${each.id}"
 												label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
@@ -277,6 +277,22 @@
 							</listitem>
 						</template>
 					</listbox>
+					<separator></separator>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaR"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
@@ -313,6 +329,22 @@
 							</listitem>
 						</template>
 					</listbox>
+					<separator></separator>
+						<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaE"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator></separator>

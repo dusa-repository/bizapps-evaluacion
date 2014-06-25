@@ -14,6 +14,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -111,12 +112,14 @@ public class CObjetivos extends CGenerico {
 	
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	ListModelList<Perspectiva> perspectiva;
+	public static Revision revision;
 
 	
 
 	@Override
 	public void inicializar() throws IOException {
-
+		
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		 List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		 cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		 cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
@@ -128,6 +131,7 @@ public class CObjetivos extends CGenerico {
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+		lblRevision.setValue(revision.getDescripcion());
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
@@ -142,6 +146,7 @@ public class CObjetivos extends CGenerico {
 		lblGerencia.setValue(gerenciaReporte);
 		gpxAgregar.setOpen(false);
 		gpxAgregados.setOpen(false);
+		
 	}
 
 
@@ -176,6 +181,7 @@ public class CObjetivos extends CGenerico {
 			evaluacionEmpleado.setResultadoObjetivos(0);
 			evaluacionEmpleado.setResultadoGeneral(0);
 			evaluacionEmpleado.setResultadoFinal(0);
+			evaluacionEmpleado.setRevision(revision);
 			servicioEvaluacion.guardar(evaluacionEmpleado);
 			}
 			

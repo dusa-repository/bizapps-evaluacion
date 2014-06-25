@@ -229,7 +229,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				String gerenciaReporte = empleado.getUnidadOrganizativa()
 						.getGerencia().getDescripcion();
 				String nombreTrabajador = empleado.getNombre();
-
+				lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 				// Combo de Objetivos
 				List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 						.buscarObjetivos(ficha, numeroEvaluacion);

@@ -93,6 +93,12 @@ public class CListaPersonal extends CGenerico {
 
 	}
 
+	@Listen("onClick = #btnSalir")
+	public void salir (){
+		winListaPersonal.onClose();
+		tabs.remove(0);
+	}
+	
 	@Listen("onClick = #btnAgregar")
 	public void AgregarEvaluacion() {
 		winListaPersonal.onClose();

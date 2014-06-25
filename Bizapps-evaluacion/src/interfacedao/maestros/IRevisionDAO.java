@@ -12,8 +12,8 @@ public interface IRevisionDAO extends JpaRepository<Revision, Integer> {
 
 	Revision findByDescripcion(String descripcion);
 	
-	public List<Revision> findByEstadoRevision(String estado);
-
+	//public List<Revision> findByEstadoRevision(String estado);
+	public Revision findByEstadoRevision(String estado);
 	
 
 	

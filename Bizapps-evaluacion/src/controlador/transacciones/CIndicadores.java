@@ -14,6 +14,7 @@ import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.Medicion;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.maestros.UnidadMedida;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
@@ -114,11 +115,12 @@ public class CIndicadores extends CGenerico {
 	@Wire
 	private Combobox cmbObjetivos;
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
+	public static Revision revision;
 	
 
 	@Override
 	public void inicializar() throws IOException {
-
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		List<Medicion> medicion = servicioMedicion.buscar();
 		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
 
@@ -130,9 +132,7 @@ public class CIndicadores extends CGenerico {
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
-//		String periodo = "ACTIVO";
-//		String revision = servicioPeriodo.buscarPorEstado(periodo);
-//		System.out.println(revision);
+		lblRevision.setValue(revision.getDescripcion());
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);

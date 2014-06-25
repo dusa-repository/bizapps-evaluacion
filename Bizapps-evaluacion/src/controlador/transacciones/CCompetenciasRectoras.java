@@ -10,6 +10,7 @@ import modelo.maestros.Competencia;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.maestros.NivelCompetenciaCargo;
+import modelo.maestros.Revision;
 import modelo.seguridad.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,9 +79,11 @@ public class CCompetenciasRectoras extends CGenerico {
 	private Window wdwConductasRectoras;
 	String tipo = "REQUERIDO";
 	ListModelList<Dominio> dominio;
-
+	public static Revision revision;
+	
 	@Override
 	public void inicializar() throws IOException {
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
@@ -89,7 +92,7 @@ public class CCompetenciasRectoras extends CGenerico {
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		
-		
+		lblRevision.setValue(revision.getDescripcion());
 
 		String cargo = empleado.getCargo().getDescripcion();
 		String unidadOrganizativa = empleado.getUnidadOrganizativa()

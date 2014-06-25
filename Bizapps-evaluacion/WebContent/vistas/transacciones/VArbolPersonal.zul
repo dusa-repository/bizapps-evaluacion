@@ -35,6 +35,7 @@
 				<listbox height="100%" id="lbxEvaluacion" rows="8"
 					width="700px" emptyMessage="Debe seleccionar un empleado">
 					<listhead>
+						<listheader label="Id Reporte" width="15%" />
 						<listheader label="Revisión" width="25%" />
 						<listheader label="Fecha" width="25%" />
 						<listheader label="Estado" width="25%" />
@@ -42,7 +43,8 @@
 					</listhead>
 					<template name="model">
 						<listitem>
-							<listcell label="${each.idRevision}"></listcell>
+							<listcell label="1"></listcell>
+							<listcell label="${each.revision.descripcion}"></listcell>
 							<listcell label="${sdf.format(each.fechaCreacion)}"></listcell>
 							<listcell
 								label="${each.estadoEvaluacion}">

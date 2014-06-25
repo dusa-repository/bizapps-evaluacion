@@ -108,7 +108,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Button btnCancelar;
 	@Wire
-	private Button btnCalculo;
+	private Button btnCancelarIndicador;
+	@Wire
+	private Button btnSalirCompetenciaR;
+	@Wire
+	private Button btnSalirCompetenciaE;
+	@Wire
+	private Button btnCancelarEvaluacion;
 	@Wire
 	private Listbox lbxCompetenciaRectora;
 	@Wire
@@ -216,6 +222,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+		lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 	}
 		}
 	}
@@ -419,9 +426,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 	}
 	
-	@Listen("onClick = #btnCancelar")
+	@Listen("onClick = #btnCancelar,  #btnCancelarIndicador, #btnSalirCompetenciaR, #btnSalirCompetenciaE, #btnCancelarEvaluacion")
 	public void salir() {
-
 		winEvaluacionEmpleado.onClose();
 	}
 

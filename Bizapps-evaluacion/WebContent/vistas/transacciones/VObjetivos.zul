@@ -33,9 +33,9 @@
 			<columns visible="true">
 				<column label="#Evaluacion" width="13%"
 					style="font-size: 10px;" />
-				<column label="Fecha Creacion" width="22%"
+				<column label="Fecha Creacion" width="15%"
 					style="font-size: 10px;" />
-				<column label="Revision" width="14%"
+				<column label="Revision" width="21%"
 					style="font-size: 10px;" />
 				<column label="Ficha" width="10%"
 					style="font-size: 10px;" />
@@ -56,7 +56,7 @@
 					<label id="lblFechaCreacion"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblRevision" value="FY13-14 (1)"
+					<label id="lblRevision" 
 						style="font-size: 10px;">
 					</label>
 					<label id="lblFicha" style="font-size: 10px;"></label>

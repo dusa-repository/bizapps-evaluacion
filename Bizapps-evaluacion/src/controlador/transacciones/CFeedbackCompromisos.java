@@ -13,6 +13,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -114,11 +115,12 @@ public class CFeedbackCompromisos extends CGenerico {
 	private Groupbox gpxAgregar;
 	@Wire
 	private Groupbox gpxAgregados;
+	public static Revision revision;
 	
 	@Override
 	public void inicializar() throws IOException {
 
-	 
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
@@ -126,6 +128,7 @@ public class CFeedbackCompromisos extends CGenerico {
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+		lblRevision.setValue(revision.getDescripcion());
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();

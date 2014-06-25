@@ -19,6 +19,7 @@ import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.Medicion;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.maestros.UnidadMedida;
 import modelo.seguridad.Usuario;
 
@@ -174,10 +175,11 @@ public class CEvaluacionAgregar extends CGenerico {
 	public static Integer usuario;
 	public static Integer idEva;
 	public static Integer num;
+	public static Revision revision;
 
 	@Override
 	public void inicializar() throws IOException {
-
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
@@ -255,6 +257,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				lblGerencia.setValue(gerenciaReporte);
 				lblEvaluacion.setValue(numeroEvaluacion.toString());
 				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+				lblRevision.setValue(revision.getDescripcion());
 			}
 		}
 		gpxAgregar.setOpen(false);
@@ -332,6 +335,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		evaluacion.setFicha(fichaE);
 		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
 		evaluacion.setIdUsuario(usuario);
+		evaluacion.setRevision(revision);
 		evaluacion.setPeso(0);
 		evaluacion.setResultado(0);
 		evaluacion.setResultadoObjetivos(0);

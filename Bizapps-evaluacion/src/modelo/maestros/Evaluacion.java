@@ -57,9 +57,10 @@ public class Evaluacion implements Serializable {
 	@Column(name="id_evaluacion_secundario")
 	private int idEvaluacionSecundario;
 
-	@Column(name="id_revision")
-	private int idRevision;
-
+	@ManyToOne
+	@JoinColumn(name="id_revision")
+	private Revision revision;
+	
 	@Column(name="id_usuario")
 	private int idUsuario;
 
@@ -207,13 +208,13 @@ public class Evaluacion implements Serializable {
 	public void setIdEvaluacionSecundario(int idEvaluacionSecundario) {
 		this.idEvaluacionSecundario = idEvaluacionSecundario;
 	}
-
-	public int getIdRevision() {
-		return this.idRevision;
+	
+	public Revision getRevision() {
+		return revision;
 	}
 
-	public void setIdRevision(int idRevision) {
-		this.idRevision = idRevision;
+	public void setRevision(Revision revision) {
+		this.revision = revision;
 	}
 
 	public int getIdUsuario() {

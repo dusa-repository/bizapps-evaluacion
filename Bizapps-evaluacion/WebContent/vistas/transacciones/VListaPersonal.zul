@@ -19,17 +19,17 @@
 			<panelchildren>
 				<separator />
 				<div align="left">
-					<button id="btnAgregar" tabindex="3"
-						tooltiptext="Agregar" style="margin-left:5px; height:27px"
+					<button id="btnAgregar"
+						tooltiptext="Agregar" style= "height:27px; width:80px"
 						label="Agregar" image="/public/imagenes/botones/annadir.png"
 						onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
 					</button>
 					<button id="btnEliminar" label="Eliminar"
-						tooltiptext="Eliminar" tabindex="1"
+						tooltiptext="Eliminar" style=" height:27px; width:80px"
 						image="/public/imagenes/botones/eliminar.png">
 					</button>
 					<button id="btnSalir" label="Salir"
-						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
+						style=" height:27px; width:80px " tooltiptext="Salir"
 						image="/public/imagenes/botones/salir.png">
 					</button>
 					<separator />
@@ -42,6 +42,7 @@
 			<listbox height="auto" id="lbxEvaluacion" mold="paging"
 				pageSize="10" width="auto">
 				<listhead style="background: #F8E0E0">
+					<listheader label="Id Reporte" width="10%" />
 					<listheader label="Revisión" width="25%" />
 					<listheader label="Fecha" width="25%" />
 					<listheader label="Estado" width="25%" />
@@ -49,7 +50,8 @@
 				</listhead>
 				<template name="model">
 					<listitem>
-						<listcell label="${each.idRevision}"></listcell>
+						<listcell label="1"></listcell>
+						<listcell label="${each.revision.descripcion}"></listcell>
 						<listcell
 							label="${sdf.format(each.fechaCreacion)}">
 						</listcell>
