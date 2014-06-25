@@ -211,7 +211,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 					btnEliminar.setVisible(false);
 					btnAgregarIndicador.setVisible(false);
 					btnEliminar2.setVisible(false);
-					panBotones.setVisible(false);
+					btnCambiarEstado.setVisible(false);
+					btnCancelar.setVisible(true);
 				}
 				txtCompromisos.setValue(evaluacion.getCompromisos());
 				txtFortalezas.setValue(evaluacion.getFortalezas());
@@ -553,7 +554,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				}		
 				}
 					
-	@Listen("onDoubleClick = #lbxObjetivosGuardados")
+	@Listen("onClick = #lbxObjetivosGuardados")
 	public void mostrarEvaluacion() {
 		gpxAgregar.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -607,7 +608,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 	}
 	
-	@Listen("onClick = #lbxObjetivosGuardados")
+	@Listen("onDoubleClick = #lbxObjetivosGuardados")
 	public void mostrarPestannaIndicadores() {
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);

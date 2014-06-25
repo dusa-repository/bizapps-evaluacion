@@ -175,7 +175,6 @@ public class CListaPersonal extends CGenerico {
 						"/vistas/transacciones/VEvaluacionEnEdicion.zul", null,
 						map);
 				winEvaluacionEmpleado.doModal();
-				winEvaluacionEmpleado.setClosable(true);
 				winListaPersonal.onClose();
 			}
 
