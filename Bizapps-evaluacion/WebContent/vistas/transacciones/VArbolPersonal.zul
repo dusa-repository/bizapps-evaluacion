@@ -43,7 +43,7 @@
 					</listhead>
 					<template name="model">
 						<listitem>
-							<listcell label="1"></listcell>
+							<listcell label= "${each.idEvaluacionSecundario}"></listcell>
 							<listcell label="${each.revision.descripcion}"></listcell>
 							<listcell label="${sdf.format(each.fechaCreacion)}"></listcell>
 							<listcell

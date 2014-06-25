@@ -20,11 +20,6 @@
 						image="/public/imagenes/botones/buscar.png"
 						onClick='contenido.src="../vistas/transacciones/VArbolPersonal.zul"'>
 					</button>
-					<button id="btnSalir" label="Salir"
-						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
-						image="/public/imagenes/botones/salir.png">
-					</button>
-
 					<separator />
 				</div>
 			</panelchildren>

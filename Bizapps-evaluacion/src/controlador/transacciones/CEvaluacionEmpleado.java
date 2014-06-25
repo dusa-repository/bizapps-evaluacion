@@ -72,6 +72,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Button btnOk;
 	@Wire
+	private Button btnCalcular;
+	@Wire
 	private Button btnGuardarIndicador;
 	@Wire
 	private Listbox lbxIndicadoresAgregados;
@@ -139,8 +141,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Groupbox gpxListaPersonal;
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
-	private static Double valor;
+	private static Double valor = 0.0;
 	private static Double total = 0.0;
+	private static Double totalObjetivo = 0.0;
 	private Double cambio;
 
 	@Override
@@ -228,11 +231,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 	}
 	
 	
-	public Double getCambio() {
-		evaluarIndicadores ();
-		return cambio;
-		
-	}
+//	public Double getCambio() {
+//		evaluarIndicadores ();
+//		return cambio;
+//		
+//	}
 
 	public ListModelList<Dominio> getDominio(){
 		dominio = new ListModelList<Dominio> (servicioDominio.buscarPorTipo(tipo));
@@ -357,28 +360,28 @@ public class CEvaluacionEmpleado extends CGenerico {
 				}
 			
 
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+//			Messagebox.show("Datos guardados exitosamente", "Información",
+//					Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}
 	
-	@Listen("onClick = #btnGuardarIndicador")
+	@Listen("onClick = #btnCalcular")
 	public void prueba () {
 		evaluarIndicadores ();
 	}
 	
-//	@Listen("onClick = #btnGuardarIndicador")
+	@Listen("onClick = #btnGuardarIndicador")
 	public void guardarIndicadores() {
-
+		
 		boolean campoBlanco = false;
 
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			
 			Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);		
-			if (((Textbox) ((listItem.getChildren().get(6))).getFirstChild())
-					.getValue().equals("") && ((Textbox) ((listItem.getChildren().get(7))).getFirstChild())
+			if (((Spinner) ((listItem.getChildren().get(6))).getFirstChild())
+					.getValue().equals("") && ((Spinner) ((listItem.getChildren().get(7))).getFirstChild())
 					.getValue().equals("") && ((Textbox) ((listItem.getChildren().get(8))).getFirstChild())
 					.getValue().equals("") && ((Textbox) ((listItem.getChildren().get(9))).getFirstChild())
 					.getValue().equals("") ) {
@@ -417,9 +420,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 				indicador.setResultadoPeso(Double.parseDouble(resultadoPeso));
 				indicador.setTotal(total);
 				servicioEvaluacionIndicador.guardar(indicador);
+				
 				}
-			
-
+			guardarObjetivos ();
 			Messagebox.show("Datos guardados exitosamente", "Información",
 					Messagebox.OK, Messagebox.INFORMATION);
 		}
@@ -466,6 +469,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 				}
 			}
 			else{
+						((Spinner) ((listItem.getChildren().get(7)))
+						.getFirstChild()).setDisabled(true);
 						valor = ((valorResultado / EvaluacionI.getValorMeta()) * 100);
 						System.out.println("valor" +valor);
 						Integer valor1= valor.intValue();
@@ -486,16 +491,22 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Double peso = EvaluacionO.getPeso();
 				Integer idObjetivo =EvaluacionO.getIdObjetivo();
 				Integer idObjetivo1 = EvaluacionI.getIdObjetivo();
-				System.out.println(idObjetivo);
-				System.out.println(idObjetivo1);
 				if (idObjetivo.equals(idObjetivo1)){
 				Double totalInd = (total * peso)/100;
+				System.out.println("total" +totalInd);
+				totalObjetivo = totalObjetivo + totalInd;
+				System.out.println("total1" +totalObjetivo);
 				String total = totalInd.toString();
 				((Textbox) ((listItem3.get(j).getChildren().get(5)))
 						.getFirstChild()).setValue(total);
-			System.out.println(total);
+				
 				}
+				String resultadoO = totalObjetivo.toString();	
+				((Textbox) ((listItem3.get(j).getChildren().get(6)))
+						.getFirstChild()).setValue(resultadoO);
+				System.out.println("p"+resultadoO);
 			}
+			
 		}
 	}
 

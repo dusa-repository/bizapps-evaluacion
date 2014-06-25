@@ -157,6 +157,18 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			}
 		}
 	}
+	public void cerrarVentana1(Window window, String id) {
+		window.setVisible(false);
+		for(int i =0; i<tabs.size();i++){
+			if(tabs.get(i).getLabel().equals(id)){
+				if(i==(tabs.size()-1)&& tabs.size()>1){
+					tabs.get(i-1).setSelected(true);
+				}
+				tabs.get(i).onClose();
+				tabs.remove(i);
+			}
+		}
+	}
 	
 	public void cerrarWindow(Window win, String id) {
 		win.setVisible(false);

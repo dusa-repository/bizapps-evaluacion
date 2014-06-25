@@ -95,8 +95,7 @@ public class CListaPersonal extends CGenerico {
 
 	@Listen("onClick = #btnSalir")
 	public void salir (){
-		winListaPersonal.onClose();
-		tabs.remove(0);
+		cerrarVentana1(winListaPersonal, "Personal");
 	}
 	
 	@Listen("onClick = #btnAgregar")

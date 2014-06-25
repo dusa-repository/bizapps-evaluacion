@@ -103,10 +103,10 @@
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
 									<listcell>
-										<textbox></textbox>
+										<textbox value="${each.totalInd}" disabled = "true"></textbox>
 									</listcell>
 									<listcell>
-										<textbox></textbox>
+										<textbox value="${each.resultado}" disabled = "true"></textbox>
 									</listcell>
 								</listitem>
 							</template>
@@ -120,11 +120,10 @@
 
 							<separator />
 							<div sclass="btn-group" align="center">
-
-								<button id="btnGuardarObjetivo"
-									tabindex="2" sclass="btn" label="Guardar"
-									image="/public/imagenes/botones/guardar.png">
-								</button>
+<!-- 								<button id="btnGuardarObjetivo" -->
+<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
+<!-- 									image="/public/imagenes/botones/guardar.png"> -->
+<!-- 								</button> -->
 								<button id="btnCancelar"
 									label="Cancelar" sclass="btn" tabindex="2"
 									image="/public/imagenes/botones/cancelar.png">
@@ -204,16 +203,17 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<spinner  constraint = "min 0" ></spinner>
+										<spinner  constraint = "min 0"  value="${each.valorResultado}"></spinner>
 									</listcell>
 									<listcell>
-										<spinner constraint = "min 0" value = "0" ></spinner>
+										<spinner constraint = "min 0"  value="${each.resultadoFyAnterior}"></spinner>
 									</listcell>
 									<listcell>
-										<textbox  disabled = "true"  onChange= '$composer.cambio'/>
+										<textbox  disabled = "true" value="${each.resultadoPorc}"/>
+<!-- 										onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
-										<textbox disabled = "true" onChange='$composer.cambio' />
+										<textbox disabled = "true" value="${each.resultadoPeso}"/>
 									</listcell>
 								</listitem>
 							</template>
@@ -231,6 +231,10 @@
 								<button id="btnGuardarIndicador"
 									tabindex="2" sclass="btn" label="Guardar"
 									image="/public/imagenes/botones/guardar.png">
+								</button>
+								<button id="btnCalcular"
+									 sclass="btn" label="Calcular"
+									image="/public/imagenes/botones/generar.png">
 								</button>
 								<button id="btnCancelarIndicador"
 									label="Cancelar" sclass="btn" tabindex="2"
