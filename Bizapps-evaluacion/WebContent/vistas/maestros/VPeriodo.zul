@@ -51,7 +51,7 @@
 							<label value="Estado:" class="etiqueta" />
 
 							<textbox id="txtEstadoPeriodo" width="80%"
-								maxlength="20" tabindex="1"
+								maxlength="20" tabindex="5"
 								tooltiptext="Ingrese aqui el estado del periodo" />
 						</row>
 					</rows>
