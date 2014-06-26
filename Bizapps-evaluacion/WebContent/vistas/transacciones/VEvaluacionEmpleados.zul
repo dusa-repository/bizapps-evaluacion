@@ -70,8 +70,83 @@
 			</tabs>
 			<tabpanels>
 				<tabpanel>
-					<separator />
-					<separator />
+					<groupbox id="gpxAgregar">
+						<listbox height="auto" id="lbxObjetivos"
+							width="auto">
+							<listhead>
+								<listheader label="Línea" width="5%" />
+								<listheader label="Plan Estratégico"
+									width="22%" />
+								<listheader label="Objetivo"
+									width="33%" />
+								<listheader label="Corresponsables"
+									width="13%" />
+								<listheader label="Peso (%)" width="6%" />
+								<listheader label="Total Ind(%)"
+									width="8%" />
+								<listheader label="Resultados (%)"
+									width="10%" />
+								<listheader width="6%" />
+							</listhead>
+							<listitem>
+								<listcell></listcell>
+								<listcell>
+									<combobox
+										placeholder="Plan Estratégico" mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbPerspectiva">
+										<template name="model">
+											<comboitem
+												context="${each.id}" label="${each.descripcion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<textbox placeholder="Objetivos"
+										mold="rounded" rows="4" width="100%" id="txtObjetivo">
+									</textbox>
+								</listcell>
+								<listcell>
+									<textbox
+										placeholder="Corresponsables" mold="rounded" rows="2"
+										width="100%" id="txtCorresponsables" />
+								</listcell>
+								<listcell>
+									<spinner placeholder="Peso" constraint = "min 0"
+										mold="rounded"  width="100%" id="txtPeso" />
+								</listcell>
+								<listcell>
+									<textbox value="0"
+										placeholder="Total" mold="rounded" rows="1" width="100%"
+										 id="txtTotal" />
+								</listcell>
+								<listcell>
+									<textbox value="0"
+										placeholder="Resultados" mold="rounded" rows="1" width="100%"
+										id="txtResultados" />
+								</listcell>
+								<listcell>
+									<button id="btnOk" width="auto"
+										height="auto" mold="trendy"
+										image="/public/imagenes/botones/agregar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+							</listitem>
+						</listbox>
+					</groupbox>
+					<div align="right" height="100%">
+						<button id="btnAgregarObjetivo" width="auto"
+							height="auto" mold="trendy" label="Agregar"
+							image="/public/imagenes/botones/agregar.png"
+							style="background-color:#F8E0E0;">
+						</button>
+						<button id="btnEliminar" width="auto"
+							height="auto" mold="trendy" label="Eliminar"
+							image="/public/imagenes/botones/eliminar.png">
+
+						</button>
+					</div>
 					<groupbox id="gpxAgregadosObjetivo">
 						<listbox height="auto"
 							id="lbxObjetivosGuardados" width="auto">
