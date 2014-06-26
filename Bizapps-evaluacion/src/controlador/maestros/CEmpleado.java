@@ -25,6 +25,7 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -33,7 +34,7 @@ import componentes.Mensaje;
 public class CEmpleado extends CGenerico {
 
 	@Wire
-	private Div divVEmpleado;
+	private Window wdwVEmpleado;
 	@Wire
 	private Div botoneraEmpleado;
 	@Wire
@@ -91,13 +92,13 @@ public class CEmpleado extends CGenerico {
 
 		txtEmpresaEmpleado.setFocus(true);
 		txtEmpresaEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
 		txtCargoEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
 		txtUnidadEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
 		txtGradoAuxiliarEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -174,6 +175,7 @@ public class CEmpleado extends CGenerico {
 						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
 						catalogo.actualizarLista(servicioEmpleado.buscarTodos());
+						abrirCatalogo();
 					} else {
 
 						if (empresa == null) {
@@ -203,7 +205,7 @@ public class CEmpleado extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVEmpleado, "Empleado");
+				cerrarVentana1(wdwVEmpleado, "Empleado");
 			}
 
 			@Override
@@ -317,13 +319,13 @@ public class CEmpleado extends CGenerico {
 		gpxDatosEmpleado.setOpen(false);
 		gpxRegistroEmpleado.setOpen(true);
 		txtEmpresaEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
 		txtCargoEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
 		txtUnidadEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
 		txtGradoAuxiliarEmpleado
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarBotones(false);
 
 	}
@@ -411,8 +413,8 @@ public class CEmpleado extends CGenerico {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogo = new Catalogo<Empleado>(catalogoEmpleado,
 				"Catalogo de Empleados", listEmpleado, "Código empleado",
-				"Código Empresa", "Código Cargo", "Código Unidad", "Nombre",
-				"Ficha", "Ficha Supervisor", "Grado Auxiliar") {
+				"Empresa", "Cargo", "Unidad Organizativa", "Nombre", "Ficha",
+				"Ficha Supervisor", "Grado Auxiliar") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
@@ -421,14 +423,12 @@ public class CEmpleado extends CGenerico {
 				for (Empleado empleado : listEmpleado) {
 					if (String.valueOf(empleado.getId()).toLowerCase()
 							.startsWith(valores.get(0))
-							&& String.valueOf(empleado.getEmpresa().getId())
-									.toLowerCase().startsWith(valores.get(1))
-							&& String.valueOf(empleado.getCargo().getId())
+							&& empleado.getEmpresa().getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& empleado.getCargo().getDescripcion()
 									.toLowerCase().startsWith(valores.get(2))
-							&& String
-									.valueOf(
-											empleado.getUnidadOrganizativa()
-													.getId()).toLowerCase()
+							&& empleado.getUnidadOrganizativa()
+									.getDescripcion().toLowerCase()
 									.startsWith(valores.get(3))
 							&& empleado.getNombre().toLowerCase()
 									.startsWith(valores.get(4))
@@ -449,10 +449,10 @@ public class CEmpleado extends CGenerico {
 			protected String[] crearRegistros(Empleado empleado) {
 				String[] registros = new String[8];
 				registros[0] = String.valueOf(empleado.getId());
-				registros[1] = String.valueOf(empleado.getEmpresa().getId());
-				registros[2] = String.valueOf(empleado.getCargo().getId());
-				registros[3] = String.valueOf(empleado.getUnidadOrganizativa()
-						.getId());
+				registros[1] = empleado.getEmpresa().getNombre();
+				registros[2] = empleado.getCargo().getDescripcion();
+				registros[3] = empleado.getUnidadOrganizativa()
+						.getDescripcion();
 				registros[4] = empleado.getNombre();
 				registros[5] = empleado.getFicha();
 				registros[6] = empleado.getFichaSupervisor();
@@ -466,11 +466,11 @@ public class CEmpleado extends CGenerico {
 				// TODO Auto-generated method stub
 				if (combo.equals("Código empleado"))
 					return servicioEmpleado.filtroId(valor);
-				else if (combo.equals("Código Empresa"))
+				else if (combo.equals("Empresa"))
 					return servicioEmpleado.filtroEmpresa(valor);
-				else if (combo.equals("Código Cargo"))
+				else if (combo.equals("Cargo"))
 					return servicioEmpleado.filtroCargo(valor);
-				else if (combo.equals("Código"))
+				else if (combo.equals("Unidad Organizativa"))
 					return servicioEmpleado.filtroUnidadOrganizativa(valor);
 				else if (combo.equals("Nombre"))
 					return servicioEmpleado.filtroNombre(valor);

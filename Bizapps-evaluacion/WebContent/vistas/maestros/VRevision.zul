@@ -1,68 +1,68 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVRevision" apply="controlador.maestros.CRevision">
-		<groupbox width="auto" mold="3d" title="Revisión (VRevision)">
-			<div id="botoneraRevision" />
+<window id="wdwVRevision" apply="controlador.maestros.CRevision"
+	border="normal" height="auto" style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraRevision" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroRevision" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva revision" />
 			<separator />
-			<groupbox id="gpxRegistroRevision" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar una nueva revision" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="45%" />
-						<column label="" width="15%" />
-						<column label="" width="20%" />
-					</columns>
-					<rows>
-						<row>
-							<hbox>
-								<label class="etiqueta"
-									value="Código Periodo:" />
-								<space />
-								<label value="*"
-									style="font-weight:bold;color:red">
-								</label>
-							</hbox>
-							<textbox id="txtPeriodoRevision" tabindex="1"
-								width="100%" maxlength="100"
-								tooltiptext="Ingrese el codigo del periodo" />
-							<button id="btnBuscarPeriodo" label=""
-								tooltiptext="Catalogo de codigos de periodos"
-								image="/public/imagenes/botones/buscar.png" />
-							<label id="lblPeriodoRevision" />
-						</row>
-						<row>
-							<label value="Descripción:"
-								class="etiqueta" />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="45%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta"
+								value="Código Periodo:" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+						<textbox id="txtPeriodoRevision" tabindex="1"
+							width="100%" maxlength="100"
+							tooltiptext="Ingrese el codigo del periodo" />
+						<button id="btnBuscarPeriodo" label=""
+							tooltiptext="Catalogo de codigos de periodos"
+							image="/public/imagenes/botones/buscar.png" />
+						<label id="lblPeriodoRevision" />
+					</row>
+					<row>
+						<label value="Descripción:" class="etiqueta" />
 
-							<textbox id="txtDescripcionRevision"
-								width="100%" maxlength="100" tabindex="2"
-								tooltiptext="Ingrese aqui la descripcion de la revision" />
-						</row>
-						<row>
-							<label value="Estado:" class="etiqueta" />
+						<textbox id="txtDescripcionRevision"
+							width="100%" maxlength="100" tabindex="2"
+							tooltiptext="Ingrese aqui la descripcion de la revision" />
+					</row>
+					<row>
+						<label value="Estado:" class="etiqueta" />
 
-							<textbox id="txtEstadoRevision" width="100%"
-								maxlength="100" tabindex="3"
-								tooltiptext="Ingrese aqui el estado de la revision" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
-			<separator />
-			<groupbox id="gpxDatosRevision" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las revisiones registradas" />
-				<div id="catalogoRevision"
-					tooltiptext="Seleccione la revision para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+						<textbox id="txtEstadoRevision" width="100%"
+							maxlength="100" tabindex="3"
+							tooltiptext="Ingrese aqui el estado de la revision" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-		<div id="divCatalogoPeriodo"
-			tooltiptext="Click para Seleccionar un Codigo" />
-	</div>
-</zk>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosRevision" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las revisiones registradas" />
+			<div id="catalogoRevision"
+				tooltiptext="Seleccione la revision para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+	<div id="divCatalogoPeriodo"
+		tooltiptext="Click para Seleccionar un Codigo" />
+</window>

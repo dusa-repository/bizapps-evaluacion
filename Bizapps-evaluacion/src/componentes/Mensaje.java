@@ -7,7 +7,7 @@ public class Mensaje {
 	public static String claveRTNoEsta = "El Codigo Definido por el Usuario no Existe.";
 	public static String guardado = "Registro Guardado Exitosamente.";
 	public static String claveUsada = "La Clave ha sido Usada por Otro Registro.";
-	public static String camposVacios = "Debe Llenar Todos lo Campos Requeridos.";
+	public static String camposVacios = "Debe Llenar Todos los Campos Requeridos.";
 	public static String noSeleccionoItem = "No ha seleccionado ningun Item";
 	public static String noHayRegistros = "No se Encontraron Registros";
 	public static String editarSoloUno = "Solo puede Editar un Item a la vez, "

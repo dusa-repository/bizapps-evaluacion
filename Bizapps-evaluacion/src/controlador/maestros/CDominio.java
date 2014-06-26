@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CDominio extends CGenerico {
 
 	@Wire
-	private Div divVDominio;
+	private Window wdwVDominio;
 	@Wire
 	private Div botoneraDominio;
 	@Wire
@@ -84,6 +85,9 @@ public class CDominio extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
 				String descripcionDominio = txtDescripcionDominio.getValue();
 				String tipo = txtTipoDominio.getValue();
 				String comentario = txtComentarioDominio.getValue();
@@ -96,6 +100,8 @@ public class CDominio extends CGenerico {
 				msj.mensajeInformacion(Mensaje.guardado);
 				limpiar();
 				catalogo.actualizarLista(servicioDominio.buscarTodos());
+				abrirCatalogo();
+				}
 
 			}
 
@@ -109,7 +115,7 @@ public class CDominio extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVDominio, "Dominio");
+				cerrarVentana1(wdwVDominio, "Dominio");
 			}
 
 			@Override
@@ -244,6 +250,23 @@ public class CDominio extends CGenerico {
 				return true;
 			}
 		}
+	}
+	
+	public boolean camposLLenos() {
+		if (txtDescripcionDominio.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
 	}
 
 	public void mostrarBotones(boolean bol) {

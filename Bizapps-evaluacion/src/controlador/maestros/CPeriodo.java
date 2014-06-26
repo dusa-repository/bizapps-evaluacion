@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CPeriodo extends CGenerico {
 
 	@Wire
-	private Div divVPeriodo;
+	private Window wdwVPeriodo;
 	@Wire
 	private Div botoneraPeriodo;
 	@Wire
@@ -91,20 +92,28 @@ public class CPeriodo extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 
-				String nombre = txtNombrePeriodo.getValue();
-				String descripcion = txtDescripcionPeriodo.getValue();
-				Timestamp fechaInicio = new java.sql.Timestamp(dtbFechaInicioPeriodo.getValue().getTime());
-				Timestamp fechaFin = new java.sql.Timestamp(dtbFechaFinPeriodo.getValue().getTime());
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				String estadoPeriodo = txtEstadoPeriodo.getValue();
-				Periodo periodo = new Periodo(idPeriodo, descripcion,
-						estadoPeriodo, fechaAuditoria, fechaFin, fechaInicio,
-						horaAuditoria, nombre, usuario);
-				servicioPeriodo.guardar(periodo);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioPeriodo.buscarTodos());
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String nombre = txtNombrePeriodo.getValue();
+					String descripcion = txtDescripcionPeriodo.getValue();
+					Timestamp fechaInicio = new java.sql.Timestamp(
+							dtbFechaInicioPeriodo.getValue().getTime());
+					Timestamp fechaFin = new java.sql.Timestamp(
+							dtbFechaFinPeriodo.getValue().getTime());
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					String estadoPeriodo = txtEstadoPeriodo.getValue();
+					Periodo periodo = new Periodo(idPeriodo, descripcion,
+							estadoPeriodo, fechaAuditoria, fechaFin,
+							fechaInicio, horaAuditoria, nombre, usuario);
+					servicioPeriodo.guardar(periodo);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioPeriodo.buscarTodos());
+					abrirCatalogo();
+				}
 
 			}
 
@@ -118,7 +127,7 @@ public class CPeriodo extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVPeriodo, "Periodo");
+				cerrarVentana1(wdwVPeriodo, "Periodo");
 			}
 
 			@Override
@@ -252,6 +261,23 @@ public class CPeriodo extends CGenerico {
 				return true;
 			}
 		}
+	}
+
+	public boolean camposLLenos() {
+		if (txtNombrePeriodo.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
 	}
 
 	public void mostrarBotones(boolean bol) {

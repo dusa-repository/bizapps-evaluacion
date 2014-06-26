@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CArea extends CGenerico {
 
 	@Wire
-	private Div divVArea;
+	private Window wdwVArea;
 	@Wire
 	private Div botoneraArea;
 	@Wire
@@ -76,15 +77,21 @@ public class CArea extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 
-				String descripcion = txtDescripcionArea.getValue();
-				String usuario =  nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Area area = new Area(idArea, descripcion, usuario,
-						fechaAuditoria, horaAuditoria);
-				servicioArea.guardar(area);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioArea.buscarTodas());
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionArea.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Area area = new Area(idArea, descripcion, usuario,
+							fechaAuditoria, horaAuditoria);
+					servicioArea.guardar(area);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioArea.buscarTodas());
+					abrirCatalogo();
+				}
 
 			}
 
@@ -98,7 +105,7 @@ public class CArea extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVArea, "Area");
+				cerrarVentana1(wdwVArea, "Area");
 			}
 
 			@Override
@@ -229,6 +236,23 @@ public class CArea extends CGenerico {
 				return true;
 			}
 		}
+	}
+
+	public boolean camposLLenos() {
+		if (txtDescripcionArea.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
 	}
 
 	public void mostrarBotones(boolean bol) {

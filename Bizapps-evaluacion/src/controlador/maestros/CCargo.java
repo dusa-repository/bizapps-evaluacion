@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CCargo extends CGenerico {
 
 	@Wire
-	private Div divVCargo;
+	private Window wdwVCargo;
 	@Wire
 	private Div botoneraCargo;
 	@Wire
@@ -87,19 +88,26 @@ public class CCargo extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 
-				String descripcion = txtDescripcionCargo.getValue();
-				String nomina = txtNominaCargo.getValue();
-				String idCargoAuxiliar = txtCargoAuxiliarCargo.getValue();
-				String idEmpresaAuxiliar = txtEmpresaAuxiliarCargo.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Cargo cargo = new Cargo(idCargo, descripcion, fechaAuditoria,
-						horaAuditoria, idCargoAuxiliar,
-						idEmpresaAuxiliar, nomina, usuario);
-				servicioCargo.guardar(cargo);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioCargo.buscarTodos());
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionCargo.getValue();
+					String nomina = txtNominaCargo.getValue();
+					String idCargoAuxiliar = txtCargoAuxiliarCargo.getValue();
+					String idEmpresaAuxiliar = txtEmpresaAuxiliarCargo
+							.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Cargo cargo = new Cargo(idCargo, descripcion,
+							fechaAuditoria, horaAuditoria, idCargoAuxiliar,
+							idEmpresaAuxiliar, nomina, usuario);
+					servicioCargo.guardar(cargo);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioCargo.buscarTodos());
+					abrirCatalogo();
+				}
 
 			}
 
@@ -113,7 +121,7 @@ public class CCargo extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVCargo, "Cargo");
+				cerrarVentana1(wdwVCargo, "Cargo");
 			}
 
 			@Override
@@ -252,6 +260,23 @@ public class CCargo extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtDescripcionCargo.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -276,11 +301,11 @@ public class CCargo extends CGenerico {
 							&& cargo.getDescripcion().toLowerCase()
 									.startsWith(valores.get(1))
 							&& cargo.getNomina().toLowerCase()
-							.startsWith(valores.get(2))
+									.startsWith(valores.get(2))
 							&& cargo.getIdCargoAuxiliar().toLowerCase()
-							.startsWith(valores.get(3))
+									.startsWith(valores.get(3))
 							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
-							.startsWith(valores.get(4))) {
+									.startsWith(valores.get(4))) {
 						lista.add(cargo);
 					}
 				}
@@ -316,8 +341,6 @@ public class CCargo extends CGenerico {
 				else
 					return servicioCargo.buscarTodos();
 			}
-			
-			
 
 		};
 		catalogo.setParent(catalogoCargo);

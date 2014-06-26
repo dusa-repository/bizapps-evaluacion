@@ -1,42 +1,48 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVUnidadMedida" apply="controlador.maestros.CUnidadMedida">
-		<groupbox width="auto" mold="3d"
-			title="Unidad de Medida (VUnidadMedida)">
-			<div id="botoneraUnidadMedida" />
+<window id="wdwVUnidadMedida" apply="controlador.maestros.CUnidadMedida"
+	border="normal" height="auto" style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraUnidadMedida" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroUnidadMedida" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva unidad de medida" />
 			<separator />
-			<groupbox id="gpxRegistroUnidadMedida" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar una nueva unidad de medida" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
 							<label value="Descripción:"
 								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-							<textbox id="txtDescripcionUnidadMedida"
-								width="80%" maxlength="50" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion de la unidad de medida" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
-			<separator />
-			<groupbox id="gpxDatosUnidadMedida" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las unidades de medida registradas" />
-				<div id="catalogoUnidadMedida"
-					tooltiptext="Seleccione la unidad de medida para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+						<textbox id="txtDescripcionUnidadMedida"
+							width="80%" maxlength="50" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion de la unidad de medida" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosUnidadMedida" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las unidades de medida registradas" />
+			<div id="catalogoUnidadMedida"
+				tooltiptext="Seleccione la unidad de medida para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

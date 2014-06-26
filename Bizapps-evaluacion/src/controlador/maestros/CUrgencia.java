@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CUrgencia extends CGenerico {
 
 	@Wire
-	private Div divVUrgencia;
+	private Window wdwVUrgencia;
 	@Wire
 	private Div botoneraUrgencia;
 	@Wire
@@ -62,32 +63,41 @@ public class CUrgencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Urgencia urgencia = catalogo.objetoSeleccionadoDelCatalogo();
+						Urgencia urgencia = catalogo
+								.objetoSeleccionadoDelCatalogo();
 						idUrgencia = urgencia.getId();
-						txtDescripcionUrgencia.setValue(urgencia.getDescripcionUrgencia());
+						txtDescripcionUrgencia.setValue(urgencia
+								.getDescripcionUrgencia());
 						txtDescripcionUrgencia.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcionUrgencia = txtDescripcionUrgencia.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Urgencia urgencia = new Urgencia(idUrgencia,descripcionUrgencia,usuario,
-						fechaAuditoria, horaAuditoria);
-		
-				servicioUrgencia.guardar(urgencia);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioUrgencia.buscarTodas());
-				
+
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcionUrgencia = txtDescripcionUrgencia
+							.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Urgencia urgencia = new Urgencia(idUrgencia,
+							descripcionUrgencia, usuario, fechaAuditoria,
+							horaAuditoria);
+
+					servicioUrgencia.guardar(urgencia);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioUrgencia.buscarTodas());
+					abrirCatalogo();
+				}
+
 			}
 
 			@Override
@@ -100,7 +110,7 @@ public class CUrgencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVUrgencia, "Urgencia");
+				cerrarVentana1(wdwVUrgencia, "Urgencia");
 			}
 
 			@Override
@@ -148,7 +158,8 @@ public class CUrgencia extends CGenerico {
 															.eliminarUnaUrgencia(idUrgencia);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioUrgencia.buscarTodas());
+													catalogo.actualizarLista(servicioUrgencia
+															.buscarTodas());
 												}
 											}
 										});
@@ -179,8 +190,24 @@ public class CUrgencia extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
+	public boolean camposLLenos() {
+		if (txtDescripcionUrgencia.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	@Listen("onClick = #gpxRegistroUrgencia")
 	public void abrirRegistro() {
 		gpxDatosUrgencia.setOpen(false);
@@ -189,7 +216,7 @@ public class CUrgencia extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosUrgencia")
 	public void abrirCatalogo() {
 		gpxDatosUrgencia.setOpen(false);
@@ -218,8 +245,6 @@ public class CUrgencia extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<Urgencia> seleccionados = catalogo.obtenerSeleccionados();
@@ -246,8 +271,9 @@ public class CUrgencia extends CGenerico {
 	public void mostrarCatalogo() {
 
 		final List<Urgencia> listUrgencia = servicioUrgencia.buscarTodas();
-		catalogo = new Catalogo<Urgencia>(catalogoUrgencia, "Catalogo de Urgencias",
-				listUrgencia, "Código Urgencia", "Descripción") {
+		catalogo = new Catalogo<Urgencia>(catalogoUrgencia,
+				"Catalogo de Urgencias", listUrgencia, "Código Urgencia",
+				"Descripción") {
 
 			@Override
 			protected List<Urgencia> buscarCampos(List<String> valores) {

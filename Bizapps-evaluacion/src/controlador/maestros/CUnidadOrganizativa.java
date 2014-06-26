@@ -22,6 +22,7 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -30,7 +31,7 @@ import componentes.Mensaje;
 public class CUnidadOrganizativa extends CGenerico {
 
 	@Wire
-	private Div divVUnidadOrganizativa;
+	private Window wdwVUnidadOrganizativa;
 	@Wire
 	private Div botoneraUnidadOrganizativa;
 	@Wire
@@ -147,6 +148,7 @@ public class CUnidadOrganizativa extends CGenerico {
 						limpiar();
 						catalogo.actualizarLista(servicioUnidadOrganizativa
 								.buscarTodas());
+						abrirCatalogo();
 					} else {
 
 						msj.mensajeAlerta(Mensaje.codigoGerencia);
@@ -166,7 +168,7 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVUnidadOrganizativa, "Unidad Organizativa");
+				cerrarVentana1(wdwVUnidadOrganizativa, "Unidad Organizativa");
 			}
 
 			@Override
@@ -363,7 +365,7 @@ public class CUnidadOrganizativa extends CGenerico {
 				.buscarTodas();
 		catalogo = new Catalogo<UnidadOrganizativa>(catalogoUnidadOrganizativa,
 				"Catalogo de UnidadOrganizativas", listUnidadOrganizativa,
-				"Código Unidad", "Código Gerencia", "Descripción", "Nivel",
+				"Código Unidad", "Código Gerencia", "Gerencia", "Descripción", "Nivel",
 				"Sub-Nivel", "Empresa Auxiliar", "Unidad Auxiliar") {
 
 			@Override
@@ -375,16 +377,18 @@ public class CUnidadOrganizativa extends CGenerico {
 							.startsWith(valores.get(0))
 							&& String.valueOf(unidad.getGerencia().getId())
 									.toLowerCase().startsWith(valores.get(1))
+							&& unidad.getGerencia().getDescripcion()
+									.toLowerCase().startsWith(valores.get(2))
 							&& unidad.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))
-							&& String.valueOf(unidad.getNivel()).toLowerCase()
 									.startsWith(valores.get(3))
+							&& String.valueOf(unidad.getNivel()).toLowerCase()
+									.startsWith(valores.get(4))
 							&& String.valueOf(unidad.getSubNivel())
-									.toLowerCase().startsWith(valores.get(4))
+									.toLowerCase().startsWith(valores.get(5))
 							&& unidad.getIdEmpresaAuxiliar().toLowerCase()
-									.startsWith(valores.get(5))
+									.startsWith(valores.get(6))
 							&& unidad.getIdUnidadOrganizativaAuxiliar()
-									.toLowerCase().startsWith(valores.get(6))) {
+									.toLowerCase().startsWith(valores.get(7))) {
 						lista.add(unidad);
 					}
 				}
@@ -394,14 +398,15 @@ public class CUnidadOrganizativa extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
-				String[] registros = new String[7];
+				String[] registros = new String[8];
 				registros[0] = String.valueOf(unidad.getId());
 				registros[1] = String.valueOf(unidad.getGerencia().getId());
-				registros[2] = unidad.getDescripcion();
-				registros[3] = String.valueOf(unidad.getNivel());
-				registros[4] = String.valueOf(unidad.getSubNivel());
-				registros[5] = String.valueOf(unidad.getIdEmpresaAuxiliar());
-				registros[6] = String.valueOf(unidad
+				registros[2] = unidad.getGerencia().getDescripcion();
+				registros[3] = unidad.getDescripcion();
+				registros[4] = String.valueOf(unidad.getNivel());
+				registros[5] = String.valueOf(unidad.getSubNivel());
+				registros[6] = String.valueOf(unidad.getIdEmpresaAuxiliar());
+				registros[7] = String.valueOf(unidad
 						.getIdUnidadOrganizativaAuxiliar());
 				return registros;
 			}
@@ -412,6 +417,8 @@ public class CUnidadOrganizativa extends CGenerico {
 				if (combo.equals("Código Unidad"))
 					return servicioUnidadOrganizativa.filtroId(valor);
 				else if (combo.equals("Código Gerencia"))
+					return servicioUnidadOrganizativa.filtroGerencia(valor);
+				else if (combo.equals("Gerencia"))
 					return servicioUnidadOrganizativa.filtroGerencia(valor);
 				else if (combo.equals("Descripción"))
 					return servicioUnidadOrganizativa.filtroDescripcion(valor);

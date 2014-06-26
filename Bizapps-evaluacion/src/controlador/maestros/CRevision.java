@@ -23,6 +23,7 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -31,7 +32,7 @@ import componentes.Mensaje;
 public class CRevision extends CGenerico {
 
 	@Wire
-	private Div divVRevision;
+	private Window wdwVRevision;
 	@Wire
 	private Div botoneraRevision;
 	@Wire
@@ -118,6 +119,7 @@ public class CRevision extends CGenerico {
 						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
 						catalogo.actualizarLista(servicioRevision.buscarTodas());
+						abrirCatalogo();
 					} else {
 						msj.mensajeAlerta(Mensaje.codigoPeriodo);
 						txtPeriodoRevision.setFocus(true);
@@ -136,7 +138,7 @@ public class CRevision extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVRevision, "Revision");
+				cerrarVentana1(wdwVRevision, "Revision");
 			}
 
 			@Override
@@ -309,7 +311,7 @@ public class CRevision extends CGenerico {
 		final List<Revision> listRevision = servicioRevision.buscarTodas();
 		catalogo = new Catalogo<Revision>(catalogoRevision,
 				"Catalogo de Revisiones", listRevision, "Código Revisión",
-				"Código periodo", "Descripción", "Estado") {
+				"Código periodo", "Periodo", "Descripción", "Estado") {
 
 			@Override
 			protected List<Revision> buscarCampos(List<String> valores) {
@@ -320,10 +322,12 @@ public class CRevision extends CGenerico {
 							.startsWith(valores.get(0))
 							&& String.valueOf(revision.getPeriodo().getId())
 									.toLowerCase().startsWith(valores.get(1))
+							&& revision.getPeriodo().getDescripcion()
+									.toLowerCase().startsWith(valores.get(2))
 							&& revision.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(3))
 							&& revision.getEstadoRevision().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.startsWith(valores.get(4))) {
 						lista.add(revision);
 					}
 				}
@@ -333,11 +337,12 @@ public class CRevision extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Revision revision) {
-				String[] registros = new String[4];
+				String[] registros = new String[5];
 				registros[0] = String.valueOf(revision.getId());
 				registros[1] = String.valueOf(revision.getPeriodo().getId());
-				registros[2] = revision.getDescripcion();
-				registros[3] = revision.getEstadoRevision();
+				registros[2] = revision.getPeriodo().getDescripcion();
+				registros[3] = revision.getDescripcion();
+				registros[4] = revision.getEstadoRevision();
 
 				return registros;
 			}
@@ -348,6 +353,8 @@ public class CRevision extends CGenerico {
 				if (combo.equals("Código Revisión"))
 					return servicioRevision.filtroId(valor);
 				else if (combo.equals("Código periodo"))
+					return servicioRevision.filtroPeriodo(valor);
+				else if (combo.equals("Periodo"))
 					return servicioRevision.filtroPeriodo(valor);
 				else if (combo.equals("Descripción"))
 					return servicioRevision.filtroDescripcion(valor);

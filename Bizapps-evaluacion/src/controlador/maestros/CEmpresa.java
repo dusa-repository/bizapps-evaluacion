@@ -21,6 +21,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -29,7 +30,7 @@ import componentes.Mensaje;
 public class CEmpresa extends CGenerico {
 
 	@Wire
-	private Div divVEmpresa;
+	private Window wdwVEmpresa;
 	@Wire
 	private Div botoneraEmpresa;
 	@Wire
@@ -91,20 +92,27 @@ public class CEmpresa extends CGenerico {
 			public void guardar() {
 				// TODO Auto-generated method stub
 
-				String nombre = txtNombreEmpresa.getValue();
-				String direccion = txtDireccionEmpresa.getValue();
-				String telefono1 = txtTelefono1Empresa.getValue();
-				String telefono2 = txtTelefono2Empresa.getValue();
-				String idEmpresaAuxiliar = txtEmpresaAuxiliarEmpresa.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Empresa empresa = new Empresa(idEmpresa,direccion, fechaAuditoria,
-						 horaAuditoria, idEmpresaAuxiliar, nombre,
-						telefono1, telefono2, usuario);
-				servicioEmpresa.guardar(empresa);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioEmpresa.buscarTodas());
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String nombre = txtNombreEmpresa.getValue();
+					String direccion = txtDireccionEmpresa.getValue();
+					String telefono1 = txtTelefono1Empresa.getValue();
+					String telefono2 = txtTelefono2Empresa.getValue();
+					String idEmpresaAuxiliar = txtEmpresaAuxiliarEmpresa
+							.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Empresa empresa = new Empresa(idEmpresa, direccion,
+							fechaAuditoria, horaAuditoria, idEmpresaAuxiliar,
+							nombre, telefono1, telefono2, usuario);
+					servicioEmpresa.guardar(empresa);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioEmpresa.buscarTodas());
+					abrirCatalogo();
+				}
 
 			}
 
@@ -118,7 +126,7 @@ public class CEmpresa extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVEmpresa, "Empresa");
+				cerrarVentana1(wdwVEmpresa, "Empresa");
 			}
 
 			@Override
@@ -259,6 +267,23 @@ public class CEmpresa extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtNombreEmpresa.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -334,5 +359,5 @@ public class CEmpresa extends CGenerico {
 		catalogo.setParent(catalogoEmpresa);
 
 	}
-	
+
 }

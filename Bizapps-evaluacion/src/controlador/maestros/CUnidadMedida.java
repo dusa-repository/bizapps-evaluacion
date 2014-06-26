@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CUnidadMedida extends CGenerico {
 
 	@Wire
-	private Div divVUnidadMedida;
+	private Window wdwVUnidadMedida;
 	@Wire
 	private Div botoneraUnidadMedida;
 	@Wire
@@ -62,31 +63,39 @@ public class CUnidadMedida extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						UnidadMedida unidadMedida = catalogo.objetoSeleccionadoDelCatalogo();
+						UnidadMedida unidadMedida = catalogo
+								.objetoSeleccionadoDelCatalogo();
 						idUnidadMedida = unidadMedida.getId();
-						txtDescripcionUnidadMedida.setValue(unidadMedida.getDescripcion());
+						txtDescripcionUnidadMedida.setValue(unidadMedida
+								.getDescripcion());
 						txtDescripcionUnidadMedida.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionUnidadMedida.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				UnidadMedida unidadMedida = new UnidadMedida(idUnidadMedida,descripcion,usuario,
-						fechaAuditoria, horaAuditoria);
-				servicioUnidadMedida.guardar(unidadMedida);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioUnidadMedida.buscarTodas());
-				
+
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionUnidadMedida.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					UnidadMedida unidadMedida = new UnidadMedida(
+							idUnidadMedida, descripcion, usuario,
+							fechaAuditoria, horaAuditoria);
+					servicioUnidadMedida.guardar(unidadMedida);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioUnidadMedida.buscarTodas());
+					abrirCatalogo();
+				}
+
 			}
 
 			@Override
@@ -99,7 +108,7 @@ public class CUnidadMedida extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVUnidadMedida, "Unidad de Medida");
+				cerrarVentana1(wdwVUnidadMedida, "Unidad de Medida");
 			}
 
 			@Override
@@ -147,7 +156,8 @@ public class CUnidadMedida extends CGenerico {
 															.eliminarUnaUnidad(idUnidadMedida);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioUnidadMedida.buscarTodas());
+													catalogo.actualizarLista(servicioUnidadMedida
+															.buscarTodas());
 												}
 											}
 										});
@@ -178,8 +188,7 @@ public class CUnidadMedida extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
 	@Listen("onClick = #gpxRegistroUnidadMedida")
 	public void abrirRegistro() {
 		gpxDatosUnidadMedida.setOpen(false);
@@ -187,7 +196,7 @@ public class CUnidadMedida extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosUnidadMedida")
 	public void abrirCatalogo() {
 		gpxDatosUnidadMedida.setOpen(false);
@@ -216,8 +225,6 @@ public class CUnidadMedida extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<UnidadMedida> seleccionados = catalogo.obtenerSeleccionados();
@@ -234,6 +241,23 @@ public class CUnidadMedida extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtDescripcionUnidadMedida.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -243,9 +267,11 @@ public class CUnidadMedida extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<UnidadMedida> listUnidadMedida = servicioUnidadMedida.buscarTodas();
-		catalogo = new Catalogo<UnidadMedida>(catalogoUnidadMedida, "Catalogo de Unidades de Medidas",
-				listUnidadMedida, "Código Unidad Medida", "Descripción") {
+		final List<UnidadMedida> listUnidadMedida = servicioUnidadMedida
+				.buscarTodas();
+		catalogo = new Catalogo<UnidadMedida>(catalogoUnidadMedida,
+				"Catalogo de Unidades de Medidas", listUnidadMedida,
+				"Código Unidad Medida", "Descripción") {
 
 			@Override
 			protected List<UnidadMedida> buscarCampos(List<String> valores) {

@@ -1,71 +1,76 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVPeriodo" apply="controlador.maestros.CPeriodo">
-		<groupbox width="auto" mold="3d" title="Periodo (VPeriodo)">
-			<div id="botoneraPeriodo" />
+<window id="wdwVPeriodo" apply="controlador.maestros.CPeriodo"
+	border="normal" height="auto" style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraPeriodo" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroPeriodo" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar un nuevo periodo" />
 			<separator />
-			<groupbox id="gpxRegistroPeriodo" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar un nuevo periodo" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
 							<label value="Nombre:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-							<textbox id="txtNombrePeriodo" width="80%"
-								maxlength="20" tabindex="1"
-								tooltiptext="Ingrese aqui el nombre del periodo" />
-						</row>
-						<row>
-							<label value="Descripción:"
-								class="etiqueta" />
+						<textbox id="txtNombrePeriodo" width="80%"
+							maxlength="20" tabindex="1"
+							tooltiptext="Ingrese aqui el nombre del periodo" />
+					</row>
+					<row>
+						<label value="Descripción:" class="etiqueta" />
 
-							<textbox id="txtDescripcionPeriodo"
-								width="80%" maxlength="100" tabindex="2"
-								tooltiptext="Ingrese aqui la descripcion del periodo" />
-						</row>
-						<row>
-							<label value="Fecha inicio:"
-								class="etiqueta" />
+						<textbox id="txtDescripcionPeriodo" width="80%"
+							maxlength="100" tabindex="2"
+							tooltiptext="Ingrese aqui la descripcion del periodo" />
+					</row>
+					<row>
+						<label value="Fecha inicio:" class="etiqueta" />
 
-							<datebox readonly="true" width="80%"
-								tabindex="3" id="dtbFechaInicioPeriodo" format="dd-MM-yyyy"
-								tooltiptext="Ingrese la fecha de inicio del periodo" />
-						</row>
-							<row>
-							<label value="Fecha fin:"
-								class="etiqueta" />
+						<datebox readonly="true" width="80%"
+							tabindex="3" id="dtbFechaInicioPeriodo" format="dd-MM-yyyy"
+							tooltiptext="Ingrese la fecha de inicio del periodo" />
+					</row>
+					<row>
+						<label value="Fecha fin:" class="etiqueta" />
 
-							<datebox readonly="true" width="80%"
-								tabindex="4" id="dtbFechaFinPeriodo" format="dd-MM-yyyy"
-								tooltiptext="Ingrese la fecha final del periodo" />
-						</row>
-						<row>
-							<label value="Estado:" class="etiqueta" />
+						<datebox readonly="true" width="80%"
+							tabindex="4" id="dtbFechaFinPeriodo" format="dd-MM-yyyy"
+							tooltiptext="Ingrese la fecha final del periodo" />
+					</row>
+					<row>
+						<label value="Estado:" class="etiqueta" />
 
-							<textbox id="txtEstadoPeriodo" width="80%"
-								maxlength="20" tabindex="5"
-								tooltiptext="Ingrese aqui el estado del periodo" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
-			<separator />
-			<groupbox id="gpxDatosPeriodo" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las periodos registrados" />
-				<div id="catalogoPeriodo"
-					tooltiptext="Seleccione el periodo para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+						<textbox id="txtEstadoPeriodo" width="80%"
+							maxlength="20" tabindex="5"
+							tooltiptext="Ingrese aqui el estado del periodo" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosPeriodo" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las periodos registrados" />
+			<div id="catalogoPeriodo"
+				tooltiptext="Seleccione el periodo para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

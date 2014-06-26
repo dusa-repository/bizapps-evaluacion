@@ -1,40 +1,49 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVPerspectiva" apply="controlador.maestros.CPerspectiva">
-		<groupbox width="auto" mold="3d" title="Perspectiva (VPerspectiva)">
-			<div id="botoneraPerspectiva" />
-			<separator />
-			<groupbox id="gpxRegistroPerspectiva" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar una nueva perspectiva" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Descripción:" class="etiqueta" />
+<window id="wdwVPerspectiva" apply="controlador.maestros.CPerspectiva"
+	border="normal" height="auto" style="background-color:#8A0808;">
 
-							<textbox id="txtDescripcionPerspectiva" width="80%"
-								maxlength="100" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion de la perspectiva" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraPerspectiva" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroPerspectiva" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva perspectiva" />
 			<separator />
-			<groupbox id="gpxDatosPerspectiva" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las perspectivas registradas" />
-				<div id="catalogoPerspectiva"
-					tooltiptext="Seleccione la perspectiva para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtDescripcionPerspectiva"
+							width="80%" maxlength="100" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion de la perspectiva" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosPerspectiva" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las perspectivas registradas" />
+			<div id="catalogoPerspectiva"
+				tooltiptext="Seleccione la perspectiva para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

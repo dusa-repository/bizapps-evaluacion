@@ -23,6 +23,7 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -31,7 +32,7 @@ import componentes.Mensaje;
 public class CTipoFormacion extends CGenerico {
 
 	@Wire
-	private Div divVTipoFormacion;
+	private Window wdwVTipoFormacion;
 	@Wire
 	private Div botoneraTipoFormacion;
 	@Wire
@@ -113,6 +114,7 @@ public class CTipoFormacion extends CGenerico {
 						limpiar();
 						catalogo.actualizarLista(servicioTipoFormacion
 								.buscarTodos());
+						abrirCatalogo();
 					} else {
 						msj.mensajeAlerta(Mensaje.codigoArea);
 						txtAreaTipoFormacion.setFocus(true);
@@ -132,7 +134,7 @@ public class CTipoFormacion extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVTipoFormacion, "Tipo de Formacion");
+				cerrarVentana1(wdwVTipoFormacion, "Tipo de Formacion");
 			}
 
 			@Override
@@ -213,7 +215,7 @@ public class CTipoFormacion extends CGenerico {
 
 	public boolean camposEditando() {
 		if (txtDescripcionTipoFormacion.getText().compareTo("") != 0
-				||txtAreaTipoFormacion.getText().compareTo("") != 0) {
+				|| txtAreaTipoFormacion.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -224,7 +226,7 @@ public class CTipoFormacion extends CGenerico {
 		gpxDatosTipoFormacion.setOpen(false);
 		gpxRegistroTipoFormacion.setOpen(true);
 		txtAreaTipoFormacion
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del área debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del área debe ser numérico");
 		mostrarBotones(false);
 
 	}
@@ -305,21 +307,21 @@ public class CTipoFormacion extends CGenerico {
 				.buscarTodos();
 		catalogo = new Catalogo<TipoFormacion>(catalogoTipoFormacion,
 				"Catalogo de Tipos de Formacion", listTipoFormacion,
-				"Código Tipo Formación", "Código Área", "Descripción") {
+				"Código Tipo Formación", "Código Área", "Área", "Descripción") {
 
 			@Override
 			protected List<TipoFormacion> buscarCampos(List<String> valores) {
 				List<TipoFormacion> lista = new ArrayList<TipoFormacion>();
 
 				for (TipoFormacion tipoFormacion : listTipoFormacion) {
-					if (String.valueOf(tipoFormacion.getId())
-							.toLowerCase().startsWith(valores.get(0))
-							&& String
-									.valueOf(
-											tipoFormacion.getArea().getId())
+					if (String.valueOf(tipoFormacion.getId()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& String.valueOf(tipoFormacion.getArea().getId())
 									.toLowerCase().startsWith(valores.get(1))
+							&& tipoFormacion.getArea().getDescripcion()
+									.toLowerCase().startsWith(valores.get(2))
 							&& tipoFormacion.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))) {
+									.startsWith(valores.get(3))) {
 						lista.add(tipoFormacion);
 					}
 				}
@@ -329,12 +331,11 @@ public class CTipoFormacion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(TipoFormacion tipoFormacion) {
-				String[] registros = new String[3];
-				registros[0] = String.valueOf(tipoFormacion
-						.getId());
-				registros[1] = String.valueOf(tipoFormacion.getArea()
-						.getId());
-				registros[2] = tipoFormacion.getDescripcion();
+				String[] registros = new String[4];
+				registros[0] = String.valueOf(tipoFormacion.getId());
+				registros[1] = String.valueOf(tipoFormacion.getArea().getId());
+				registros[2] = tipoFormacion.getArea().getDescripcion();
+				registros[3] = tipoFormacion.getDescripcion();
 
 				return registros;
 			}
@@ -345,6 +346,8 @@ public class CTipoFormacion extends CGenerico {
 				if (combo.equals("Código Tipo Formación"))
 					return servicioTipoFormacion.filtroId(valor);
 				else if (combo.equals("Código Área"))
+					return servicioTipoFormacion.filtroArea(valor);
+				else if (combo.equals("Área"))
 					return servicioTipoFormacion.filtroArea(valor);
 				else if (combo.equals("Descripción"))
 					return servicioTipoFormacion.filtroDescripcion(valor);

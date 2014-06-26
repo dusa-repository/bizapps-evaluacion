@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CGerencia extends CGenerico {
 
 	@Wire
-	private Div divVGerencia;
+	private Window wdwVGerencia;
 	@Wire
 	private Div botoneraGerencia;
 	@Wire
@@ -62,31 +63,37 @@ public class CGerencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Gerencia gerencia = catalogo.objetoSeleccionadoDelCatalogo();
+						Gerencia gerencia = catalogo
+								.objetoSeleccionadoDelCatalogo();
 						idGerencia = gerencia.getId();
-						txtDescripcionGerencia.setValue(gerencia.getDescripcion());
+						txtDescripcionGerencia.setValue(gerencia
+								.getDescripcion());
 						txtDescripcionGerencia.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionGerencia.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Gerencia gerencia = new Gerencia(idGerencia, descripcion,
-						fechaAuditoria, horaAuditoria, usuario);
-				servicioGerencia.guardar(gerencia);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioGerencia.buscarTodas());
-				
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionGerencia.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Gerencia gerencia = new Gerencia(idGerencia, descripcion,
+							fechaAuditoria, horaAuditoria, usuario);
+					servicioGerencia.guardar(gerencia);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioGerencia.buscarTodas());
+					abrirCatalogo();
+				}
+
 			}
 
 			@Override
@@ -99,7 +106,7 @@ public class CGerencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVGerencia, "Gerencia");
+				cerrarVentana1(wdwVGerencia, "Gerencia");
 			}
 
 			@Override
@@ -147,7 +154,8 @@ public class CGerencia extends CGenerico {
 															.eliminarUnaGerencia(idGerencia);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioGerencia.buscarTodas());
+													catalogo.actualizarLista(servicioGerencia
+															.buscarTodas());
 												}
 											}
 										});
@@ -178,8 +186,7 @@ public class CGerencia extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
 	@Listen("onClick = #gpxRegistroGerencia")
 	public void abrirRegistro() {
 		gpxDatosGerencia.setOpen(false);
@@ -187,7 +194,7 @@ public class CGerencia extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosGerencia")
 	public void abrirCatalogo() {
 		gpxDatosGerencia.setOpen(false);
@@ -216,8 +223,6 @@ public class CGerencia extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<Gerencia> seleccionados = catalogo.obtenerSeleccionados();
@@ -234,6 +239,23 @@ public class CGerencia extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtDescripcionGerencia.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -244,8 +266,9 @@ public class CGerencia extends CGenerico {
 	public void mostrarCatalogo() {
 
 		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
-		catalogo = new Catalogo<Gerencia>(catalogoGerencia, "Catalogo de Gerencias",
-				listGerencia, "Código gerencia", "Descripción") {
+		catalogo = new Catalogo<Gerencia>(catalogoGerencia,
+				"Catalogo de Gerencias", listGerencia, "Código gerencia",
+				"Descripción") {
 
 			@Override
 			protected List<Gerencia> buscarCampos(List<String> valores) {

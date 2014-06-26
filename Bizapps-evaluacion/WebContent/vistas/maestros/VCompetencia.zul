@@ -1,55 +1,63 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVCompetencia" apply="controlador.maestros.CCompetencia">
-		<groupbox width="auto" mold="3d" title="Competencia (VCompetencia)">
-			<div id="botoneraCompetencia" />
+<window id="wdwVCompetencia" apply="controlador.maestros.CCompetencia"
+	border="normal" height="auto" style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraCompetencia" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroCompetencia" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar un nueva competencia" />
 			<separator />
-			<groupbox id="gpxRegistroCompetencia" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar un nueva competencia" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Descripción:" class="etiqueta" />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-							<textbox id="txtDescripcionCompetencia" width="50%"
-								maxlength="100" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion de la competencia" />
-						</row>
-						<row>
-							<label value="Nivel:" class="etiqueta" />
+						<textbox id="txtDescripcionCompetencia"
+							width="50%" maxlength="100" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion de la competencia" />
+					</row>
+					<row>
+						<label value="Nivel:" class="etiqueta" />
 
-							<textbox id="txtNivelCompetencia" width="50%"
-								maxlength="100" tabindex="2"
-								tooltiptext="Ingrese aqui el nivel de la competencia" />
-						</row>
-						<row>
-							<label value="Comentario:" class="etiqueta" />
+						<textbox id="txtNivelCompetencia" width="50%"
+							maxlength="100" tabindex="2"
+							tooltiptext="Ingrese aqui el nivel de la competencia" />
+					</row>
+					<row>
+						<label value="Comentario:" class="etiqueta" />
 
-							<textbox id="txtComentarioCompetencia"
-								width="50%" maxlength="5000" tabindex="3" rows="4" cols="100"
-								tooltiptext="Ingrese aqui el comentario de la competencia" />
-						</row>
-						
-					</rows>
-				</grid>
-			</groupbox>
-			<separator />
-			<groupbox id="gpxDatosCompetencia" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las competencias registradas" />
-				<div id="catalogoCompetencia"
-					tooltiptext="Seleccione la competencia para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+						<textbox id="txtComentarioCompetencia"
+							width="50%" maxlength="5000" tabindex="3" rows="4" cols="100"
+							tooltiptext="Ingrese aqui el comentario de la competencia" />
+					</row>
+
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator/>
+		<groupbox id="gpxDatosCompetencia" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las competencias registradas" />
+			<div id="catalogoCompetencia"
+				tooltiptext="Seleccione la competencia para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

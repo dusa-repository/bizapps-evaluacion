@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CPerspectiva extends CGenerico {
 
 	@Wire
-	private Div divVPerspectiva;
+	private Window wdwVPerspectiva;
 	@Wire
 	private Div botoneraPerspectiva;
 	@Wire
@@ -62,31 +63,38 @@ public class CPerspectiva extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Perspectiva perspectiva = catalogo.objetoSeleccionadoDelCatalogo();
+						Perspectiva perspectiva = catalogo
+								.objetoSeleccionadoDelCatalogo();
 						idPerspectiva = perspectiva.getId();
-						txtDescripcionPerspectiva.setValue(perspectiva.getDescripcion());
+						txtDescripcionPerspectiva.setValue(perspectiva
+								.getDescripcion());
 						txtDescripcionPerspectiva.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionPerspectiva.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Perspectiva perspectiva = new Perspectiva(idPerspectiva, descripcion, usuario,
-						 fechaAuditoria, horaAuditoria);
-				servicioPerspectiva.guardar(perspectiva);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioPerspectiva.buscar());
-				
+
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionPerspectiva.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Perspectiva perspectiva = new Perspectiva(idPerspectiva,
+							descripcion, usuario, fechaAuditoria, horaAuditoria);
+					servicioPerspectiva.guardar(perspectiva);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioPerspectiva.buscar());
+					abrirCatalogo();
+				}
+
 			}
 
 			@Override
@@ -99,7 +107,7 @@ public class CPerspectiva extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVPerspectiva, "Perspectiva");
+				cerrarVentana1(wdwVPerspectiva, "Perspectiva");
 			}
 
 			@Override
@@ -147,7 +155,8 @@ public class CPerspectiva extends CGenerico {
 															.eliminarUnaPerspectiva(idPerspectiva);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioPerspectiva.buscar());
+													catalogo.actualizarLista(servicioPerspectiva
+															.buscar());
 												}
 											}
 										});
@@ -178,8 +187,7 @@ public class CPerspectiva extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
 	@Listen("onClick = #gpxRegistroPerspectiva")
 	public void abrirRegistro() {
 		gpxDatosPerspectiva.setOpen(false);
@@ -187,7 +195,7 @@ public class CPerspectiva extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosPerspectiva")
 	public void abrirCatalogo() {
 		gpxDatosPerspectiva.setOpen(false);
@@ -216,8 +224,6 @@ public class CPerspectiva extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<Perspectiva> seleccionados = catalogo.obtenerSeleccionados();
@@ -234,6 +240,23 @@ public class CPerspectiva extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtDescripcionPerspectiva.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -244,8 +267,9 @@ public class CPerspectiva extends CGenerico {
 	public void mostrarCatalogo() {
 
 		final List<Perspectiva> listPerspectiva = servicioPerspectiva.buscar();
-		catalogo = new Catalogo<Perspectiva>(catalogoPerspectiva, "Catalogo de Perspectivas",
-				listPerspectiva, "Código perspectiva", "Descripción") {
+		catalogo = new Catalogo<Perspectiva>(catalogoPerspectiva,
+				"Catalogo de Perspectivas", listPerspectiva,
+				"Código perspectiva", "Descripción") {
 
 			@Override
 			protected List<Perspectiva> buscarCampos(List<String> valores) {
@@ -289,4 +313,3 @@ public class CPerspectiva extends CGenerico {
 	}
 
 }
-

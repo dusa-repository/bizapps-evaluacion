@@ -20,6 +20,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import componentes.Botonera;
 import componentes.Catalogo;
@@ -28,7 +29,7 @@ import componentes.Mensaje;
 public class CCompetencia extends CGenerico {
 
 	@Wire
-	private Div divVCompetencia;
+	private Window wdwVCompetencia;
 	@Wire
 	private Div botoneraCompetencia;
 	@Wire
@@ -66,36 +67,44 @@ public class CCompetencia extends CGenerico {
 					if (catalogo.obtenerSeleccionados().size() == 1) {
 						mostrarBotones(false);
 						abrirRegistro();
-						Competencia competencia = catalogo.objetoSeleccionadoDelCatalogo();
+						Competencia competencia = catalogo
+								.objetoSeleccionadoDelCatalogo();
 						idCompetencia = competencia.getId();
-						txtDescripcionCompetencia.setValue(competencia.getDescripcion());
+						txtDescripcionCompetencia.setValue(competencia
+								.getDescripcion());
 						txtNivelCompetencia.setValue(competencia.getNivel());
-						txtComentarioCompetencia.setValue(competencia.getComentario());
+						txtComentarioCompetencia.setValue(competencia
+								.getComentario());
 						txtDescripcionCompetencia.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
-
 
 			}
 
 			@Override
 			public void guardar() {
 				// TODO Auto-generated method stub
-				
-				String descripcion = txtDescripcionCompetencia.getValue();
-				String nivel = txtNivelCompetencia.getValue();
-				String comentario = txtComentarioCompetencia.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Competencia competencia = new Competencia(idCompetencia,comentario,
-						 descripcion, fechaAuditoria,  horaAuditoria,
-						 nivel, usuario);
-				servicioCompetencia.guardar(competencia);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioCompetencia.buscarTodas());
-				
+
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+					String descripcion = txtDescripcionCompetencia.getValue();
+					String nivel = txtNivelCompetencia.getValue();
+					String comentario = txtComentarioCompetencia.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Competencia competencia = new Competencia(idCompetencia,
+							comentario, descripcion, fechaAuditoria,
+							horaAuditoria, nivel, usuario);
+					servicioCompetencia.guardar(competencia);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioCompetencia.buscarTodas());
+					abrirCatalogo();
+				}
+
 			}
 
 			@Override
@@ -108,7 +117,7 @@ public class CCompetencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana(divVCompetencia, "Competencia");
+				cerrarVentana1(wdwVCompetencia, "Competencia");
 			}
 
 			@Override
@@ -156,7 +165,8 @@ public class CCompetencia extends CGenerico {
 															.eliminarUnaCompetencia(idCompetencia);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioCompetencia.buscarTodas());
+													catalogo.actualizarLista(servicioCompetencia
+															.buscarTodas());
 												}
 											}
 										});
@@ -191,8 +201,7 @@ public class CCompetencia extends CGenerico {
 		} else
 			return false;
 	}
-	
-	
+
 	@Listen("onClick = #gpxRegistroCompetencia")
 	public void abrirRegistro() {
 		gpxDatosCompetencia.setOpen(false);
@@ -200,7 +209,7 @@ public class CCompetencia extends CGenerico {
 		mostrarBotones(false);
 
 	}
-	
+
 	@Listen("onOpen = #gpxDatosCompetencia")
 	public void abrirCatalogo() {
 		gpxDatosCompetencia.setOpen(false);
@@ -229,8 +238,6 @@ public class CCompetencia extends CGenerico {
 			mostrarBotones(true);
 		}
 	}
-	
-	
 
 	public boolean validarSeleccion() {
 		List<Competencia> seleccionados = catalogo.obtenerSeleccionados();
@@ -247,6 +254,23 @@ public class CCompetencia extends CGenerico {
 		}
 	}
 
+	public boolean camposLLenos() {
+		if (txtDescripcionCompetencia.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	public void mostrarBotones(boolean bol) {
 		botonera.getChildren().get(0).setVisible(bol);
 		botonera.getChildren().get(1).setVisible(!bol);
@@ -256,9 +280,11 @@ public class CCompetencia extends CGenerico {
 
 	public void mostrarCatalogo() {
 
-		final List<Competencia> listCompetencia = servicioCompetencia.buscarTodas();
-		catalogo = new Catalogo<Competencia>(catalogoCompetencia, "Catalogo de Competencias",
-				listCompetencia, "Código competencia", "Descripción" , "Nivel", "Comentario") {
+		final List<Competencia> listCompetencia = servicioCompetencia
+				.buscarTodas();
+		catalogo = new Catalogo<Competencia>(catalogoCompetencia,
+				"Catalogo de Competencias", listCompetencia,
+				"Código competencia", "Descripción", "Nivel", "Comentario") {
 
 			@Override
 			protected List<Competencia> buscarCampos(List<String> valores) {
@@ -312,4 +338,3 @@ public class CCompetencia extends CGenerico {
 	}
 
 }
-

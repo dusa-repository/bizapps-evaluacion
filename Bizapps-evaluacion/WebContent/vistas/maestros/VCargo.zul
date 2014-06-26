@@ -1,61 +1,70 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVCargo" apply="controlador.maestros.CCargo">
-		<groupbox width="auto" mold="3d" title="Cargo (VCargo)">
-			<div id="botoneraCargo" />
+<window id="wdwVCargo" apply="controlador.maestros.CCargo"
+	border="normal" height="auto" style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraCargo" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroCargo" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar un nuevo cargo" />
 			<separator />
-			<groupbox id="gpxRegistroCargo" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar un nuevo cargo" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Descripción:" class="etiqueta" />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-							<textbox id="txtDescripcionCargo" width="50%"
-								maxlength="100" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion del cargo" />
-						</row>
-						<row>
-							<label value="Nómina:" class="etiqueta" />
+						<textbox id="txtDescripcionCargo" width="50%"
+							maxlength="100" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion del cargo" />
+					</row>
+					<row>
+						<label value="Nómina:" class="etiqueta" />
 
-							<textbox id="txtNominaCargo" width="50%"
-								maxlength="50" tabindex="2"
-								tooltiptext="Ingrese aqui la nomina del cargo" />
-						</row>
-						<row>
-							<label value="Cargo auxiliar:" class="etiqueta" />
+						<textbox id="txtNominaCargo" width="50%"
+							maxlength="50" tabindex="2"
+							tooltiptext="Ingrese aqui la nomina del cargo" />
+					</row>
+					<row>
+						<label value="Cargo auxiliar:" class="etiqueta" />
 
-							<textbox id="txtCargoAuxiliarCargo"
-								width="50%" maxlength="50" tabindex="3"
-								tooltiptext="Ingrese aqui el cargo auxiliar" />
-						</row>
-						<row>
-							<label value="Empresa auxiliar:" class="etiqueta" />
+						<textbox id="txtCargoAuxiliarCargo" width="50%"
+							maxlength="50" tabindex="3"
+							tooltiptext="Ingrese aqui el cargo auxiliar" />
+					</row>
+					<row>
+						<label value="Empresa auxiliar:"
+							class="etiqueta" />
 
-							<textbox id="txtEmpresaAuxiliarCargo" width="50%"
-								maxlength="50" tabindex="4"
-								tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
-			<separator />
-			<groupbox id="gpxDatosCargo" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar los cargos registrados" />
-				<div id="catalogoCargo"
-					tooltiptext="Seleccione el cargo para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+						<textbox id="txtEmpresaAuxiliarCargo"
+							width="50%" maxlength="50" tabindex="4"
+							tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator/>
+		<groupbox id="gpxDatosCargo" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar los cargos registrados" />
+			<div id="catalogoCargo"
+				tooltiptext="Seleccione el cargo para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

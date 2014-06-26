@@ -1,40 +1,49 @@
-<zk>
-	<style src="../public/Estilo.css" />
-	<div id="divVMedicion" apply="controlador.maestros.CMedicion">
-		<groupbox width="auto" mold="3d" title="Medición (VMedicion)">
-			<div id="botoneraMedicion" />
-			<separator />
-			<groupbox id="gpxRegistroMedicion" width="auto" title=""
-				open="false">
-				<caption label="Nuevo" style="font-weight:bold"
-					tooltiptext="Presione para registrar una nueva medicion" />
-				<separator />
-				<grid width="100%">
-					<columns visible="false">
-						<column label="" width="20%" />
-						<column label="" width="55%" />
-						<column label="" width="25%" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Descripción:" class="etiqueta" />
+<window id="wdwVMedicion" apply="controlador.maestros.CMedicion"
+	border="normal" height="auto" style="background-color:#8A0808;">
 
-							<textbox id="txtDescripcionMedicion" width="80%"
-								maxlength="100" tabindex="1"
-								tooltiptext="Ingrese aqui la descripcion de la medicion" />
-						</row>
-					</rows>
-				</grid>
-			</groupbox>
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraMedicion" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroMedicion" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva medicion" />
 			<separator />
-			<groupbox id="gpxDatosMedicion" width="auto" title="">
-				<caption label="Registros" style="font-weight:bold"
-					tooltiptext="Presione para visualizar las mediciones registradas" />
-				<div id="catalogoMedicion"
-					tooltiptext="Seleccione la medicion para realizar una accion" />
-			</groupbox>
-			<separator />
-			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtDescripcionMedicion" width="80%"
+							maxlength="100" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion de la medicion" />
+					</row>
+				</rows>
+			</grid>
 		</groupbox>
-	</div>
-</zk>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosMedicion" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las mediciones registradas" />
+			<div id="catalogoMedicion"
+				tooltiptext="Seleccione la medicion para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>
