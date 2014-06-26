@@ -22,7 +22,7 @@
 					<button id="btnAgregar"
 						tooltiptext="Agregar" style= "height:27px; width:80px"
 						label="Agregar" image="/public/imagenes/botones/annadir.png"
-						onClick='contenido.src="../vistas/transacciones/VItems.zul"'>
+						onClick='contenido.src="../vistas/transacciones/VAgregarEvaluacion.zul"'>
 					</button>
 					<button id="btnEliminar" label="Eliminar"
 						tooltiptext="Eliminar" style=" height:27px; width:80px"
