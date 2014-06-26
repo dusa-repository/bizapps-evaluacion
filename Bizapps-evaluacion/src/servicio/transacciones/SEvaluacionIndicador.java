@@ -40,4 +40,10 @@ public class SEvaluacionIndicador {
 	public void eliminarVarios(List<EvaluacionIndicador> evaluacionIndicador) {
 		evaluacionIndicadorDAO.delete(evaluacionIndicador);
 	}
+	
+	// Servicio que busca el maximo id
+		public Integer buscarId() {
+			return evaluacionIndicadorDAO.buscar();
+		}
+		
 }

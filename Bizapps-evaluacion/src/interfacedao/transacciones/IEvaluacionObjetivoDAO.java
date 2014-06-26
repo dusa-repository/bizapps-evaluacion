@@ -18,5 +18,9 @@ public interface IEvaluacionObjetivoDAO extends JpaRepository<EvaluacionObjetivo
 	List<EvaluacionObjetivo> findByIdEvaluacion(Integer idEvaluacion);
 	
 	EvaluacionObjetivo findByIdObjetivo(Integer idObjetivo);
+	
+	@Query("select max(idObjetivo) from EvaluacionObjetivo")
+	public Integer buscar();
+
 
 }

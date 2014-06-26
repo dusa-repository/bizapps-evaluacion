@@ -116,6 +116,11 @@ public class CIndicadores extends CGenerico {
 	private Combobox cmbObjetivos;
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 	public static Revision revision;
+	private static int idEva;
+	private static int idObjetivo;
+	private static int idIndicador;
+	private static String unid;
+	private static String medic;
 	
 
 	@Override
@@ -134,6 +139,7 @@ public class CIndicadores extends CGenerico {
 		String ficha = u.getCedula();
 		lblRevision.setValue(revision.getDescripcion());
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		Integer numeroEvaluacion1 = servicioEvaluacion.buscar(ficha).size() + 1;
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
@@ -146,14 +152,22 @@ public class CIndicadores extends CGenerico {
 		lblCargo.setValue(cargo);
 		lblUnidadOrganizativa.setValue(unidadOrganizativa);
 		lblGerencia.setValue(gerenciaReporte);
-		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
-//		lblRevision.setValue(revision);
 		gpxAgregar.setOpen(false);
 		gpxAgregados.setOpen(false);
 		
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivos(ficha, numeroEvaluacion);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivo));
+//		System.out.println(evaluacionObjetivo);
+//		Integer numeroEvaluacion2 = numeroEvaluacion;
+//		if (evaluacionObjetivo == null){
+//			System.out.println("if");
+//			lblEvaluacion.setValue(numeroEvaluacion1.toString());
+//		}
+//		else{
+//			System.out.println("else");
+//			lblEvaluacion.setValue(numeroEvaluacion2.toString());
+//		}
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -171,6 +185,11 @@ public class CIndicadores extends CGenerico {
 		|| txtResultadoPorc.getText().compareTo("")==0 || txtPesoPorc.getText().compareTo("")==0 || txtValorMeta.getText().compareTo("")==0)
 		{
 		}	else {
+			
+			if (idIndicador != 0) {
+				System.out.println("entoooooooooooo");
+				EvaluacionIndicadorActualizar();
+			} else {
 			gpxAgregados.setOpen(true);
 		String indicador = txtIndicador.getValue();
 		String unidadCombo= cmbUnidad.getSelectedItem().getContext();
@@ -186,6 +205,7 @@ public class CIndicadores extends CGenerico {
 		Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
 		Integer linea = indicadores.size() + 1;		
 		EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
+		indicadorLista.setIdIndicador(servicioEvaluacionIndicador.buscarId()+1);
 		indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
 		indicadorLista.setDescripcionIndicador(indicador);
 		indicadorLista.setMedicion(medicion);
@@ -210,6 +230,7 @@ public class CIndicadores extends CGenerico {
 		limpiar ();
 		}
 	}
+	}
 
 	public void limpiar() {
 		txtIndicador.setValue("");
@@ -223,6 +244,68 @@ public class CIndicadores extends CGenerico {
 		cmbUnidad.setValue(null);
 	}
 	
+	@Listen("onClick = #lbxAgregados")
+	public void mostrarEvaluacionIndicadores() {
+		gpxAgregar.setOpen(true);
+		if (lbxAgregados.getItemCount() != 0) {
+
+			Listitem listItem = lbxAgregados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
+						.getValue();
+				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				idIndicador = evaluacionIndicador.getIdIndicador();
+				System.out.println(idObjetivo);
+				System.out.println(idIndicador);
+				Integer linea = evaluacionIndicador.getLinea();
+				String indicador = evaluacionIndicador.getDescripcionIndicador();
+				String unidad = evaluacionIndicador.getUnidadMedida().getDescripcion();
+				unid = unidad;
+				String medicion = evaluacionIndicador.getMedicion().getDescripcionMedicion();
+				medic = medicion;
+				Double peso = evaluacionIndicador.getPeso();
+				Double valorMeta = evaluacionIndicador.getValorMeta();
+				Double valorResultado = evaluacionIndicador.getValorResultado();
+				Double fyAnterior = evaluacionIndicador.getResultadoFyAnterior();
+				Double resultadoPorc = evaluacionIndicador.getResultadoPorc();
+				Double resultadoPeso = evaluacionIndicador.getResultadoPeso();
+				Double total = evaluacionIndicador.getTotal();
+				txtIndicador.setValue(indicador);
+				cmbMedicion.setValue(medicion);
+				cmbUnidad.setValue(unidad);
+				int peso1 = peso.intValue();
+				int valor = valorMeta.intValue();
+				int valorR = valorResultado.intValue();
+				int fyAnt = fyAnterior.intValue();
+				int resulPorc = resultadoPorc.intValue();
+				int resulP = resultadoPeso.intValue();
+				int tot = total.intValue();
+				txtPeso.setValue(peso1);
+				txtResFy.setValue(fyAnt);
+				txtValorMeta.setValue(valor);
+				txtValorResultado.setValue(valorR);
+				txtResultadoPorc.setValue(resulPorc);
+				txtPesoPorc.setValue(resulP);
+				cmbMedicion.setDisabled(true);
+				cmbUnidad.setDisabled(true);
+			}
+		}
+	}
+	
+	private void EvaluacionIndicadorActualizar() {
+		UnidadMedida unidadMedida = servicioUnidadMedida.buscarPorNombre(unid);
+		Medicion medicion = servicioMedicion.buscarPorNombre(medic);
+		EvaluacionIndicador indicador = servicioEvaluacionIndicador.buscarIndicadorId(idIndicador);
+		indicador.setDescripcionIndicador(txtIndicador.getValue());
+		indicador.setPeso(txtPeso.getValue());
+		indicador.setValorMeta(txtValorMeta.getValue());
+		servicioEvaluacionIndicador.guardar(indicador);
+		List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+		lbxAgregados.getItems().clear();
+		lbxAgregados.setModel(new ListModelList<EvaluacionIndicador>(
+				evaluacionInd));
+		gpxAgregar.setOpen(false);
+	}
 	
 
 }

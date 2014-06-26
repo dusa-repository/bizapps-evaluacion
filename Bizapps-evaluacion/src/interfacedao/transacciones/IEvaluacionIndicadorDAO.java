@@ -16,4 +16,8 @@ public interface IEvaluacionIndicadorDAO extends JpaRepository<EvaluacionIndicad
 	
 	EvaluacionIndicador findByIdIndicador(Integer idIndicador);
 	
+	@Query("select max(idIndicador) from EvaluacionIndicador")
+	public Integer buscar();
+
+	
 }

@@ -38,6 +38,11 @@ public class SEvaluacionObjetivo {
 	public void eliminarUno(Integer id) {
 		evaluacionObjetivoDAO.delete(id);
 	}
+
+	// Servicio que busca el maximo id
+	public Integer buscarId() {
+		return evaluacionObjetivoDAO.buscar();
+	}
 	
 
 	public void eliminarVarios(List<EvaluacionObjetivo> evaluacionObjetivo) {
