@@ -139,7 +139,6 @@ public class CIndicadores extends CGenerico {
 		String ficha = u.getCedula();
 		lblRevision.setValue(revision.getDescripcion());
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
-		Integer numeroEvaluacion1 = servicioEvaluacion.buscar(ficha).size() + 1;
 		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String cargo = empleado.getCargo().getDescripcion();
@@ -158,16 +157,10 @@ public class CIndicadores extends CGenerico {
 		
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo.buscarObjetivos(ficha, numeroEvaluacion);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(evaluacionObjetivo));
-//		System.out.println(evaluacionObjetivo);
-//		Integer numeroEvaluacion2 = numeroEvaluacion;
-//		if (evaluacionObjetivo == null){
-//			System.out.println("if");
-//			lblEvaluacion.setValue(numeroEvaluacion1.toString());
-//		}
-//		else{
-//			System.out.println("else");
-//			lblEvaluacion.setValue(numeroEvaluacion2.toString());
-//		}
+	
+		lblEvaluacion.setValue(numeroEvaluacion.toString());
+			
+	
 	}
 
 	@Listen("onClick = #btnAgregar")
