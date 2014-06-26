@@ -248,7 +248,7 @@
 								<listheader width="7%" />
 							</listhead>
 							<listitem>
-								<listcell label="1"></listcell>
+								<listcell ></listcell>
 								<listcell>
 									<textbox placeholder="Indicador"
 										mold="rounded" rows="2" width="100%" id="txtIndicador" />
