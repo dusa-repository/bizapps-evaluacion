@@ -190,6 +190,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static String pers;
 	private static String unid;
 	private static String medic;
+	private static String fichaE;
+	private static int num;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -207,6 +209,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Integer idEvaluacion = (Integer) map.get("id");
 				String fichaMap = (String) map.get("titulo");
 				idEva = idEvaluacion;
+				fichaE = fichaMap;
 
 				System.out.println(idEvaluacion);
 				List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
@@ -226,6 +229,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 				String ficha = evaluacion.getFicha();
 				Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha)
 						.size();
+				num = numeroEvaluacion;
+				System.out.println(num);
+				System.out.println(fichaE);
 				Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 
 				List<EvaluacionObjetivo> evaluacionObjetivo = new ArrayList<EvaluacionObjetivo>();
@@ -322,6 +328,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Listen("onClick = #btnAgregarIndicador")
 	public void agregarIndicador() {
 		gpxAgregarIndicador.setOpen(true);
+	}
+
+	@Listen("onClick = #btnEliminar")
+	public void eliminarObj() {
+		eliminarObjetivo ();
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -910,6 +921,70 @@ public class CEvaluacionEmpleado extends CGenerico {
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+		}
+	}
+	
+	public void eliminarObjetivo() {
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				if (evaluacionIndicador.size() != 0) {
+					Messagebox
+							.show("El objetivo tiene indicadores asocioados desea eliminarlo",
+									"Alerta",
+									Messagebox.OK | Messagebox.CANCEL,
+									Messagebox.QUESTION,
+									new org.zkoss.zk.ui.event.EventListener<Event>() {
+										public void onEvent(Event evt)
+												throws InterruptedException {
+											if (evt.getName().equals("onOK")) {
+												List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+														.buscarIndicadores(idObjetivo);
+												servicioEvaluacionIndicador
+														.eliminarVarios(evaluacionIndicador);
+												servicioEvaluacionObjetivo
+														.eliminarUno(idObjetivo);
+												msj.mensajeInformacion(Mensaje.eliminado);
+												lbxObjetivosGuardados
+														.getItems().clear();
+												objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+												lbxObjetivosGuardados
+														.setModel(new ListModelList<EvaluacionObjetivo>(
+																objetivosG));
+											}
+										}
+									});
+				} else {
+					
+					Messagebox.show("Desea Eliminar el Objetivo", "Alerta",
+							Messagebox.OK | Messagebox.CANCEL,
+							Messagebox.QUESTION,
+							new org.zkoss.zk.ui.event.EventListener<Event>() {
+								public void onEvent(Event evt)
+										throws InterruptedException {
+									if (evt.getName().equals("onOK")) {
+										servicioEvaluacionObjetivo
+												.eliminarUno(idObjetivo);
+										msj.mensajeInformacion(Mensaje.eliminado);
+										lbxObjetivosGuardados.getItems()
+												.clear();
+										objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+										lbxObjetivosGuardados
+												.setModel(new ListModelList<EvaluacionObjetivo>(
+														objetivosG));
+									}
+								}
+							});
+
+				}
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+
 		}
 	}
 }
