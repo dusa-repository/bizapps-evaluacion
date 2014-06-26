@@ -336,6 +336,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		eliminarIndicador();
 	}
 
+	@Listen("onClick = #btnEliminar")
+	public void eliminarObj() {
+		eliminarObjetivo ();
+	}
+	
 	@Listen("onClick = #btnAgregar")
 	public void AgregarObjetivo() {
 		gpxAgregar.setOpen(true);
@@ -567,7 +572,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 	}
 
-	@Listen("onClick = #lbxObjetivosGuardados")
+	@Listen("onDoubleClick = #lbxObjetivosGuardados")
 	public void mostrarEvaluacion() {
 		gpxAgregar.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -684,7 +689,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 	}
 
-	@Listen("onDoubleClick = #lbxObjetivosGuardados")
+
 	public void mostrarPestannaIndicadores() {
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
@@ -731,6 +736,70 @@ public class CEvaluacionEnEdicion extends CGenerico {
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+		}
+	}
+	
+	public void eliminarObjetivo() {
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				if (evaluacionIndicador.size() != 0) {
+					Messagebox
+							.show("El objetivo tiene indicadores asocioados desea eliminarlo",
+									"Alerta",
+									Messagebox.OK | Messagebox.CANCEL,
+									Messagebox.QUESTION,
+									new org.zkoss.zk.ui.event.EventListener<Event>() {
+										public void onEvent(Event evt)
+												throws InterruptedException {
+											if (evt.getName().equals("onOK")) {
+												List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+														.buscarIndicadores(idObjetivo);
+												servicioEvaluacionIndicador
+														.eliminarVarios(evaluacionIndicador);
+												servicioEvaluacionObjetivo
+														.eliminarUno(idObjetivo);
+												msj.mensajeInformacion(Mensaje.eliminado);
+												lbxObjetivosGuardados
+														.getItems().clear();
+												objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+												lbxObjetivosGuardados
+														.setModel(new ListModelList<EvaluacionObjetivo>(
+																objetivosG));
+											}
+										}
+									});
+				} else {
+					
+					Messagebox.show("Desea Eliminar el Objetivo", "Alerta",
+							Messagebox.OK | Messagebox.CANCEL,
+							Messagebox.QUESTION,
+							new org.zkoss.zk.ui.event.EventListener<Event>() {
+								public void onEvent(Event evt)
+										throws InterruptedException {
+									if (evt.getName().equals("onOK")) {
+										servicioEvaluacionObjetivo
+												.eliminarUno(idObjetivo);
+										msj.mensajeInformacion(Mensaje.eliminado);
+										lbxObjetivosGuardados.getItems()
+												.clear();
+										objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+										lbxObjetivosGuardados
+												.setModel(new ListModelList<EvaluacionObjetivo>(
+														objetivosG));
+									}
+								}
+							});
+
+				}
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+
 		}
 	}
 }
