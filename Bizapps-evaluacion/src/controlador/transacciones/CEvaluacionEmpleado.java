@@ -18,8 +18,10 @@ import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
+import modelo.maestros.Medicion;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.UnidadMedida;
 import modelo.seguridad.Usuario;
 
 import org.hibernate.hql.internal.ast.tree.CaseNode;
@@ -63,6 +65,20 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Textbox txtAnterior;
 	@Wire
+	private Spinner txtPeso1;
+	@Wire
+	private Spinner txtValorMeta;
+	@Wire
+	private Spinner txtValorResultado1;
+	@Wire
+	private Textbox txtIndicador;
+	@Wire
+	private Spinner txtResFy;
+	@Wire
+	private Spinner txtResultadoPorc;
+	@Wire
+	private Spinner txtPesoPorc;
+	@Wire
 	private Button btnGuardar;
 	@Wire
 	private Button btnGuardarObjetivo;
@@ -74,6 +90,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Button btnCalcular;
 	@Wire
 	private Button btnGuardarIndicador;
+	@Wire
+	private Button btnAgregarIndicador;
+	@Wire
+	private Button btnEliminarIndicador;
 	@Wire
 	private Button btnAgregarObjetivo;
 	@Wire
@@ -94,6 +114,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Groupbox gpxAgregar;
 	@Wire
 	private Groupbox gpxAgregados;
+	@Wire
+	private Groupbox gpxAgregarIndicador;
 	@Wire
 	private Label lblEvaluacion;
 	@Wire
@@ -139,6 +161,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Combobox cmbNivelRequerido;
 	@Wire
+	private Combobox cmbUnidad;
+	@Wire
+	private Combobox cmbMedicion;
+	@Wire
 	private Window wdwConductasRectoras;
 	@Wire
 	private Window winEvaluacionEmpleado;
@@ -148,6 +174,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
+	
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
 	private static int idEva;
@@ -165,6 +192,12 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+
+		List<Medicion> medicion = servicioMedicion.buscar();
+		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
+
+		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
+		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
 
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
@@ -219,6 +252,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 				lbxObjetivosGuardados
 						.setModel(new ListModelList<EvaluacionObjetivo>(
 								objetivosG));
+				
+				// Listbox que contine los indicadores
+				cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
+						evaluacionObjetivoIndicadores));
 
 				List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
 				List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
@@ -265,9 +302,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 				lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 				gpxAgregar.setOpen(false);
+				gpxAgregarIndicador.setOpen(false);
 			}
 		}
 	}
+	
 
 	// public Double getCambio() {
 	// evaluarIndicadores ();
@@ -279,6 +318,12 @@ public class CEvaluacionEmpleado extends CGenerico {
 	public void agregarObjetivo() {
 		gpxAgregar.setOpen(true);
 	}
+	
+	@Listen("onClick = #btnAgregarIndicador")
+	public void agregarIndicador() {
+		gpxAgregarIndicador.setOpen(true);
+	}
+
 
 	public ListModelList<Dominio> getDominio() {
 		dominio = new ListModelList<Dominio>(
@@ -335,14 +380,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
 		lbxIndicadoresAgregados.getItems().clear();
-		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
 		Integer idObjetivo = Integer.parseInt(cmbObjetivos.getSelectedItem()
 				.getContext());
-		evaluacionObjetivoIndicador = servicioEvaluacionIndicador
+		indicadores = servicioEvaluacionIndicador
 				.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(
-						evaluacionObjetivoIndicador));
+						indicadores));
 
 	}
 
@@ -682,6 +726,76 @@ public class CEvaluacionEmpleado extends CGenerico {
 		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObje));
 		gpxAgregar.setOpen(false);
+	}
+	
+	@Listen("onClick = #btnOk2")
+	public void AgregarIndicador1() {
+
+		if (cmbObjetivos.getText().compareTo("") == 0
+				|| cmbUnidad.getText().compareTo("") == 0
+				|| cmbMedicion.getText().compareTo("") == 0
+				|| txtPeso1.getText().compareTo("") == 0
+				|| txtValorMeta.getText().compareTo("") == 0
+				|| txtResFy.getText().compareTo("") == 0
+				|| txtIndicador.getText().compareTo("") == 0
+				|| txtResultadoPorc.getText().compareTo("") == 0
+				|| txtPesoPorc.getText().compareTo("") == 0)
+
+		{
+			Messagebox.show("Debe llenar todos los campos", "Advertencia",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		} else {
+			if (idIndicador != 0) {
+				System.out.println("entoooooooooooo");
+				//EvaluacionIndicadorActualizar();
+			} else {
+			gpxAgregados.setOpen(true);
+			String indicador = txtIndicador.getValue();
+			String unidadCombo = cmbUnidad.getSelectedItem().getContext();
+			UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
+					.parseInt(unidadCombo));
+			String medicionCombo = cmbMedicion.getSelectedItem().getContext();
+			Medicion medicion = servicioMedicion.buscarMedicion(Integer
+					.parseInt(medicionCombo));
+			String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
+			Double peso = Double.valueOf(txtPeso1.getValue());
+			Double valorMeta = Double.valueOf(txtValorMeta.getValue());
+			Double valorResultado = Double
+					.valueOf(txtValorResultado1.getValue());
+			Double resFy = Double.valueOf(txtResFy.getValue());
+			Double resultadoPorc = Double.valueOf(txtResultadoPorc.getValue());
+			Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
+			Integer linea = indicadores.size() + 1;
+			EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
+			indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
+			indicadorLista.setDescripcionIndicador(indicador);
+			indicadorLista.setMedicion(medicion);
+			indicadorLista.setUnidadMedida(unidad);
+			indicadorLista.setLinea(linea);
+			indicadorLista.setPeso(peso);
+			indicadorLista.setResultadoFyAnterior(resFy);
+			indicadorLista.setResultadoPeso(pesoPorc);
+			indicadorLista.setResultadoPorc(resultadoPorc);
+			indicadorLista.setValorMeta(valorMeta);
+			indicadorLista.setValorResultado(valorResultado);
+			indicadorLista.setTotal(0);
+			indicadores.add(indicadorLista);
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(
+							indicadores));
+			servicioEvaluacionIndicador.guardar(indicadorLista);
+			
+			Messagebox.show(
+					"Indicador para el objetivo" + " "
+							+ cmbObjetivos.getValue() + " "
+							+ "ha sido guardado exitosamente", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+		}
+			
+
+//			limpiar();
+	}
 	}
 
 }

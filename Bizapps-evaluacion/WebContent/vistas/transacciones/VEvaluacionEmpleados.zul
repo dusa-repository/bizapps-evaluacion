@@ -237,6 +237,105 @@
 							</rows>
 						</grid>
 					</groupbox>
+					<groupbox id="gpxAgregarIndicador">
+						<listbox height="auto" id="lbxAgregarIndicador"
+							mold="paging" pageSize="10" width="auto">
+							<listhead>
+								<listheader label="Línea" width="5%" />
+								<listheader label="Indicador "
+									width="23%" />
+								<listheader label="Unid. Med."
+									width="9%" />
+								<listheader label="Medición"
+									width="14%" />
+								<listheader label="Peso (%)" width="7%" />
+								<listheader label="Valor Meta"
+									width="9%" />
+								<listheader label="Valor Resultado"
+									width="12%" />
+								<listheader label="Res.Fy.Ant."
+									width="9%" />
+								<listheader label="Resultado (%)"
+									width="12%" />
+								<listheader label="Resul. Peso (%)"
+									width="12%" />
+								<listheader width="7%" />
+							</listhead>
+							<listitem>
+								<listcell ></listcell>
+								<listcell>
+									<textbox placeholder="Indicador"
+										mold="rounded" rows="2" width="100%" id="txtIndicador" />
+								</listcell>
+								<listcell>
+									<combobox
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbUnidad">
+										<template name="model">
+											<comboitem
+												context="${each.id}" label="${each.descripcion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<combobox
+										placeholder="Seleccione..." mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbMedicion">
+										<template name="model">
+											<comboitem
+												context="${each.id}"
+												label="${each.descripcionMedicion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<spinner placeholder="Peso %" constraint = "min 0"
+										mold="rounded" width="100%" id="txtPeso1" />
+								</listcell>
+								<listcell>
+									<spinner placeholder="Valor Meta" constraint = "min 0"
+										mold="rounded" width="100%" id="txtValorMeta" />
+								</listcell>
+								<listcell>
+									<spinner
+										placeholder="Valor Resultado" mold="rounded" width="100%"
+										id="txtValorResultado1" disabled="true" value = "0" constraint = "min 0"/>
+								</listcell>
+								<listcell>
+									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
+										mold="rounded" width="100%" id="txtResFy" disabled = "true"/>
+								</listcell>
+								<listcell>
+									<spinner placeholder="Resultado %" value = "0" constraint = "min 0"
+										mold="rounded" width="100%" id="txtResultadoPorc" disabled="true" />
+								</listcell>
+								<listcell>
+									<spinner
+										placeholder="Resultado peso %" mold="rounded" width="100%"
+										id="txtPesoPorc" disabled="true" value = "0" constraint = "min 0"/>
+								</listcell>
+								<listcell>
+									<button id="btnOk2" width="auto"
+										height="auto" mold="trendy"
+										image="/public/imagenes/botones/agregar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+							</listitem>
+						</listbox>
+					</groupbox>
+					<div align="right" height="100%">
+						<button id="btnAgregarIndicador" width="auto"
+							height="auto" mold="trendy" label="Agregar"
+							image="/public/imagenes/botones/agregar.png">
+						</button>
+						<button id="btnEliminarIndicador" width="auto"
+							height="auto" image="/public/imagenes/botones/eliminar.png"
+							mold="trendy" label="Eliminar">
+						</button>
+					</div>
 					<groupbox id="gpxAgregados">
 						<listbox height="auto"
 							id="lbxIndicadoresAgregados" mold="paging" pageSize="10"
