@@ -88,6 +88,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Button btnEliminar2;
 	@Wire
+	private Button btnEliminarIndicador;
+	@Wire
 	private Button btnAgregarIndicador;
 	@Wire
 	private Button btnGuardarIndicador;
@@ -272,6 +274,11 @@ public class CAgregarEvaluacion extends CGenerico {
 		dominio = new ListModelList<Dominio>(
 				servicioDominio.buscarPorTipo(tipo));
 		return dominio;
+	}
+
+	@Listen("onClick = #btnEliminarIndicador")
+	public void eliminarI() {
+		eliminarIndicador();
 	}
 
 	@Listen("onClick = #cmbObjetivos")
@@ -549,7 +556,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 	}
 
-	@Listen("onClick = #lbxIndicadoresAgregados")
+	@Listen("onDoubleClick = #lbxIndicadoresAgregados")
 	public void mostrarEvaluacionIndicadores() {
 		gpxAgregarIndicador.setOpen(true);
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
@@ -754,6 +761,37 @@ public class CAgregarEvaluacion extends CGenerico {
 					Messagebox.INFORMATION);
 			limpiar ();
 		}
+	
+	private void eliminarIndicador() {
+		if (lbxIndicadoresAgregados.getItemCount() != 0) {
+			Listitem listItem = lbxIndicadoresAgregados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
+						.getValue();
+				idIndicador = evaluacionIndicador.getIdIndicador();
+				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				Messagebox.show("Desea Eliminar el Indicador", "Alerta",
+						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									servicioEvaluacionIndicador
+											.eliminarUno(idIndicador);
+									msj.mensajeInformacion(Mensaje.eliminado);
+									lbxIndicadoresAgregados.getItems().clear();
+									indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+									lbxIndicadoresAgregados
+											.setModel(new ListModelList<EvaluacionIndicador>(
+													indicadores));
+								}
+							}
+						});
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+		}
+	}
 	
 
 }

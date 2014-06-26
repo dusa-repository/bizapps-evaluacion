@@ -91,6 +91,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnGuardarIndicador;
 	@Wire
+	private Button btnEliminarIndicador;
+	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
 	private Listbox lbxObjetivosGuardados;
@@ -206,13 +208,13 @@ public class CEvaluacionEnEdicion extends CGenerico {
 					btnAgregar.setVisible(true);
 					btnEliminar.setVisible(true);
 					btnAgregarIndicador.setVisible(true);
-					btnEliminar2.setVisible(true);
+					btnEliminarIndicador.setVisible(true);
 					panBotones.setVisible(true);
 				} else {
 					btnAgregar.setVisible(false);
 					btnEliminar.setVisible(false);
 					btnAgregarIndicador.setVisible(false);
-					btnEliminar2.setVisible(false);
+					btnEliminarIndicador.setVisible(false);
 					btnCambiarEstado.setVisible(false);
 					btnCancelar.setVisible(true);
 				}
@@ -327,6 +329,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
 		winEvaluacionEmpleado.onClose();
+	}
+	
+	@Listen("onClick = #btnEliminarIndicador")
+	public void eliminarI() {
+		eliminarIndicador();
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -587,7 +594,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 	}
 
-	@Listen("onClick = #lbxIndicadoresAgregados")
+	@Listen("onDoubleClick = #lbxIndicadoresAgregados")
 	public void mostrarEvaluacionIndicadores() {
 		gpxAgregarIndicador.setOpen(true);
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
@@ -693,6 +700,37 @@ public class CEvaluacionEnEdicion extends CGenerico {
 						.setModel(new ListModelList<EvaluacionIndicador>(
 								indicadores));
 			}
+		}
+	}
+	
+	private void eliminarIndicador() {
+		if (lbxIndicadoresAgregados.getItemCount() != 0) {
+			Listitem listItem = lbxIndicadoresAgregados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
+						.getValue();
+				idIndicador = evaluacionIndicador.getIdIndicador();
+				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				Messagebox.show("Desea Eliminar el Indicador", "Alerta",
+						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									servicioEvaluacionIndicador
+											.eliminarUno(idIndicador);
+									msj.mensajeInformacion(Mensaje.eliminado);
+									lbxIndicadoresAgregados.getItems().clear();
+									indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+									lbxIndicadoresAgregados
+											.setModel(new ListModelList<EvaluacionIndicador>(
+													indicadores));
+								}
+							}
+						});
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
 	}
 }

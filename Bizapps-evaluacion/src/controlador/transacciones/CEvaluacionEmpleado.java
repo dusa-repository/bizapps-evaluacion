@@ -29,6 +29,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -487,6 +488,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 	public void prueba() {
 		evaluarIndicadores();
 	}
+	
+	@Listen("onClick = #btnEliminarIndicador")
+	public void eliminarI() {
+		eliminarIndicador();
+	}
 
 	@Listen("onClick = #btnGuardarIndicador")
 	public void guardarIndicadores() {
@@ -757,7 +763,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		} else {
 			if (idIndicador != 0) {
 				System.out.println("entoooooooooooo");
-				 EvaluacionIndicadorActualizar();
+				EvaluacionIndicadorActualizar();
 			} else {
 				gpxAgregados.setOpen(true);
 				String indicador = txtIndicador.getValue();
@@ -809,7 +815,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		}
 	}
 
-	@Listen("onClick = #lbxIndicadoresAgregados")
+	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")
 	public void mostrarEvaluacionIndicadores() {
 		gpxAgregarIndicador.setOpen(true);
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
@@ -821,15 +827,19 @@ public class CEvaluacionEmpleado extends CGenerico {
 				idObjetivo = evaluacionIndicador.getIdObjetivo();
 				idIndicador = evaluacionIndicador.getIdIndicador();
 				Integer linea = evaluacionIndicador.getLinea();
-				String indicador = evaluacionIndicador.getDescripcionIndicador();
-				String unidad = evaluacionIndicador.getUnidadMedida().getDescripcion();
+				String indicador = evaluacionIndicador
+						.getDescripcionIndicador();
+				String unidad = evaluacionIndicador.getUnidadMedida()
+						.getDescripcion();
 				unid = unidad;
-				String medicion = evaluacionIndicador.getMedicion().getDescripcionMedicion();
+				String medicion = evaluacionIndicador.getMedicion()
+						.getDescripcionMedicion();
 				medic = medicion;
 				Double peso = evaluacionIndicador.getPeso();
 				Double valorMeta = evaluacionIndicador.getValorMeta();
 				Double valorResultado = evaluacionIndicador.getValorResultado();
-				Double fyAnterior = evaluacionIndicador.getResultadoFyAnterior();
+				Double fyAnterior = evaluacionIndicador
+						.getResultadoFyAnterior();
 				Double resultadoPorc = evaluacionIndicador.getResultadoPorc();
 				Double resultadoPeso = evaluacionIndicador.getResultadoPeso();
 				Double total = evaluacionIndicador.getTotal();
@@ -854,20 +864,52 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 		}
 	}
-	
+
 	private void EvaluacionIndicadorActualizar() {
 		UnidadMedida unidadMedida = servicioUnidadMedida.buscarPorNombre(unid);
 		Medicion medicion = servicioMedicion.buscarPorNombre(medic);
-		EvaluacionIndicador indicador = servicioEvaluacionIndicador.buscarIndicadorId(idIndicador);
+		EvaluacionIndicador indicador = servicioEvaluacionIndicador
+				.buscarIndicadorId(idIndicador);
 		indicador.setDescripcionIndicador(txtIndicador.getValue());
 		indicador.setPeso(txtPeso1.getValue());
 		indicador.setValorMeta(txtValorMeta.getValue());
 		servicioEvaluacionIndicador.guardar(indicador);
-		List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+		List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador
+				.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados.getItems().clear();
-		lbxIndicadoresAgregados.setModel(new ListModelList<EvaluacionIndicador>(
-				evaluacionInd));
+		lbxIndicadoresAgregados
+				.setModel(new ListModelList<EvaluacionIndicador>(evaluacionInd));
 		gpxAgregarIndicador.setOpen(false);
 	}
 
+	private void eliminarIndicador() {
+		if (lbxIndicadoresAgregados.getItemCount() != 0) {
+			Listitem listItem = lbxIndicadoresAgregados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
+						.getValue();
+				idIndicador = evaluacionIndicador.getIdIndicador();
+				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				Messagebox.show("Desea Eliminar el Indicador", "Alerta",
+						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									servicioEvaluacionIndicador
+											.eliminarUno(idIndicador);
+									msj.mensajeInformacion(Mensaje.eliminado);
+									lbxIndicadoresAgregados.getItems().clear();
+									indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+									lbxIndicadoresAgregados
+											.setModel(new ListModelList<EvaluacionIndicador>(
+													indicadores));
+								}
+							}
+						});
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+		}
+	}
 }

@@ -317,7 +317,7 @@
 							height="auto" mold="trendy" label="Agregar"
 							image="/public/imagenes/botones/agregar.png">
 						</button>
-						<button id="btnEliminar2" width="auto"
+						<button id="btnEliminarIndicador" width="auto"
 							height="auto" image="/public/imagenes/botones/eliminar.png"
 							mold="trendy" label="Eliminar" onClick="@command('cancelar')">
 						</button>
