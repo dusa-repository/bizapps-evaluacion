@@ -14,6 +14,7 @@ public interface IEvaluacionConductaDAO extends JpaRepository<EvaluacionConducta
 	
 	public List <EvaluacionConducta> findByEvaluacionIdEvaluacion (Integer id);
 
-
+	@Query("select ec from EvaluacionConducta ec where ec.evaluacion.idEvaluacion = ?1")
+	public EvaluacionConducta buscar(Integer id);
 
 }

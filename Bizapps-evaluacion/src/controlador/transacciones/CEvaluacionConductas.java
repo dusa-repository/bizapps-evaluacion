@@ -107,6 +107,7 @@ public class CEvaluacionConductas extends CGenerico {
 				for (int i = 0; i < conductasE.size(); i++) {
 					Integer id = conductasE.get(i).getConductaCompetencia()
 							.getId();
+//					int idE = conductasE.get(i).getEvaluacion().getIdEvaluacion();
 					for (int j = 0; j < lbxConductasRectoras.getItemCount(); j++) {
 						Listitem listItem = lbxConductasRectoras
 								.getItemAtIndex(j);
@@ -114,9 +115,11 @@ public class CEvaluacionConductas extends CGenerico {
 						int id2 = cc.getId();
 						if (id == id2) {
 							listItem.setSelected(true);
-//							System.out.println(Observacion);
+//							EvaluacionConducta ec = servicioEvaluacionConducta.buscarConducta(idE);
+//							String observacion = ec.getObservacion();
+//							System.out.println(observacion);
 //							((Textbox) ((listItem.getChildren().get(1)))
-//									.getFirstChild()).setValue((Observacion));
+//									.getFirstChild()).setValue((observacion));
 						}
 
 					}

@@ -29,4 +29,8 @@ public class SEvaluacionConducta {
 		return evaluacionConductaDAO.findByEvaluacionIdEvaluacion(id);
 	}
 
+	public EvaluacionConducta buscarConducta (Integer id){
+		return evaluacionConductaDAO.buscar(id);
+	}
+
 }
