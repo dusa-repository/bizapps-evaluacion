@@ -565,6 +565,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 			}
 			guardarObjetivos();
+			guardarEvaluacion ();
 			Messagebox.show("Datos guardados exitosamente", "Información",
 					Messagebox.OK, Messagebox.INFORMATION);
 		}
@@ -998,5 +999,16 @@ public class CEvaluacionEmpleado extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
+	}
+	
+	public void guardarEvaluacion (){
+		System.out.println("entrooo");
+		Evaluacion evalua = servicioEvaluacion.buscarEvaluacion(idEva);
+		System.out.println(evalua);
+		System.out.println(idEva);
+		evalua.setFechaRevision(fechaHora);
+		evalua.setFichaEvaluador(fichaE);
+		evalua.setResultadoObjetivos(totalObjetivo.intValue());
+		servicioEvaluacion.guardar(evalua);
 	}
 }
