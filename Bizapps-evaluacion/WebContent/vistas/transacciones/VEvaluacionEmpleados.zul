@@ -499,7 +499,7 @@
 										model="${$composer.dominio}">
 										<template name="model">
 											<comboitem
-												description="${each.idDominio}"
+												description="${each.id}"
 												label="${each.descripcionDominio}" />
 										</template>
 									</combobox>

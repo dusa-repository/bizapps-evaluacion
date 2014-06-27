@@ -328,7 +328,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
-		winEvaluacionEmpleado.onClose();
+		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 	}
 	
 	@Listen("onClick = #btnEliminarIndicador")
