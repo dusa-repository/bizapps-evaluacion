@@ -351,7 +351,7 @@
 						</button>
 						<button id="btnEliminar2"
 							image="/public/imagenes/botones/eliminar.png" label="Eliminar"
-							onClick="@command('cancelar')">
+							>
 						</button>
 					</div>
 
