@@ -175,6 +175,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
+	List<EvaluacionConducta> evaluacionconductas = new ArrayList<EvaluacionConducta>();
 
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
@@ -310,6 +311,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 				gpxAgregar.setOpen(false);
 				gpxAgregarIndicador.setOpen(false);
+				evaluacionconductas = servicioEvaluacionConducta.buscarConductas(idEva);
 			}
 		}
 	}
@@ -349,7 +351,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 		txtCorresponsables.setValue("");
 		txtPeso.setValue(null);
-		;
+		
 	}
 
 	public void limpiarIndicador() {
@@ -388,6 +390,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
+					map.put("idEva", idEva);
+					map.put("conductas", evaluacionconductas);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions
 							.createComponents(
@@ -435,6 +439,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
+					map.put("idEva", idEva);
+					map.put("conductas", evaluacionconductas);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions
 							.createComponents(
@@ -636,15 +642,21 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 
 		}
+		int item = lbxObjetivosGuardados.getItems().size();
+		System.out.println("k" +item);
 		for (int k = 0; k < lbxObjetivosGuardados.getItems().size(); k++) {
+			
 			List<Listitem> listItem4 = lbxObjetivosGuardados.getItems();
 			String resultadoO = ((Textbox) ((listItem4.get(k).getChildren()
 					.get(5))).getFirstChild()).getValue();
 			totalObjetivo = totalObjetivo + Double.parseDouble(resultadoO);
 			String resultado = totalObjetivo.toString();
-			if (lbxObjetivosGuardados.getItems().size() - 1 == k) {
-				((Textbox) ((listItem4.get(k).getChildren().get(6)))
+			if (k == item-1 ){
+				for (int l = 0; l < lbxObjetivosGuardados.getItems().size(); l++) {
+					List<Listitem> listItem5 = lbxObjetivosGuardados.getItems();
+				((Textbox) ((listItem5.get(l).getChildren().get(6)))
 						.getFirstChild()).setValue(resultado);
+				}
 			}
 		}
 	}

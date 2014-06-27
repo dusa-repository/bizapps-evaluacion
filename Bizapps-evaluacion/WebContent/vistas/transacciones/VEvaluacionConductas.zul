@@ -51,7 +51,7 @@
 
 			</panelchildren>
 		</panel>		
-					
+					<listbox id = "lbxConductasEn" disabled = "true"> </listbox>
 					
 		</groupbox>
 		

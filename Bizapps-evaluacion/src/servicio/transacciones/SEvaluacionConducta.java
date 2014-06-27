@@ -24,4 +24,9 @@ public class SEvaluacionConducta {
 	public void guardar(EvaluacionConducta conducta) {
 		evaluacionConductaDAO.save(conducta);
 	}
+	
+	public List<EvaluacionConducta> buscarConductas (Integer id){
+		return evaluacionConductaDAO.findByEvaluacionIdEvaluacion(id);
+	}
+
 }
