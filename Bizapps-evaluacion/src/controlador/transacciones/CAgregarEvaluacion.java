@@ -277,8 +277,6 @@ public class CAgregarEvaluacion extends CGenerico {
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 		gpxAgregar.setOpen(false);
 		gpxAgregarIndicador.setOpen(false);
-		System.out.println(numero);
-		System.out.println(numeroEvaluacion);	
 	}
 
 
@@ -375,6 +373,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				Messagebox.OK, Messagebox.INFORMATION);
 
 		limpiar();
+		
 	}
 
 
@@ -382,15 +381,20 @@ public class CAgregarEvaluacion extends CGenerico {
 		txtObjetivo.setValue("");
 		cmbPerspectiva.setValue(null);
 		txtCorresponsables.setValue("");
-		txtIndicador.setValue("");
 		txtPeso.setValue(null);
-		txtPesoPorc.setValue(null);
-		txtResFy.setValue(null);
-		txtResultadoPorc.setValue(null);
+		
+	}
+	
+	public void limpiarI (){
+		txtIndicador.setValue("");
+		txtPesoPorc.setValue(0);
+		txtResFy.setValue(0);
+		txtResultadoPorc.setValue(0);
 		txtValorMeta.setValue(null);
-		txtValorResultado.setValue(null);
+		txtValorResultado.setValue(0);
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
+		txtPeso1.setValue(null);
 	}
 
 	@Listen("onClick = #btnAgregarIndicador")
@@ -464,7 +468,7 @@ public class CAgregarEvaluacion extends CGenerico {
 						Messagebox.OK, Messagebox.INFORMATION);
 				gpxAgregarIndicador.setOpen(false);
 
-				limpiar();
+				limpiarI();
 			}
 		}
 	}
