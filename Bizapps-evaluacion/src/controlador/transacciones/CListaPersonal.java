@@ -15,6 +15,7 @@ import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -77,6 +78,7 @@ public class CListaPersonal extends CGenerico {
 	private static int idEva;
 	private static String fichaE;
 	private static Evaluacion eva;
+	public static Revision revision;
 	List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
 
 	@Override
@@ -90,6 +92,9 @@ public class CListaPersonal extends CGenerico {
 				+ u.getNombre() + "   " + u.getApellido());
 		evaluacion = servicioEvaluacion.buscar(ficha);
 		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion));
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
+		idEva = servicioEvaluacion.buscarId() + 1;
+		
 
 	}
 
@@ -101,6 +106,34 @@ public class CListaPersonal extends CGenerico {
 	@Listen("onClick = #btnAgregar")
 	public void AgregarEvaluacion() {
 		winListaPersonal.onClose();
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
+		Integer idUsuario = u.getIdUsuario();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+		idEva = servicioEvaluacion.buscarId()+1;
+		Evaluacion evaluacion = new Evaluacion();
+		evaluacion.setIdEvaluacion(idEva);
+		evaluacion.setEstadoEvaluacion("EN EDICION");
+		evaluacion.setFechaCreacion(fechaHora);
+		evaluacion.setFicha(ficha);
+		evaluacion.setRevision(revision);
+		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
+		evaluacion.setIdUsuario(idUsuario);
+		evaluacion.setPeso(0);
+		evaluacion.setResultado(0);
+		evaluacion.setResultadoObjetivos(0);
+		evaluacion.setResultadoGeneral(0);
+		servicioEvaluacion.guardar(evaluacion);
+		final HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("idEva", idEva);
+		System.out.println("va" +idEva);
+		Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+		winEvaluacionEmpleado = (Window) Executions.createComponents(
+				"/vistas/transacciones/VAgregarEvaluacion.zul", null,
+				map);
+		winEvaluacionEmpleado.doModal();
 	}
 
 	@Listen("onClick = #btnEliminar")

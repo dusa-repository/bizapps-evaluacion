@@ -180,7 +180,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 
-	private static int idEva;
+	private static Integer idEva;
 	private static boolean bool = false;
 	private static int idObjetivo;
 	private static int idIndicador;
@@ -189,14 +189,21 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static String medic;
 	public static Revision revision;
 	private static String fichaE;
-	public static int numero;
+	public static Integer numero = 0;
 
 
 	@Override
 	public void inicializar() throws IOException {
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("itemsCatalogo");
+		if (map != null) {
+			if (map.get("idEva") != null) {
+				Integer idEvaluacion = (Integer) map.get("idEva");
+				idEva = idEvaluacion;
+			}
+		}
 		
-		Integer idEvaluacion = servicioEvaluacion.buscarId() + 1;
-		idEva = idEvaluacion;
+		System.out.println("viene" +idEva);
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
@@ -212,7 +219,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		fichaE = ficha;
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 		numero = numeroEvaluacion;
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
@@ -270,8 +277,10 @@ public class CAgregarEvaluacion extends CGenerico {
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 		gpxAgregar.setOpen(false);
 		gpxAgregarIndicador.setOpen(false);
-	
+		System.out.println(numero);
+		System.out.println(numeroEvaluacion);	
 	}
+
 
 	public ListModelList<Dominio> getDominio() {
 		dominio = new ListModelList<Dominio>(
@@ -293,6 +302,9 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void mostrarObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, numero);
+		System.out.println(fichaE);
+		System.out.println(numero);
+		System.out.println(evaluacionObjetivo);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObjetivo));
 	}
@@ -328,25 +340,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
-		Integer idUsuario = u.getIdUsuario();
-		Integer numeroEvaluacion = Integer.parseInt(lblEvaluacion.getValue());
-
-		Evaluacion evaluacion = new Evaluacion();
-		evaluacion.setIdEvaluacion(idEva);
-		evaluacion.setEstadoEvaluacion("EN EDICION");
-		evaluacion.setFechaCreacion(fechaHora);
-		evaluacion.setFicha(ficha);
-		evaluacion.setRevision(revision);
-		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
-		evaluacion.setIdUsuario(idUsuario);
-		evaluacion.setPeso(0);
-		evaluacion.setResultado(0);
-		evaluacion.setResultadoObjetivos(0);
-		evaluacion.setResultadoGeneral(0);
+		
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -377,7 +371,6 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		}
 		gpxAgregar.setOpen(false);
-		servicioEvaluacion.guardar(evaluacion);
 		Messagebox.show("Objetivos Guardados Exitosamente", "Información",
 				Messagebox.OK, Messagebox.INFORMATION);
 
