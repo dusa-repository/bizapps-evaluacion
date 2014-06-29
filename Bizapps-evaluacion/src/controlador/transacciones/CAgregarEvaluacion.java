@@ -191,6 +191,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static String fichaE;
 	public static int numero;
 
+
 	@Override
 	public void inicializar() throws IOException {
 		
@@ -267,6 +268,8 @@ public class CAgregarEvaluacion extends CGenerico {
 		lblGerencia.setValue(gerenciaReporte);
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+		gpxAgregar.setOpen(false);
+		gpxAgregarIndicador.setOpen(false);
 	
 	}
 
@@ -311,7 +314,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
-		winEvaluacionEmpleado.onClose();
+		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -337,6 +340,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		evaluacion.setEstadoEvaluacion("EN EDICION");
 		evaluacion.setFechaCreacion(fechaHora);
 		evaluacion.setFicha(ficha);
+		evaluacion.setRevision(revision);
 		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
 		evaluacion.setIdUsuario(idUsuario);
 		evaluacion.setPeso(0);
@@ -403,13 +407,12 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
-
+		
 		if (cmbObjetivos.getText().compareTo("") == 0
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
 				|| txtPeso1.getText().compareTo("") == 0
 				|| txtValorMeta.getText().compareTo("") == 0
-				|| txtResFy.getText().compareTo("") == 0
 				|| txtIndicador.getText().compareTo("") == 0
 				|| txtResultadoPorc.getText().compareTo("") == 0
 				|| txtPesoPorc.getText().compareTo("") == 0
@@ -466,7 +469,7 @@ public class CAgregarEvaluacion extends CGenerico {
 						+ cmbObjetivos.getValue() + " "
 						+ "ha sido guardado exitosamente", "Información",
 						Messagebox.OK, Messagebox.INFORMATION);
-				gpxAgregar.setOpen(false);
+				gpxAgregarIndicador.setOpen(false);
 
 				limpiar();
 			}
