@@ -95,7 +95,7 @@ public class CEvaluacionConductas extends CGenerico {
 						numeroEvaluacion, ficha);
 				List<ConductaCompetencia> conductas = new ArrayList<ConductaCompetencia>();
 				conductas = servicioConductaCompetencia
-						.buscarConductaCompetencias(idCompetencia);
+						.buscarConductaCompetencias(competencia);
 				lbxConductasRectoras
 						.setModel(new ListModelList<ConductaCompetencia>(
 								conductas));

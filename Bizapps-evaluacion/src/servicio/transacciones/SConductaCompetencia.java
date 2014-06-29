@@ -18,8 +18,8 @@ public class SConductaCompetencia {
 	@Autowired
 	private IConductaCompetenciaDAO conductaCompetenciaDAO;
 
-	public List<ConductaCompetencia> buscarConductaCompetencias(int id) {
-		return conductaCompetenciaDAO.findByIdCompetencia(id);
+	public List<ConductaCompetencia> buscarConductaCompetencias(Competencia id) {
+		return conductaCompetenciaDAO.findByCompetencia(id);
 	}
 	
 	
