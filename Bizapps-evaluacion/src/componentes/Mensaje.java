@@ -29,6 +29,8 @@ public class Mensaje {
 	public static String codigoPeriodo = "El codigo del periodo definido por el usuario no existe";
 	public static String codigoArea = "El codigo del area definido por el usuario no existe";
 	public static String codigoGerencia = "El codigo de la gerencia definido por el usuario no existe";
+	public static String codigoCompetencia = "El codigo de la competencia definido por el usuario no existe";
+	public static String codigoDominio = "El codigo del dominio definido por el usuario no existe";
 	
 	
 	public static String seleccionarEmpresa = "Debe seleccionar una Empresa";

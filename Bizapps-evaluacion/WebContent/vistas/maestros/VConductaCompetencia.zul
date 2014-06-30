@@ -1,0 +1,90 @@
+<window id="wdwVConductaCompetencia"
+	apply="controlador.maestros.CConductaCompetencia" border="normal"
+	height="auto" style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraConductaCompetencia" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroConductaCompetencia" width="auto"
+			title="" open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva gerencia" />
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="45%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta"
+								value="Código Competencia:" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+						<textbox id="txtCompetenciaConductaCompetencia"
+							width="100%" tabindex="1" maxlength="100"
+							tooltiptext="Ingrese el codigo del area" />
+						<button id="btnBuscarCompetencia" label=""
+							tooltiptext="Catalogo de codigos de competencia"
+							image="/public/imagenes/botones/buscar.png" />
+						<label id="lblCompetencia" />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta"
+								value="Código Dominio:" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+						<textbox id="txtDominioConductaCompetencia"
+							width="100%" tabindex="2" maxlength="100"
+							tooltiptext="Ingrese el codigo del area" />
+						<button id="btnBuscarDominio" label=""
+							tooltiptext="Catalogo de codigos de dominio"
+							image="/public/imagenes/botones/buscar.png" />
+						<label id="lblDominio" />
+					</row>
+					<row>
+						<label value="Descripción:" class="etiqueta" />
+
+						<textbox id="txtDescripcionConductaCompetencia"
+							width="100%" maxlength="255" tabindex="3"
+							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
+					</row>
+					<row>
+						<label value="Orden:" class="etiqueta" />
+
+						<textbox id="txtOrdenConductaCompetencia"
+							width="100%" maxlength="100" tabindex="4"
+							tooltiptext="Ingrese aqui el orden" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosConductaCompetencia" width="auto"
+			title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visua+lizar las gerencias registradas" />
+			<div id="catalogoConductaCompetencia"
+				tooltiptext="Seleccione la gerencia para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+	<div id="divCatalogoCompetencia"
+		tooltiptext="Click para Seleccionar un Codigo" />
+	<div id="divCatalogoDominio"
+		tooltiptext="Click para Seleccionar un Codigo" />
+</window>

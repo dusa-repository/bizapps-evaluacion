@@ -8,7 +8,24 @@ import modelo.maestros.ConductaCompetencia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IConductaCompetenciaDAO extends
-		JpaRepository<ConductaCompetencia, Long> {
+		JpaRepository<ConductaCompetencia, Integer> {
 
 	public List<ConductaCompetencia> findByCompetencia(Competencia id);
+
+	public ConductaCompetencia findByDescripcion(String descripcion);
+
+	public List<ConductaCompetencia> findByIdStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<ConductaCompetencia> findByCompetenciaStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<ConductaCompetencia> findByDominioStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<ConductaCompetencia> findByDescripcionStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<ConductaCompetencia> findByOrdenStartingWithAllIgnoreCase(
+			String valor);
 }
