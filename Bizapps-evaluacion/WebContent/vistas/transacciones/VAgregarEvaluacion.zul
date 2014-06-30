@@ -87,8 +87,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="6%" />
-								<listheader label="Total Ind(%)"
-									width="8%" />
+<!-- 								<listheader label="Total Ind(%)" -->
+<!-- 									width="8%" /> -->
 								<listheader label="Resultados (%)"
 									width="10%" />
 								<listheader width="6%" />
@@ -164,8 +164,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader label="Total Ind(%)"
-									width="9%" />
+<!-- 								<listheader label="Total Ind(%)" -->
+<!-- 									width="9%" /> -->
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>

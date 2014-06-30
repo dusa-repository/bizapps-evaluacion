@@ -228,8 +228,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Authentication auth = SecurityContextHolder.getContext()
 						.getAuthentication();
 				String ficha = evaluacion.getFicha();
-				Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha)
-						.size();
+				Integer numeroEvaluacion = evaluacion.getIdEvaluacionSecundario();
 				num = numeroEvaluacion;
 				System.out.println(num);
 				System.out.println(fichaE);

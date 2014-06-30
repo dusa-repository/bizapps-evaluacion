@@ -219,7 +219,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		fichaE = ficha;
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha);
 		numero = numeroEvaluacion;
 		lblEvaluacion.setValue(numeroEvaluacion.toString());
 		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));

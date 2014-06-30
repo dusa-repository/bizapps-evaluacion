@@ -111,7 +111,7 @@ public class CListaPersonal extends CGenerico {
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 		String ficha = u.getCedula();
 		Integer idUsuario = u.getIdUsuario();
-		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size() + 1;
+		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha) + 1;
 		idEva = servicioEvaluacion.buscarId()+1;
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEva);

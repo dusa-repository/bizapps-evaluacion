@@ -219,7 +219,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				String gerenciaReporte = empleado.getUnidadOrganizativa()
 						.getGerencia().getDescripcion();
 				String nombreTrabajador = empleado.getNombre();
-				Integer numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
+				Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(fichaE) + 1;
 				num = numeroEvaluacion;
 				System.out.println(numeroEvaluacion);
 			

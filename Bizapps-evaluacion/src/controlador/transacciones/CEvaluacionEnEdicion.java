@@ -225,8 +225,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				Authentication auth = SecurityContextHolder.getContext()
 						.getAuthentication();
 				String ficha = evaluacion.getFicha();
-				Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha)
-						.size();
+				Integer numeroEvaluacion = evaluacion.getIdEvaluacionSecundario();
 				Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 				String cargo = empleado.getCargo().getDescripcion();
 				String unidadOrganizativa = empleado.getUnidadOrganizativa()
@@ -328,7 +327,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
+		winEvaluacionEmpleado.onClose();
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
+		
 	}
 	
 	@Listen("onClick = #btnEliminarIndicador")
