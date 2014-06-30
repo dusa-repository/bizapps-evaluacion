@@ -36,11 +36,11 @@ public class CCumplimientoObjetivo extends CGenerico {
 	@Wire
 	private Combobox cmbPeriodo;
 	@Wire
-	private Combobox cmbPeriodoComparar;
-	@Wire
 	private Combobox cmbEmpresa;
 	@Wire
 	private Combobox cmbGerencia;
+	@Wire
+	private Combobox cmbGerenciaComparar;
 	@Wire
 	private Combobox cmbUnidadOrganizativa;
 	@Wire
@@ -65,7 +65,7 @@ public class CCumplimientoObjetivo extends CGenerico {
 				+ cmbEmpresa.getSelectedItem().getLabel() + "/  Gerencia: "
 				+ cmbGerencia.getSelectedItem().getLabel()
 				+ "/  Periodo: "
-				+ cmbPeriodo.getSelectedItem().getLabel() + " - " + cmbPeriodoComparar.getSelectedItem().getLabel() + " / Unidad Organizativa: " + cmbUnidadOrganizativa.getSelectedItem().getLabel() + " ";
+				+ cmbPeriodo.getSelectedItem().getLabel() + " - " +" / Unidad Organizativa: " + cmbUnidadOrganizativa.getSelectedItem().getLabel() + " ";
     	chart.setSubtitle(subtitulo);
     
 		Map parametros = new HashMap();
@@ -78,15 +78,6 @@ public class CCumplimientoObjetivo extends CGenerico {
 								0,
 								cmbPeriodo.getSelectedItem().getId()
 										.length() - 1));
-		parametros.put(
-				"periodo_comparar",
-				cmbPeriodoComparar
-						.getSelectedItem()
-						.getId()
-						.substring(
-								0,
-								cmbPeriodoComparar.getSelectedItem()
-										.getId().length() - 1));
 		parametros.put(
 				"empresa",
 				cmbEmpresa
@@ -106,6 +97,15 @@ public class CCumplimientoObjetivo extends CGenerico {
 								cmbGerencia.getSelectedItem().getId()
 										.length() - 1));
 		parametros.put(
+				"gerencia_comparar",
+				cmbGerenciaComparar
+						.getSelectedItem()
+						.getId()
+						.substring(
+								0,
+								cmbGerenciaComparar.getSelectedItem().getId()
+										.length() - 1));
+		parametros.put(
 				"unidad",
 				cmbUnidadOrganizativa
 						.getSelectedItem()
@@ -116,7 +116,7 @@ public class CCumplimientoObjetivo extends CGenerico {
 										.getId().length() - 1));
 		
 		parametros.put("estado_evaluacion", "FINALIZADA");
-    	 chart.setModel(servicioReporte.getDataCumplimientoObjetivo(parametros));
+    	 chart.setModel(servicioReporte.getDataCumplimientoObjetivoG(parametros));
          
     	 chart.getXAxis().setMin(0);
          chart.getXAxis().getTitle().setText("Periodo");
@@ -145,6 +145,16 @@ public class CCumplimientoObjetivo extends CGenerico {
     	
 		
 	}
+    
+    @Listen("onClick = #btnLimpiar")
+	public void limpiar() {
+		cmbPeriodo.setText("Seleccione un Periodo");
+		cmbEmpresa.setText("Seleccione una Empresa");
+		cmbGerencia.setText("Seleccione una Gerencia");
+		cmbGerenciaComparar.setText("Seleccione una Gerencia");
+		cmbGerenciaComparar.setText("Seleccione una Gerencia");
+		cmbUnidadOrganizativa.setText("Seleccione una Unidad Organizativa");
+	}
 
 
 	@Override
@@ -170,23 +180,23 @@ public class CCumplimientoObjetivo extends CGenerico {
 
 	private void comboGerencia() {
 		List<Gerencia> gerencias = new ArrayList<Gerencia>();
-		Gerencia gerenciaAuxiliar = new Gerencia();
+		/*Gerencia gerenciaAuxiliar = new Gerencia();
 		gerenciaAuxiliar.setId(0);
 		gerenciaAuxiliar.setDescripcion("TODAS");
-		gerencias.add(gerenciaAuxiliar);
+		gerencias.add(gerenciaAuxiliar);*/
 		gerencias.addAll(servicioGerencia.buscarTodas());
 		cmbGerencia.setModel(new ListModelList<Gerencia>(gerencias));
+		cmbGerenciaComparar.setModel(new ListModelList<Gerencia>(gerencias));
 	}
 
 	private void comboPeriodo() {
-		List<Revision> revisiones = servicioRevision.buscarTodas();
-		/*
-		 * Periodo periodoAuxiliar = new Periodo(); periodoAuxiliar.setId(0);
-		 * periodoAuxiliar.setDescripcion("TODAS");
-		 * periodos.add(periodoAuxiliar);
-		 */
-		cmbPeriodo.setModel(new ListModelList<Revision>(revisiones));
-		cmbPeriodoComparar.setModel(new ListModelList<Revision>(revisiones));
+		List<Revision> revisiones = new ArrayList<Revision>();
+		Revision revisionAuxiliar = new Revision();
+		revisionAuxiliar.setId(0);
+		revisionAuxiliar.setDescripcion("TODOS");
+		revisiones.add(revisionAuxiliar);
+		revisiones.addAll(servicioRevision.buscarTodas());
+		cmbPeriodo.setModel(new ListModelList<Revision>(revisiones));	
 	}
 
 	private void comboUnidadOrganizativa() {

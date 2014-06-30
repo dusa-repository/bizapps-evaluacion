@@ -457,7 +457,7 @@ public class ReporteDAO implements IReporteDAO {
 		List<Object[]> results = qSentencia.getResultList();
 
 		for (Object[] obj : results) {
-			model.setValue((String) obj[0], (String) obj[1], (double) obj[1]);
+			model.setValue((String) obj[0], (String) obj[1], (double) obj[2]);
 		}
 
 		// if (vsGerencia) {
@@ -505,11 +505,16 @@ public class ReporteDAO implements IReporteDAO {
 				} else {
 					restricciones += " AND";
 				}
-
+				
+				
 				switch (entrada.getKey()) {
 				case "gerencia":
-					restricciones += " ge.id_gerencia=" + entrada.getValue()
-							+ "";
+					restricciones += " ge.id_gerencia in ( "
+							+ entrada.getValue() + ","
+							+ parametros.get("gerencia_comparar") + " )";
+					break;
+				case "gerencia_comparar":
+					restricciones += " 1=1 ";
 					break;
 				case "empresa":
 					restricciones += " emp.id_empresa=" + entrada.getValue()
@@ -520,12 +525,8 @@ public class ReporteDAO implements IReporteDAO {
 							+ entrada.getValue() + "";
 					break;
 				case "periodo":
-					restricciones += " eva.id_revision in ( "
-							+ entrada.getValue() + ","
-							+ parametros.get("periodo_comparar") + " )";
-					break;
-				case "periodo_comparar":
-					restricciones += " 1=1 ";
+					restricciones += " eva.id_revision=" + entrada.getValue()
+							+ "";
 					break;
 				case "estado_evaluacion":
 					restricciones += " eva.estado_evaluacion = '"
@@ -541,9 +542,9 @@ public class ReporteDAO implements IReporteDAO {
 			}
 		}
 
-		sentencia = "  select  rev.descripcion as desc_rev,nivc.id_competencia,comp.descripcion as desc_comp,Count(*) as cantidad  from evaluacion as eva INNER JOIN empleado as emp ON eva.ficha=emp.ficha INNER JOIN nivel_competencia_cargo as nivc ON nivc.id_cargo=emp.id_cargo INNER JOIN evaluacion_competencia as evac ON evac.id_evaluacion=eva.id_evaluacion INNER JOIN competencia as comp ON comp.id_competencia=nivc.id_competencia INNER JOIN revision as rev ON eva.id_revision = rev.id_revision INNER JOIN periodo ON periodo.id_periodo = rev.id_periodo     INNER JOIN unidad_organizativa as uni ON uni.id_unidad_organizativa = emp.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = uni.id_gerencia INNER JOIN empresa as empr ON empr.id_empresa=emp.id_empresa INNER JOIN valoracion as valo ON valo.nombre = eva.valoracion  WHERE nivc.id_competencia=evac.id_competencia  and evac.id_dominio<>0 AND nivc.id_dominio > (evac.id_dominio+5)     ";
+		sentencia = "  select  ge.descripcion as desc_rev,nivc.id_competencia,comp.descripcion as desc_comp,Count(*) as cantidad  from evaluacion as eva INNER JOIN empleado as emp ON eva.ficha=emp.ficha INNER JOIN nivel_competencia_cargo as nivc ON nivc.id_cargo=emp.id_cargo INNER JOIN evaluacion_competencia as evac ON evac.id_evaluacion=eva.id_evaluacion INNER JOIN competencia as comp ON comp.id_competencia=nivc.id_competencia INNER JOIN revision as rev ON eva.id_revision = rev.id_revision INNER JOIN periodo ON periodo.id_periodo = rev.id_periodo     INNER JOIN unidad_organizativa as uni ON uni.id_unidad_organizativa = emp.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = uni.id_gerencia INNER JOIN empresa as empr ON empr.id_empresa=emp.id_empresa INNER JOIN valoracion as valo ON valo.nombre = eva.valoracion  WHERE nivc.id_competencia=evac.id_competencia  and evac.id_dominio<>0 AND nivc.id_dominio > (evac.id_dominio+5)     ";
 		ordenamiento = "  order by id_competencia ";
-		agrupamiento = " group by rev.descripcion,nivc.id_competencia,comp.descripcion ";
+		agrupamiento = " group by ge.descripcion,nivc.id_competencia,comp.descripcion ";
 
 		CategoryModel model;
 		model = new DefaultCategoryModel();
@@ -562,6 +563,9 @@ public class ReporteDAO implements IReporteDAO {
 		return model;
 
 	}
+	
+	/* ----------------- GERENCIA ---------------------- */
+	
 
 	@Override
 	public CategoryModel getDataEvaluadosBrecha(Map<String, String> parametros) {

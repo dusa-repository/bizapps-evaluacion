@@ -17,30 +17,28 @@ public class SReporte {
 	@Autowired
 	private IReporteDAO servicioReporteDAO;
 
+	
+/* ----------------- PERIODO ---------------------- */
+	
 	@SuppressWarnings("unchecked")
-	public CategoryModel getDataResumenMacro(Map parametros) {
+	public CategoryModel getDataResumenMacroP(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
 				.getDataResumenMacroPeriodo(parametros);
-		
 		return datos;
-
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	public CategoryModel getDataCumplimientoObjetivo(Map parametros) {
+	public CategoryModel getDataCumplimientoObjetivoP(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
 				.getDataCumplimientoObjetivoPeriodo(parametros);
-		
 		return datos;
-
 	}
 
-	
 	@SuppressWarnings("unchecked")
-	public CategoryModel getDataResumenGeneralBrecha(Map parametros) {
+	public CategoryModel getDataResumenGeneralBrechaP(Map parametros) {
 
 		CategoryModel datos = servicioReporteDAO
 				.getDataResumenGeneralBrechaPeriodo(parametros);
@@ -49,7 +47,46 @@ public class SReporte {
 
 	}
 	
+	/* ----------------- PERIODO ---------------------- */
+	
+	/* ----------------- GERENCIA ---------------------- */
+	
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataResumenMacroG(Map parametros) {
 
+		CategoryModel datos = servicioReporteDAO
+				.getDataResumenMacroGerencia(parametros);
+		return datos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataCumplimientoObjetivoG(Map parametros) {
+
+		CategoryModel datos = servicioReporteDAO
+				.getDataCumplimientoObjetivoGerencia(parametros);
+		return datos;
+	}
+
+	@SuppressWarnings("unchecked")
+	public CategoryModel getDataResumenGeneralBrechaG(Map parametros) {
+
+		CategoryModel datos = servicioReporteDAO
+				.getDataResumenGeneralBrechaGerencia(parametros);
+		
+		return datos;
+
+	}
+	
+	/* ----------------- GERENCIA ---------------------- */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	public CategoryModel getDataEvaluadosBrecha(Map parametros) {
 
@@ -59,7 +96,6 @@ public class SReporte {
 		return datos;
 
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public List<BeanDataGeneralCsv> getDataGeneralCsv(Map parametros) {

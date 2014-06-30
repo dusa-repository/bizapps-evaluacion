@@ -137,7 +137,7 @@ public class CResumenGeneralBrecha extends CGenerico {
 		
     	
     	
-    	 chart.setModel(servicioReporte.getDataResumenGeneralBrecha(parametros));
+    	 chart.setModel(servicioReporte.getDataResumenGeneralBrechaP(parametros));
          
     	 chart.getXAxis().setMin(0);
          chart.getXAxis().getTitle().setText("Brechas");

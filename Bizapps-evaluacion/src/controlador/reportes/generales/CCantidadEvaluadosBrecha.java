@@ -39,6 +39,8 @@ public class CCantidadEvaluadosBrecha extends CGenerico {
 	@Wire
 	private Combobox cmbUnidadOrganizativa;
 	@Wire
+	private Combobox cmbCompetencia;
+	@Wire
 	private Button btnGenerar;
 	@Wire
 	private Button btnLimpiar;
@@ -141,6 +143,7 @@ public class CCantidadEvaluadosBrecha extends CGenerico {
 		cmbEmpresa.setText("Seleccione una Empresa");
 		cmbGerencia.setText("Seleccione una Gerencia");
 		cmbUnidadOrganizativa.setText("Seleccione una Unidad Organizativa");
+		cmbCompetencia.setText("Seleccione una Competencia");
 	}
 
 	@Listen("onClick = #btnSalir")
@@ -168,6 +171,10 @@ public class CCantidadEvaluadosBrecha extends CGenerico {
 			Messagebox.show(Mensaje.seleccionarUnidadOrganizativa, alerta, Messagebox.OK,
 					Messagebox.EXCLAMATION);
 			valido = false;
+		}  else if (cmbCompetencia.getSelectedItem() == null) {
+			Messagebox.show(Mensaje.seleccionarCompetencia, alerta, Messagebox.OK,
+					Messagebox.EXCLAMATION);
+			valido = false;
 		}  
 	
 		return valido;
@@ -180,6 +187,7 @@ public class CCantidadEvaluadosBrecha extends CGenerico {
 		comboGerencia();
 		comboPeriodo();
 		comboUnidadOrganizativa();
+		comboCompetencia();
 	}
 
 	private void comboEmpresa() {
@@ -230,6 +238,7 @@ public class CCantidadEvaluadosBrecha extends CGenerico {
 		competenciaAuxiliar.setDescripcion("TODAS");
 		compentencias.add(competenciaAuxiliar);
 		compentencias.addAll(servicioCompetencia.buscarTodas());
+		cmbCompetencia.setModel(new ListModelList<Competencia>(compentencias));
 	}
 
 	

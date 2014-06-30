@@ -1,0 +1,76 @@
+<zk>
+	<window class="general" apply="controlador.reportes.gerencia.CCumplimientoObjetivo" id="winCumplimientoObjetivo">
+		<groupbox width="100%" mold="3d"
+			title="Parametros">
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="16%" />
+					<column label="" width="34%" />
+					<column label="" width="15%" />
+					<column label="" width="35%" />
+				</columns>
+				<rows>
+					<row>
+						<label class="etiqueta" value="Gerencia:" />
+						<combobox id="cmbGerencia" readonly="true" value="Seleccione una Gerencia"
+							width="100%">
+							<template name="model">
+								<comboitem label="${each.descripcion}" id="${each.id}A" />
+							</template>
+						</combobox>
+
+						<label class="etiqueta" value="Gerencia Comparar:" />
+						<combobox id="cmbGerenciaComparar" readonly="true" value="Seleccione una Gerencia"
+							width="100%">
+							<template name="model">
+								<comboitem label="${each.descripcion}" id="${each.id}B" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+						<label class="etiqueta" value="Empresa:" />
+						<combobox id="cmbEmpresa" readonly="true"
+							value="Seleccione una Empresa" width="100%">
+							<template name="model">
+								<comboitem label="${each.nombre}" id="${each.id}C" />
+							</template>
+						</combobox>
+						
+						<label class="etiqueta" value="Periodo:" />
+						<combobox id="cmbPeriodo" readonly="true"
+							value="Seleccione un Periodo" width="100%">
+							<template name="model">
+								<comboitem label="${each.descripcion}" id="${each.id}D" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+					<label class="etiqueta" value="Unidad Organizativa:" />
+						<combobox id="cmbUnidadOrganizativa" readonly="true"
+							value="Seleccione una Unidad Organizativa" width="100%">
+							<template name="model">
+								<comboitem label="${each.descripcion}" id="${each.id}E" />
+							</template>
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+			<div align="right" style="float: right;">
+				<button id="btnGenerar" tooltiptext="Generar"
+					image="/public/iconos/generar.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+				<button id="btnLimpiar" tooltiptext="Limpiar"
+					image="/public/iconos/limpiar.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+				<button id="btnSalir" tooltiptext="Salir"
+					image="/public/iconos/salir.png" style="background:#FFFFFF; border:solid #FF7925"
+					class="btnCatalogo" />
+			</div>
+		</groupbox>
+		<groupbox height="100%">
+		    <charts id="chart" type="column"
+		        title="Resultados de Desempeño / Cumplimiento Objetivos"
+		        subtitle=""/>
+		</groupbox>
+	</window>
+</zk>

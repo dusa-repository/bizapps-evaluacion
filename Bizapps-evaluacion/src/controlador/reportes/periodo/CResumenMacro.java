@@ -116,7 +116,7 @@ public class CResumenMacro extends CGenerico {
 			
 			parametros.put("estado_evaluacion", "FINALIZADA");
 			
-			chart.setModel(servicioReporte.getDataResumenMacro(parametros));
+			chart.setModel(servicioReporte.getDataResumenMacroP(parametros));
 
 			chart.getXAxis().setMin(0);
 			chart.getXAxis().getTitle().setText("Valoracion");

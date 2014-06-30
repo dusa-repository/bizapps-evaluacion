@@ -121,7 +121,7 @@ public class CCumplimientoObjetivo extends CGenerico {
 										.getId().length() - 1));
 		
 		parametros.put("estado_evaluacion", "FINALIZADA");
-    	 chart.setModel(servicioReporte.getDataCumplimientoObjetivo(parametros));
+    	 chart.setModel(servicioReporte.getDataCumplimientoObjetivoP(parametros));
          
     	 chart.getXAxis().setMin(0);
          chart.getXAxis().getTitle().setText("Periodo");
@@ -224,17 +224,19 @@ public class CCumplimientoObjetivo extends CGenerico {
 		gerencias.add(gerenciaAuxiliar);
 		gerencias.addAll(servicioGerencia.buscarTodas());
 		cmbGerencia.setModel(new ListModelList<Gerencia>(gerencias));
+		
 	}
 
 	private void comboPeriodo() {
-		List<Revision> revisiones = servicioRevision.buscarTodas();
-		/*
-		 * Periodo periodoAuxiliar = new Periodo(); periodoAuxiliar.setId(0);
-		 * periodoAuxiliar.setDescripcion("TODAS");
-		 * periodos.add(periodoAuxiliar);
-		 */
-		cmbPeriodo.setModel(new ListModelList<Revision>(revisiones));
-		cmbPeriodoComparar.setModel(new ListModelList<Revision>(revisiones));
+		List<Revision> revisiones = new ArrayList<Revision>();
+		/*Revision revisionAuxiliar = new Revision();
+		revisionAuxiliar.setId(0);
+		revisionAuxiliar.setDescripcion("TODOS");
+		revisiones.add(revisionAuxiliar);*/
+		revisiones.addAll(servicioRevision.buscarTodas());
+		cmbPeriodo.setModel(new ListModelList<Revision>(revisiones));	
+		cmbPeriodoComparar.setModel(new ListModelList<Revision>(revisiones));	
+		
 	}
 
 	private void comboUnidadOrganizativa() {
