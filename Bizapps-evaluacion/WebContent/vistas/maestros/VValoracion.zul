@@ -1,0 +1,78 @@
+<window id="wdwVValoracion" apply="controlador.maestros.CValoracion"
+	border="normal" height="auto" style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraValoracion" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroValoracion" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva gerencia" />
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Nombre:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtNombreValoracion" width="80%"
+							maxlength="50" tabindex="1"
+							tooltiptext="Ingrese aqui el nombre de la valoracion" />
+					</row>
+					<row>
+						<label value="Descripción:" class="etiqueta" />
+						<textbox id="txtDescripcionValoracion"
+							width="80%" maxlength="500" tabindex="2"
+							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
+					</row>
+					<row>
+						<label value="Orden:" class="etiqueta" />
+						<textbox id="txtOrdenValoracion" width="80%"
+							tabindex="3"
+							tooltiptext="Ingrese aqui el orden de la valoracion" />
+					</row>
+					<row>
+						<label value="Rango inferior:" class="etiqueta" />
+						<textbox id="txtRangoInferiorValoracion"
+							width="80%" tabindex="4"
+							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
+					</row>
+					<row>
+						<label value="Rango superior:" class="etiqueta" />
+						<textbox id="txtRangoSuperiorValoracion"
+							width="80%" tabindex="5"
+							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
+					</row>
+					<row>
+						<label value="Valor:" class="etiqueta" />
+						<textbox id="txtValorValoracion" width="80%"
+							tabindex="6"
+							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosValoracion" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visua+lizar las gerencias registradas" />
+			<div id="catalogoValoracion"
+				tooltiptext="Seleccione la gerencia para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

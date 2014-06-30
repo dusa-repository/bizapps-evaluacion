@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -18,7 +19,7 @@ public class Valoracion implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="id_valoracion")
-	private int idValoracion;
+	private int id;
 
 	@Column(name="descripcion")
 	private String descripcion;
@@ -55,7 +56,7 @@ public class Valoracion implements Serializable {
 			String nombre, int orden, int rangoInferior, int rangoSuperior,
 			int valor) {
 		super();
-		this.idValoracion = idValoracion;
+		this.id = idValoracion;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -67,12 +68,21 @@ public class Valoracion implements Serializable {
 		this.valor = valor;
 	}
 
-	public int getIdValoracion() {
-		return this.idValoracion;
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setIdValoracion(int idValoracion) {
-		this.idValoracion = idValoracion;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getDescripcion() {
@@ -97,14 +107,6 @@ public class Valoracion implements Serializable {
 
 	public void setHoraAuditoria(String horaAuditoria) {
 		this.horaAuditoria = horaAuditoria;
-	}
-
-	public String getIdUsuario() {
-		return this.usuario;
-	}
-
-	public void setIdUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 
 	public String getNombre() {
