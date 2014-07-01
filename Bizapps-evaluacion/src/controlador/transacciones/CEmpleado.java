@@ -226,9 +226,9 @@ public class CEmpleado extends CGenerico {
 							Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
 							List<Listitem> listItem2 = lbxEvaluacion.getItems();
 							Evaluacion eva = listItem2.get(j).getValue();
-							Integer id = eva.getIdUsuario();
-							Usuario usuario = servicioUsuario.buscarId(id);
-							String nombre = usuario.getNombre() + "  " + usuario.getApellido();
+							String fichaS = eva.getFichaEvaluador();
+							Empleado empleado = servicioEmpleado.buscarPorFicha(fichaS);
+							String nombre = empleado.getNombre();
 							((Label) ((listItem.getChildren().get(5))).getFirstChild())
 									.setValue(nombre);
 						}

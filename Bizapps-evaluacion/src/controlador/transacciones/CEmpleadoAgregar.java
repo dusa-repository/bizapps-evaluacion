@@ -80,6 +80,7 @@ public class CEmpleadoAgregar extends CGenerico {
 	private static Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
 	public static Revision revision;
+	private static int idEva;
 
 	Mensaje msj = new Mensaje();
 
@@ -218,8 +219,34 @@ public class CEmpleadoAgregar extends CGenerico {
 		if (arbolPersonalAgregar.getSelectedItem() != null) {
 			String item = String.valueOf(arbolPersonalAgregar.getSelectedItem()
 					.getContext());
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+			Integer idUsuario = u.getIdUsuario();
+			Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
+			idEva = servicioEvaluacion.buscarId() + 1;
+			Empleado empleado = servicioEmpleado.buscarPorFicha(item);
+			String fichaEvaluador = empleado.getFichaSupervisor();
+			Integer idCargo = empleado.getCargo().getId();
+			Evaluacion evaluacion = new Evaluacion();
+			evaluacion.setIdEvaluacion(idEva);
+			evaluacion.setEstadoEvaluacion("EN EDICION");
+			evaluacion.setFechaCreacion(fechaHora);
+			evaluacion.setFechaAuditoria(fechaHora);
+			evaluacion.setFicha(item);
+			evaluacion.setRevision(revision);
+			evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
+			evaluacion.setIdUsuario(idUsuario);
+			evaluacion.setFichaEvaluador(fichaEvaluador);
+			evaluacion.setPeso(0);
+			evaluacion.setResultado(0);
+			evaluacion.setResultadoObjetivos(0);
+			evaluacion.setResultadoGeneral(0);
+			servicioEvaluacion.guardar(evaluacion);
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ficha", item);
+			map.put("id", idEva);
+			map.put("numero", numeroEvaluacion);
 			Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 			winEvaluacionEmpleadoAgregar = (Window) Executions
 					.createComponents(

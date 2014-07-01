@@ -202,18 +202,21 @@ public class CEvaluacionAgregar extends CGenerico {
 
 		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
 		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
-
-		
-		Integer idEvaluacion = servicioEvaluacion.buscarId() + 1;
-		idEva = idEvaluacion;
-		System.out.println(idEva);
+//
+//		
+//		Integer idEvaluacion = servicioEvaluacion.buscarId() + 1;
+//		idEva = idEvaluacion;
+//		System.out.println(idEva);
 
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
 		if (map != null) {
 			if (map.get("ficha") != null) {
 				String ficha = (String) map.get("ficha");
+				Integer idEvaluacion1 = (Integer) map.get("id");
 				fichaE = ficha;
+				idEva = idEvaluacion1;
+				
 				Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 				String cargo = empleado.getCargo().getDescripcion();
 				String unidadOrganizativa = empleado.getUnidadOrganizativa()
@@ -221,7 +224,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				String gerenciaReporte = empleado.getUnidadOrganizativa()
 						.getGerencia().getDescripcion();
 				String nombreTrabajador = empleado.getNombre();
-				Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(fichaE) + 1;
+				Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(fichaE);
 				num = numeroEvaluacion;
 				System.out.println(numeroEvaluacion);
 			
@@ -361,31 +364,31 @@ public class CEvaluacionAgregar extends CGenerico {
 	public void AgregarObjetivo2() {
 		
 		gpxAgregados.setOpen(true);
-		Integer numeroEvaluacion;
-		Integer idEvaluacion;
-		if (objetivosG.size() == 0) {
-			idEvaluacion = servicioEvaluacion.buscarId() + 1;
-			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
-		}
-		else{
-			idEvaluacion = servicioEvaluacion.buscarId();
-			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size();
-		}
+//		Integer numeroEvaluacion;
+//		Integer idEvaluacion;
+//		if (objetivosG.size() == 0) {
+//			idEvaluacion = servicioEvaluacion.buscarId() + 1;
+//			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
+//		}
+//		else{
+//			idEvaluacion = servicioEvaluacion.buscarId();
+//			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size();
+//		}
 		
-		Evaluacion evaluacion = new Evaluacion();
-		evaluacion.setIdEvaluacion(idEvaluacion);
-		evaluacion.setEstadoEvaluacion("EN EDICION");
-		evaluacion.setFechaCreacion(fechaHora);
-		evaluacion.setFicha(fichaE);
-		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
-		evaluacion.setIdUsuario(usuario);
-		evaluacion.setRevision(revision);
-		evaluacion.setPeso(0);
-		evaluacion.setResultado(0);
-		evaluacion.setResultadoObjetivos(0);
-		evaluacion.setResultadoGeneral(0);
-		evaluacion.setResultadoFinal(0);
-		
+//		Evaluacion evaluacion = new Evaluacion();
+//		evaluacion.setIdEvaluacion(idEvaluacion);
+//		evaluacion.setEstadoEvaluacion("EN EDICION");
+//		evaluacion.setFechaCreacion(fechaHora);
+//		evaluacion.setFicha(fichaE);
+//		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
+//		evaluacion.setIdUsuario(usuario);
+//		evaluacion.setRevision(revision);
+//		evaluacion.setPeso(0);
+//		evaluacion.setResultado(0);
+//		evaluacion.setResultadoObjetivos(0);
+//		evaluacion.setResultadoGeneral(0);
+//		evaluacion.setResultadoFinal(0);
+//		
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -399,7 +402,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 		idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
 		Integer linea = objetivosG.size() + 1;
-		objetivoLista.setIdEvaluacion(idEvaluacion);
+		objetivoLista.setIdEvaluacion(idEva);
 		objetivoLista.setDescripcionObjetivo(objetivo);
 		objetivoLista.setPerspectiva(perspectiva);
 		objetivoLista.setIdObjetivo(idObjetivo);
@@ -414,7 +417,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		servicioEvaluacionObjetivo.guardar(objetivoLista);
 		gpxAgregar.setOpen(false);
 
-		servicioEvaluacion.guardar(evaluacion);
+//		servicioEvaluacion.guardar(evaluacion);
 		Messagebox.show("Objetivos Guardados Exitosamente", "Información",
 				Messagebox.OK, Messagebox.INFORMATION);
 		}

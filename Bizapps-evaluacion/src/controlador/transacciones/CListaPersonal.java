@@ -104,9 +104,9 @@ public class CListaPersonal extends CGenerico {
 			Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
 			List<Listitem> listItem2 = lbxEvaluacion.getItems();
 			Evaluacion eva = listItem2.get(j).getValue();
-			Integer id = eva.getIdUsuario();
-			Usuario usuario = servicioUsuario.buscarId(id);
-			String nombre = usuario.getNombre() + "  " + usuario.getApellido();
+			String fichaS = eva.getFichaEvaluador();
+			Empleado empleado = servicioEmpleado.buscarPorFicha(fichaS);
+			String nombre = empleado.getNombre();
 			((Label) ((listItem.getChildren().get(5))).getFirstChild())
 					.setValue(nombre);
 		}
@@ -127,14 +127,19 @@ public class CListaPersonal extends CGenerico {
 		Integer idUsuario = u.getIdUsuario();
 		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha) + 1;
 		idEva = servicioEvaluacion.buscarId() + 1;
+		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+		String fichaEvaluador = empleado.getFichaSupervisor();
+		Integer idCargo = empleado.getCargo().getId();
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEva);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
 		evaluacion.setFechaCreacion(fechaHora);
+		evaluacion.setFechaAuditoria(fechaHora);
 		evaluacion.setFicha(ficha);
 		evaluacion.setRevision(revision);
 		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
 		evaluacion.setIdUsuario(idUsuario);
+		evaluacion.setFichaEvaluador(fichaEvaluador);
 		evaluacion.setPeso(0);
 		evaluacion.setResultado(0);
 		evaluacion.setResultadoObjetivos(0);
