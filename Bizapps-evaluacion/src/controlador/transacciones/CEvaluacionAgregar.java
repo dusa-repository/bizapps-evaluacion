@@ -93,6 +93,8 @@ public class CEvaluacionAgregar extends CGenerico {
 	@Wire
 	private Button btnGuardarIndicador;
 	@Wire
+	private Button btnCancelarO;
+	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
 	private Listbox lbxObjetivosGuardados;
@@ -283,6 +285,11 @@ public class CEvaluacionAgregar extends CGenerico {
 		return dominio;
 	}
 
+	@Listen("onClick = #btnCancelarO")
+	public void cerrarPanel() {
+		gpxAgregar.setOpen(false);
+	}
+	
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
 		gpxAgregados.setOpen(true);

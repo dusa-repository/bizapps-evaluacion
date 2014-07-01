@@ -146,6 +146,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Button btnCancelarEvaluacion;
 	@Wire
+	private Button btnCancelarO;
+	@Wire
 	private Listbox lbxCompetenciaRectora;
 	@Wire
 	private Listbox lbxObjetivos;
@@ -331,6 +333,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 		gpxAgregarIndicador.setOpen(true);
 	}
 
+	@Listen("onClick = #btnCancelarO")
+	public void cerrarPanel() {
+		gpxAgregar.setOpen(false);
+	}
+	
 	@Listen("onClick = #btnEliminar")
 	public void eliminarObj() {
 		eliminarObjetivo ();

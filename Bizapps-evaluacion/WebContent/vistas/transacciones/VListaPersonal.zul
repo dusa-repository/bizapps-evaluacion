@@ -41,7 +41,7 @@
 			<listbox height="auto" id="lbxEvaluacion" mold="paging"
 				pageSize="10" width="auto">
 				<listhead style="background: #F8E0E0">
-					<listheader label="Id Evaluación" width="15%" />
+					<listheader label="#Evaluación" width="15%" />
 					<listheader label="Revisión" width="20%" />
 					<listheader label="Fecha" width="20%" />
 					<listheader label="Estado" width="20%" />
@@ -50,7 +50,7 @@
 				</listhead>
 				<template name="model">
 					<listitem>
-						<listcell label="${each.idEvaluacion}"></listcell>
+						<listcell label="${each.idEvaluacionSecundario}"></listcell>
 						<listcell label="${each.revision.descripcion}"></listcell>
 						<listcell
 							label="${sdf.format(each.fechaCreacion)}">

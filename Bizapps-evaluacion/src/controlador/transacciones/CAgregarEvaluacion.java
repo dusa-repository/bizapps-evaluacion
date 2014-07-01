@@ -82,6 +82,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Button btnOk;
 	@Wire
+	private Button btnCancelarO;
+	@Wire
 	private Button btnOk2;
 	@Wire
 	private Button btnEliminar;
@@ -290,6 +292,11 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void eliminarI() {
 		eliminarIndicador();
 	}
+	
+	@Listen("onClick = #btnCancelarO")
+	public void cerrarPanel() {
+		gpxAgregar.setOpen(false);
+	}
 
 	@Listen("onClick = #btnEliminar")
 	public void eliminarObj() {
@@ -325,6 +332,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
+		winEvaluacionEmpleado.onClose();
 	}
 
 	@Listen("onClick = #btnAgregar")

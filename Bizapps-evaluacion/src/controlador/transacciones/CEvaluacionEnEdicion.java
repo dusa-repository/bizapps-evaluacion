@@ -93,6 +93,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnEliminarIndicador;
 	@Wire
+	private Button btnCancelarO;
+	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
 	private Listbox lbxObjetivosGuardados;
@@ -330,6 +332,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		winEvaluacionEmpleado.onClose();
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 		
+	}
+	
+	@Listen("onClick = #btnCancelarO")
+	public void cerrarPanel() {
+		gpxAgregar.setOpen(false);
 	}
 	
 	@Listen("onClick = #btnEliminarIndicador")

@@ -60,7 +60,7 @@
 					<label id="lblFechaCreacion"
 						style="font-size: 10px;">
 					</label>
-					<label id="lblRevision" value="FY13-14 (1)"
+					<label id="lblRevision"
 						style="font-size: 10px;">
 					</label>
 					<label id="lblFicha" style="font-size: 10px;">
@@ -106,15 +106,14 @@
 								<listheader label="Plan Estratégico"
 									width="22%" />
 								<listheader label="Objetivo"
-									width="33%" />
+									width="38%" />
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="6%" />
-								<listheader label="Total Ind(%)"
-									width="8%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
-								<listheader width="6%" />
+								<listheader width="5%" />
+								<listheader width="5%" />
 							</listhead>
 							<listitem>
 								<listcell></listcell>
@@ -145,11 +144,6 @@
 								</listcell>
 								<listcell>
 									<textbox value="0"
-										placeholder="Total" mold="rounded" rows="1" width="100%"
-										readonly="true" id="txtTotal" />
-								</listcell>
-								<listcell>
-									<textbox value="0"
 										placeholder="Resultados" mold="rounded" rows="1" width="100%"
 										readonly="true" id="txtResultados" />
 								</listcell>
@@ -157,6 +151,13 @@
 									<button id="btnOk" width="auto"
 										height="auto" mold="trendy"
 										image="/public/imagenes/botones/seleccionar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+									</listcell>
+								<listcell>
+									<button id="btnCancelarO" width="auto"
+										height="auto" mold="trendy"
+										image="/public/imagenes/botones/anular.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
@@ -178,8 +179,6 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader label="Total Ind(%)"
-									width="9%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -196,9 +195,6 @@
 										label="${each.corresponsables}">
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
-									<listcell
-										label="${each.totalInd}">
-									</listcell>
 									<listcell
 										label="${each.resultado}">
 									</listcell>
