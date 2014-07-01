@@ -7,7 +7,10 @@ import interfacedao.transacciones.IEvaluacionObjetivoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Competencia;
+import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionCompetencia;
+import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.TipoFormacion;
 
@@ -25,5 +28,8 @@ public class SEvaluacionCompetencia {
 		evaluacionCompetenciaDAO.save(competencia);
 	}
 	
-	
+	public EvaluacionCompetencia buscar (Evaluacion evaluacion, Competencia competencia){
+		return evaluacionCompetenciaDAO.findByEvaluacionAndCompetencia(evaluacion, competencia);
+	}
+
 }
