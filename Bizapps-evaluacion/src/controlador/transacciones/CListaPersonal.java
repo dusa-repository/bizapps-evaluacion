@@ -41,6 +41,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Panel;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -72,6 +73,8 @@ public class CListaPersonal extends CGenerico {
 	@Wire
 	private Listbox lbxEvaluacion;
 	@Wire
+	private Listbox lbxUsuario;
+	@Wire
 	private Window winEvaluacionEmpleado;
 	@Wire
 	private Groupbox gpxListaPersonal;
@@ -80,6 +83,8 @@ public class CListaPersonal extends CGenerico {
 	private static Evaluacion eva;
 	public static Revision revision;
 	List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
+	List<Usuario> usuarios = new ArrayList<Usuario>();
+	Evaluacion evaluacionN;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -94,15 +99,24 @@ public class CListaPersonal extends CGenerico {
 		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion));
 		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		idEva = servicioEvaluacion.buscarId() + 1;
-		
-
+		lbxEvaluacion.renderAll();
+		for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
+			Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
+			List<Listitem> listItem2 = lbxEvaluacion.getItems();
+			Evaluacion eva = listItem2.get(j).getValue();
+			Integer id = eva.getIdUsuario();
+			Usuario usuario = servicioUsuario.buscarId(id);
+			String nombre = usuario.getNombre() + "  " + usuario.getApellido();
+			((Label) ((listItem.getChildren().get(5))).getFirstChild())
+					.setValue(nombre);
+		}
 	}
 
 	@Listen("onClick = #btnSalir")
-	public void salir (){
+	public void salir() {
 		cerrarVentana1(winListaPersonal, "Personal");
 	}
-	
+
 	@Listen("onClick = #btnAgregar")
 	public void AgregarEvaluacion() {
 		winListaPersonal.onClose();
@@ -112,7 +126,7 @@ public class CListaPersonal extends CGenerico {
 		String ficha = u.getCedula();
 		Integer idUsuario = u.getIdUsuario();
 		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha) + 1;
-		idEva = servicioEvaluacion.buscarId()+1;
+		idEva = servicioEvaluacion.buscarId() + 1;
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEva);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
@@ -128,11 +142,10 @@ public class CListaPersonal extends CGenerico {
 		servicioEvaluacion.guardar(evaluacion);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("idEva", idEva);
-		System.out.println("va" +idEva);
+		System.out.println("va" + idEva);
 		Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 		winEvaluacionEmpleado = (Window) Executions.createComponents(
-				"/vistas/transacciones/VAgregarEvaluacion.zul", null,
-				map);
+				"/vistas/transacciones/VAgregarEvaluacion.zul", null, map);
 		winEvaluacionEmpleado.doModal();
 	}
 
@@ -153,34 +166,37 @@ public class CListaPersonal extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									if (eva.getEstadoEvaluacion().equals("EN EDICION")){
-									List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
-											.buscarObjetivosEvaluar(idEva);
-									for (int i = 0; i < evaluacionObjetivo
-											.size(); i++) {
-										Integer idObjetivo = evaluacionObjetivo
-												.get(i).getIdObjetivo();
-										List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
-												.buscarIndicadores(idObjetivo);
-										servicioEvaluacionIndicador.eliminarVarios(evaluacionIndicador);
+									if (eva.getEstadoEvaluacion().equals(
+											"EN EDICION")) {
+										List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+												.buscarObjetivosEvaluar(idEva);
+										for (int i = 0; i < evaluacionObjetivo
+												.size(); i++) {
+											Integer idObjetivo = evaluacionObjetivo
+													.get(i).getIdObjetivo();
+											List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
+													.buscarIndicadores(idObjetivo);
+											servicioEvaluacionIndicador
+													.eliminarVarios(evaluacionIndicador);
+										}
+										servicioEvaluacion.eliminarUno(idEva);
+										servicioEvaluacionObjetivo
+												.eliminarVarios(evaluacionObjetivo);
+										msj.mensajeInformacion(Mensaje.eliminado);
+										lbxEvaluacion.getItems().clear();
+										evaluacion = servicioEvaluacion
+												.buscar(fichaE);
+										lbxEvaluacion
+												.setModel(new ListModelList<Evaluacion>(
+														evaluacion));
+									} else {
+										Messagebox
+												.show("No puede Eliminar la Evaluación",
+														"Alerta",
+														Messagebox.OK,
+														Messagebox.EXCLAMATION);
 									}
-									servicioEvaluacion.eliminarUno(idEva);
-									servicioEvaluacionObjetivo
-											.eliminarVarios(evaluacionObjetivo);
-									msj.mensajeInformacion(Mensaje.eliminado);
-									lbxEvaluacion.getItems().clear();
-									evaluacion = servicioEvaluacion
-											.buscar(fichaE);
-									lbxEvaluacion
-											.setModel(new ListModelList<Evaluacion>(
-													evaluacion));
-								}
-									else{
-										Messagebox.show("No puede Eliminar la Evaluación",
-												"Alerta", Messagebox.OK,
-												Messagebox.EXCLAMATION);
-								}
-								
+
 								}
 							}
 						});

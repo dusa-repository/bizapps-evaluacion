@@ -52,5 +52,8 @@ public class SUsuario {
 		return usuarioDAO.findByLoginStartingWithAllIgnoreCase(valor);
 	}
 
-	
+	public Usuario buscarId(Integer idUsuario) {
+		return usuarioDAO.findByIdUsuario(idUsuario);
+	}
+
 }
