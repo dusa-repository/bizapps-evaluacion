@@ -164,8 +164,20 @@
 							</listitem>
 						</listbox>
 					</groupbox>
-
-					<separator></separator>
+					<div align="right" height="100%">
+						<button id="btnAgregar" style="heigth:27px"
+							label="Agregar" image="/public/imagenes/botones/annadir.png">
+						</button>
+						<button id="btnEliminar" width="auto"
+							height="auto" label="Eliminar"
+							image="/public/imagenes/botones/eliminar.png">
+						</button>
+						<button id="btnIr"
+							height="100%" mold="trendy" label="Ir Indicador"
+							image="/public/imagenes/botones/adelante.png"
+							style="background-color:#F8E0E0;">
+						</button>
+					</div>
 
 					<groupbox id="gpxObjetivosAgregados">
 						<listbox height="auto"
@@ -204,17 +216,6 @@
 					</groupbox>
 					<separator />
 					<separator />
-
-					<div align="right" height="100%">
-						<button id="btnAgregar" style="heigth:27px"
-							label="Agregar" image="/public/imagenes/botones/annadir.png">
-						</button>
-						<button id="btnEliminar" width="auto"
-							height="auto" label="Eliminar"
-							image="/public/imagenes/botones/eliminar.png">
-
-						</button>
-					</div>
 					<separator />
 				</tabpanel>
 				<!-- contenedor de indicadores -->

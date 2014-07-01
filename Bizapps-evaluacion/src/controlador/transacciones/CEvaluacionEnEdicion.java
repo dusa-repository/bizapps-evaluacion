@@ -75,6 +75,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnGuardar;
 	@Wire
+	private Button btnIr;
+	@Wire
 	private Button btnGuardarObjetivo;
 	@Wire
 	private Button btnImprimir;
@@ -698,23 +700,23 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	}
 
 
-	public void mostrarPestannaIndicadores() {
-		tbIndicadores.setSelected(true);
-		gpxAgregados.setOpen(true);
-		if (lbxObjetivosGuardados.getItemCount() != 0) {
-			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
-			if (listItem != null) {
-				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
-						.getValue();
-				idObjetivo = evaluacionObjetivo.getIdObjetivo();
-				indicadores = servicioEvaluacionIndicador
-						.buscarIndicadores(idObjetivo);
-				lbxIndicadoresAgregados
-						.setModel(new ListModelList<EvaluacionIndicador>(
-								indicadores));
-			}
-		}
-	}
+//	public void mostrarPestannaIndicadores() {
+//		tbIndicadores.setSelected(true);
+//		gpxAgregados.setOpen(true);
+//		if (lbxObjetivosGuardados.getItemCount() != 0) {
+//			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+//			if (listItem != null) {
+//				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+//						.getValue();
+//				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+//				indicadores = servicioEvaluacionIndicador
+//						.buscarIndicadores(idObjetivo);
+//				lbxIndicadoresAgregados
+//						.setModel(new ListModelList<EvaluacionIndicador>(
+//								indicadores));
+//			}
+//		}
+//	}
 	
 	private void eliminarIndicador() {
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
@@ -809,5 +811,34 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
+	}
+	
+	@Listen("onClick = #btnIr")
+	public void mostrarPestannaIndicadores() {
+		tbIndicadores.setSelected(true);
+		gpxAgregados.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
+					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
+					Integer idOb = eo.getIdObjetivo();
+					System.out.println("id" +idOb);
+					System.out.println("id1" +idObjetivo);
+					if (idOb == idObjetivo){
+						cmbObjetivos.setValue(objetivosG.get(i).getDescripcionObjetivo());
+					}		
+				}
+				indicadores = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				lbxIndicadoresAgregados
+						.setModel(new ListModelList<EvaluacionIndicador>(
+								indicadores));
+			}
+		}
+		idObjetivo = 0;
 	}
 }

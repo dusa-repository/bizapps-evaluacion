@@ -43,6 +43,9 @@ import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import controlador.maestros.CGenerico;
 import componentes.Mensaje;
 
@@ -95,6 +98,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Button btnAgregarIndicador;
 	@Wire
 	private Button btnGuardarIndicador;
+	@Wire
+	private Button btnIr;
 	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
@@ -360,7 +365,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			Double peso = Double.valueOf(txtPeso.getValue());
 			EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 			Integer linea = objetivosG.size() + 1;
-			objetivoLista.setIdObjetivo(servicioEvaluacionObjetivo.buscarId() + 1);
+			idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
+			objetivoLista.setIdObjetivo(idObjetivo);
 			objetivoLista.setIdEvaluacion(idEva);
 			objetivoLista.setDescripcionObjetivo(objetivo);
 			objetivoLista.setPerspectiva(perspectiva);
@@ -381,6 +387,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				Messagebox.OK, Messagebox.INFORMATION);
 
 		limpiar();
+		idObjetivo = 0;
 		
 	}
 
@@ -666,7 +673,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 	}
 
-	
+	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
@@ -676,6 +683,15 @@ public class CAgregarEvaluacion extends CGenerico {
 				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
 						.getValue();
 				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
+						.buscarObjetivos(fichaE, numero);
+				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
+					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
+					Integer idOb = eo.getIdObjetivo();
+					if (idOb == idObjetivo){
+						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
+					}		
+				}
 				indicadores = servicioEvaluacionIndicador
 						.buscarIndicadores(idObjetivo);
 				lbxIndicadoresAgregados
@@ -683,6 +699,7 @@ public class CAgregarEvaluacion extends CGenerico {
 								indicadores));
 			}
 		}
+		idObjetivo = 0;
 	}
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")

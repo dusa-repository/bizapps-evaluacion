@@ -40,6 +40,7 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Panel;
 import org.zkoss.zul.Spinner;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
@@ -168,6 +169,10 @@ public class CEvaluacionAgregar extends CGenerico {
 	private Combobox cmbMedicion;
 	@Wire
 	private Panel panBotones;
+	@Wire
+	private Tab tbIndicadores;
+	@Wire
+	private Button btnIr;
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -401,6 +406,8 @@ public class CEvaluacionAgregar extends CGenerico {
 		Double peso = Double.valueOf(txtPeso.getValue());
 		EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 		idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
+		System.out.println(idObjetivo);
+		System.out.println(idEva);
 		Integer linea = objetivosG.size() + 1;
 		objetivoLista.setIdEvaluacion(idEva);
 		objetivoLista.setDescripcionObjetivo(objetivo);
@@ -431,15 +438,8 @@ public class CEvaluacionAgregar extends CGenerico {
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setDisabled(false);
 		txtCorresponsables.setValue("");
-		txtIndicador.setValue("");
 		txtPeso.setValue(null);
-		txtPesoPorc.setValue(null);
-		txtResFy.setValue(null);
-		txtResultadoPorc.setValue(null);
 		txtValorMeta.setValue(null);
-		txtValorResultado.setValue(null);
-		cmbMedicion.setValue(null);
-		cmbUnidad.setValue(null);
 	}
 
 	@Listen("onClick = #btnAgregarIndicador")
@@ -834,4 +834,35 @@ public class CEvaluacionAgregar extends CGenerico {
 
 	}
 
+	@Listen("onClick = #btnIr")
+	public void mostrarPestannaIndicadores() {
+		tbIndicadores.setSelected(true);
+		gpxAgregados.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
+						.buscarObjetivos(fichaE, num);
+				verObjetivos ();
+				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
+					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
+					Integer idOb = eo.getIdObjetivo();
+					System.out.println("id" +idOb);
+					System.out.println("id1" +idObjetivo);
+					if (idOb == idObjetivo){
+						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
+					}		
+				}
+				indicadores = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				lbxIndicadoresAgregados
+						.setModel(new ListModelList<EvaluacionIndicador>(
+								indicadores));
+			}
+		}
+		idObjetivo = 0;
+	}
 }

@@ -88,6 +88,7 @@ public class CEmpleadoAgregar extends CGenerico {
 	public void inicializar() throws IOException {
 
 		arbolPersonalAgregar.setModel(getModel());
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 
 	}
 

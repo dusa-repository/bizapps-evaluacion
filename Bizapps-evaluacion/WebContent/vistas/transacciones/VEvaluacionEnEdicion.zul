@@ -151,7 +151,11 @@
 						<button id="btnEliminar" width="auto"
 							height="auto" mold="trendy" label="Eliminar"
 							image="/public/imagenes/botones/eliminar.png">
-
+						</button>
+						<button id="btnIr" width="auto"
+							height="auto" mold="trendy" label="Ir Indicador"
+							image="/public/imagenes/botones/adelante.png"
+							style="background-color:#F8E0E0;">
 						</button>
 					</div>
 					<groupbox id="gpxObjetivosAgregados">
