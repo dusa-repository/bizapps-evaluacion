@@ -7,6 +7,8 @@ import interfacedao.transacciones.IEvaluacionObjetivoDAO;
 
 import java.util.List;
 
+import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.TipoFormacion;
@@ -31,6 +33,10 @@ public class SEvaluacionConducta {
 
 	public EvaluacionConducta buscarConducta (Integer id){
 		return evaluacionConductaDAO.buscar(id);
+	}
+	
+	public EvaluacionConducta buscar (Evaluacion eva, ConductaCompetencia cc){
+		return evaluacionConductaDAO.findByEvaluacionAndConductaCompetencia(eva, cc);
 	}
 
 }

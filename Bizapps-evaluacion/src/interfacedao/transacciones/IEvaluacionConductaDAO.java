@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 
 import java.util.List;
 
+import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionObjetivo;
@@ -17,4 +18,5 @@ public interface IEvaluacionConductaDAO extends JpaRepository<EvaluacionConducta
 	@Query("select ec from EvaluacionConducta ec where ec.evaluacion.idEvaluacion = ?1")
 	public EvaluacionConducta buscar(Integer id);
 
+	public EvaluacionConducta findByEvaluacionAndConductaCompetencia (Evaluacion eva, ConductaCompetencia cc);
 }
