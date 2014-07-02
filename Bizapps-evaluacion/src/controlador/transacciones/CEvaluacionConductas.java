@@ -144,32 +144,33 @@ public class CEvaluacionConductas extends CGenerico {
 
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
+		System.out.println("domimio" +idDominio);
 		evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		Competencia competencia = servicioCompetencia.buscarCompetencia(idCompetencia); 
 		evaluacionCompetencia.setCompetencia(competencia);
 		evaluacionCompetencia.setEvaluacion(evaluacion);
 		evaluacionCompetencia.setIdDominio(idDominio);
 
-		boolean campoBlanco = false;
+//		boolean campoBlanco = false;
 
 		for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxConductasRectoras.getItems();
 
 			if (listItem2.get(i).isSelected()) {
 				Listitem listItem = lbxConductasRectoras.getItemAtIndex(i);
-				if (((Textbox) ((listItem.getChildren().get(2)))
-						.getFirstChild()).getValue().equals("")) {
-					campoBlanco = true;
-				}
+//				if (((Textbox) ((listItem.getChildren().get(2)))
+//						.getFirstChild()).getValue().equals("")) {
+//					campoBlanco = true;
+//				}
 			}
 		}
-
-		if (campoBlanco == true) {
-			Messagebox.show(
-					"Debe ingresar una observacion a los items seleccionados",
-					"Error", Messagebox.OK, Messagebox.ERROR);
-
-		} else {
+//
+//		if (campoBlanco == true) {
+//			Messagebox.show(
+//					"Debe ingresar una observacion a los items seleccionados",
+//					"Error", Messagebox.OK, Messagebox.ERROR);
+//
+//		} else {
 			List<EvaluacionConducta> evaluacionesC = new ArrayList<EvaluacionConducta>();
 
 			for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
@@ -192,7 +193,5 @@ public class CEvaluacionConductas extends CGenerico {
 					Messagebox.OK, Messagebox.INFORMATION);
 			wdwConductasRectoras.onClose();
 		}
-
-	}
 
 }

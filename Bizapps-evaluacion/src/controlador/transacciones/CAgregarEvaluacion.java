@@ -675,6 +675,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
+		mostrarObjetivos();
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -688,6 +689,8 @@ public class CAgregarEvaluacion extends CGenerico {
 				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
 					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
 					Integer idOb = eo.getIdObjetivo();
+					System.out.println(idOb);
+					System.out.println(idObjetivo);
 					if (idOb == idObjetivo){
 						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
 					}		
