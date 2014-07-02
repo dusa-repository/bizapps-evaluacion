@@ -13,6 +13,7 @@ import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
+import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
@@ -178,7 +179,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
-
+	List<EvaluacionConducta> evaluacionconductas = new ArrayList<EvaluacionConducta>();
+	
 	private static int idEva;
 	private static boolean bool = false;
 	private static int idObjetivo;
@@ -306,6 +308,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		gpxObjetivosAgregados.setOpen(true);
 		gpxAgregarIndicador.setOpen(false);
 		gpxAgregados.setOpen(false);
+		evaluacionconductas = servicioEvaluacionConducta.buscarConductas(idEva);
+		if (evaluacionconductas != null){
+		mostrarDominioRectora ();
+		mostrarDominioEspecifica();
+		}
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -840,5 +847,126 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			}
 		}
 		idObjetivo = 0;
+	}
+	
+
+	private void mostrarDominioRectora() {
+		lbxCompetenciaRectora.renderAll();
+				for (int i = 0; i < lbxCompetenciaRectora.getItemCount(); i++) {
+					Listitem listItem2 = lbxCompetenciaRectora
+							.getItemAtIndex(i);
+					NivelCompetenciaCargo nivel = (NivelCompetenciaCargo) listItem2
+							.getValue();
+					List<Listitem> listItem5 = lbxCompetenciaRectora.getItems();
+					Integer idCompetencia = nivel.getCompetencia().getId();
+					Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+					Competencia competencia = servicioCompetencia.buscarCompetencia(idCompetencia);
+					EvaluacionCompetencia evaluacion = servicioEvaluacionCompetencia.buscar(eva, competencia);
+					Integer dominio = evaluacion.getIdDominio();
+					Dominio dom = servicioDominio.buscarDominio(dominio);
+					String descripcionDominio = dom.getDescripcionDominio();
+					((Combobox) ((listItem5.get(i).getChildren().get(2)))
+							.getFirstChild()).setValue(descripcionDominio);
+					System.out.println(descripcionDominio);
+					
+				} 
+				
+			}
+	private void mostrarDominioEspecifica() {
+		lbxCompetenciaEspecifica.renderAll();
+				for (int i = 0; i < lbxCompetenciaEspecifica.getItemCount(); i++) {
+					Listitem listItem2 = lbxCompetenciaEspecifica
+							.getItemAtIndex(i);
+					NivelCompetenciaCargo nivel = (NivelCompetenciaCargo) listItem2
+							.getValue();
+					List<Listitem> listItem5 = lbxCompetenciaEspecifica.getItems();
+					Integer idCompetencia = nivel.getCompetencia().getId();
+					Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+					Competencia competencia = servicioCompetencia.buscarCompetencia(idCompetencia);
+					EvaluacionCompetencia evaluacion = servicioEvaluacionCompetencia.buscar(eva, competencia);
+					Integer dominio = evaluacion.getIdDominio();
+					Dominio dom = servicioDominio.buscarDominio(dominio);
+					String descripcionDominio = dom.getDescripcionDominio();
+					((Combobox) ((listItem5.get(i).getChildren().get(2)))
+							.getFirstChild()).setValue(descripcionDominio);
+					System.out.println(descripcionDominio);
+					
+				} 
+				
+			}
+	
+	@Listen("onDoubleClick = #lbxCompetenciaRectora")
+	public void mostrarCompetenciasR() {
+
+		if (lbxCompetenciaRectora.getItemCount() != 0) {
+
+			Listitem listItem = lbxCompetenciaRectora.getSelectedItem();
+			if (listItem != null) {
+				if (((Combobox) ((listItem.getChildren().get(2)))
+						.getFirstChild()).getValue() == "") {
+					Messagebox.show("Debe Seleccionar un nivel de dominio",
+							"Error", Messagebox.OK, Messagebox.ERROR);
+				} else {
+					String nivel = ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getSelectedItem()
+							.getDescription();
+					String titulo = "Competencias Rectoras";
+					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
+							.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", competencia.getCompetencia().getId());
+					map.put("idnivel", nivel);
+					map.put("titulo", titulo);
+					map.put("idEva", idEva);
+					map.put("conductas", evaluacionconductas);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					wdwConductasRectoras = (Window) Executions
+							.createComponents(
+									"/vistas/transacciones/VEvaluacionConductas.zul",
+									null, map);
+					wdwConductasRectoras.doModal();
+				}
+			}
+
+		}
+
+	}
+
+	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
+	public void mostrarCompetenciasE() {
+
+		if (lbxCompetenciaEspecifica.getItemCount() != 0) {
+
+			Listitem listItem = lbxCompetenciaEspecifica.getSelectedItem();
+			if (listItem != null) {
+				if (((Combobox) ((listItem.getChildren().get(2)))
+						.getFirstChild()).getValue() == "") {
+					Messagebox.show("Debe Seleccionar un nivel de dominio",
+							"Error", Messagebox.OK, Messagebox.ERROR);
+				} else {
+					String nivel = ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getSelectedItem()
+							.getDescription();
+
+					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
+							.getValue();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					String titulo = "Competencias Especificas";
+					map.put("id", competencia.getCompetencia().getId());
+					map.put("idnivel", nivel);
+					map.put("titulo", titulo);
+					map.put("idEva", idEva);
+					map.put("conductas", evaluacionconductas);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					wdwConductasRectoras = (Window) Executions
+							.createComponents(
+									"/vistas/transacciones/VEvaluacionConductas.zul",
+									null, map);
+					wdwConductasRectoras.doModal();
+				}
+			}
+
+		}
+
 	}
 }
