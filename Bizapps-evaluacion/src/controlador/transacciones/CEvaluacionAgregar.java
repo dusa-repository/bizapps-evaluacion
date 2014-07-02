@@ -180,6 +180,7 @@ public class CEvaluacionAgregar extends CGenerico {
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 	List<EvaluacionConducta> evaluacionconductas = new ArrayList<EvaluacionConducta>();
+	List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = new ArrayList<EvaluacionObjetivo>();
 	public static String fichaE;
 	public static Integer usuario;
 	public static Integer idEva;
@@ -845,16 +846,19 @@ public class CEvaluacionAgregar extends CGenerico {
 						.getValue();
 				idObjetivo = evaluacionObjetivo.getIdObjetivo();
 				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
-						.buscarObjetivos(fichaE, num);
-				verObjetivos ();
-				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
-					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
-					Integer idOb = eo.getIdObjetivo();
-					System.out.println("id" +idOb);
-					System.out.println("id1" +idObjetivo);
+						.buscarObjetivos(fichaE, numero);
+				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
+				System.out.println("objeto"+evaluacionObjetivoIndicadores);
+				if (evaluacionObjetivo1.size()==1){
+					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0).getDescripcionObjetivo());
+				}
+				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+					Integer idOb = evaluacionObjetivoIndicadores.get(i).getIdObjetivo();
 					if (idOb == idObjetivo){
 						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
 					}		
+				}
 				}
 				indicadores = servicioEvaluacionIndicador
 						.buscarIndicadores(idObjetivo);
@@ -862,7 +866,6 @@ public class CEvaluacionAgregar extends CGenerico {
 						.setModel(new ListModelList<EvaluacionIndicador>(
 								indicadores));
 			}
-		}
 		idObjetivo = 0;
 	}
 }

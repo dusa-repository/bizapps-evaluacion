@@ -116,8 +116,8 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso" constraint = "min 0"
-										mold="rounded"  width="100%" id="txtPeso" />
+									<spinner placeholder="Peso" constraint = "min 0; max 100"
+										mold="rounded"  width="100%" id="txtPeso" maxlength="3" />
 								</listcell>
 								<listcell>
 									<textbox value="0"

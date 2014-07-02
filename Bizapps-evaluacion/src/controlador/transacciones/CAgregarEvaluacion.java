@@ -186,6 +186,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
+	List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = new ArrayList<EvaluacionObjetivo>();
 
 	private static Integer idEva;
 	private static boolean bool = false;
@@ -312,9 +313,6 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void mostrarObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, numero);
-		System.out.println(fichaE);
-		System.out.println(numero);
-		System.out.println(evaluacionObjetivo);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObjetivo));
 	}
@@ -376,18 +374,19 @@ public class CAgregarEvaluacion extends CGenerico {
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
 			objetivosG.add(objetivoLista);
+//			if (cambiarEstado() == true){
 			lbxObjetivosGuardados
 					.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
 			servicioEvaluacionObjetivo.guardar(objetivoLista);
-			
-
-		}
+		
 		gpxAgregar.setOpen(false);
 		Messagebox.show("Objetivos Guardados Exitosamente", "Información",
 				Messagebox.OK, Messagebox.INFORMATION);
-
+			}
+//		}
 		limpiar();
 		idObjetivo = 0;
+		
 		
 	}
 
@@ -518,7 +517,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	}
 
 	@Listen("onClick = #btnCambiarEstado")
-	public void cambiarEstado() {
+	public boolean cambiarEstado() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		validar();
 		Double sumaPeso = (double) 0;
@@ -533,12 +532,14 @@ public class CAgregarEvaluacion extends CGenerico {
 							Messagebox.INFORMATION);
 
 		}
+		
 
 		else if (bool == true) {
 			Messagebox
 					.show("La suma de los pesos de los indicadores debe ser igual a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
+			return true;
 		} else {
 
 			String estado = "PENDIENTE";
@@ -547,6 +548,10 @@ public class CAgregarEvaluacion extends CGenerico {
 			Messagebox.show("La evaluación ahora esta pendiente por revisar",
 					"Información", Messagebox.OK, Messagebox.INFORMATION);
 		}
+			return false;
+		
+		
+		
 	}
 
 	@Listen("onDoubleClick = #lbxObjetivosGuardados")
@@ -675,7 +680,6 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
-		mostrarObjetivos();
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -686,14 +690,18 @@ public class CAgregarEvaluacion extends CGenerico {
 				idObjetivo = evaluacionObjetivo.getIdObjetivo();
 				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
 						.buscarObjetivos(fichaE, numero);
-				for (int i = 0; i < cmbObjetivos.getItemCount(); i++) {
-					EvaluacionObjetivo eo = cmbObjetivos.getItemAtIndex(i).getValue();
-					Integer idOb = eo.getIdObjetivo();
-					System.out.println(idOb);
-					System.out.println(idObjetivo);
+				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
+				System.out.println("objeto"+evaluacionObjetivoIndicadores);
+				if (evaluacionObjetivo1.size()==1){
+					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0).getDescripcionObjetivo());
+				}
+				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+					Integer idOb = evaluacionObjetivoIndicadores.get(i).getIdObjetivo();
 					if (idOb == idObjetivo){
 						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
 					}		
+				}
 				}
 				indicadores = servicioEvaluacionIndicador
 						.buscarIndicadores(idObjetivo);
@@ -701,7 +709,6 @@ public class CAgregarEvaluacion extends CGenerico {
 						.setModel(new ListModelList<EvaluacionIndicador>(
 								indicadores));
 			}
-		}
 		idObjetivo = 0;
 	}
 
