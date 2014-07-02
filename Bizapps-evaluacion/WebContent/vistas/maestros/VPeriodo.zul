@@ -55,9 +55,12 @@
 					<row>
 						<label value="Estado:" class="etiqueta" />
 
-						<textbox id="txtEstadoPeriodo" width="80%"
-							maxlength="20" tabindex="5"
-							tooltiptext="Ingrese aqui el estado del periodo" />
+						<combobox id="cmbEstadoPeriodo" readonly="true"
+							tooltiptext="Seleccione el estado del periodo" width="80%"
+							tabindex="5">
+							<comboitem label="ACTIVO" />
+							<comboitem label="INACTIVO" />
+						</combobox>
 					</row>
 				</rows>
 			</grid>

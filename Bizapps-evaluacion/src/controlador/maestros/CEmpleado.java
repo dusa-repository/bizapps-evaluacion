@@ -64,6 +64,10 @@ public class CEmpleado extends CGenerico {
 	@Wire
 	private Textbox txtFichaSupervisorEmpleado;
 	@Wire
+	private Button btnBuscarSupervisor;
+	@Wire
+	private Label lblSupervisorEmpleado;
+	@Wire
 	private Textbox txtGradoAuxiliarEmpleado;
 	@Wire
 	private Groupbox gpxDatosEmpleado;
@@ -73,6 +77,8 @@ public class CEmpleado extends CGenerico {
 	private Div divCatalogoEmpresa;
 	@Wire
 	private Div divCatalogoCargo;
+	@Wire
+	private Div divCatalogoSupervisor;
 	@Wire
 	private Div divCatalogoUnidad;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
@@ -85,20 +91,13 @@ public class CEmpleado extends CGenerico {
 	Catalogo<Empresa> catalogoEmpresa;
 	Catalogo<Cargo> catalogoCargo;
 	Catalogo<UnidadOrganizativa> catalogoUnidad;
+	Catalogo<Empleado> catalogoSupervisor;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
 		txtEmpresaEmpleado.setFocus(true);
-		txtEmpresaEmpleado
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la empresa debe ser numérico");
-		txtCargoEmpleado
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
-		txtUnidadEmpleado
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
-		txtGradoAuxiliarEmpleado
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -128,6 +127,10 @@ public class CEmpleado extends CGenerico {
 						txtFichaEmpleado.setValue(empleado.getFicha());
 						txtFichaSupervisorEmpleado.setValue(empleado
 								.getFichaSupervisor());
+						lblSupervisorEmpleado.setValue(servicioEmpleado
+								.buscarPorNombre(
+										txtFichaSupervisorEmpleado.getValue())
+								.getNombre());
 						txtGradoAuxiliarEmpleado.setValue(String
 								.valueOf(empleado.getGradoAuxiliar()));
 						txtEmpresaEmpleado.setFocus(true);
@@ -291,7 +294,11 @@ public class CEmpleado extends CGenerico {
 		lblUnidadEmpleado.setValue("");
 		txtNombreEmpleado.setValue("");
 		txtFichaEmpleado.setValue("");
+		txtFichaSupervisorEmpleado.setConstraint("");
 		txtFichaSupervisorEmpleado.setValue("");
+		txtFichaSupervisorEmpleado
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del supervisor debe ser numérico");
+		lblSupervisorEmpleado.setValue("");
 		txtGradoAuxiliarEmpleado.setConstraint("");
 		txtGradoAuxiliarEmpleado.setValue("");
 		txtGradoAuxiliarEmpleado
@@ -324,6 +331,8 @@ public class CEmpleado extends CGenerico {
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del cargo debe ser numérico");
 		txtUnidadEmpleado
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la unidad organizativa debe ser numérico");
+		txtFichaSupervisorEmpleado
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del supervisor debe ser numérico");
 		txtGradoAuxiliarEmpleado
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El grado auxiliar debe ser numérico");
 		mostrarBotones(false);
@@ -338,6 +347,8 @@ public class CEmpleado extends CGenerico {
 		txtCargoEmpleado.setValue("");
 		txtUnidadEmpleado.setConstraint("");
 		txtUnidadEmpleado.setValue("");
+		txtFichaSupervisorEmpleado.setConstraint("");
+		txtFichaSupervisorEmpleado.setValue("");
 		txtGradoAuxiliarEmpleado.setConstraint("");
 		txtGradoAuxiliarEmpleado.setValue("");
 		gpxDatosEmpleado.setOpen(false);
@@ -385,7 +396,8 @@ public class CEmpleado extends CGenerico {
 	public boolean camposLLenos() {
 		if (txtEmpresaEmpleado.getText().compareTo("") == 0
 				|| txtCargoEmpleado.getText().compareTo("") == 0
-				|| txtUnidadEmpleado.getText().compareTo("") == 0) {
+				|| txtUnidadEmpleado.getText().compareTo("") == 0
+				|| txtFichaSupervisorEmpleado.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -518,6 +530,17 @@ public class CEmpleado extends CGenerico {
 		if (unidad == null) {
 			msj.mensajeAlerta(Mensaje.codigoUnidad);
 			txtUnidadEmpleado.setFocus(true);
+		}
+
+	}
+
+	@Listen("onChange = #txtFichaSupervisorEmpleado")
+	public void buscarSupervisor() {
+		Empleado empleado = servicioEmpleado.buscar(Integer
+				.valueOf(txtFichaSupervisorEmpleado.getValue()));
+		if (empleado == null) {
+			msj.mensajeAlerta(Mensaje.codigoSupervisor);
+			txtFichaSupervisorEmpleado.setFocus(true);
 		}
 
 	}
@@ -757,6 +780,96 @@ public class CEmpleado extends CGenerico {
 		txtUnidadEmpleado.setValue(String.valueOf(unidad.getId()));
 		lblUnidadEmpleado.setValue(unidad.getDescripcion());
 		catalogoUnidad.setParent(null);
+	}
+
+	@Listen("onClick = #btnBuscarSupervisor")
+	public void mostrarCatalogoSupervisor() {
+		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
+		catalogoSupervisor = new Catalogo<Empleado>(divCatalogoSupervisor,
+				"Catalogo Empleados", listEmpleado, "Código empleado",
+				"Empresa", "Cargo", "Unidad Organizativa", "Nombre", "Ficha",
+				"Ficha Supervisor", "Grado Auxiliar") {
+
+			@Override
+			protected List<Empleado> buscarCampos(List<String> valores) {
+				List<Empleado> lista = new ArrayList<Empleado>();
+
+				for (Empleado empleado : listEmpleado) {
+					if (String.valueOf(empleado.getId()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& empleado.getEmpresa().getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& empleado.getCargo().getDescripcion()
+									.toLowerCase().startsWith(valores.get(2))
+							&& empleado.getUnidadOrganizativa()
+									.getDescripcion().toLowerCase()
+									.startsWith(valores.get(3))
+							&& empleado.getNombre().toLowerCase()
+									.startsWith(valores.get(4))
+							&& empleado.getFicha().toLowerCase()
+									.startsWith(valores.get(5))
+							&& empleado.getFichaSupervisor().toLowerCase()
+									.startsWith(valores.get(6))
+							&& String.valueOf(empleado.getGradoAuxiliar())
+									.toLowerCase().startsWith(valores.get(7))) {
+						lista.add(empleado);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(Empleado empleado) {
+				String[] registros = new String[8];
+				registros[0] = String.valueOf(empleado.getId());
+				registros[1] = empleado.getEmpresa().getNombre();
+				registros[2] = empleado.getCargo().getDescripcion();
+				registros[3] = empleado.getUnidadOrganizativa()
+						.getDescripcion();
+				registros[4] = empleado.getNombre();
+				registros[5] = empleado.getFicha();
+				registros[6] = empleado.getFichaSupervisor();
+				registros[7] = String.valueOf(empleado.getGradoAuxiliar());
+
+				return registros;
+			}
+
+			@Override
+			protected List<Empleado> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				if (combo.equals("Código empleado"))
+					return servicioEmpleado.filtroId(valor);
+				else if (combo.equals("Empresa"))
+					return servicioEmpleado.filtroEmpresa(valor);
+				else if (combo.equals("Cargo"))
+					return servicioEmpleado.filtroCargo(valor);
+				else if (combo.equals("Unidad Organizativa"))
+					return servicioEmpleado.filtroUnidadOrganizativa(valor);
+				else if (combo.equals("Nombre"))
+					return servicioEmpleado.filtroNombre(valor);
+				else if (combo.equals("Ficha"))
+					return servicioEmpleado.filtroFicha(valor);
+				else if (combo.equals("Ficha Supervisor"))
+					return servicioEmpleado.filtroFichaSupervisor(valor);
+				else if (combo.equals("Grado Auxiliar"))
+					return servicioEmpleado.filtroGradoAuxiliar(valor);
+				else
+					return servicioEmpleado.buscarTodos();
+			}
+
+		};
+
+		catalogoSupervisor.setParent(divCatalogoSupervisor);
+		catalogoSupervisor.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoSupervisor")
+	public void seleccionSupervisor() {
+		Empleado empleado = catalogoSupervisor.objetoSeleccionadoDelCatalogo();
+		txtFichaSupervisorEmpleado.setValue(String.valueOf(empleado.getId()));
+		lblSupervisorEmpleado.setValue(empleado.getNombre());
+		catalogoSupervisor.setParent(null);
 	}
 
 }

@@ -17,6 +17,8 @@ public class SPeriodo {
 
 	@Autowired
 	private IPeriodoDAO periodoDAO;
+	
+	private String[] estadoPeriodo = { "ACTIVO", "INACTIVO" };
 
 	/* Servicio que permite guardar los datos de un cargo*/
 	public void guardar(Periodo periodo) {
@@ -41,13 +43,13 @@ public class SPeriodo {
 	}
 	
 	
-
-	public String  buscarPorEstado(String estado) {
-		return  periodoDAO.findByEstadoPeriodo(estado);
-	
+	/* Servicio que permite buscar un periodo activo */
+	public Periodo buscarPeriodoActivo() {
+		Periodo periodo;
+		periodo = periodoDAO.findByEstadoPeriodo(estadoPeriodo[0]);
+		return periodo;
 	}
-	
-	
+
 	/* Servicio que permite eliminar un periodo */
 	public void eliminarUnPeriodo(int id) {
 		periodoDAO.delete(id);

@@ -11,7 +11,7 @@ public class Mensaje {
 	public static String noSeleccionoItem = "No ha seleccionado ningun Item";
 	public static String noHayRegistros = "No se Encontraron Registros";
 	public static String editarSoloUno = "Solo puede Editar un Item a la vez, "
-	+ "Seleccione un (1) solo Item y Repita la Operacion";
+			+ "Seleccione un (1) solo Item y Repita la Operacion";
 	public static String deseaEliminar = "¿Desea Eliminar el Registro?";
 	public static String eliminado = "Registro Eliminado Exitosamente";
 	public static String estaEditando = "No ha culminado la Edicion, ¿Desea Continuar Editando?";
@@ -31,26 +31,26 @@ public class Mensaje {
 	public static String codigoGerencia = "El codigo de la gerencia definido por el usuario no existe";
 	public static String codigoCompetencia = "El codigo de la competencia definido por el usuario no existe";
 	public static String codigoDominio = "El codigo del dominio definido por el usuario no existe";
-	
-	
+	public static String codigoSupervisor = "El codigo del supervisor definido por el usuario no existe";
+	public static String periodoActivo = "Ya existe un periodo con el estado ACTIVO";
+	public static String revisionActiva = "Ya existe una revision activa para el periodo seleccionado";
+
 	public static String seleccionarEmpresa = "Debe seleccionar una Empresa";
 	public static String seleccionarPeriodo = "Debe seleccionar un Periodo";
 	public static String seleccionarUnidadOrganizativa = "Debe seleccionar una Unidad Organizativa";
 	public static String seleccionarGerencia = "Debe seleccionar una Gerencia";
 	public static String seleccionarCompetencia = "Debe seleccionar una Competencia";
-	
-	public void mensajeInformacion(String msj) {
-	      Messagebox.show(msj, "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
-		}
-	
-	public void mensajeAlerta(String msj) {
-	      Messagebox.show(msj, "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
-		}
 
-		public void mensajeError(String msj) {
-	      Messagebox.show(msj, "Error",
-					Messagebox.OK, Messagebox.ERROR);
-		}
+	public void mensajeInformacion(String msj) {
+		Messagebox.show(msj, "Informacion", Messagebox.OK,
+				Messagebox.INFORMATION);
+	}
+
+	public void mensajeAlerta(String msj) {
+		Messagebox.show(msj, "Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+	}
+
+	public void mensajeError(String msj) {
+		Messagebox.show(msj, "Error", Messagebox.OK, Messagebox.ERROR);
+	}
 }

@@ -30,14 +30,19 @@
 						<textbox id="txtDescripcionCompetencia"
 							width="50%" maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la competencia" />
-					</row>
+					</row>					
 					<row>
 						<label value="Nivel:" class="etiqueta" />
 
-						<textbox id="txtNivelCompetencia" width="50%"
-							maxlength="100" tabindex="2"
-							tooltiptext="Ingrese aqui el nivel de la competencia" />
+						<combobox id="cmbNivelCompetencia" readonly="true"
+							tooltiptext="Seleccione el nivel de la competencia" width="52%"
+							tabindex="2">
+							<comboitem label="RECTORAS" />
+							<comboitem label="ESPECIFICAS" />
+						</combobox>
 					</row>
+					
+					
 					<row>
 						<label value="Comentario:" class="etiqueta" />
 

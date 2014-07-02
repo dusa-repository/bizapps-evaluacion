@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
@@ -37,7 +38,7 @@ public class CDominio extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionDominio;
 	@Wire
-	private Textbox txtTipoDominio;
+	private Combobox cmbTipoDominio;
 	@Wire
 	private Textbox txtComentarioDominio;
 	@Wire
@@ -72,7 +73,7 @@ public class CDominio extends CGenerico {
 						idDominio = dominio.getId();
 						txtDescripcionDominio.setValue(dominio
 								.getDescripcionDominio());
-						txtTipoDominio.setValue(dominio.getTipo());
+						cmbTipoDominio.setValue(dominio.getTipo());
 						txtComentarioDominio.setValue(dominio.getComentario());
 						txtDescripcionDominio.setFocus(true);
 					} else
@@ -89,7 +90,7 @@ public class CDominio extends CGenerico {
 				guardar = validar();
 				if (guardar) {
 				String descripcionDominio = txtDescripcionDominio.getValue();
-				String tipo = txtTipoDominio.getValue();
+				String tipo = cmbTipoDominio.getValue();
 				String comentario = txtComentarioDominio.getValue();
 				String usuario = nombreUsuarioSesion();
 				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
@@ -184,7 +185,7 @@ public class CDominio extends CGenerico {
 	public void limpiarCampos() {
 		idDominio = 0;
 		txtDescripcionDominio.setValue("");
-		txtTipoDominio.setValue("");
+		cmbTipoDominio.setValue("");
 		txtComentarioDominio.setValue("");
 		catalogo.limpiarSeleccion();
 		txtDescripcionDominio.setFocus(true);
@@ -193,7 +194,7 @@ public class CDominio extends CGenerico {
 
 	public boolean camposEditando() {
 		if (txtDescripcionDominio.getText().compareTo("") != 0
-				|| txtTipoDominio.getText().compareTo("") != 0
+				|| cmbTipoDominio.getText().compareTo("") != 0
 				|| txtComentarioDominio.getText().compareTo("") != 0) {
 			return true;
 		} else

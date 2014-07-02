@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.maestros.Area;
 import modelo.maestros.Dominio;
+import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class SRevision {
 
 	@Autowired
 	private IRevisionDAO revisionDAO;
+	
+	private String[] estadoRevision = { "ACTIVO", "INACTIVO" };
 
 	/* Servicio que permite guardar los datos de una revision*/
 	public void guardar(Revision revision) {
@@ -46,6 +49,15 @@ public class SRevision {
 		revisiones = revisionDAO.findByEstadoRevision(estado);
 		return revisiones;
 	}
+	
+	/* Servicio que permite buscar la revision de acuerdo a un estado y un periodo*/
+	public Revision buscarRevisionActiva(Periodo periodo) {
+		Revision revision;
+		revision = revisionDAO.findByPeriodoAndEstadoRevision(periodo, estadoRevision[0]);
+		return revision;
+
+	}
+	
 	
 	/* Servicio que permite eliminar una revision */
 	public void eliminarUnaRevision(int id) {

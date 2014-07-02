@@ -45,10 +45,15 @@
 					<row>
 						<label value="Estado:" class="etiqueta" />
 
-						<textbox id="txtEstadoRevision" width="100%"
-							maxlength="100" tabindex="3"
-							tooltiptext="Ingrese aqui el estado de la revision" />
+						<combobox id="cmbEstadoRevision" readonly="true"
+							tooltiptext="Seleccione el estado de la revision" width="100%"
+							tabindex="3">
+							<comboitem label="ACTIVO" />
+							<comboitem label="INACTIVO" />
+						</combobox>
 					</row>
+
+
 				</rows>
 			</grid>
 		</groupbox>

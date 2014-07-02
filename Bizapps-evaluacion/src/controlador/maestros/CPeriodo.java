@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
@@ -43,7 +44,7 @@ public class CPeriodo extends CGenerico {
 	@Wire
 	private Datebox dtbFechaFinPeriodo;
 	@Wire
-	private Textbox txtEstadoPeriodo;
+	private Combobox cmbEstadoPeriodo;
 	@Wire
 	private Groupbox gpxDatosPeriodo;
 	@Wire
@@ -80,7 +81,7 @@ public class CPeriodo extends CGenerico {
 						dtbFechaInicioPeriodo
 								.setValue(periodo.getFechaInicio());
 						dtbFechaFinPeriodo.setValue(periodo.getFechaFin());
-						txtEstadoPeriodo.setValue(periodo.getEstadoPeriodo());
+						cmbEstadoPeriodo.setValue(periodo.getEstadoPeriodo());
 						txtNombrePeriodo.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -95,24 +96,35 @@ public class CPeriodo extends CGenerico {
 				boolean guardar = true;
 				guardar = validar();
 				if (guardar) {
-					String nombre = txtNombrePeriodo.getValue();
-					String descripcion = txtDescripcionPeriodo.getValue();
-					Timestamp fechaInicio = new java.sql.Timestamp(
-							dtbFechaInicioPeriodo.getValue().getTime());
-					Timestamp fechaFin = new java.sql.Timestamp(
-							dtbFechaFinPeriodo.getValue().getTime());
-					String usuario = nombreUsuarioSesion();
-					Timestamp fechaAuditoria = new Timestamp(
-							new Date().getTime());
-					String estadoPeriodo = txtEstadoPeriodo.getValue();
-					Periodo periodo = new Periodo(idPeriodo, descripcion,
-							estadoPeriodo, fechaAuditoria, fechaFin,
-							fechaInicio, horaAuditoria, nombre, usuario);
-					servicioPeriodo.guardar(periodo);
-					msj.mensajeInformacion(Mensaje.guardado);
-					limpiar();
-					catalogo.actualizarLista(servicioPeriodo.buscarTodos());
-					abrirCatalogo();
+
+					if (!validarEstadoActivo()) {
+
+						String nombre = txtNombrePeriodo.getValue();
+						String descripcion = txtDescripcionPeriodo.getValue();
+						Timestamp fechaInicio = new java.sql.Timestamp(
+								dtbFechaInicioPeriodo.getValue().getTime());
+						Timestamp fechaFin = new java.sql.Timestamp(
+								dtbFechaFinPeriodo.getValue().getTime());
+						String usuario = nombreUsuarioSesion();
+						Timestamp fechaAuditoria = new Timestamp(
+								new Date().getTime());
+						String estadoPeriodo = cmbEstadoPeriodo.getValue();
+						Periodo periodo = new Periodo(idPeriodo, descripcion,
+								estadoPeriodo, fechaAuditoria, fechaFin,
+								fechaInicio, horaAuditoria, nombre, usuario);
+						servicioPeriodo.guardar(periodo);
+						msj.mensajeInformacion(Mensaje.guardado);
+						limpiar();
+						catalogo.actualizarLista(servicioPeriodo.buscarTodos());
+						abrirCatalogo();
+
+					}else{
+						
+						msj.mensajeAlerta(Mensaje.periodoActivo);
+						cmbEstadoPeriodo.setFocus(true);
+				
+					}
+
 				}
 
 			}
@@ -199,7 +211,7 @@ public class CPeriodo extends CGenerico {
 		txtDescripcionPeriodo.setValue("");
 		dtbFechaInicioPeriodo.setValue(null);
 		dtbFechaFinPeriodo.setValue(null);
-		txtEstadoPeriodo.setValue("");
+		cmbEstadoPeriodo.setValue("");
 		catalogo.limpiarSeleccion();
 		txtNombrePeriodo.setFocus(true);
 	}
@@ -264,7 +276,9 @@ public class CPeriodo extends CGenerico {
 	}
 
 	public boolean camposLLenos() {
-		if (txtNombrePeriodo.getText().compareTo("") == 0) {
+		if (txtNombrePeriodo.getText().compareTo("") == 0
+				||dtbFechaInicioPeriodo.getText().compareTo("") == 0
+				||dtbFechaFinPeriodo.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -277,6 +291,18 @@ public class CPeriodo extends CGenerico {
 			return false;
 		} else
 			return true;
+
+	}
+
+	protected boolean validarEstadoActivo() {
+		
+		Periodo periodo = servicioPeriodo.buscarPeriodoActivo();
+
+		if (cmbEstadoPeriodo.getValue().equals("ACTIVO") && periodo != null) {
+			return true;
+		}
+
+		return false;
 
 	}
 

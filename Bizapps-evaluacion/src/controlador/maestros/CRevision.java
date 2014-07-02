@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
@@ -40,7 +41,7 @@ public class CRevision extends CGenerico {
 	@Wire
 	private Textbox txtPeriodoRevision;
 	@Wire
-	private Textbox txtEstadoRevision;
+	private Combobox cmbEstadoRevision;
 	@Wire
 	private Button btnBuscarPeriodo;
 	@Wire
@@ -86,7 +87,7 @@ public class CRevision extends CGenerico {
 								.getPeriodo().getId()));
 						lblPeriodoRevision.setValue(revision.getPeriodo()
 								.getDescripcion());
-						txtEstadoRevision
+						cmbEstadoRevision
 								.setValue(revision.getEstadoRevision());
 						txtPeriodoRevision.setFocus(true);
 					} else
@@ -107,19 +108,33 @@ public class CRevision extends CGenerico {
 
 					if (periodo != null) {
 
-						String descripcion = txtDescripcionRevision.getValue();
-						String estadoRevision = txtEstadoRevision.getValue();
-						String usuario = nombreUsuarioSesion();
-						Timestamp fechaAuditoria = new Timestamp(
-								new Date().getTime());
-						Revision revision = new Revision(idRevision,
-								descripcion, estadoRevision, fechaAuditoria,
-								horaAuditoria, usuario, periodo);
-						servicioRevision.guardar(revision);
-						msj.mensajeInformacion(Mensaje.guardado);
-						limpiar();
-						catalogo.actualizarLista(servicioRevision.buscarTodas());
-						abrirCatalogo();
+						if (!validarRevisionActiva()) {
+
+							String descripcion = txtDescripcionRevision
+									.getValue();
+							String estadoRevision = cmbEstadoRevision
+									.getValue();
+							String usuario = nombreUsuarioSesion();
+							Timestamp fechaAuditoria = new Timestamp(
+									new Date().getTime());
+							Revision revision = new Revision(idRevision,
+									descripcion, estadoRevision,
+									fechaAuditoria, horaAuditoria, usuario,
+									periodo);
+							servicioRevision.guardar(revision);
+							msj.mensajeInformacion(Mensaje.guardado);
+							limpiar();
+							catalogo.actualizarLista(servicioRevision
+									.buscarTodas());
+							abrirCatalogo();
+
+						}else{
+							
+							msj.mensajeAlerta(Mensaje.revisionActiva);
+							cmbEstadoRevision.setFocus(true);
+							
+						}
+
 					} else {
 						msj.mensajeAlerta(Mensaje.codigoPeriodo);
 						txtPeriodoRevision.setFocus(true);
@@ -212,7 +227,7 @@ public class CRevision extends CGenerico {
 		txtPeriodoRevision
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del periodo debe ser numérico");
 		lblPeriodoRevision.setValue("");
-		txtEstadoRevision.setValue("");
+		cmbEstadoRevision.setValue("");
 		catalogo.limpiarSeleccion();
 		txtPeriodoRevision.setFocus(true);
 
@@ -221,7 +236,7 @@ public class CRevision extends CGenerico {
 	public boolean camposEditando() {
 		if (txtDescripcionRevision.getText().compareTo("") != 0
 				|| txtPeriodoRevision.getText().compareTo("") != 0
-				|| txtEstadoRevision.getText().compareTo("") != 0) {
+				|| cmbEstadoRevision.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -298,6 +313,20 @@ public class CRevision extends CGenerico {
 				return true;
 			}
 		}
+	}
+
+	protected boolean validarRevisionActiva() {
+
+		Revision revision = servicioRevision
+				.buscarRevisionActiva(servicioPeriodo.buscarPeriodo(Integer
+						.valueOf(txtPeriodoRevision.getValue())));
+
+		if (cmbEstadoRevision.getValue().equals("ACTIVO") && revision != null) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 	public void mostrarBotones(boolean bol) {
@@ -447,7 +476,7 @@ public class CRevision extends CGenerico {
 					return servicioPeriodo.filtroEstado(valor);
 				else
 					return servicioPeriodo.buscarTodos();
-		
+
 			}
 
 		};

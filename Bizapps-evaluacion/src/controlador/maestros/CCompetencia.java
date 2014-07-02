@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
@@ -37,7 +38,7 @@ public class CCompetencia extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionCompetencia;
 	@Wire
-	private Textbox txtNivelCompetencia;
+	private Combobox cmbNivelCompetencia;
 	@Wire
 	private Textbox txtComentarioCompetencia;
 	@Wire
@@ -72,7 +73,7 @@ public class CCompetencia extends CGenerico {
 						idCompetencia = competencia.getId();
 						txtDescripcionCompetencia.setValue(competencia
 								.getDescripcion());
-						txtNivelCompetencia.setValue(competencia.getNivel());
+						cmbNivelCompetencia.setValue(competencia.getNivel());
 						txtComentarioCompetencia.setValue(competencia
 								.getComentario());
 						txtDescripcionCompetencia.setFocus(true);
@@ -90,7 +91,7 @@ public class CCompetencia extends CGenerico {
 				guardar = validar();
 				if (guardar) {
 					String descripcion = txtDescripcionCompetencia.getValue();
-					String nivel = txtNivelCompetencia.getValue();
+					String nivel = cmbNivelCompetencia.getValue();
 					String comentario = txtComentarioCompetencia.getValue();
 					String usuario = nombreUsuarioSesion();
 					Timestamp fechaAuditoria = new Timestamp(
@@ -186,7 +187,7 @@ public class CCompetencia extends CGenerico {
 	public void limpiarCampos() {
 		idCompetencia = 0;
 		txtDescripcionCompetencia.setValue("");
-		txtNivelCompetencia.setValue("");
+		cmbNivelCompetencia.setValue("");
 		txtComentarioCompetencia.setValue("");
 		catalogo.limpiarSeleccion();
 		txtDescripcionCompetencia.setFocus(true);
@@ -195,7 +196,7 @@ public class CCompetencia extends CGenerico {
 
 	public boolean camposEditando() {
 		if (txtDescripcionCompetencia.getText().compareTo("") != 0
-				|| txtNivelCompetencia.getText().compareTo("") != 0
+				|| cmbNivelCompetencia.getText().compareTo("") != 0
 				|| txtComentarioCompetencia.getText().compareTo("") != 0) {
 			return true;
 		} else

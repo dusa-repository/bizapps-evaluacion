@@ -32,6 +32,7 @@ public abstract class Catalogo<Clase> extends Window {
 		super(titulo, "2", true);
 		this.setId("cmpCatalogo" + titulo);
 		this.setStyle("background-header:#FF7925; background: #f4f2f2");
+		this.setClosable(false);
 		setWidth("auto");
 		crearLista(lista, campos);
 		lsbCatalogo.addEventListener(Events.ON_SELECT,

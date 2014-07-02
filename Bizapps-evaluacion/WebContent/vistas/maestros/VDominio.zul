@@ -18,7 +18,15 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Descripción:" class="etiqueta" />
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<textbox id="txtDescripcionDominio" width="50%"
 							maxlength="100" tabindex="1"
@@ -27,9 +35,12 @@
 					<row>
 						<label value="Tipo:" class="etiqueta" />
 
-						<textbox id="txtTipoDominio" width="50%"
-							maxlength="50" tabindex="2"
-							tooltiptext="Ingrese aqui el tipo de dominio" />
+						<combobox id="cmbTipoDominio" readonly="true"
+							tooltiptext="Seleccione el tipo del dominio" width="52%"
+							tabindex="2">
+							<comboitem label="EVIDENCIADO" />
+							<comboitem label="REQUERIDO" />
+						</combobox>
 					</row>
 					<row>
 						<label value="Comentario:" class="etiqueta" />
@@ -43,7 +54,7 @@
 			</grid>
 		</groupbox>
 		<separator />
-		<separator/>
+		<separator />
 		<groupbox id="gpxDatosDominio" width="auto" title="">
 			<caption label="Registros" style="font-weight:bold"
 				tooltiptext="Presione para visualizar los dominios registrados" />
