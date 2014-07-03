@@ -198,7 +198,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	public static Revision revision;
 	private static String fichaE;
 	public static Integer numero = 0;
-
+	public static EvaluacionObjetivo ev;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -210,8 +210,8 @@ public class CAgregarEvaluacion extends CGenerico {
 				idEva = idEvaluacion;
 			}
 		}
-		
-		System.out.println("viene" +idEva);
+
+		System.out.println("viene" + idEva);
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
@@ -287,7 +287,6 @@ public class CAgregarEvaluacion extends CGenerico {
 		gpxAgregarIndicador.setOpen(false);
 	}
 
-
 	public ListModelList<Dominio> getDominio() {
 		dominio = new ListModelList<Dominio>(
 				servicioDominio.buscarPorTipo(tipo));
@@ -298,7 +297,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void eliminarI() {
 		eliminarIndicador();
 	}
-	
+
 	@Listen("onClick = #btnCancelarO")
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
@@ -306,9 +305,9 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnEliminar")
 	public void eliminarObj() {
-		eliminarObjetivo ();
+		eliminarObjetivo();
 	}
-	
+
 	@Listen("onClick = #cmbObjetivos")
 	public void mostrarObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
@@ -349,7 +348,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-		
+
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -373,33 +372,42 @@ public class CAgregarEvaluacion extends CGenerico {
 			objetivoLista.setResultado(0);
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
-			objetivosG.add(objetivoLista);
-//			if (cambiarEstado() == true){
-			lbxObjetivosGuardados
-					.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
-			servicioEvaluacionObjetivo.guardar(objetivoLista);
-		
-		gpxAgregar.setOpen(false);
-		Messagebox.show("Objetivos Guardados Exitosamente", "Información",
-				Messagebox.OK, Messagebox.INFORMATION);
-			}
-//		}
-		limpiar();
-		idObjetivo = 0;
-		
-		
-	}
+			ev = objetivoLista;
+			if (objetivosG.size() == 0) {
+				objetivosG.add(objetivoLista);
+				System.out.println("entroiffff");
+				lbxObjetivosGuardados
+						.setModel(new ListModelList<EvaluacionObjetivo>(
+								objetivosG));
+				servicioEvaluacionObjetivo.guardar(objetivoLista);
 
+				gpxAgregar.setOpen(false);
+				Messagebox.show("Objetivos Guardados Exitosamente",
+						"Información", Messagebox.OK, Messagebox.INFORMATION);
+				limpiar();
+			} else {
+				objetivosG.add(objetivoLista);
+				cambiarEstado1();
+				lbxObjetivosGuardados
+						.setModel(new ListModelList<EvaluacionObjetivo>(
+								objetivosG));
+			
+			}
+		}
+		
+		idObjetivo = 0;
+
+	}
 
 	public void limpiar() {
 		txtObjetivo.setValue("");
 		cmbPerspectiva.setValue(null);
 		txtCorresponsables.setValue("");
 		txtPeso.setValue(null);
-		
+
 	}
-	
-	public void limpiarI (){
+
+	public void limpiarI() {
 		txtIndicador.setValue("");
 		txtPesoPorc.setValue(0);
 		txtResFy.setValue(0);
@@ -418,7 +426,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
-		
+
 		if (cmbObjetivos.getText().compareTo("") == 0
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
@@ -456,9 +464,10 @@ public class CAgregarEvaluacion extends CGenerico {
 						.getValue());
 				Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
 				Integer linea = indicadores.size() + 1;
-				
+
 				EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
-				indicadorLista.setIdIndicador(servicioEvaluacionIndicador.buscarId()+1);
+				indicadorLista.setIdIndicador(servicioEvaluacionIndicador
+						.buscarId() + 1);
 				indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
 				indicadorLista.setDescripcionIndicador(indicador);
 				indicadorLista.setMedicion(medicion);
@@ -517,7 +526,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	}
 
 	@Listen("onClick = #btnCambiarEstado")
-	public boolean cambiarEstado() {
+	public void cambiarEstado() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		validar();
 		Double sumaPeso = (double) 0;
@@ -532,14 +541,13 @@ public class CAgregarEvaluacion extends CGenerico {
 							Messagebox.INFORMATION);
 
 		}
-		
 
 		else if (bool == true) {
 			Messagebox
 					.show("La suma de los pesos de los indicadores debe ser igual a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
-			return true;
+			
 		} else {
 
 			String estado = "PENDIENTE";
@@ -548,10 +556,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			Messagebox.show("La evaluación ahora esta pendiente por revisar",
 					"Información", Messagebox.OK, Messagebox.INFORMATION);
 		}
-			return false;
-		
-		
-		
+	
+
 	}
 
 	@Listen("onDoubleClick = #lbxObjetivosGuardados")
@@ -692,23 +698,26 @@ public class CAgregarEvaluacion extends CGenerico {
 						.buscarObjetivos(fichaE, numero);
 				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
 						.buscarObjetivosEvaluar(idEva);
-				System.out.println("objeto"+evaluacionObjetivoIndicadores);
-				if (evaluacionObjetivo1.size()==1){
-					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0).getDescripcionObjetivo());
+				System.out.println("objeto" + evaluacionObjetivoIndicadores);
+				if (evaluacionObjetivo1.size() == 1) {
+					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0)
+							.getDescripcionObjetivo());
 				}
 				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
-					Integer idOb = evaluacionObjetivoIndicadores.get(i).getIdObjetivo();
-					if (idOb == idObjetivo){
-						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
-					}		
+					Integer idOb = evaluacionObjetivoIndicadores.get(i)
+							.getIdObjetivo();
+					if (idOb == idObjetivo) {
+						cmbObjetivos.setValue(evaluacionObjetivo1.get(i)
+								.getDescripcionObjetivo());
+					}
 				}
-				}
-				indicadores = servicioEvaluacionIndicador
-						.buscarIndicadores(idObjetivo);
-				lbxIndicadoresAgregados
-						.setModel(new ListModelList<EvaluacionIndicador>(
-								indicadores));
 			}
+			indicadores = servicioEvaluacionIndicador
+					.buscarIndicadores(idObjetivo);
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(
+							indicadores));
+		}
 		idObjetivo = 0;
 	}
 
@@ -780,16 +789,17 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 
 	}
-	
+
 	@Listen("onClick = #btnAgregarF")
-	public void Guardar() {	
+	public void Guardar() {
 		String fortalezas = txtFortalezas.getValue();
 		String oportunidades = txtOportunidades.getValue();
 		String resumen = txtResumen.getValue();
 		String compromisos = txtCompromisos.getValue();
 		Integer idEvaluacion = Integer.parseInt(lblEvaluacion.getValue());
 		Evaluacion evaluacionEmpleado = new Evaluacion();
-		evaluacionEmpleado = servicioEvaluacion.buscarIdEvaluacion(idEvaluacion, fichaE);
+		evaluacionEmpleado = servicioEvaluacion.buscarIdEvaluacion(
+				idEvaluacion, fichaE);
 		evaluacionEmpleado.setCompromisos(compromisos);
 		evaluacionEmpleado.setFortalezas(fortalezas);
 		evaluacionEmpleado.setOportunidades(oportunidades);
@@ -797,11 +807,10 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		servicioEvaluacion.guardar(evaluacionEmpleado);
 		Messagebox.show("Feedback y Compromisos Registrados Exitosamente",
-				"Información", Messagebox.OK,
-					Messagebox.INFORMATION);
-			limpiar ();
-		}
-	
+				"Información", Messagebox.OK, Messagebox.INFORMATION);
+		limpiar();
+	}
+
 	private void eliminarIndicador() {
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
 			Listitem listItem = lbxIndicadoresAgregados.getSelectedItem();
@@ -821,7 +830,8 @@ public class CAgregarEvaluacion extends CGenerico {
 											.eliminarUno(idIndicador);
 									msj.mensajeInformacion(Mensaje.eliminado);
 									lbxIndicadoresAgregados.getItems().clear();
-									indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
+									indicadores = servicioEvaluacionIndicador
+											.buscarIndicadores(idObjetivo);
 									lbxIndicadoresAgregados
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
@@ -832,7 +842,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
 	}
-	
+
 	public void eliminarObjetivo() {
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
 			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
@@ -861,7 +871,8 @@ public class CAgregarEvaluacion extends CGenerico {
 												msj.mensajeInformacion(Mensaje.eliminado);
 												lbxObjetivosGuardados
 														.getItems().clear();
-												objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+												objetivosG = servicioEvaluacionObjetivo
+														.buscarObjetivosEvaluar(idEva);
 												lbxObjetivosGuardados
 														.setModel(new ListModelList<EvaluacionObjetivo>(
 																objetivosG));
@@ -869,7 +880,7 @@ public class CAgregarEvaluacion extends CGenerico {
 										}
 									});
 				} else {
-					
+
 					Messagebox.show("Desea Eliminar el Objetivo", "Alerta",
 							Messagebox.OK | Messagebox.CANCEL,
 							Messagebox.QUESTION,
@@ -882,7 +893,8 @@ public class CAgregarEvaluacion extends CGenerico {
 										msj.mensajeInformacion(Mensaje.eliminado);
 										lbxObjetivosGuardados.getItems()
 												.clear();
-										objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+										objetivosG = servicioEvaluacionObjetivo
+												.buscarObjetivosEvaluar(idEva);
 										lbxObjetivosGuardados
 												.setModel(new ListModelList<EvaluacionObjetivo>(
 														objetivosG));
@@ -897,6 +909,73 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 	}
 	
+	public void validar1() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		String ficha = evaluacion.getFicha();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
+		if (evaluacionObjetivoIndicadores != null) {
+			for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+				int idObjetivo = evaluacionObjetivoIndicadores.get(i)
+						.getIdObjetivo();
+				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				Double sumaPeso = (double) 0;
+				for (int j = 0; j < evaluacionObjetivoIndicador.size(); j++) {
+					Double peso = evaluacionObjetivoIndicador.get(j).getPeso();
+					sumaPeso = peso + sumaPeso;
+				}
+
+				if (sumaPeso > 100) {
+					bool = true;
+					i = 1000000000;
+				}
+			}
+
+		}
+
+	}
+
+
+	public void cambiarEstado1() {
+		System.out.println("METODO");
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		validar1();
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < objetivosG.size(); j++) {
+			Double peso = objetivosG.get(j).getPeso();
+			sumaPeso = sumaPeso + peso;
+			System.out.println("SUMA"+sumaPeso);
+		}
+		if (sumaPeso > 100) {
+			Messagebox
+					.show("La suma de los pesos de los objetivos debe ser igual a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+			objetivosG.remove(ev);
+
+
+		}
+
+		else if (bool == true) {
+			Messagebox
+					.show("La suma de los pesos de los indicadores debe ser igual a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+			
+		} else {
+			servicioEvaluacionObjetivo.guardar(ev);
+			Messagebox.show("Objetivos Guardados Exitosamente", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+			limpiar();
+			
+		}
+	
+
+	}
+
 
 }
-
