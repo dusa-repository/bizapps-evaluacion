@@ -193,6 +193,8 @@ public class CEvaluacionAgregar extends CGenerico {
 	private static String pers;
 	private static String unid;
 	private static String medic;
+	private static boolean bool = false;
+	public static EvaluacionObjetivo ev;
 
 	public static int numero;
 	@Override
@@ -419,19 +421,32 @@ public class CEvaluacionAgregar extends CGenerico {
 		objetivoLista.setResultado(0);
 		objetivoLista.setTotalInd(0);
 		objetivoLista.setCorresponsables(corresponsables);
-		objetivosG.add(objetivoLista);
-		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
-				objetivosG));
-		servicioEvaluacionObjetivo.guardar(objetivoLista);
-		gpxAgregar.setOpen(false);
+		ev = objetivoLista;
+		if (objetivosG.size() == 0) {
+			objetivosG.add(objetivoLista);
+			System.out.println("entroiffff");
+			lbxObjetivosGuardados
+					.setModel(new ListModelList<EvaluacionObjetivo>(
+							objetivosG));
+			servicioEvaluacionObjetivo.guardar(objetivoLista);
 
-//		servicioEvaluacion.guardar(evaluacion);
-		Messagebox.show("Objetivos Guardados Exitosamente", "Información",
-				Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+			Messagebox.show("Objetivos Guardados Exitosamente",
+					"Información", Messagebox.OK, Messagebox.INFORMATION);
+			limpiar();
+		} else {
+			objetivosG.add(objetivoLista);
+			cambiarEstado1();
+			lbxObjetivosGuardados
+					.setModel(new ListModelList<EvaluacionObjetivo>(
+							objetivosG));
+		
 		}
-		limpiar();
-		idObjetivo = 0;
 	}
+	
+	idObjetivo = 0;
+
+}
 
 	public void limpiar() {
 		txtObjetivo.setValue("");
@@ -868,4 +883,74 @@ public class CEvaluacionAgregar extends CGenerico {
 			}
 		idObjetivo = 0;
 	}
+	
+	
+	public void validar1() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		String ficha = evaluacion.getFicha();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
+		if (evaluacionObjetivoIndicadores != null) {
+			for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+				int idObjetivo = evaluacionObjetivoIndicadores.get(i)
+						.getIdObjetivo();
+				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				Double sumaPeso = (double) 0;
+				for (int j = 0; j < evaluacionObjetivoIndicador.size(); j++) {
+					Double peso = evaluacionObjetivoIndicador.get(j).getPeso();
+					sumaPeso = peso + sumaPeso;
+				}
+
+				if (sumaPeso > 100) {
+					bool = true;
+					i = 1000000000;
+				}
+			}
+
+		}
+
+	}
+
+
+	public void cambiarEstado1() {
+		System.out.println("METODO");
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		validar1();
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < objetivosG.size(); j++) {
+			Double peso = objetivosG.get(j).getPeso();
+			sumaPeso = sumaPeso + peso;
+			System.out.println("SUMA"+sumaPeso);
+		}
+		if (sumaPeso > 100) {
+			Messagebox
+					.show("La suma de los pesos de los objetivos no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+			objetivosG.remove(ev);
+
+
+		}
+
+		else if (bool == true) {
+			Messagebox
+					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+			
+		} else {
+			servicioEvaluacionObjetivo.guardar(ev);
+			Messagebox.show("Objetivos Guardados Exitosamente", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+			limpiar();
+			
+		}
+	
+
+	}
+
 }

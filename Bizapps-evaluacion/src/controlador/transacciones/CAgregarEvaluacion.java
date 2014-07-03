@@ -550,10 +550,10 @@ public class CAgregarEvaluacion extends CGenerico {
 			
 		} else {
 
-			String estado = "PENDIENTE";
-			evaluacion.setEstadoEvaluacion(estado);
-			servicioEvaluacion.guardar(evaluacion);
-			Messagebox.show("La evaluación ahora esta pendiente por revisar",
+//			String estado = "PENDIENTE";
+//			evaluacion.setEstadoEvaluacion(estado);
+//			servicioEvaluacion.guardar(evaluacion);
+			Messagebox.show("Evaluación guardada con exito",
 					"Información", Messagebox.OK, Messagebox.INFORMATION);
 		}
 	
@@ -951,7 +951,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 		if (sumaPeso > 100) {
 			Messagebox
-					.show("La suma de los pesos de los objetivos debe ser igual a 100",
+					.show("La suma de los pesos de los objetivos no debe ser mayor a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
 			objetivosG.remove(ev);
@@ -961,7 +961,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		else if (bool == true) {
 			Messagebox
-					.show("La suma de los pesos de los indicadores debe ser igual a 100",
+					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
 			
