@@ -51,12 +51,12 @@ public class Valoracion implements Serializable {
 	public Valoracion() {
 	}
 	
-	public Valoracion(int idValoracion, String descripcion,
-			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
-			String nombre, int orden, int rangoInferior, int rangoSuperior,
-			int valor) {
+	
+	public Valoracion(int id, String descripcion, Timestamp fechaAuditoria,
+			String horaAuditoria, String usuario, String nombre, int orden,
+			int rangoInferior, int rangoSuperior, int valor) {
 		super();
-		this.id = idValoracion;
+		this.id = id;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
@@ -68,7 +68,6 @@ public class Valoracion implements Serializable {
 		this.valor = valor;
 	}
 
-	
 	public int getId() {
 		return id;
 	}

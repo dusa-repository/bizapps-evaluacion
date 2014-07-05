@@ -64,9 +64,9 @@
 					<row>
 						<label value="Orden:" class="etiqueta" />
 
-						<textbox id="txtOrdenConductaCompetencia"
-							width="100%" maxlength="100" tabindex="4"
-							tooltiptext="Ingrese aqui el orden" />
+						<spinner id="spnOrdenConductaCompetencia"
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="4" tooltiptext="Ingrese aqui el orden" />
 					</row>
 				</rows>
 			</grid>

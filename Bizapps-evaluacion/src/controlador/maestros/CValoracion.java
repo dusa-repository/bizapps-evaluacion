@@ -19,6 +19,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -39,7 +40,7 @@ public class CValoracion extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionValoracion;
 	@Wire
-	private Textbox txtOrdenValoracion;
+	private Spinner spnOrdenValoracion;
 	@Wire
 	private Textbox txtRangoInferiorValoracion;
 	@Wire
@@ -79,8 +80,7 @@ public class CValoracion extends CGenerico {
 						txtNombreValoracion.setValue(valoracion.getNombre());
 						txtDescripcionValoracion.setValue(valoracion
 								.getDescripcion());
-						txtOrdenValoracion.setValue(String.valueOf(valoracion
-								.getOrden()));
+						spnOrdenValoracion.setValue(valoracion.getOrden());
 						txtRangoInferiorValoracion.setValue(String
 								.valueOf(valoracion.getRangoInferior()));
 						txtRangoSuperiorValoracion.setValue(String
@@ -102,12 +102,12 @@ public class CValoracion extends CGenerico {
 				guardar = validar();
 				if (guardar) {
 					String nombre = txtNombreValoracion.getValue();
-					String descripcion = txtDescripcionValoracion.getValue();			
-					int orden = Integer.valueOf(txtOrdenValoracion.getValue());
+					String descripcion = txtDescripcionValoracion.getValue();
+					int orden = Integer.valueOf(spnOrdenValoracion.getValue());
 					int rangoInferior = Integer
-								.valueOf(txtRangoInferiorValoracion.getValue());
+							.valueOf(txtRangoInferiorValoracion.getValue());
 					int rangoSuperior = Integer
-								.valueOf(txtRangoSuperiorValoracion.getValue());
+							.valueOf(txtRangoSuperiorValoracion.getValue());
 					int valor = Integer.valueOf(txtValorValoracion.getValue());
 					String usuario = nombreUsuarioSesion();
 					Timestamp fechaAuditoria = new Timestamp(
@@ -206,10 +206,7 @@ public class CValoracion extends CGenerico {
 		idValoracion = 0;
 		txtNombreValoracion.setValue("");
 		txtDescripcionValoracion.setValue("");
-		txtOrdenValoracion.setConstraint("");
-		txtOrdenValoracion.setValue("");
-		txtOrdenValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El orden de la valoración debe ser numérico");
+		spnOrdenValoracion.setValue(null);
 		txtRangoInferiorValoracion.setConstraint("");
 		txtRangoInferiorValoracion.setValue("");
 		txtRangoInferiorValoracion
@@ -230,7 +227,7 @@ public class CValoracion extends CGenerico {
 	public boolean camposEditando() {
 		if (txtNombreValoracion.getText().compareTo("") != 0
 				|| txtDescripcionValoracion.getText().compareTo("") != 0
-				|| txtOrdenValoracion.getText().compareTo("") != 0
+				|| spnOrdenValoracion.getText().compareTo("") != 0
 				|| txtRangoInferiorValoracion.getText().compareTo("") != 0
 				|| txtRangoSuperiorValoracion.getText().compareTo("") != 0
 				|| txtValorValoracion.getText().compareTo("") != 0) {
@@ -243,22 +240,18 @@ public class CValoracion extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosValoracion.setOpen(false);
 		gpxRegistroValoracion.setOpen(true);
-		txtOrdenValoracion
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El orden de la valoración debe ser numérico");
 		txtRangoInferiorValoracion
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango inferior de la valoración debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango inferior de la valoración debe ser numérico");
 		txtRangoSuperiorValoracion
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango superior de la valoración debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango superior de la valoración debe ser numérico");
 		txtValorValoracion
-		.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El valor de la valoración debe ser numérico");
+				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El valor de la valoración debe ser numérico");
 		mostrarBotones(false);
 
 	}
 
 	@Listen("onOpen = #gpxDatosValoracion")
 	public void abrirCatalogo() {
-		txtOrdenValoracion.setConstraint("");
-		txtOrdenValoracion.setValue("");
 		txtRangoInferiorValoracion.setConstraint("");
 		txtRangoInferiorValoracion.setValue("");
 		txtRangoSuperiorValoracion.setConstraint("");

@@ -26,6 +26,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -56,7 +57,7 @@ public class CConductaCompetencia extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionConductaCompetencia;
 	@Wire
-	private Textbox txtOrdenConductaCompetencia;
+	private Spinner spnOrdenConductaCompetencia;
 	@Wire
 	private Groupbox gpxDatosConductaCompetencia;
 	@Wire
@@ -108,8 +109,7 @@ public class CConductaCompetencia extends CGenerico {
 								.getDescripcion());
 						txtDescripcionConductaCompetencia.setValue(conducta
 								.getDescripcion());
-						txtOrdenConductaCompetencia.setValue(String
-								.valueOf(conducta.getOrden()));
+						spnOrdenConductaCompetencia.setValue(conducta.getOrden());
 						txtCompetenciaConductaCompetencia.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -135,7 +135,7 @@ public class CConductaCompetencia extends CGenerico {
 
 						String descripcion = txtDescripcionConductaCompetencia
 								.getValue();
-						int orden = Integer.valueOf(txtOrdenConductaCompetencia
+						int orden = Integer.valueOf(spnOrdenConductaCompetencia
 								.getValue());
 						String usuario = nombreUsuarioSesion();
 						Timestamp fechaAuditoria = new Timestamp(
@@ -174,7 +174,8 @@ public class CConductaCompetencia extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana1(wdwVConductaCompetencia, "Conducta por Competencia");
+				cerrarVentana1(wdwVConductaCompetencia,
+						"Conducta por Competencia");
 			}
 
 			@Override
@@ -254,10 +255,7 @@ public class CConductaCompetencia extends CGenerico {
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la competencia debe ser numérico");
 		lblDominio.setValue("");
 		txtDescripcionConductaCompetencia.setValue("");
-		txtOrdenConductaCompetencia.setConstraint("");
-		txtOrdenConductaCompetencia.setValue("");
-		txtOrdenConductaCompetencia
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la competencia debe ser numérico");
+		spnOrdenConductaCompetencia.setValue(null);
 		catalogo.limpiarSeleccion();
 		txtCompetenciaConductaCompetencia.setFocus(true);
 
@@ -267,7 +265,7 @@ public class CConductaCompetencia extends CGenerico {
 		if (txtCompetenciaConductaCompetencia.getText().compareTo("") != 0
 				|| txtDominioConductaCompetencia.getText().compareTo("") != 0
 				|| txtDescripcionConductaCompetencia.getText().compareTo("") != 0
-				|| txtOrdenConductaCompetencia.getText().compareTo("") != 0) {
+				|| spnOrdenConductaCompetencia.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -278,8 +276,6 @@ public class CConductaCompetencia extends CGenerico {
 		txtCompetenciaConductaCompetencia
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la competencia debe ser numérico");
 		txtDominioConductaCompetencia
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la competencia debe ser numérico");
-		txtOrdenConductaCompetencia
 				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la competencia debe ser numérico");
 		gpxDatosConductaCompetencia.setOpen(false);
 		gpxRegistroConductaCompetencia.setOpen(true);
@@ -293,8 +289,6 @@ public class CConductaCompetencia extends CGenerico {
 		txtCompetenciaConductaCompetencia.setValue("");
 		txtDominioConductaCompetencia.setConstraint("");
 		txtDominioConductaCompetencia.setValue("");
-		txtOrdenConductaCompetencia.setConstraint("");
-		txtOrdenConductaCompetencia.setValue("");
 		gpxDatosConductaCompetencia.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -592,7 +586,7 @@ public class CConductaCompetencia extends CGenerico {
 			}
 
 		};
-		
+
 		catalogoDominio.setClosable(true);
 		catalogoDominio.setWidth("80%");
 		catalogoDominio.setParent(divCatalogoDominio);

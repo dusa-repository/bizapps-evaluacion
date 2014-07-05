@@ -39,8 +39,8 @@
 					</row>
 					<row>
 						<label value="Orden:" class="etiqueta" />
-						<textbox id="txtOrdenValoracion" width="80%"
-							tabindex="3"
+						<spinner id="spnOrdenValoracion" width="80%"
+							tabindex="3" constraint="no negative"
 							tooltiptext="Ingrese aqui el orden de la valoracion" />
 					</row>
 					<row>
