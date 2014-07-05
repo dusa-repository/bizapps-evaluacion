@@ -51,9 +51,18 @@ public class SRevision {
 	}
 	
 	/* Servicio que permite buscar la revision de acuerdo a un estado y un periodo*/
-	public Revision buscarRevisionActiva(Periodo periodo) {
+	public Revision buscarRevisionPorPeriodo(Periodo periodo) {
 		Revision revision;
 		revision = revisionDAO.findByPeriodoAndEstadoRevision(periodo, estadoRevision[0]);
+		return revision;
+
+	}
+	
+	
+	/* Servicio que permite buscar la revision de acuerdo a un estado y un periodo*/
+	public Revision buscarRevisionActiva() {
+		Revision revision;
+		revision = revisionDAO.findByEstadoRevision(estadoRevision[0]);
 		return revision;
 
 	}

@@ -320,8 +320,7 @@ public class CRevision extends CGenerico {
 	protected boolean validarRevisionActiva() {
 
 		Revision revision = servicioRevision
-				.buscarRevisionActiva(servicioPeriodo.buscarPeriodo(Integer
-						.valueOf(txtPeriodoRevision.getValue())));
+				.buscarRevisionActiva();
 
 		if (cmbEstadoRevision.getValue().equals("ACTIVO") && revision != null) {
 			return true;
