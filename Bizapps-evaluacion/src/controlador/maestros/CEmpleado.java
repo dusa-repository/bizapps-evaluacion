@@ -258,6 +258,7 @@ public class CEmpleado extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioEmpleado
 															.buscarTodos());
+													abrirCatalogo();
 												}
 											}
 										});

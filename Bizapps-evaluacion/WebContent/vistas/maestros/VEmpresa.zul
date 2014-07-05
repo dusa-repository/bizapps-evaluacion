@@ -53,7 +53,7 @@
 							tooltiptext="Ingrese aqui el telefono de la empresa" />
 					</row>
 					<row>
-						<label value="Empresa auxiliar:"
+						<label value="Empresa Auxiliar:"
 							class="etiqueta" />
 
 						<textbox id="txtEmpresaAuxiliarEmpresa"

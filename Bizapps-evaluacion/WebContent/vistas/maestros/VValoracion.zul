@@ -33,8 +33,8 @@
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />
-						<textbox id="txtDescripcionValoracion"
-							width="80%" maxlength="500" tabindex="2"
+						<textbox id="txtDescripcionValoracion" rows="3"
+							cols="100" width="80%" maxlength="500" tabindex="2"
 							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
 					</row>
 					<row>

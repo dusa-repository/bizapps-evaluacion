@@ -218,6 +218,7 @@ public class CUnidadOrganizativa extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioUnidadOrganizativa
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

@@ -40,7 +40,7 @@
 					<row>
 						<label value="Descripción:" class="etiqueta" />
 
-						<textbox id="txtDescripcionTipoFormacion"
+						<textbox id="txtDescripcionTipoFormacion" rows="3" cols="100"
 							width="100%" maxlength="100" tabindex="2"
 							tooltiptext="Ingrese aqui la descripcion del tipo de formacion" />
 					</row>

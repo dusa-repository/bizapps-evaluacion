@@ -156,6 +156,7 @@ public class CGerencia extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioGerencia
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

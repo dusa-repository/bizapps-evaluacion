@@ -58,7 +58,7 @@
 						<label value="Descripción:" class="etiqueta" />
 
 						<textbox id="txtDescripcionConductaCompetencia"
-							width="100%" maxlength="255" tabindex="3"
+							rows="3" cols="100" width="100%" maxlength="255" tabindex="3"
 							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
 					</row>
 					<row>

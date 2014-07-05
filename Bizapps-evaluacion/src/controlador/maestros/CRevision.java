@@ -203,6 +203,7 @@ public class CRevision extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioRevision
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});
@@ -243,7 +244,8 @@ public class CRevision extends CGenerico {
 	}
 
 	public boolean camposLLenos() {
-		if (txtPeriodoRevision.getText().compareTo("") == 0) {
+		if (txtPeriodoRevision.getText().compareTo("") == 0
+				||cmbEstadoRevision.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;

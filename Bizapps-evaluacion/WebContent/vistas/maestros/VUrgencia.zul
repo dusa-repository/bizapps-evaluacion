@@ -27,7 +27,7 @@
 							</label>
 						</hbox>
 
-						<textbox id="txtDescripcionUrgencia" width="80%"
+						<textbox id="txtDescripcionUrgencia" width="90%"
 							maxlength="500" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la urgencia" />
 					</row>

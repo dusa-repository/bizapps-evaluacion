@@ -171,6 +171,7 @@ public class CCargo extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioCargo
 															.buscarTodos());
+													abrirCatalogo();
 												}
 											}
 										});

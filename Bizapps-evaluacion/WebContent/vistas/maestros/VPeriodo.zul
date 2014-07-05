@@ -27,33 +27,39 @@
 							</label>
 						</hbox>
 
-						<textbox id="txtNombrePeriodo" width="80%"
+						<textbox id="txtNombrePeriodo" width="79%"
 							maxlength="20" tabindex="1"
 							tooltiptext="Ingrese aqui el nombre del periodo" />
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />
 
-						<textbox id="txtDescripcionPeriodo" width="80%"
-							maxlength="100" tabindex="2"
+						<textbox id="txtDescripcionPeriodo" width="79%"
+							maxlength="100" tabindex="2" rows="3" cols="100"
 							tooltiptext="Ingrese aqui la descripcion del periodo" />
 					</row>
 					<row>
-						<label value="Fecha inicio:" class="etiqueta" />
+						<label value="Fecha Inicio:" class="etiqueta" />
 
 						<datebox readonly="true" width="80%"
 							tabindex="3" id="dtbFechaInicioPeriodo" format="dd-MM-yyyy"
 							tooltiptext="Ingrese la fecha de inicio del periodo" />
 					</row>
 					<row>
-						<label value="Fecha fin:" class="etiqueta" />
+						<label value="Fecha Fin:" class="etiqueta" />
 
 						<datebox readonly="true" width="80%"
 							tabindex="4" id="dtbFechaFinPeriodo" format="dd-MM-yyyy"
 							tooltiptext="Ingrese la fecha final del periodo" />
 					</row>
 					<row>
-						<label value="Estado:" class="etiqueta" />
+						<hbox>
+							<label value="Estado:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<combobox id="cmbEstadoPeriodo" readonly="true"
 							tooltiptext="Seleccione el estado del periodo" width="80%"

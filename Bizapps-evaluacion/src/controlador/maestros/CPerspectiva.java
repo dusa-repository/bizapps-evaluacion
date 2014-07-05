@@ -157,6 +157,7 @@ public class CPerspectiva extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioPerspectiva
 															.buscar());
+													abrirCatalogo();
 												}
 											}
 										});

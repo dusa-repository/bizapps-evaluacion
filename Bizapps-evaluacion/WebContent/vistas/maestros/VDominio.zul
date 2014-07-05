@@ -28,15 +28,21 @@
 							</label>
 						</hbox>
 
-						<textbox id="txtDescripcionDominio" width="50%"
+						<textbox id="txtDescripcionDominio" width="60%"
 							maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion del dominio" />
 					</row>
 					<row>
-						<label value="Tipo:" class="etiqueta" />
+						<hbox>
+							<label value="Tipo:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<combobox id="cmbTipoDominio" readonly="true"
-							tooltiptext="Seleccione el tipo del dominio" width="52%"
+							tooltiptext="Seleccione el tipo del dominio" width="62%"
 							tabindex="2">
 							<comboitem label="EVIDENCIADO" />
 							<comboitem label="REQUERIDO" />
@@ -45,7 +51,7 @@
 					<row>
 						<label value="Comentario:" class="etiqueta" />
 
-						<textbox id="txtComentarioDominio" width="50%"
+						<textbox id="txtComentarioDominio" width="60%"
 							maxlength="5000" tabindex="3" rows="4" cols="100"
 							tooltiptext="Ingrese aqui el comentario del dominio" />
 					</row>

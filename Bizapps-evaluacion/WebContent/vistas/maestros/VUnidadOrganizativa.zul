@@ -40,7 +40,7 @@
 						<label value="Descripción:" class="etiqueta" />
 
 						<textbox id="txtDescripcionUnidadOrganizativa"
-							width="100%" maxlength="100" tabindex="2"
+							width="100%" maxlength="100" tabindex="2" rows="3" cols="100"
 							tooltiptext="Ingrese aqui la descripcion de la unidad organizativa" />
 					</row>
 					<row>
@@ -51,14 +51,14 @@
 							tooltiptext="Ingrese aqui el nivel de la unidad organizativa" />
 					</row>
 					<row>
-						<label value="Sub-nivel:" class="etiqueta" />
+						<label value="Sub-Nivel:" class="etiqueta" />
 
 						<textbox id="txtSubNivelUnidadOrganizativa"
 							width="100%" tabindex="4"
 							tooltiptext="Ingrese aqui el sub-nivel de la unidad organizativa" />
 					</row>
 					<row>
-						<label value="Empresa auxiliar:"
+						<label value="Empresa Auxiliar:"
 							class="etiqueta" />
 
 						<textbox
@@ -67,7 +67,7 @@
 							tooltiptext="Ingrese aqui la empresa auxiliar de la unidad organizativa" />
 					</row>
 					<row>
-						<label value="Unidad organizativa auxiliar:"
+						<label value="Unidad Organizativa Auxiliar:"
 							class="etiqueta" />
 
 						<textbox id="txtUnidadOrganizativaAuxiliar"

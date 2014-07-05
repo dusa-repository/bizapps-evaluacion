@@ -27,7 +27,7 @@
 							</label>
 						</hbox>
 
-						<textbox id="txtDescripcionArea" width="80%"
+						<textbox id="txtDescripcionArea" width="90%"
 							maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion del area" />
 					</row>

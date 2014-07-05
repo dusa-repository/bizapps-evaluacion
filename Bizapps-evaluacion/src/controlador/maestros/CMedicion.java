@@ -159,6 +159,7 @@ public class CMedicion extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioMedicion
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

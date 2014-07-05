@@ -189,6 +189,7 @@ public class CPeriodo extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioPeriodo
 															.buscarTodos());
+													abrirCatalogo();
 												}
 											}
 										});
@@ -278,7 +279,8 @@ public class CPeriodo extends CGenerico {
 	public boolean camposLLenos() {
 		if (txtNombrePeriodo.getText().compareTo("") == 0
 				||dtbFechaInicioPeriodo.getText().compareTo("") == 0
-				||dtbFechaFinPeriodo.getText().compareTo("") == 0) {
+				||dtbFechaFinPeriodo.getText().compareTo("") == 0
+				||cmbEstadoPeriodo.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;

@@ -185,6 +185,7 @@ public class CValoracion extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioValoracion
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

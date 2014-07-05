@@ -168,6 +168,7 @@ public class CCompetencia extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioCompetencia
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});
@@ -256,7 +257,8 @@ public class CCompetencia extends CGenerico {
 	}
 
 	public boolean camposLLenos() {
-		if (txtDescripcionCompetencia.getText().compareTo("") == 0) {
+		if (txtDescripcionCompetencia.getText().compareTo("") == 0
+				||cmbNivelCompetencia.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;

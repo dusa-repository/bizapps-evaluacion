@@ -158,6 +158,7 @@ public class CUnidadMedida extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioUnidadMedida
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

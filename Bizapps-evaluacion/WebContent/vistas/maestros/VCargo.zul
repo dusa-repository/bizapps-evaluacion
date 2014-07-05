@@ -27,30 +27,30 @@
 							</label>
 						</hbox>
 
-						<textbox id="txtDescripcionCargo" width="50%"
-							maxlength="100" tabindex="1"
+						<textbox id="txtDescripcionCargo" width="60%"
+							maxlength="100" tabindex="1" rows="3" cols="100"
 							tooltiptext="Ingrese aqui la descripcion del cargo" />
 					</row>
 					<row>
 						<label value="Nómina:" class="etiqueta" />
 
-						<textbox id="txtNominaCargo" width="50%"
+						<textbox id="txtNominaCargo" width="60%"
 							maxlength="50" tabindex="2"
 							tooltiptext="Ingrese aqui la nomina del cargo" />
 					</row>
 					<row>
-						<label value="Cargo auxiliar:" class="etiqueta" />
+						<label value="Cargo Auxiliar:" class="etiqueta" />
 
-						<textbox id="txtCargoAuxiliarCargo" width="50%"
+						<textbox id="txtCargoAuxiliarCargo" width="60%"
 							maxlength="50" tabindex="3"
 							tooltiptext="Ingrese aqui el cargo auxiliar" />
 					</row>
 					<row>
-						<label value="Empresa auxiliar:"
+						<label value="Empresa Auxiliar:"
 							class="etiqueta" />
 
 						<textbox id="txtEmpresaAuxiliarCargo"
-							width="50%" maxlength="50" tabindex="4"
+							width="60%" maxlength="50" tabindex="4"
 							tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
 					</row>
 				</rows>

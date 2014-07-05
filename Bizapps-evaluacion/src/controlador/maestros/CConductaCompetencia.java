@@ -224,6 +224,7 @@ public class CConductaCompetencia extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioConductaCompetencia
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

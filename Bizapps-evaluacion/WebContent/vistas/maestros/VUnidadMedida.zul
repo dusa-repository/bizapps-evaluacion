@@ -28,7 +28,7 @@
 						</hbox>
 
 						<textbox id="txtDescripcionUnidadMedida"
-							width="80%" maxlength="50" tabindex="1"
+							width="90%" maxlength="50" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la unidad de medida" />
 					</row>
 				</rows>

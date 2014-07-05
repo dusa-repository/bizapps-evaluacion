@@ -28,26 +28,33 @@
 						</hbox>
 
 						<textbox id="txtDescripcionCompetencia"
-							width="50%" maxlength="100" tabindex="1"
+							width="60%" maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la competencia" />
-					</row>					
+					</row>
 					<row>
-						<label value="Nivel:" class="etiqueta" />
+						<hbox>
+							<label value="Nivel:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-						<combobox id="cmbNivelCompetencia" readonly="true"
-							tooltiptext="Seleccione el nivel de la competencia" width="52%"
+						<combobox id="cmbNivelCompetencia"
+							readonly="true"
+							tooltiptext="Seleccione el nivel de la competencia" width="62%"
 							tabindex="2">
 							<comboitem label="RECTORAS" />
 							<comboitem label="ESPECIFICAS" />
 						</combobox>
 					</row>
-					
-					
+
+
 					<row>
 						<label value="Comentario:" class="etiqueta" />
 
 						<textbox id="txtComentarioCompetencia"
-							width="50%" maxlength="5000" tabindex="3" rows="4" cols="100"
+							width="60%" maxlength="5000" tabindex="3" rows="4" cols="100"
 							tooltiptext="Ingrese aqui el comentario de la competencia" />
 					</row>
 
@@ -55,7 +62,7 @@
 			</grid>
 		</groupbox>
 		<separator />
-		<separator/>
+		<separator />
 		<groupbox id="gpxDatosCompetencia" width="auto" title="">
 			<caption label="Registros" style="font-weight:bold"
 				tooltiptext="Presione para visualizar las competencias registradas" />

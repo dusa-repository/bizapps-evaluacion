@@ -155,6 +155,7 @@ public class CArea extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioArea
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

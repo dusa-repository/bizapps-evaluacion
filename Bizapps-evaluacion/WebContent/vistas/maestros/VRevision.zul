@@ -43,7 +43,13 @@
 							tooltiptext="Ingrese aqui la descripcion de la revision" />
 					</row>
 					<row>
-						<label value="Estado:" class="etiqueta" />
+						<hbox>
+							<label value="Estado:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<combobox id="cmbEstadoRevision" readonly="true"
 							tooltiptext="Seleccione el estado de la revision" width="100%"

@@ -166,6 +166,7 @@ public class CDominio extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioDominio
 															.buscarTodos());
+													abrirCatalogo();
 												}
 											}
 										});
@@ -254,7 +255,8 @@ public class CDominio extends CGenerico {
 	}
 	
 	public boolean camposLLenos() {
-		if (txtDescripcionDominio.getText().compareTo("") == 0) {
+		if (txtDescripcionDominio.getText().compareTo("") == 0
+				||cmbTipoDominio.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;

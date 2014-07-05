@@ -176,6 +176,7 @@ public class CEmpresa extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioEmpresa
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});

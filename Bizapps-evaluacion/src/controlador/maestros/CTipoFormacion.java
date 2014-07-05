@@ -184,6 +184,7 @@ public class CTipoFormacion extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioTipoFormacion
 															.buscarTodos());
+													abrirCatalogo();
 												}
 											}
 										});

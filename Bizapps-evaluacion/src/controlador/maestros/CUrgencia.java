@@ -160,6 +160,7 @@ public class CUrgencia extends CGenerico {
 													limpiar();
 													catalogo.actualizarLista(servicioUrgencia
 															.buscarTodas());
+													abrirCatalogo();
 												}
 											}
 										});
