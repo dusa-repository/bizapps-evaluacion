@@ -33,7 +33,7 @@ public abstract class Catalogo<Clase> extends Window {
 		this.setId("cmpCatalogo" + titulo);
 		this.setStyle("background-header:#FF7925; background: #f4f2f2");
 		this.setClosable(false);
-		setWidth("auto");
+		setWidth("100%");
 		crearLista(lista, campos);
 		lsbCatalogo.addEventListener(Events.ON_SELECT,
 				new EventListener<Event>() {
@@ -80,6 +80,8 @@ public abstract class Catalogo<Clase> extends Window {
 		}
 		lsbCatalogo.appendChild(lhdEncabezado);
 		lhdEncabezado.setVisible(true);
+		lsbCatalogo.setWidth("100%");
+		lsbCatalogo.setSizedByContent(true);
 		lsbCatalogo.setModel(new ListModelList<Clase>(lista));
 		lsbCatalogo.setMultiple(false);
 		lsbCatalogo.setCheckmark(false);
