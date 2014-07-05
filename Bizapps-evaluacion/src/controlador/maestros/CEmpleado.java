@@ -127,10 +127,15 @@ public class CEmpleado extends CGenerico {
 						txtFichaEmpleado.setValue(empleado.getFicha());
 						txtFichaSupervisorEmpleado.setValue(empleado
 								.getFichaSupervisor());
-						lblSupervisorEmpleado.setValue(servicioEmpleado
-								.buscarPorNombre(
-										txtFichaSupervisorEmpleado.getValue())
-								.getNombre());
+						Empleado fichaSupervisor = servicioEmpleado
+								.buscar(Integer.parseInt(empleado
+										.getFichaSupervisor()));
+						if (fichaSupervisor != null)
+							lblSupervisorEmpleado
+									.setValue(servicioEmpleado.buscar(
+											Integer.parseInt(empleado
+													.getFichaSupervisor()))
+											.getNombre());
 						txtGradoAuxiliarEmpleado.setValue(String
 								.valueOf(empleado.getGradoAuxiliar()));
 						txtEmpresaEmpleado.setFocus(true);
