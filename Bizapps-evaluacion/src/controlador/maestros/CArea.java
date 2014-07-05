@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Gerencia;
+import modelo.maestros.TipoFormacion;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -18,6 +20,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -37,9 +40,17 @@ public class CArea extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionArea;
 	@Wire
+	private Textbox txtTipoFormacionArea;
+	@Wire
+	private Button btnBuscarTipoFormacion;
+	@Wire
+	private Label lblTipoFormacionArea;
+	@Wire
 	private Groupbox gpxDatosArea;
 	@Wire
 	private Div catalogoArea;
+	@Wire
+	private Div divCatalogoTipoFormacion;
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	private int idArea = 0;
@@ -47,12 +58,13 @@ public class CArea extends CGenerico {
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
 	Catalogo<Area> catalogo;
+	Catalogo<TipoFormacion> catalogoTipoFormacion;
 
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 
-		txtDescripcionArea.setFocus(true);
+		txtTipoFormacionArea.setFocus(true);
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -65,8 +77,12 @@ public class CArea extends CGenerico {
 						abrirRegistro();
 						Area area = catalogo.objetoSeleccionadoDelCatalogo();
 						idArea = area.getId();
+						txtTipoFormacionArea.setValue(String.valueOf(area
+								.getTipoFormacion().getId()));
+						lblTipoFormacionArea.setValue(area.getTipoFormacion()
+								.getDescripcion());
 						txtDescripcionArea.setValue(area.getDescripcion());
-						txtDescripcionArea.setFocus(true);
+						txtTipoFormacionArea.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
@@ -84,13 +100,23 @@ public class CArea extends CGenerico {
 					String usuario = nombreUsuarioSesion();
 					Timestamp fechaAuditoria = new Timestamp(
 							new Date().getTime());
-					Area area = new Area(idArea, descripcion, usuario,
-							fechaAuditoria, horaAuditoria);
-					servicioArea.guardar(area);
-					msj.mensajeInformacion(Mensaje.guardado);
-					limpiar();
-					catalogo.actualizarLista(servicioArea.buscarTodas());
-					abrirCatalogo();
+					TipoFormacion tipoFormacion = servicioTipoFormacion
+							.buscarTipoFormacion(Integer
+									.valueOf(txtTipoFormacionArea.getValue()));
+					if (tipoFormacion != null) {
+						Area area = new Area(idArea, descripcion, usuario,
+								fechaAuditoria, horaAuditoria, tipoFormacion);
+						servicioArea.guardar(area);
+						msj.mensajeInformacion(Mensaje.guardado);
+						limpiar();
+						catalogo.actualizarLista(servicioArea.buscarTodas());
+						abrirCatalogo();
+					} else {
+
+						msj.mensajeAlerta(Mensaje.codigoTipoFormacion);
+						txtTipoFormacionArea.setFocus(true);
+
+					}
 				}
 
 			}
@@ -175,13 +201,16 @@ public class CArea extends CGenerico {
 	public void limpiarCampos() {
 		idArea = 0;
 		txtDescripcionArea.setValue("");
+		txtTipoFormacionArea.setValue("");
+		lblTipoFormacionArea.setValue("");
 		catalogo.limpiarSeleccion();
-		txtDescripcionArea.setFocus(true);
+		txtTipoFormacionArea.setFocus(true);
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionArea.getText().compareTo("") != 0) {
+		if (txtTipoFormacionArea.getText().compareTo("") != 0
+				|| txtDescripcionArea.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -240,7 +269,7 @@ public class CArea extends CGenerico {
 	}
 
 	public boolean camposLLenos() {
-		if (txtDescripcionArea.getText().compareTo("") == 0) {
+		if (txtTipoFormacionArea.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -267,7 +296,8 @@ public class CArea extends CGenerico {
 
 		final List<Area> listArea = servicioArea.buscarTodas();
 		catalogo = new Catalogo<Area>(catalogoArea, "Catalogo de Areas",
-				listArea, "Código área", "Descripción") {
+				listArea, "Código Área", "Código Tipo Formción",
+				"Tipo de Formación", "Descripción") {
 
 			@Override
 			protected List<Area> buscarCampos(List<String> valores) {
@@ -276,8 +306,12 @@ public class CArea extends CGenerico {
 				for (Area area : listArea) {
 					if (String.valueOf(area.getId()).toLowerCase()
 							.startsWith(valores.get(0))
+							&& String.valueOf(area.getTipoFormacion().getId())
+									.toLowerCase().startsWith(valores.get(1))
+							&& area.getTipoFormacion().getDescripcion()
+									.toLowerCase().startsWith(valores.get(2))
 							&& area.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+									.startsWith(valores.get(3))) {
 						lista.add(area);
 					}
 				}
@@ -287,9 +321,11 @@ public class CArea extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Area area) {
-				String[] registros = new String[2];
+				String[] registros = new String[4];
 				registros[0] = String.valueOf(area.getId());
-				registros[1] = area.getDescripcion();
+				registros[1] = String.valueOf(area.getTipoFormacion().getId());
+				registros[2] = area.getTipoFormacion().getDescripcion();
+				registros[3] = area.getDescripcion();
 
 				return registros;
 			}
@@ -297,8 +333,12 @@ public class CArea extends CGenerico {
 			@Override
 			protected List<Area> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código área"))
+				if (combo.equals("Código Área"))
 					return servicioArea.filtroId(valor);
+				if (combo.equals("Código Tipo Formción"))
+					return servicioArea.filtroTipoFormacion(valor);
+				if (combo.equals("Tipo de Formación"))
+					return servicioArea.filtroTipoFormacion(valor);
 				else if (combo.equals("Descripción"))
 					return servicioArea.filtroNombre(valor);
 				else
@@ -309,5 +349,77 @@ public class CArea extends CGenerico {
 		catalogo.setParent(catalogoArea);
 
 	}
+	
+	@Listen("onClick = #btnBuscarTipoFormacion")
+	public void mostrarCatalogoTipoFormacion() {
+		final List<TipoFormacion> listTipoFormacion = servicioTipoFormacion
+				.buscarTodos();
+		catalogoTipoFormacion = new Catalogo<TipoFormacion>(divCatalogoTipoFormacion,
+				"Catalogo de Tipos de Formacion", listTipoFormacion,
+				"Código Tipo Formación", "Descripción") {
 
+			@Override
+			protected List<TipoFormacion> buscarCampos(List<String> valores) {
+				List<TipoFormacion> lista = new ArrayList<TipoFormacion>();
+
+				for (TipoFormacion tipoFormacion : listTipoFormacion) {
+					if (String.valueOf(tipoFormacion.getId()).toLowerCase()
+							.startsWith(valores.get(0))
+							&& tipoFormacion.getDescripcion().toLowerCase()
+									.startsWith(valores.get(1))) {
+						lista.add(tipoFormacion);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(TipoFormacion tipoFormacion) {
+				String[] registros = new String[2];
+				registros[0] = String.valueOf(tipoFormacion.getId());
+				registros[1] = tipoFormacion.getDescripcion();
+
+				return registros;
+			}
+
+			@Override
+			protected List<TipoFormacion> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				if (combo.equals("Código Tipo Formación"))
+					return servicioTipoFormacion.filtroId(valor);
+				else if (combo.equals("Descripción"))
+					return servicioTipoFormacion.filtroDescripcion(valor);
+				else
+					return servicioTipoFormacion.buscarTodos();
+			}
+
+		};
+
+		catalogoTipoFormacion.setClosable(true);
+		catalogoTipoFormacion.setWidth("80%");
+		catalogoTipoFormacion.setParent(divCatalogoTipoFormacion);
+		catalogoTipoFormacion.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoTipoFormacion")
+	public void seleccionTipoFormacion() {
+		TipoFormacion tipoFormacion = catalogoTipoFormacion.objetoSeleccionadoDelCatalogo();
+		txtTipoFormacionArea
+				.setValue(String.valueOf(tipoFormacion.getId()));
+		lblTipoFormacionArea.setValue(tipoFormacion.getDescripcion());
+		catalogoTipoFormacion.setParent(null);
+	}
+
+	@Listen("onChange = #txtTipoFormacionArea")
+	public void buscarTipoFormacion() {
+		TipoFormacion tipoFormacion = servicioTipoFormacion.buscarTipoFormacion(Integer
+				.valueOf(txtTipoFormacionArea.getValue()));
+				
+		if (tipoFormacion == null) {
+			msj.mensajeAlerta(Mensaje.codigoTipoFormacion);
+			txtTipoFormacionArea.setFocus(true);
+		}
+
+	}
 }

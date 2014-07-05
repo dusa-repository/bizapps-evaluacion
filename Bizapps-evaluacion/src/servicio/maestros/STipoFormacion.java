@@ -58,13 +58,6 @@ public class STipoFormacion {
 		return tipoFormacionDAO.findByIdStartingWithAllIgnoreCase(valor);
 	}
 	
-	/*
-	 * Servicio que permite filtrar los tipos de formacion de una lista de acuerdo al
-	 * codigo del area
-	 */
-	public List<TipoFormacion> filtroArea(String valor) {
-		return tipoFormacionDAO.findByAreaStartingWithAllIgnoreCase(valor);
-	}
 	
 	/*
 	 * Servicio que permite filtrar los tipos de formacion de una lista de acuerdo al

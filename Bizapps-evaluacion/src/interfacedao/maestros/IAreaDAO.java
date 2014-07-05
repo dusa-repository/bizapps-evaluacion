@@ -16,6 +16,8 @@ public interface IAreaDAO extends JpaRepository<Area, Integer> {
 
 	public List<Area> findByIdStartingWithAllIgnoreCase(String valor);
 
+	public List<Area> findByTipoFormacionStartingWithAllIgnoreCase(String valor);
+
 
 
 	

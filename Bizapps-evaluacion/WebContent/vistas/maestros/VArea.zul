@@ -13,21 +13,32 @@
 			<grid width="100%">
 				<columns visible="false">
 					<column label="" width="20%" />
-					<column label="" width="55%" />
-					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
 				</columns>
 				<rows>
 					<row>
 						<hbox>
-							<label value="Descripción:"
-								class="etiqueta" />
+							<label class="etiqueta"
+								value="Código Tipo de Formación:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
 							</label>
 						</hbox>
+						<textbox id="txtTipoFormacionArea" tabindex="1"
+							width="100%" maxlength="100"
+							tooltiptext="Ingrese el codigo del tipo de formacion" />
+						<button id="btnBuscarTipoFormacion" label=""
+							tooltiptext="Catalogo de codigos de tipo de formacion"
+							image="/public/imagenes/botones/buscar.png" />
+						<label id="lblTipoFormacionArea" />
+					</row>
+					<row>
+						<label value="Descripción:" class="etiqueta" />
 
-						<textbox id="txtDescripcionArea" width="90%"
+						<textbox id="txtDescripcionArea" width="100%"
 							maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion del area" />
 					</row>
@@ -45,4 +56,6 @@
 		<separator />
 		<separator />
 	</groupbox>
+	<div id="divCatalogoTipoFormacion"
+		tooltiptext="Click para Seleccionar un Codigo" />
 </window>

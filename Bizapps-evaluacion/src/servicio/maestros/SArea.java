@@ -56,6 +56,15 @@ public class SArea {
 		return areaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
+	
+	/*
+	 * Servicio que permite filtrar las areas de una lista de acuerdo al
+	 * tipo de formacion
+	 */
+	public List<Area> filtroTipoFormacion(String valor) {
+		return areaDAO.findByTipoFormacionStartingWithAllIgnoreCase(valor);
+	}
+	
 	/*
 	 * Servicio que permite filtrar las areas de una lista de acuerdo al
 	 * id

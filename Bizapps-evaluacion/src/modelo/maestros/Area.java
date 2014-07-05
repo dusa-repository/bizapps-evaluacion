@@ -35,24 +35,26 @@ public class Area implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
-	//bi-directional many-to-one association to TipoFormacion
-	@OneToMany(mappedBy="area")
-	private List<TipoFormacion> tipoFormacions;
+	//bi-directional many-to-one association to Area
+	@ManyToOne
+	@JoinColumn(name="id_tipo_formacion")
+	private TipoFormacion tipoFormacion;
+	
 
 	public Area() {
 	}
 	
-	public Area(int idArea, String descripcion, String usuario,
-			Timestamp fechaAuditoria, String horaAuditoria) {
+	public Area(int id, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria,
+			TipoFormacion tipoFormacion) {
 		super();
-		this.id = idArea;
+		this.id = id;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
+		this.tipoFormacion = tipoFormacion;
 	}
-
-
 
 	public int getId() {
 		return this.id;
@@ -68,6 +70,14 @@ public class Area implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	
+	public TipoFormacion getTipoFormacion() {
+		return tipoFormacion;
+	}
+
+	public void setTipoFormacion(TipoFormacion tipoFormacion) {
+		this.tipoFormacion = tipoFormacion;
 	}
 
 	public Timestamp getFechaAuditoria() {
@@ -86,27 +96,6 @@ public class Area implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public List<TipoFormacion> getTipoFormacions() {
-		return this.tipoFormacions;
-	}
-
-	public void setTipoFormacions(List<TipoFormacion> tipoFormacions) {
-		this.tipoFormacions = tipoFormacions;
-	}
-
-	public TipoFormacion addTipoFormacion(TipoFormacion tipoFormacion) {
-		getTipoFormacions().add(tipoFormacion);
-		tipoFormacion.setArea(this);
-
-		return tipoFormacion;
-	}
-
-	public TipoFormacion removeTipoFormacion(TipoFormacion tipoFormacion) {
-		getTipoFormacions().remove(tipoFormacion);
-		tipoFormacion.setArea(null);
-
-		return tipoFormacion;
-	}
 	
 	public String getUsuario() {
 		return usuario;

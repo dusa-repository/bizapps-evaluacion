@@ -30,6 +30,7 @@ public class Mensaje {
 	public static String codigoArea = "El codigo del area definido por el usuario no existe";
 	public static String codigoGerencia = "El codigo de la gerencia definido por el usuario no existe";
 	public static String codigoCompetencia = "El codigo de la competencia definido por el usuario no existe";
+	public static String codigoTipoFormacion = "El codigo del tipo de formacion definido por el usuario no existe";
 	public static String codigoDominio = "El codigo del dominio definido por el usuario no existe";
 	public static String codigoSupervisor = "El codigo del supervisor definido por el usuario no existe";
 	public static String periodoActivo = "Ya existe un periodo con el estado ACTIVO";

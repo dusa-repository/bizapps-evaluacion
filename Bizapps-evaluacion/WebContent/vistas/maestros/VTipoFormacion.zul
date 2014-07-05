@@ -22,26 +22,16 @@
 				<rows>
 					<row>
 						<hbox>
-							<label class="etiqueta"
-								value="Código Área:" />
+							<label value="Descripción:"
+								class="etiqueta" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
 							</label>
 						</hbox>
-						<textbox id="txtAreaTipoFormacion" width="100%"
-							tabindex="1" maxlength="100"
-							tooltiptext="Ingrese el codigo del area" />
-						<button id="btnBuscarArea" label=""
-							tooltiptext="Catalogo de codigos de area"
-							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblAreaTipoFormacion" />
-					</row>
-					<row>
-						<label value="Descripción:" class="etiqueta" />
 
-						<textbox id="txtDescripcionTipoFormacion" rows="3" cols="100"
-							width="100%" maxlength="100" tabindex="2"
+						<textbox id="txtDescripcionTipoFormacion"
+							width="90%" maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion del tipo de formacion" />
 					</row>
 				</rows>
@@ -58,6 +48,4 @@
 		<separator />
 		<separator />
 	</groupbox>
-	<div id="divCatalogoArea"
-		tooltiptext="Click para Seleccionar un Codigo" />
 </window>

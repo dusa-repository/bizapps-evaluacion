@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import modelo.seguridad.Usuario;
-
+import java.util.List;
 import java.sql.Timestamp;
 
 
@@ -31,10 +31,11 @@ public class TipoFormacion implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 
-	//bi-directional many-to-one association to Area
-	@ManyToOne
-	@JoinColumn(name="id_area")
-	private Area area;
+	//bi-directional many-to-one association to area
+	@OneToMany(mappedBy="tipoFormacion")
+	private List<Area> areas;
+	
+	
 
 	@Column(name="usuario")
 	private String usuario;
@@ -42,18 +43,15 @@ public class TipoFormacion implements Serializable {
 	public TipoFormacion() {
 	}
 	
-	public TipoFormacion(int idTipoFormacion, String descripcion,
-			Timestamp fechaAuditoria, String horaAuditoria, Area area,
-			String usuario) {
+	public TipoFormacion(int id, String descripcion, Timestamp fechaAuditoria,
+			String horaAuditoria, String usuario) {
 		super();
-		this.id = idTipoFormacion;
+		this.id = id;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
-		this.area = area;
 		this.usuario = usuario;
 	}
-
 
 
 	public int getId() {
@@ -70,6 +68,14 @@ public class TipoFormacion implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	
+	public List<Area> getAreas() {
+		return areas;
+	}
+
+	public void setAreas(List<Area> areas) {
+		this.areas = areas;
 	}
 
 	public Timestamp getFechaAuditoria() {
@@ -88,14 +94,7 @@ public class TipoFormacion implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public Area getArea() {
-		return this.area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
+	
 	public String getUsuario() {
 		return usuario;
 	}
