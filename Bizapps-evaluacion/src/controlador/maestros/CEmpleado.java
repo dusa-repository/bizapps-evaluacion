@@ -612,6 +612,8 @@ public class CEmpleado extends CGenerico {
 
 		};
 
+		catalogoEmpresa.setClosable(true);
+		catalogoEmpresa.setWidth("80%");
 		catalogoEmpresa.setParent(divCatalogoEmpresa);
 		catalogoEmpresa.doModal();
 	}
@@ -684,6 +686,8 @@ public class CEmpleado extends CGenerico {
 
 		};
 
+		catalogoCargo.setClosable(true);
+		catalogoCargo.setWidth("80%");
 		catalogoCargo.setParent(divCatalogoCargo);
 		catalogoCargo.doModal();
 	}
@@ -770,6 +774,8 @@ public class CEmpleado extends CGenerico {
 
 		};
 
+		catalogoUnidad.setClosable(true);
+		catalogoUnidad.setWidth("80%");
 		catalogoUnidad.setParent(divCatalogoUnidad);
 		catalogoUnidad.doModal();
 	}
@@ -861,6 +867,8 @@ public class CEmpleado extends CGenerico {
 
 		};
 
+		catalogoSupervisor.setClosable(true);
+		catalogoSupervisor.setWidth("80%");
 		catalogoSupervisor.setParent(divCatalogoSupervisor);
 		catalogoSupervisor.doModal();
 	}

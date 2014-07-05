@@ -416,6 +416,8 @@ public class CTipoFormacion extends CGenerico {
 
 		};
 
+		catalogoArea.setClosable(true);
+		catalogoArea.setWidth("80%");
 		catalogoArea.setParent(divCatalogoArea);
 		catalogoArea.doModal();
 	}

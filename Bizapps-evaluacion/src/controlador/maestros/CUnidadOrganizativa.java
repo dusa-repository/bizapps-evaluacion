@@ -498,6 +498,8 @@ public class CUnidadOrganizativa extends CGenerico {
 
 		};
 
+		catalogoGerencia.setClosable(true);
+		catalogoGerencia.setWidth("80%");
 		catalogoGerencia.setParent(divCatalogoGerencia);
 		catalogoGerencia.doModal();
 	}

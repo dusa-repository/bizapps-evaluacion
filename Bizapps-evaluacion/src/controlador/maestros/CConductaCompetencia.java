@@ -522,6 +522,8 @@ public class CConductaCompetencia extends CGenerico {
 
 		};
 
+		catalogoCompetencia.setClosable(true);
+		catalogoCompetencia.setWidth("80%");
 		catalogoCompetencia.setParent(divCatalogoCompetencia);
 		catalogoCompetencia.doModal();
 	}
@@ -590,7 +592,9 @@ public class CConductaCompetencia extends CGenerico {
 			}
 
 		};
-
+		
+		catalogoDominio.setClosable(true);
+		catalogoDominio.setWidth("80%");
 		catalogoDominio.setParent(divCatalogoDominio);
 		catalogoDominio.doModal();
 	}

@@ -482,6 +482,8 @@ public class CRevision extends CGenerico {
 
 		};
 
+		catalogoPeriodo.setClosable(true);
+		catalogoPeriodo.setWidth("80%");
 		catalogoPeriodo.setParent(divCatalogoPeriodo);
 		catalogoPeriodo.doModal();
 	}
