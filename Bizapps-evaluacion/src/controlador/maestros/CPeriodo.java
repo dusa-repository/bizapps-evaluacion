@@ -75,7 +75,7 @@ public class CPeriodo extends CGenerico {
 						Periodo periodo = catalogo
 								.objetoSeleccionadoDelCatalogo();
 						idPeriodo = periodo.getId();
-						txtNombrePeriodo.setValue(periodo.getDescripcion());
+						txtNombrePeriodo.setValue(periodo.getNombre());
 						txtDescripcionPeriodo
 								.setValue(periodo.getDescripcion());
 						dtbFechaInicioPeriodo
