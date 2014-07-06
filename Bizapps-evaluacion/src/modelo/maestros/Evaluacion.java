@@ -61,6 +61,10 @@ public class Evaluacion implements Serializable {
 	@JoinColumn(name="id_revision")
 	private Revision revision;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_cargo")
+	private Cargo cargo;
+	
 	@Column(name="id_usuario")
 	private int idUsuario;
 
@@ -297,4 +301,13 @@ public class Evaluacion implements Serializable {
 		this.valoracion = valoracion;
 	}
 
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	
 }

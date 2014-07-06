@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import modelo.maestros.Bitacora;
+import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
@@ -129,7 +131,7 @@ public class CListaPersonal extends CGenerico {
 		idEva = servicioEvaluacion.buscarId() + 1;
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String fichaEvaluador = empleado.getFichaSupervisor();
-		Integer idCargo = empleado.getCargo().getId();
+		Cargo cargo = empleado.getCargo();
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEva);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
@@ -144,7 +146,21 @@ public class CListaPersonal extends CGenerico {
 		evaluacion.setResultado(0);
 		evaluacion.setResultadoObjetivos(0);
 		evaluacion.setResultadoGeneral(0);
+		evaluacion.setCargo(cargo);
+		evaluacion.setHoraAuditoria(horaAuditoria);
+		Bitacora bitacora = new Bitacora();
+
+		bitacora.setEvaluacion(evaluacion);
+		bitacora.setIdUsuario(u);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setEstadoEvaluacion("EN EDICION");
+		System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
+		System.out.println(evaluacion + " " + u + " " + fechaHora
+				+ horaAuditoria);
+
 		servicioEvaluacion.guardar(evaluacion);
+		//servicioBitacora.guardar(bitacora);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("idEva", idEva);
 		System.out.println("va" + idEva);

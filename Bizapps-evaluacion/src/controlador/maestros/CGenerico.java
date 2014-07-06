@@ -51,6 +51,7 @@ import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 
+import servicio.transacciones.SBitacora;
 import servicio.transacciones.SConductaCompetencia;
 import servicio.transacciones.SEvaluacion;
 import servicio.transacciones.SEvaluacionCompetencia;
@@ -119,6 +120,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacionConducta servicioEvaluacionConducta;
 	@WireVariable("SEvaluacionCompetencia")
 	protected SEvaluacionCompetencia servicioEvaluacionCompetencia;
+	@WireVariable("SBitacora")
+	protected SBitacora servicioBitacora;
 	@WireVariable("SReporte")
 	protected SReporte servicioReporte;
 	protected static SimpleDateFormat formatoFecha = new SimpleDateFormat(
