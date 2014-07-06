@@ -82,8 +82,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="6%" />
-								<listheader label="Total Ind(%)"
-									width="8%" />
+<!-- 								<listheader label="Total Ind(%)" -->
+<!-- 									width="8%" /> -->
 								<listheader label="Resultados (%)"
 									width="10%" />
 								<listheader width="5%" />
@@ -410,10 +410,10 @@
 							<separator />
 							<div sclass="btn-group" align="center">
 
-								<button id="btnGuardarIndicador"
-									tabindex="2" sclass="btn" label="Guardar"
-									image="/public/imagenes/botones/guardar.png">
-								</button>
+<!-- 								<button id="btnGuardarIndicador" -->
+<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
+<!-- 									image="/public/imagenes/botones/guardar.png"> -->
+<!-- 								</button> -->
 								<button id="btnCalcular"
 									 sclass="btn" label="Calcular"
 									image="/public/imagenes/botones/exportar.png">

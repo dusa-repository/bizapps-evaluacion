@@ -673,6 +673,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 				}
 			}
 		}
+		guardarObjetivos ();
+		guardarIndicadores();
+		totalObjetivo = 0.0;
+		totalInd = 0.0;
+		total = 0.0;
 	}
 
 	public Integer calcularPorcentajeMetaIndicado(Integer valor) {

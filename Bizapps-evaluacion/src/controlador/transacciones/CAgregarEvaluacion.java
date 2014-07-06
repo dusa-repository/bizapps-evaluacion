@@ -675,14 +675,14 @@ public class CAgregarEvaluacion extends CGenerico {
 		gpxAgregarIndicador.setOpen(false);
 	}
 
-	@Listen("onSelect = #cmbMedicion")
-	public void mostrarResAnterior() {
-		txtResFy.setDisabled(true);
-		if (cmbMedicion.getValue().equals("CONTINUA")) {
-			System.out.println("entroooooooooooo");
-			txtResFy.setDisabled(false);
-		}
-	}
+//	@Listen("onSelect = #cmbMedicion")
+//	public void mostrarResAnterior() {
+//		txtResFy.setDisabled(true);
+//		if (cmbMedicion.getValue().equals("CONTINUA")) {
+//			System.out.println("entroooooooooooo");
+//			txtResFy.setDisabled(false);
+//		}
+//	}
 
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {

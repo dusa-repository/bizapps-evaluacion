@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import modelo.maestros.Cargo;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.Revision;
@@ -228,7 +229,7 @@ public class CEmpleadoAgregar extends CGenerico {
 			idEva = servicioEvaluacion.buscarId() + 1;
 			Empleado empleado = servicioEmpleado.buscarPorFicha(item);
 			String fichaEvaluador = empleado.getFichaSupervisor();
-			Integer idCargo = empleado.getCargo().getId();
+			Cargo cargo = empleado.getCargo();
 			Evaluacion evaluacion = new Evaluacion();
 			evaluacion.setIdEvaluacion(idEva);
 			evaluacion.setEstadoEvaluacion("EN EDICION");
@@ -243,6 +244,8 @@ public class CEmpleadoAgregar extends CGenerico {
 			evaluacion.setResultado(0);
 			evaluacion.setResultadoObjetivos(0);
 			evaluacion.setResultadoGeneral(0);
+			evaluacion.setCargo(cargo);
+			evaluacion.setHoraAuditoria(horaAuditoria);
 			servicioEvaluacion.guardar(evaluacion);
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ficha", item);
