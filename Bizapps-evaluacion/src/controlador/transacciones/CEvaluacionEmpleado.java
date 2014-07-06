@@ -196,6 +196,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static String medic;
 	private static String fichaE;
 	private static int num;
+	Usuario u;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -230,6 +231,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				txtResumen.setValue(evaluacion.getResumen());
 				Authentication auth = SecurityContextHolder.getContext()
 						.getAuthentication();
+				u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 				String ficha = evaluacion.getFicha();
 				Integer numeroEvaluacion = evaluacion
 						.getIdEvaluacionSecundario();
@@ -673,7 +675,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 				}
 			}
 		}
-		guardarObjetivos ();
 		guardarIndicadores();
 		totalObjetivo = 0.0;
 		totalInd = 0.0;
@@ -1028,7 +1029,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		System.out.println(evalua);
 		System.out.println(idEva);
 		evalua.setFechaRevision(fechaHora);
-		evalua.setFichaEvaluador(fichaE);
+		evalua.setFichaEvaluador(u.getCedula());
+		evalua.setIdUsuario(u.getIdUsuario());
 		evalua.setResultadoObjetivos(totalObjetivo.intValue());
 		servicioEvaluacion.guardar(evalua);
 	}

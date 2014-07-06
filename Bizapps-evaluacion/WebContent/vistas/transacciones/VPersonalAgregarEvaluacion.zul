@@ -1,28 +1,7 @@
 <zk>
-	<window border="normal" height="auto" width="95%"
+	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;" id="winEvaluacionEmpleadoAgregar"
-		apply="controlador.transacciones.CEvaluacionAgregar">
-
-		<div style="background-color:#F8E0E0;">
-			<label value="Acción a Realizar" style="font-weight:bold;" />
-		</div>
-		<separator />
-		<panel border="normal" width="100%">
-			<panelchildren>
-				<separator />
-				<div align="left">
-					<button id="btnCambiarEstado" label="Guardar"
-						style="margin-left:5px; height:28px"
-						image="/public/imagenes/botones/guardar.png">
-					</button>
-					<button id="btnCancelar" label="Salir"
-						style="height:27px; width:80px" tabindex="1" tooltiptext="Salir"
-						image="/public/imagenes/botones/salir.png">
-					</button>
-					<separator />
-				</div>
-			</panelchildren>
-		</panel>
+		apply="controlador.transacciones.CEvaluacionAgregar" closable="true">
 		<separator />
 
 
@@ -165,17 +144,17 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregar" style="heigth:27px"
-							label="Agregar" image="/public/imagenes/botones/annadir.png">
+						<button id="btnAgregar" Width="auto"
+							height="auto" label="Agregar" image="/public/imagenes/botones/agregar.png">
 						</button>
 						<button id="btnEliminar" width="auto"
 							height="auto" label="Eliminar"
 							image="/public/imagenes/botones/eliminar.png">
 						</button>
 						<button id="btnIr"
-							height="100%" mold="trendy" label="Ir Indicador"
+							Width="auto" height="auto"  label="Ir Indicador"
 							image="/public/imagenes/botones/adelante.png"
-							style="background-color:#F8E0E0;">
+							>
 						</button>
 					</div>
 
@@ -547,6 +526,23 @@
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="center">
+					<button id="btnCambiarEstado" label="Guardar"
+						width="auto" height="auto"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnCancelar" label="Cancelar"
+						width="auto" height="auto"  tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
 		<separator></separator>
 
 	</window>

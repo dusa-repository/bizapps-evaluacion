@@ -194,6 +194,8 @@ public class CEvaluacionAgregar extends CGenerico {
 	private static String unid;
 	private static String medic;
 	private static boolean bool = false;
+	private static boolean bool1 = false;
+	public static Integer idO1 = 0;
 	public static EvaluacionObjetivo ev;
 
 	public static int numero;
@@ -313,6 +315,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(
 						evaluacionObjetivoIndicador));
+		bool1 = true;
 
 	}
 	
@@ -465,7 +468,7 @@ public class CEvaluacionAgregar extends CGenerico {
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
-
+		String idObjetivo;
 		if (cmbObjetivos.getText().compareTo("") == 0
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
@@ -489,7 +492,11 @@ public class CEvaluacionAgregar extends CGenerico {
 			String medicionCombo = cmbMedicion.getSelectedItem().getContext();
 			Medicion medicion = servicioMedicion.buscarMedicion(Integer
 					.parseInt(medicionCombo));
-			String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
+			if (bool1 == false) {
+				idObjetivo = String.valueOf(idO);
+			} else {
+				idObjetivo = cmbObjetivos.getSelectedItem().getContext();
+			}
 			Double peso = Double.valueOf(txtPeso1.getValue());
 			Double valorMeta = Double.valueOf(txtValorMeta.getValue());
 			Double valorResultado = Double
@@ -523,7 +530,7 @@ public class CEvaluacionAgregar extends CGenerico {
 							+ cmbObjetivos.getValue() + " "
 							+ "ha sido guardado exitosamente", "Información",
 					Messagebox.OK, Messagebox.INFORMATION);
-			gpxAgregar.setOpen(false);
+			gpxAgregarIndicador.setOpen(false);
 
 		}
 
@@ -867,11 +874,13 @@ public class CEvaluacionAgregar extends CGenerico {
 				System.out.println("objeto"+evaluacionObjetivoIndicadores);
 				if (evaluacionObjetivo1.size()==1){
 					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0).getDescripcionObjetivo());
+					idO1 = evaluacionObjetivoIndicadores.get(0).getIdObjetivo();
 				}
 				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
 					Integer idOb = evaluacionObjetivoIndicadores.get(i).getIdObjetivo();
 					if (idOb == idObjetivo){
 						cmbObjetivos.setValue(evaluacionObjetivo1.get(i).getDescripcionObjetivo());
+						idO1 = evaluacionObjetivoIndicadores.get(i).getIdObjetivo();
 					}		
 				}
 				}
