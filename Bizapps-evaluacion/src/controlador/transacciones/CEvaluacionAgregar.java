@@ -1222,5 +1222,68 @@ public class CEvaluacionAgregar extends CGenerico {
 		winEvaluacionEmpleadoAgregar.onClose();
 	}
 
+	public void validar() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		String ficha = evaluacion.getFicha();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
+		if (evaluacionObjetivoIndicadores != null) {
+			for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+				int idObjetivo = evaluacionObjetivoIndicadores.get(i)
+						.getIdObjetivo();
+				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				Double sumaPeso = (double) 0;
+				for (int j = 0; j < evaluacionObjetivoIndicador.size(); j++) {
+					Double peso = evaluacionObjetivoIndicador.get(j).getPeso();
+					sumaPeso = peso + sumaPeso;
+				}
+
+				if (sumaPeso != 100) {
+					bool = true;
+					i = 1000000000;
+				}
+			}
+
+		}
+
+	}
+
+	@Listen("onClick = #btnCambiarEstado")
+	public void cambiarEstado() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		validar();
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < objetivosG.size(); j++) {
+			Double peso = objetivosG.get(j).getPeso();
+			sumaPeso = sumaPeso + peso;
+		}
+		if (sumaPeso != 100) {
+			Messagebox
+					.show("La suma de los pesos de los objetivos debe ser igual a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+
+		}
+
+		else if (bool == true) {
+			Messagebox
+					.show("La suma de los pesos de los indicadores debe ser igual a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+
+		} else {
+
+			// String estado = "PENDIENTE";
+			// evaluacion.setEstadoEvaluacion(estado);
+			// servicioEvaluacion.guardar(evaluacion);
+			Messagebox.show("Evaluación guardada con exito", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+		}
+
+	}
+
 }
 

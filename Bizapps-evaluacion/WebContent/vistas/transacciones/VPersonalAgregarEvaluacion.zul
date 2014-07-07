@@ -202,26 +202,26 @@
 							</template>
 						</listbox>
 					</groupbox>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
+<!-- 					<panel border="normal" width="95%" -->
+<!-- 						style="margin-left:2%;margin-right:3%"> -->
+<!-- 						<panelchildren> -->
 
-							<separator />
-							<div sclass="btn-group" align="center">
+<!-- 							<separator /> -->
+<!-- 							<div sclass="btn-group" align="center"> -->
 <!-- 								<button id="btnGuardarObjetivo" -->
 <!-- 									tabindex="2" sclass="btn" label="Guardar" -->
 <!-- 									image="/public/imagenes/botones/guardar.png"> -->
 <!-- 								</button> -->
-								<button id="btnCancelar"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
+<!-- 								<button id="btnCancelar" -->
+<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
+<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
+<!-- 								</button> -->
 
-								<separator />
-							</div>
+<!-- 								<separator /> -->
+<!-- 							</div> -->
 
-						</panelchildren>
-					</panel>
+<!-- 						</panelchildren> -->
+<!-- 					</panel> -->
 					<separator />
 					<separator />
 					<separator />
@@ -355,8 +355,6 @@
 						</listbox>
 					</groupbox>
 					<separator />
-					<separator />
-
 					<div align="right" height="100%">
 						<button id="btnAgregarIndicador" width="auto"
 							height="auto" label="Agregar" style="height:27px"
@@ -366,10 +364,11 @@
 							image="/public/imagenes/botones/eliminar.png" label="Eliminar"
 							>
 						</button>
-					</div>
-
-					<separator />
-					
+						<button id="btnCalcular"
+									 sclass="btn" label="Calcular"
+									image="/public/imagenes/botones/exportar.png">
+								</button>
+					</div>					
 					<groupbox id="gpxAgregados">
 						<listbox height="auto"
 							id="lbxIndicadoresAgregados" mold="paging" pageSize="10"
@@ -439,30 +438,6 @@
 							</template>
 						</listbox>
 					</groupbox>
-			<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-
-<!-- 								<button id="btnGuardarIndicador" -->
-<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
-<!-- 									image="/public/imagenes/botones/guardar.png"> -->
-<!-- 								</button> -->
-								<button id="btnCalcular"
-									 sclass="btn" label="Calcular"
-									image="/public/imagenes/botones/exportar.png">
-								</button>
-								<button id="btnCancelarIndicador"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
 				</tabpanel>
 				
 
@@ -502,21 +477,21 @@
 							</listitem>
 						</template>
 					</listbox>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
+<!-- 					<panel border="normal" width="95%" -->
+<!-- 						style="margin-left:2%;margin-right:3%"> -->
+<!-- 						<panelchildren> -->
 
-							<separator />
-							<div sclass="btn-group" align="center">
-								<button id="btnSalirCompetenciaR"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
+<!-- 							<separator /> -->
+<!-- 							<div sclass="btn-group" align="center"> -->
+<!-- 								<button id="btnSalirCompetenciaR" -->
+<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
+<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
+<!-- 								</button> -->
 
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
+<!-- 								<separator /> -->
+<!-- 							</div> -->
+<!-- 						</panelchildren> -->
+<!-- 					</panel> -->
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de competencias especificas  -->
@@ -554,21 +529,21 @@
 							</listitem>
 						</template>
 					</listbox>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
+<!-- 					<panel border="normal" width="95%" -->
+<!-- 						style="margin-left:2%;margin-right:3%"> -->
+<!-- 						<panelchildren> -->
 
-							<separator />
-							<div sclass="btn-group" align="center">
-								<button id="btnSalirCompetenciaE"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
+<!-- 							<separator /> -->
+<!-- 							<div sclass="btn-group" align="center"> -->
+<!-- 								<button id="btnSalirCompetenciaE" -->
+<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
+<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
+<!-- 								</button> -->
 
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
+<!-- 								<separator /> -->
+<!-- 							</div> -->
+<!-- 						</panelchildren> -->
+<!-- 					</panel> -->
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de feedback y compromiso -->
@@ -628,25 +603,46 @@
 					</div>
 					<separator></separator>
 					<separator></separator>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
+<!-- 					<panel border="normal" width="95%" -->
+<!-- 						style="margin-left:2%;margin-right:3%"> -->
+<!-- 						<panelchildren> -->
 
-							<separator />
-							<div sclass="btn-group" align="center">
+<!-- 							<separator /> -->
+<!-- 							<div sclass="btn-group" align="center"> -->
 
-								<button id="btnCancelarEvaluacion"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
+<!-- 								<button id="btnCancelarEvaluacion" -->
+<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
+<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
+<!-- 								</button> -->
 
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
+<!-- 								<separator /> -->
+<!-- 							</div> -->
+<!-- 						</panelchildren> -->
+<!-- 					</panel> -->
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
+		<separator></separator>
+		<separator></separator>
+		<panel border="normal" width="95%"
+			style="margin-left:2%;margin-right:3%" id = "panBotones">
+			<panelchildren>
+
+				<separator />
+				<div sclass="btn-group" align="center">
+
+					<button id="btnCambiarEstado" tabindex="2"
+						sclass="btn" label="Guardar" image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnCancelar" label="Cancelar"
+						sclass="btn" tabindex="2" image="/public/imagenes/botones/cancelar.png">
+					</button>
+
+					<separator />
+				</div>
+
+			</panelchildren>
+		</panel>
 		<separator />
 		<separator></separator>
 
