@@ -153,6 +153,11 @@
 							image="/public/imagenes/botones/eliminar.png">
 
 						</button>
+							<button id="btnIr" width="auto"
+							height="auto" mold="trendy" label="Ir Indicador"
+							image="/public/imagenes/botones/adelante.png"
+							style="background-color:#F8E0E0;">
+						</button>
 					</div>
 					<groupbox id="gpxAgregadosObjetivo">
 						<listbox height="auto"
@@ -302,7 +307,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso %"
-										constraint="min 0" mold="rounded" width="100%" id="txtPeso1" />
+										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Valor Meta"
@@ -312,7 +317,7 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado1" disabled="true" value="0"
+										id="txtValorResultado1" value="0"
 										constraint="min 0" />
 								</listcell>
 								<listcell>
@@ -349,6 +354,7 @@
 							height="auto" image="/public/imagenes/botones/eliminar.png"
 							mold="trendy" label="Eliminar">
 						</button>
+					
 					</div>
 					<groupbox id="gpxAgregados">
 						<listbox height="auto"
@@ -426,10 +432,10 @@
 								<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
 								<!-- 									image="/public/imagenes/botones/guardar.png"> -->
 								<!-- 								</button> -->
-								<button id="btnCalcular" sclass="btn"
-									label="Calcular"
-									image="/public/imagenes/botones/exportar.png">
-								</button>
+<!-- 								<button id="btnCalcular" sclass="btn" -->
+<!-- 									label="Calcular" -->
+<!-- 									image="/public/imagenes/botones/exportar.png"> -->
+<!-- 								</button> -->
 								<button id="btnCancelarIndicador"
 									label="Cancelar" sclass="btn" tabindex="2"
 									image="/public/imagenes/botones/cancelar.png">

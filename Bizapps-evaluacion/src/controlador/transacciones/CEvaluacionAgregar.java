@@ -727,6 +727,7 @@ public class CEvaluacionAgregar extends CGenerico {
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
 								}
+								evaluarIndicadores();
 							}
 						});
 			} else

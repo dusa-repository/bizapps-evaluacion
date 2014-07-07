@@ -789,6 +789,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
 								}
+								evaluarIndicadores();
 							}
 						});
 			} else

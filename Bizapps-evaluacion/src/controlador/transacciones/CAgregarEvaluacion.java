@@ -880,12 +880,13 @@ public class CAgregarEvaluacion extends CGenerico {
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
 								}
+								evaluarIndicadores();
 							}
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
-		evaluarIndicadores();
+		
 	}
 
 	public void eliminarObjetivo() {

@@ -44,6 +44,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Spinner;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import controlador.maestros.CGenerico;
@@ -100,6 +101,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Button btnAgregarObjetivo;
 	@Wire
 	private Button btnEliminar;
+	@Wire
+	private Button btnIr;
 	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
@@ -174,11 +177,14 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Window winEvaluacionEmpleado;
 	@Wire
 	private Groupbox gpxListaPersonal;
+	@Wire
+	private Tab tbIndicadores;
 
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 	List<EvaluacionConducta> evaluacionconductas = new ArrayList<EvaluacionConducta>();
+	List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = new ArrayList<EvaluacionObjetivo>();
 
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
@@ -197,6 +203,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static String fichaE;
 	private static int num;
 	Usuario u;
+	public static Integer idO = 0;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -581,8 +588,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+//			Messagebox.show("Datos guardados exitosamente", "Información",
+//					Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}
@@ -593,7 +600,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	}
 
 	public void evaluarIndicadores() {
-
+		lbxIndicadoresAgregados.renderAll();
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
@@ -826,9 +833,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Double resultadoPorc = Double.valueOf(txtResultadoPorc
 						.getValue());
 				Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
+				Integer idIndicador = servicioEvaluacionIndicador.buscarId() + 1;
 				Integer linea = indicadores.size() + 1;
 				EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
 				indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
+				indicadorLista.setIdIndicador(idIndicador);
 				indicadorLista.setDescripcionIndicador(indicador);
 				indicadorLista.setMedicion(medicion);
 				indicadorLista.setUnidadMedida(unidad);
@@ -856,6 +865,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 			limpiarIndicador();
 			idIndicador = 0;
 		}
+		evaluarIndicadores();
 	}
 
 	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")
@@ -950,6 +960,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
 								}
+								evaluarIndicadores();
 							}
 						});
 			} else
@@ -1097,5 +1108,54 @@ public class CEvaluacionEmpleado extends CGenerico {
 		Messagebox.show(
 				"Evaluacion Guardada Exitosamente",
 				"Información", Messagebox.OK, Messagebox.INFORMATION);
+	}
+	
+	@Listen("onClick = #btnIr")
+	public void mostrarPestannaIndicadores() {
+		tbIndicadores.setSelected(true);
+		gpxAgregados.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
+						.buscarObjetivos(fichaE, num);
+				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
+				System.out.println("objeto" + evaluacionObjetivoIndicadores);
+				if (evaluacionObjetivo1.size() == 1) {
+					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0)
+							.getDescripcionObjetivo());
+					idO = evaluacionObjetivoIndicadores.get(0).getIdObjetivo();
+
+				}
+				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+					Integer idOb = evaluacionObjetivoIndicadores.get(i)
+							.getIdObjetivo();
+					if (idOb == idObjetivo) {
+						cmbObjetivos.setValue(evaluacionObjetivo1.get(i)
+								.getDescripcionObjetivo());
+						idO = evaluacionObjetivoIndicadores.get(i)
+								.getIdObjetivo();
+					}
+				}
+			}
+			indicadores = servicioEvaluacionIndicador
+					.buscarIndicadores(idObjetivo);
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(
+							indicadores));
+		}
+		idObjetivo = 0;
+	}
+
+	@Listen("onSelect = #cmbMedicion")
+	public void mostrarResAnterior() {
+		txtResFy.setDisabled(true);
+		if (cmbMedicion.getValue().equals("CONTINUA")) {
+			txtResFy.setDisabled(false);
+		}
 	}
 }
