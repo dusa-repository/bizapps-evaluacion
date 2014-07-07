@@ -170,8 +170,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader label="Total Ind(%)"
-									width="9%" />
+								<listheader 
+									width="3%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -189,7 +189,7 @@
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
 									<listcell>
-										<textbox value="${each.totalInd}" disabled = "true"></textbox>
+										<textbox value="${each.totalInd}" disabled = "true" visible = "false"></textbox>
 									</listcell>
 									<listcell>
 										<textbox value="${each.resultado}" disabled = "true"></textbox>
@@ -274,7 +274,8 @@
 									width="12%" />
 								<listheader label="Resul. Peso (%)"
 									width="12%" />
-								<listheader width="7%" />
+								<listheader width="5%" />
+								<listheader width="5%" />
 							</listhead>
 							<listitem>
 								<listcell ></listcell>
@@ -306,7 +307,7 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %" constraint = "min 0"
+									<spinner placeholder="Peso %" constraint = "min 0; max 100"
 										mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
@@ -316,7 +317,7 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" disabled="true" value = "0" constraint = "min 0"/>
+										id="txtValorResultado"  value = "0" constraint = "min 0; max 100"/>
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
@@ -335,6 +336,13 @@
 									<button id="btnOk2" width="auto"
 										height="auto" mold="trendy"
 										image="/public/imagenes/botones/agregar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+								<listcell>
+									<button id="btnCancelarI" width="auto"
+										height="auto" mold="trendy"
+										image="/public/imagenes/botones/anular.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>

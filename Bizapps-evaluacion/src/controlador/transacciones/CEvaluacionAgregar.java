@@ -138,6 +138,8 @@ public class CEvaluacionAgregar extends CGenerico {
 	@Wire
 	private Button btnCambiarEstado;
 	@Wire
+	private Button btnCancelarI;
+	@Wire
 	private Listbox lbxCompetenciaRectora;
 	@Wire
 	private Listbox lbxObjetivos;
@@ -314,6 +316,11 @@ public class CEvaluacionAgregar extends CGenerico {
 	@Listen("onClick = #btnCancelarO")
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
+	}
+	
+	@Listen("onClick = #btnCancelarI")
+	public void cerrarPanelI() {
+		gpxAgregarIndicador.setOpen(false);
 	}
 	
 	@Listen("onSelect = #cmbObjetivos")
@@ -527,11 +534,11 @@ public class CEvaluacionAgregar extends CGenerico {
 			indicadorLista.setUnidadMedida(unidad);
 			indicadorLista.setLinea(linea);
 			indicadorLista.setPeso(peso);
-			indicadorLista.setResultadoFyAnterior(0);
-			indicadorLista.setResultadoPeso(0);
-			indicadorLista.setResultadoPorc(0);
+			indicadorLista.setResultadoFyAnterior(resFy);
+			indicadorLista.setResultadoPeso(pesoPorc);
+			indicadorLista.setResultadoPorc(resultadoPorc);
 			indicadorLista.setValorMeta(valorMeta);
-			indicadorLista.setValorResultado(0);
+			indicadorLista.setValorResultado(valorResultado);
 			indicadorLista.setTotal(0);
 			indicadores.add(indicadorLista);
 			lbxIndicadoresAgregados
@@ -553,13 +560,13 @@ public class CEvaluacionAgregar extends CGenerico {
 	}
 
 
-//	@Listen("onSelect = #cmbMedicion")
-//	public void mostrarResAnterior() {
-//		txtResFy.setDisabled(true);
-//		if (cmbMedicion.getValue().equals("CONTINUA")) {
-//			txtResFy.setDisabled(false);
-//		}
-//	}
+	@Listen("onSelect = #cmbMedicion")
+	public void mostrarResAnterior() {
+		txtResFy.setDisabled(true);
+		if (cmbMedicion.getValue().equals("CONTINUA")) {
+			txtResFy.setDisabled(false);
+		}
+	}
 
 	@Listen("onClick = #btnGuardarCompromisos")
 	public void guardarComportamiento() {
@@ -1035,8 +1042,8 @@ public class CEvaluacionAgregar extends CGenerico {
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+//			Messagebox.show("Datos guardados exitosamente", "Información",
+//					Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}

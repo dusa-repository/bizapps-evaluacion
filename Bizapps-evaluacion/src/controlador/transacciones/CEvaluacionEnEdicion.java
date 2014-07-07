@@ -140,6 +140,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnCambiarEstado;
 	@Wire
+	private Button btnCancelarI;
+	@Wire
 	private Button btnCalcular;
 	@Wire
 	private Listbox lbxCompetenciaRectora;
@@ -369,6 +371,11 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
 	}
+	
+	@Listen("onClick = #btnCancelarI")
+	public void cerrarPanelI() {
+		gpxAgregarIndicador.setOpen(false);
+	}
 
 	@Listen("onClick = #btnEliminarIndicador")
 	public void eliminarI() {
@@ -489,7 +496,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
 				|| txtPeso1.getText().compareTo("") == 0
-				|| txtValorMeta.getText().compareTo("") == 0
+//				|| txtValorMeta.getText().compareTo("") == 0
 				|| txtResFy.getText().compareTo("") == 0
 				|| txtIndicador.getText().compareTo("") == 0
 				|| txtResultadoPorc.getText().compareTo("") == 0
@@ -545,7 +552,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 						+ cmbObjetivos.getValue() + " "
 						+ "ha sido guardado exitosamente", "Información",
 						Messagebox.OK, Messagebox.INFORMATION);
-				gpxAgregar.setOpen(false);
+				gpxAgregarIndicador.setOpen(false);
 
 				limpiar();
 			}
@@ -1060,10 +1067,12 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
-				indicador.setValorResultado(valorResultado);
+				System.out.println(valorResultado);
+				//
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
 				indicador.setResultadoPeso(Double.parseDouble(resultadoPeso));
+				indicador.setValorResultado(valorResultado);
 				indicador.setTotal(total);
 				servicioEvaluacionIndicador.guardar(indicador);
 
@@ -1267,6 +1276,5 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				"Evaluacion Guardada Exitosamente",
 				"Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
-
 
 }

@@ -313,7 +313,7 @@
 										mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Valor Meta" constraint = "min 0; max 100"
+									<spinner placeholder="Valor Meta" constraint = "min 0"
 										mold="rounded" width="100%" id="txtValorMeta" />
 								</listcell>
 								<listcell>
