@@ -1082,4 +1082,20 @@ public class CEvaluacionEmpleado extends CGenerico {
 		}
 
 	}
+	@Listen("onClick = #btnGuardarCompromisos")
+	public void guardarComportamiento() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		String compromisos = txtCompromisos.getValue();
+		String fortalezas = txtFortalezas.getValue();
+		String oportunidades = txtOportunidades.getValue();
+		String resumen = txtResumen.getValue();
+		evaluacion.setCompromisos(compromisos);
+		evaluacion.setFortalezas(fortalezas);
+		evaluacion.setOportunidades(oportunidades);
+		evaluacion.setResumen(resumen);
+		servicioEvaluacion.guardar(evaluacion);
+		Messagebox.show(
+				"Evaluacion Guardada Exitosamente",
+				"Información", Messagebox.OK, Messagebox.INFORMATION);
+	}
 }

@@ -201,6 +201,26 @@
 							</template>
 						</listbox>
 					</groupbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+<!-- 								<button id="btnGuardarObjetivo" -->
+<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
+<!-- 									image="/public/imagenes/botones/guardar.png"> -->
+<!-- 								</button> -->
+								<button id="btnCancelar"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+
+						</panelchildren>
+					</panel>
 					<separator />
 					<separator />
 				</tabpanel>
@@ -400,7 +420,7 @@
 						</listbox>
 					</groupbox>
 					<separator></separator>
-					<panel border="normal" width="95%"
+								<panel border="normal" width="95%"
 						style="margin-left:2%;margin-right:3%">
 						<panelchildren>
 
@@ -415,7 +435,7 @@
 									 sclass="btn" label="Calcular"
 									image="/public/imagenes/botones/exportar.png">
 								</button>
-								<button id="btnCancelar"
+								<button id="btnCancelarIndicador"
 									label="Cancelar" sclass="btn" tabindex="2"
 									image="/public/imagenes/botones/cancelar.png">
 								</button>
@@ -461,6 +481,21 @@
 							</listitem>
 						</template>
 					</listbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaR"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de competencias especificas  -->
@@ -498,6 +533,21 @@
 							</listitem>
 						</template>
 					</listbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaE"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de feedback y compromiso -->
@@ -554,7 +604,24 @@
 							height="auto" mold="trendy" label="Agregar"
 							image="/public/imagenes/botones/agregar.png">
 						</button>
+						<separator />
+						<separator />
 						</div>
+						<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnCancelarEvaluacion"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>

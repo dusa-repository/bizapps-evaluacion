@@ -180,6 +180,14 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Combobox cmbMedicion;
 	@Wire
+	private Button btnCancelarIndicador;
+	@Wire
+	private Button btnSalirCompetenciaR;
+	@Wire
+	private Button btnSalirCompetenciaE;
+	@Wire
+	private Button btnCancelarEvaluacion;
+	@Wire
 	private Panel panBotones;
 	@Wire
 	private Tab tbIndicadores;
@@ -1225,6 +1233,11 @@ public class CAgregarEvaluacion extends CGenerico {
 		evalua.setIdUsuario(u.getIdUsuario());
 		evalua.setResultadoObjetivos(totalObjetivo.intValue());
 		servicioEvaluacion.guardar(evalua);
+	}
+	
+	@Listen("onClick = #btnCancelar,  #btnCancelarIndicador, #btnSalirCompetenciaR, #btnSalirCompetenciaE, #btnCancelarEvaluacion")
+	public void salir1() {
+		winEvaluacionEmpleado.onClose();
 	}
 
 }

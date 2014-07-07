@@ -170,6 +170,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
+								<listheader label="Total Ind(%)"
+									width="9%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -186,13 +188,40 @@
 										label="${each.corresponsables}">
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
-									<listcell
-										label="${each.resultado}">
+									<listcell>
+										<textbox value="${each.totalInd}" disabled = "true"></textbox>
 									</listcell>
+									<listcell>
+										<textbox value="${each.resultado}" disabled = "true"></textbox>
+									</listcell>
+<!-- 									<listcell label="${each.peso}"></listcell> -->
+<!-- 									<listcell -->
+<!-- 										label="${each.resultado}"> -->
+<!-- 									</listcell> -->
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+<!-- 								<button id="btnGuardarObjetivo" -->
+<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
+<!-- 									image="/public/imagenes/botones/guardar.png"> -->
+<!-- 								</button> -->
+								<button id="btnCancelar"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+
+						</panelchildren>
+					</panel>
 					<separator />
 					<separator />
 					<separator />
@@ -351,7 +380,7 @@
 								<listheader label="Valor Resultado"
 									width="12%" />
 								<listheader label="Res.Fy.Ant."
-									width="9%" />
+									width="12%" />
 								<listheader label="Resultado (%)"
 									width="10%" />
 								<listheader label="Resul. Peso (%)"
@@ -373,23 +402,61 @@
 									<listcell
 										label="${each.valorMeta}">
 									</listcell>
-									<listcell
-										label="${each.valorResultado}">
+									<listcell>
+										<spinner  constraint = "min 0"  value="${each.valorResultado}"></spinner>
 									</listcell>
-									<listcell
-										label="${each.resultadoFyAnterior}">
+									<listcell>
+										<spinner constraint = "min 0"  value="${each.resultadoFyAnterior}"></spinner>
 									</listcell>
-									<listcell
-										label="${each.resultadoPeso}">
+									<listcell>
+										<textbox  disabled = "true" value="${each.resultadoPorc}"/>
+<!-- 										onChange= '$composer.cambio' -->
 									</listcell>
-									<listcell
-										label="${each.resultadoPorc}">
+									<listcell>
+										<textbox disabled = "true" value="${each.resultadoPeso}"/>
 									</listcell>
+<!-- 									<listcell -->
+<!-- 										label="${each.valorResultado}"> -->
+<!-- 									</listcell> -->
+<!-- 									<listcell -->
+<!-- 										label="${each.resultadoFyAnterior}"> -->
+<!-- 									</listcell> -->
+<!-- 									<listcell -->
+<!-- 										label="${each.resultadoPeso}"> -->
+<!-- 									</listcell> -->
+<!-- 									<listcell -->
+<!-- 										label="${each.resultadoPorc}"> -->
+<!-- 									</listcell> -->
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
+			<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+
+<!-- 								<button id="btnGuardarIndicador" -->
+<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
+<!-- 									image="/public/imagenes/botones/guardar.png"> -->
+<!-- 								</button> -->
+								<button id="btnCalcular"
+									 sclass="btn" label="Calcular"
+									image="/public/imagenes/botones/exportar.png">
+								</button>
+								<button id="btnCancelarIndicador"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
+				
 
 				<tabpanel>
 					<!-- 				Contenedor de competencias rectoras  -->
@@ -427,6 +494,21 @@
 							</listitem>
 						</template>
 					</listbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaR"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de competencias especificas  -->
@@ -464,6 +546,21 @@
 							</listitem>
 						</template>
 					</listbox>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+								<button id="btnSalirCompetenciaE"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 				<tabpanel>
 					<!-- 				contenedor de feedback y compromiso -->
@@ -523,26 +620,26 @@
 					</div>
 					<separator></separator>
 					<separator></separator>
+					<panel border="normal" width="95%"
+						style="margin-left:2%;margin-right:3%">
+						<panelchildren>
+
+							<separator />
+							<div sclass="btn-group" align="center">
+
+								<button id="btnCancelarEvaluacion"
+									label="Cancelar" sclass="btn" tabindex="2"
+									image="/public/imagenes/botones/cancelar.png">
+								</button>
+
+								<separator />
+							</div>
+						</panelchildren>
+					</panel>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
 		<separator />
-		<panel border="normal" width="100%">
-			<panelchildren>
-				<separator />
-				<div align="center">
-					<button id="btnCambiarEstado" label="Guardar"
-						width="auto" height="auto"
-						image="/public/imagenes/botones/guardar.png">
-					</button>
-					<button id="btnCancelar" label="Cancelar"
-						width="auto" height="auto"  tooltiptext="Salir"
-						image="/public/imagenes/botones/salir.png">
-					</button>
-					<separator />
-				</div>
-			</panelchildren>
-		</panel>
 		<separator></separator>
 
 	</window>
