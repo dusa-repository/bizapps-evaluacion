@@ -343,9 +343,9 @@
 							height="auto" image="/public/imagenes/botones/eliminar.png"
 							mold="trendy" label="Eliminar" onClick="@command('cancelar')">
 						</button>
-						<button id="btnCalcular" sclass="btn"
-							label="Calcular" image="/public/imagenes/botones/exportar.png">
-						</button>
+<!-- 						<button id="btnCalcular" sclass="btn" -->
+<!-- 							label="Calcular" image="/public/imagenes/botones/exportar.png"> -->
+<!-- 						</button> -->
 					</div>
 					<groupbox id="gpxAgregados">
 						<listbox height="auto"
@@ -406,18 +406,6 @@
 										<textbox disabled="true"
 											value="${each.resultadoPeso}" />
 									</listcell>
-									<!-- 									<listcell -->
-									<!-- 										label="${each.valorResultado}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoFyAnterior}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoPeso}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoPorc}"> -->
-									<!-- 									</listcell> -->
 								</listitem>
 							</template>
 						</listbox>

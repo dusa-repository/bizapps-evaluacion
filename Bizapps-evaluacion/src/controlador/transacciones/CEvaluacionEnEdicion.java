@@ -521,6 +521,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				Medicion medicion = servicioMedicion.buscarMedicion(Integer
 						.parseInt(medicionCombo));
 				String idObjetivo = cmbObjetivos.getSelectedItem().getContext();
+				Integer idIndicador = servicioEvaluacionIndicador.buscarId() + 1;
 				Double peso = Double.valueOf(txtPeso1.getValue());
 				Double valorMeta = Double.valueOf(txtValorMeta.getValue());
 				Double valorResultado = Double.valueOf(txtValorResultado
@@ -531,6 +532,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
 				Integer linea = indicadores.size() + 1;
 				EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
+				indicadorLista.setIdIndicador(idIndicador);
 				indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
 				indicadorLista.setDescripcionIndicador(indicador);
 				indicadorLista.setMedicion(medicion);
@@ -557,6 +559,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				limpiar();
 			}
 		}
+		evaluarIndicadores();
 	}
 
 	public void validar() {
@@ -1049,7 +1052,6 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 		} else {
 			List<EvaluacionIndicador> evaluacionesI = new ArrayList<EvaluacionIndicador>();
-
 			for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 				List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 				EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
@@ -1067,27 +1069,28 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
-				System.out.println(valorResultado);
+				System.out.println("id"+idIndicador);
 				//
+
+				
+				indicador.setValorResultado(valorResultado);
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
 				indicador.setResultadoPeso(Double.parseDouble(resultadoPeso));
-				indicador.setValorResultado(valorResultado);
 				indicador.setTotal(total);
 				servicioEvaluacionIndicador.guardar(indicador);
 
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+		
 		}
 
 	}
 
 
 	public void evaluarIndicadores() {
-
+		lbxIndicadoresAgregados.renderAll();
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();

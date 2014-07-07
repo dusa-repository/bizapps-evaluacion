@@ -557,6 +557,8 @@ public class CEvaluacionAgregar extends CGenerico {
 			limpiarIndicador();
 			idIndicador = 0;
 		}
+		
+		evaluarIndicadores();
 	}
 
 
@@ -1014,7 +1016,7 @@ public class CEvaluacionAgregar extends CGenerico {
 
 		} else {
 			List<EvaluacionIndicador> evaluacionesI = new ArrayList<EvaluacionIndicador>();
-
+			lbxIndicadoresAgregados.renderAll();
 			for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 				List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 				EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
@@ -1032,10 +1034,11 @@ public class CEvaluacionAgregar extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
-				indicador.setValorResultado(valorResultado);
+				
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
 				indicador.setResultadoPeso(Double.parseDouble(resultadoPeso));
+				indicador.setValorResultado(valorResultado);
 				indicador.setTotal(total);
 				servicioEvaluacionIndicador.guardar(indicador);
 
@@ -1050,7 +1053,7 @@ public class CEvaluacionAgregar extends CGenerico {
 
 
 	public void evaluarIndicadores() {
-
+		lbxIndicadoresAgregados.renderAll();
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();

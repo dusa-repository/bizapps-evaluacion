@@ -80,13 +80,13 @@
 									width="33%" />
 								<listheader label="Corresponsables"
 									width="13%" />
-								<listheader label="Peso (%)" width="6%" />
+								<listheader label="Peso (%)" width="10%" />
 								<!-- 								<listheader label="Total Ind(%)" -->
 								<!-- 									width="8%" /> -->
 								<listheader label="Resultados (%)"
 									width="10%" />
-								<listheader width="5%" />
-								<listheader width="5%" />
+								<listheader width="6%" />
+								<listheader width="6%" />
 							</listhead>
 							<listitem>
 								<listcell></listcell>
@@ -115,15 +115,15 @@
 									<spinner placeholder="Peso"
 										constraint="min 0" mold="rounded" width="100%" id="txtPeso" />
 								</listcell>
-								<listcell>
-									<textbox value="0"
-										placeholder="Total" mold="rounded" rows="1" width="100%"
-										id="txtTotal" />
-								</listcell>
+<!-- 								<listcell> -->
+<!-- 									<textbox value="0" -->
+<!-- 										placeholder="Total" mold="rounded" rows="1" width="100%" -->
+<!-- 										id="txtTotal" /> -->
+<!-- 								</listcell> -->
 								<listcell>
 									<textbox value="0"
 										placeholder="Resultados" mold="rounded" rows="1" width="100%"
-										id="txtResultados" />
+										id="txtResultados" disabled="true"/>
 								</listcell>
 								<listcell>
 									<button id="btnOk" width="auto"
@@ -166,8 +166,8 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader label="Total Ind(%)"
-									width="9%" />
+								<listheader 
+									width="3%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -186,7 +186,7 @@
 									<listcell label="${each.peso}"></listcell>
 									<listcell>
 										<textbox
-											value="${each.totalInd}" disabled="true">
+											value="${each.totalInd}" disabled="true" visible = "false">
 										</textbox>
 									</listcell>
 									<listcell>
