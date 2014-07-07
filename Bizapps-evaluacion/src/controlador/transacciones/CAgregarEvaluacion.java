@@ -142,6 +142,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Button btnCancelar;
 	@Wire
+	private Button btnCancelarI;
+	@Wire
 	private Button btnCalculo;
 	@Wire
 	private Button btnCambiarEstado;
@@ -319,6 +321,11 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
 	}
+	
+	@Listen("onClick = #btnCancelarI")
+	public void cerrarPanelI() {
+		gpxAgregarIndicador.setOpen(false);
+	}
 
 	@Listen("onClick = #btnEliminar")
 	public void eliminarObj() {
@@ -480,12 +487,12 @@ public class CAgregarEvaluacion extends CGenerico {
 				}
 				Double peso = Double.valueOf(txtPeso1.getValue());
 				Double valorMeta = Double.valueOf(txtValorMeta.getValue());
-//				Double valorResultado = Double.valueOf(txtValorResultado
-//						.getValue());
-//				Double resFy = Double.valueOf(txtResFy.getValue());
-//				Double resultadoPorc = Double.valueOf(txtResultadoPorc
-//						.getValue());
-//				Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
+				Double valorResultado = Double.valueOf(txtValorResultado
+						.getValue());
+				Double resFy = Double.valueOf(txtResFy.getValue());
+				Double resultadoPorc = Double.valueOf(txtResultadoPorc
+						.getValue());
+				Double pesoPorc = Double.valueOf(txtPesoPorc.getValue());
 				Integer linea = indicadores.size() + 1;
 
 				EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
@@ -497,12 +504,13 @@ public class CAgregarEvaluacion extends CGenerico {
 				indicadorLista.setUnidadMedida(unidad);
 				indicadorLista.setLinea(linea);
 				indicadorLista.setPeso(peso);
-//				indicadorLista.setResultadoFyAnterior(resFy);
-//				indicadorLista.setResultadoPeso(pesoPorc);
-//				indicadorLista.setResultadoPorc(resultadoPorc);
+				indicadorLista.setResultadoFyAnterior(resFy);
+				indicadorLista.setResultadoPeso(pesoPorc);
+				indicadorLista.setResultadoPorc(resultadoPorc);
 				indicadorLista.setValorMeta(valorMeta);
-//				indicadorLista.setValorResultado(valorResultado);
+				indicadorLista.setValorResultado(valorResultado);
 				indicadorLista.setTotal(0);
+				
 				indicadores.add(indicadorLista);
 				lbxIndicadoresAgregados
 						.setModel(new ListModelList<EvaluacionIndicador>(
@@ -513,12 +521,21 @@ public class CAgregarEvaluacion extends CGenerico {
 						+ "ha sido guardado exitosamente", "Información",
 						Messagebox.OK, Messagebox.INFORMATION);
 				gpxAgregarIndicador.setOpen(false);
-
+				
 				limpiarI();
 			}
 		}
 
 	}
+	
+	@Listen("onSelect = #cmbMedicion")
+	public void mostrarResAnterior() {
+		txtResFy.setDisabled(true);
+		if (cmbMedicion.getValue().equals("CONTINUA")) {
+			txtResFy.setDisabled(false);
+		}
+	}
+
 
 	public void validar() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
@@ -1108,15 +1125,15 @@ public class CAgregarEvaluacion extends CGenerico {
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+//			Messagebox.show("Datos guardados exitosamente", "Información",
+//					Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}
 
 
 	public void evaluarIndicadores() {
-
+		Integer resultado1 = 0;
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
@@ -1125,8 +1142,10 @@ public class CAgregarEvaluacion extends CGenerico {
 					.getFirstChild()).getValue();
 			Integer resultadoFyAnterior = ((Spinner) ((listItem.getChildren()
 					.get(7))).getFirstChild()).getValue();
-			String resultado = ((Textbox) ((listItem.getChildren().get(8)))
+//			String resultado = String.valueOf(txtResultadoPorc.getValue());
+			String resultado =	((Textbox) ((listItem.getChildren().get(8)))
 					.getFirstChild()).getValue();
+//			String resultadoPeso =  String.valueOf(txtPesoPorc.getValue());
 			String resultadoPeso = ((Textbox) ((listItem.getChildren().get(9)))
 					.getFirstChild()).getValue();
 			if (EvaluacionI.getMedicion().getDescripcionMedicion()
@@ -1154,11 +1173,16 @@ public class CAgregarEvaluacion extends CGenerico {
 				Integer valor1 = valor.intValue();
 				System.out.println("valor1" + valor1);
 				resultado = calcularPorcentajeMetaIndicado(valor1).toString();
+				resultado1= calcularPorcentajeMetaIndicado(valor1);
 				System.out.println("resultado" + resultado);
 			}
 
 			resultadoPeso = String.valueOf((Double.parseDouble(resultado)
 					* (EvaluacionI.getPeso()) / 100));
+			double resul = ((Double.parseDouble(resultado) * (EvaluacionI.getPeso()) / 100));
+//			Integer resul1 = Integer.
+//			txtResultadoPorc.setValue(resultado1);
+//			txtPesoPorc.setValue(resul);
 			((Textbox) ((listItem.getChildren().get(8))).getFirstChild())
 					.setValue((resultado));
 			((Textbox) ((listItem.getChildren().get(9))).getFirstChild())
