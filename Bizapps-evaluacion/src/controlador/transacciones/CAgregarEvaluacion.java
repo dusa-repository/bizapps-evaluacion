@@ -881,6 +881,7 @@ public class CAgregarEvaluacion extends CGenerico {
 													indicadores));
 								}
 								evaluarIndicadores();
+								idIndicador = 0;
 							}
 						});
 			} else
@@ -923,6 +924,7 @@ public class CAgregarEvaluacion extends CGenerico {
 														.setModel(new ListModelList<EvaluacionObjetivo>(
 																objetivosG));
 											}
+											idObjetivo = 0;
 										}
 									});
 				} else {
@@ -945,6 +947,7 @@ public class CAgregarEvaluacion extends CGenerico {
 												.setModel(new ListModelList<EvaluacionObjetivo>(
 														objetivosG));
 									}
+									idObjetivo = 0;
 								}
 							});
 
@@ -953,6 +956,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
+		
 	}
 
 	public void validar1() {
@@ -1117,6 +1121,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
+				System.out.println(idIndicador);
 				indicador.setValorResultado(valorResultado);
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));

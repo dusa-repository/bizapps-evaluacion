@@ -728,6 +728,7 @@ public class CEvaluacionAgregar extends CGenerico {
 													indicadores));
 								}
 								evaluarIndicadores();
+								idIndicador = 0;
 							}
 						});
 			} else

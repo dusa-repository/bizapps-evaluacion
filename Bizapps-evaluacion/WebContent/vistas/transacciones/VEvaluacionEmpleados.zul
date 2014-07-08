@@ -113,7 +113,8 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso"
-										constraint="min 0" mold="rounded" width="100%" id="txtPeso" />
+										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso"
+										maxlength="3" />
 								</listcell>
 <!-- 								<listcell> -->
 <!-- 									<textbox value="0" -->
@@ -172,7 +173,7 @@
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
 								<listheader 
-									width="3%" />
+									width="0%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -306,7 +307,7 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %"
+									<spinner placeholder="Peso %" maxlength="3"
 										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>

@@ -170,7 +170,7 @@
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
 								<listheader 
-									width="2%" />
+									width="0%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -310,7 +310,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso %" constraint = "min 0; max 100"
-										mold="rounded" width="100%" id="txtPeso1" />
+										mold="rounded" width="100%" id="txtPeso1" maxlength="3"/>
 								</listcell>
 								<listcell>
 									<spinner placeholder="Valor Meta" constraint = "min 0"
@@ -319,10 +319,10 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" value = "0" constraint = "min 0; max 100" />
+										id="txtValorResultado" value = "0" constraint = "min 0" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0; max 100"
+									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
 										mold="rounded" width="100%" id="txtResFy" disabled= "true" />
 								</listcell>
 								<listcell>

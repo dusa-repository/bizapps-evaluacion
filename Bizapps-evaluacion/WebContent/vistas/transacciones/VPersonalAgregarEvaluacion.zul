@@ -118,8 +118,8 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso"
-										constraint="min 0" mold="rounded" width="100%" id="txtPeso" />
+									<spinner placeholder="Peso" maxlength="3"
+										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
 									<textbox value="0"
@@ -171,7 +171,7 @@
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
 								<listheader 
-									width="2%" />
+									width="0%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -308,7 +308,7 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %"
+									<spinner placeholder="Peso %" maxlength="3"
 										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
@@ -320,11 +320,11 @@
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
 										id="txtValorResultado"  value="0"
-										constraint="min 0; max 100" />
+										constraint="min 0" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant"
-										value="0" constraint="min 0; max 100" mold="rounded" width="100%"
+										value="0" constraint="min 0" mold="rounded" width="100%"
 										id="txtResFy" disabled = "true" />
 								</listcell>
 								<listcell>
