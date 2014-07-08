@@ -144,6 +144,18 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Button btnCalcular;
 	@Wire
+	private Button btnEnEdicion;
+	@Wire
+	private Button btnPendiente;
+	@Wire
+	private Button btnRevisada;
+	@Wire
+	private Button btnAprobada;
+	@Wire
+	private Button btnCalibrada;
+	@Wire
+	private Button btnFinalizada;
+	@Wire
 	private Listbox lbxCompetenciaRectora;
 	@Wire
 	private Listbox lbxObjetivos;
@@ -202,7 +214,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	private static String pers;
 	private static String unid;
 	private static String medic;
-	
+
 	private static Double valor = 0.0;
 	private static Double total = 0.0;
 	private static Double totalObjetivo = 0.0;
@@ -325,6 +337,27 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				lblGerencia.setValue(gerenciaReporte);
 				lblEvaluacion.setValue(numeroEvaluacion.toString());
 				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+
+				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")) {
+					btnPendiente.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("PENDIENTE")) {
+					btnEnEdicion.setVisible(true);
+					btnRevisada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("REVISADA")) {
+					btnPendiente.setVisible(true);
+					btnAprobada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("APROBADA")) {
+					btnRevisada.setVisible(true);
+					btnCalibrada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("CALIBRADA")) {
+					btnAprobada.setVisible(true);
+					btnFinalizada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("FINALIZADA")) {
+					btnAgregar.setVisible(false);
+					btnEliminar.setVisible(false);
+					btnEliminar2.setVisible(false);
+					btnAgregarIndicador.setVisible(false);
+				}
 			}
 		}
 		gpxAgregar.setOpen(false);
@@ -337,6 +370,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			mostrarDominioRectora();
 			mostrarDominioEspecifica();
 		}
+
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -371,7 +405,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
 	}
-	
+
 	@Listen("onClick = #btnCancelarI")
 	public void cerrarPanelI() {
 		gpxAgregarIndicador.setOpen(false);
@@ -496,7 +530,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
 				|| txtPeso1.getText().compareTo("") == 0
-//				|| txtValorMeta.getText().compareTo("") == 0
+				// || txtValorMeta.getText().compareTo("") == 0
 				|| txtResFy.getText().compareTo("") == 0
 				|| txtIndicador.getText().compareTo("") == 0
 				|| txtResultadoPorc.getText().compareTo("") == 0
@@ -934,12 +968,12 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			EvaluacionCompetencia evaluacion = servicioEvaluacionCompetencia
 					.buscar(eva, competencia);
 			if (evaluacion != null) {
-			Integer dominio = evaluacion.getIdDominio();
-			Dominio dom = servicioDominio.buscarDominio(dominio);
-			String descripcionDominio = dom.getDescripcionDominio();
-			((Combobox) ((listItem5.get(i).getChildren().get(2)))
-					.getFirstChild()).setValue(descripcionDominio);
-			System.out.println(descripcionDominio);
+				Integer dominio = evaluacion.getIdDominio();
+				Dominio dom = servicioDominio.buscarDominio(dominio);
+				String descripcionDominio = dom.getDescripcionDominio();
+				((Combobox) ((listItem5.get(i).getChildren().get(2)))
+						.getFirstChild()).setValue(descripcionDominio);
+				System.out.println(descripcionDominio);
 			}
 
 		}
@@ -1019,8 +1053,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 		}
 
-
 	}
+
 	@Listen("onClick = #btnCalcular")
 	public void prueba() {
 		evaluarIndicadores();
@@ -1070,10 +1104,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
-				System.out.println("id"+idIndicador);
+				System.out.println("id" + idIndicador);
 				//
 
-				
 				indicador.setValorResultado(valorResultado);
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
@@ -1084,11 +1117,10 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-		
+
 		}
 
 	}
-
 
 	public void evaluarIndicadores() {
 		lbxIndicadoresAgregados.renderAll();
@@ -1209,7 +1241,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		evalua.setResultadoObjetivos(totalObjetivo.intValue());
 		servicioEvaluacion.guardar(evalua);
 	}
-	
+
 	@Listen("onClick = #btnGuardarObjetivo")
 	public void guardarObjetivos() {
 
@@ -1256,7 +1288,6 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 
 	}
-	
 
 	@Listen("onClick = #btnCancelar,  #btnCancelarIndicador, #btnSalirCompetenciaR, #btnSalirCompetenciaE, #btnCancelarEvaluacion")
 	public void salir1() {
@@ -1276,9 +1307,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		evaluacion.setOportunidades(oportunidades);
 		evaluacion.setResumen(resumen);
 		servicioEvaluacion.guardar(evaluacion);
-		Messagebox.show(
-				"Evaluacion Guardada Exitosamente",
-				"Información", Messagebox.OK, Messagebox.INFORMATION);
+		Messagebox.show("Evaluacion Guardada Exitosamente", "Información",
+				Messagebox.OK, Messagebox.INFORMATION);
 	}
 
 }

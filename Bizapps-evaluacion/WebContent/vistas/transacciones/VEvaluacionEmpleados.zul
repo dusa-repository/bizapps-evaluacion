@@ -206,26 +206,6 @@
 					</groupbox>
 					<separator />
 					<separator />
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-								<!-- 								<button id="btnGuardarObjetivo" -->
-								<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
-								<!-- 									image="/public/imagenes/botones/guardar.png"> -->
-								<!-- 								</button> -->
-								<button id="btnCancelar"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-
-						</panelchildren>
-					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
@@ -422,30 +402,6 @@
 					</groupbox>
 					<separator />
 					<separator />
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-
-								<!-- 								<button id="btnGuardarIndicador" -->
-								<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
-								<!-- 									image="/public/imagenes/botones/guardar.png"> -->
-								<!-- 								</button> -->
-<!-- 								<button id="btnCalcular" sclass="btn" -->
-<!-- 									label="Calcular" -->
-<!-- 									image="/public/imagenes/botones/exportar.png"> -->
-<!-- 								</button> -->
-								<button id="btnCancelarIndicador"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
@@ -482,21 +438,6 @@
 						</template>
 					</listbox>
 					<separator></separator>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-								<button id="btnSalirCompetenciaR"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator />
@@ -533,21 +474,6 @@
 						</template>
 					</listbox>
 					<separator></separator>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-								<button id="btnSalirCompetenciaE"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
 				</tabpanel>
 				<tabpanel>
 					<separator></separator>
@@ -606,24 +532,47 @@
 					</div>
 					<separator></separator>
 					<separator></separator>
-					<panel border="normal" width="95%"
-						style="margin-left:2%;margin-right:3%">
-						<panelchildren>
-
-							<separator />
-							<div sclass="btn-group" align="center">
-
-								<button id="btnCancelarEvaluacion"
-									label="Cancelar" sclass="btn" tabindex="2"
-									image="/public/imagenes/botones/cancelar.png">
-								</button>
-
-								<separator />
-							</div>
-						</panelchildren>
-					</panel>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
+		<panel border="normal" width="95%"
+			style="margin-left:2%;margin-right:3%" id="panBotones">
+			<panelchildren>
+
+				<separator />
+				<div sclass="btn-group" align="center">
+
+					<button id="btnCambiarEstado" tabindex="2"
+						sclass="btn" label="Guardar"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnEdicion" label="En Edición" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/enedicion.png">
+					</button>
+					<button id="btnPendiente" label="A Pendiente" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/pendiente.png">
+					</button>
+					<button id="btnRevisada" label="Revisada" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/revisada.png">
+					</button>
+					<button id="btnAprobada" label="Aprobada" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/aprobada.png">
+					</button>
+					<button id="btnCalibrada" label="Calibarada" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/calibrada.png">
+					</button>
+					<button id="btnfinalizada" label="Finalizada" visible = "false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/finalizada.png">
+					</button>
+					<button id="btnCancelar" label="Cancelar"
+						sclass="btn" tabindex="2"
+						image="/public/imagenes/botones/cancelar.png">
+					</button>
+
+					<separator />
+				</div>
+
+			</panelchildren>
+		</panel>
 	</window>
 </zk>

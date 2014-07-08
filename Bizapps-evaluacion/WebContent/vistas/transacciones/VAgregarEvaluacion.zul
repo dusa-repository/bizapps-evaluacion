@@ -651,10 +651,13 @@
 					<button id="btnCambiarEstado" tabindex="2"
 						sclass="btn" label="Guardar" image="/public/imagenes/botones/guardar.png">
 					</button>
+					<button id="btnPendiente" label="A Pendiente"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/pendiente.png">
+					</button>
 					<button id="btnCancelar" label="Cancelar"
 						sclass="btn" tabindex="2" image="/public/imagenes/botones/cancelar.png">
 					</button>
-
+					
 					<separator />
 				</div>
 

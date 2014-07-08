@@ -179,6 +179,22 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Groupbox gpxListaPersonal;
 	@Wire
 	private Tab tbIndicadores;
+	@Wire
+	private Button btnEnEdicion;
+	@Wire
+	private Button btnPendiente;
+	@Wire
+	private Button btnRevisada;
+	@Wire
+	private Button btnAprobada;
+	@Wire
+	private Button btnCalibrada;
+	@Wire
+	private Button btnFinalizada;
+	@Wire
+	private Button btnCambiarEstado;
+	@Wire
+	private Button btnGuardarCompromisos;
 
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
@@ -323,6 +339,30 @@ public class CEvaluacionEmpleado extends CGenerico {
 				lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 				gpxAgregar.setOpen(false);
 				gpxAgregarIndicador.setOpen(false);
+				
+				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")) {
+					btnPendiente.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("PENDIENTE")) {
+					btnEnEdicion.setVisible(true);
+					btnRevisada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("REVISADA")) {
+					btnPendiente.setVisible(true);
+					btnAprobada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("APROBADA")) {
+					btnRevisada.setVisible(true);
+					btnCalibrada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("CALIBRADA")) {
+					btnAprobada.setVisible(true);
+					btnFinalizada.setVisible(true);
+				} else if (evaluacion.getEstadoEvaluacion().equals("FINALIZADA")) {
+					btnAgregarObjetivo.setVisible(false);
+					btnEliminar.setVisible(false);
+					btnEliminarIndicador.setVisible(false);
+					btnAgregarIndicador.setVisible(false);
+					btnIr.setVisible(false);
+					btnGuardarCompromisos.setVisible(false);
+					btnCambiarEstado.setVisible(false);
+				}
 				evaluacionconductas = servicioEvaluacionConducta
 						.buscarConductas(idEva);
 				if (evaluacionconductas.size() != 0) {
@@ -1158,4 +1198,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 			txtResFy.setDisabled(false);
 		}
 	}
+	
+
 }
