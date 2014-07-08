@@ -610,7 +610,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				txtPeso.setValue(peso1);
 				cmbPerspectiva.setValue(perspectiva.getDescripcion());
 				pers = perspectiva.getDescripcion();
-				cmbPerspectiva.setDisabled(true);
+				//cmbPerspectiva.setDisabled(true);
 			}
 		}
 	}
@@ -621,10 +621,14 @@ public class CEvaluacionAgregar extends CGenerico {
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
+		String perspectivaCombo = cmbPerspectiva.getSelectedItem()
+				.getContext();
+		Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
+				.parseInt(perspectivaCombo));
 		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
 				.buscarObjetivosId(idObjetivo);
 		objetivoLista.setDescripcionObjetivo(objetivo);
-		objetivoLista.setPerspectiva(perspectiva1);
+		objetivoLista.setPerspectiva(perspectiva);
 		objetivoLista.setPeso(peso);
 		objetivoLista.setCorresponsables(corresponsables);
 		servicioEvaluacionObjetivo.guardar(objetivoLista);

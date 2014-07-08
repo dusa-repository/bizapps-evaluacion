@@ -660,6 +660,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Listen("onDoubleClick = #lbxObjetivosGuardados")
 	public void mostrarEvaluacion() {
 		gpxAgregar.setOpen(true);
+		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(
+				perspectiva));
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
 
 			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
@@ -672,14 +675,14 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				String corresponsables = evaluacionObjetivo
 						.getCorresponsables();
 				Double peso = evaluacionObjetivo.getPeso();
-				Perspectiva perspectiva = evaluacionObjetivo.getPerspectiva();
+				Perspectiva perspectiva1 = evaluacionObjetivo.getPerspectiva();
 				txtObjetivo.setValue(objetivo);
 				txtCorresponsables.setValue(corresponsables);
 				int peso1 = peso.intValue();
 				txtPeso.setValue(peso1);
-				cmbPerspectiva.setValue(perspectiva.getDescripcion());
-				pers = perspectiva.getDescripcion();
-				cmbPerspectiva.setDisabled(true);
+				cmbPerspectiva.setValue(perspectiva1.getDescripcion());
+				pers = perspectiva1.getDescripcion();
+				//cmbPerspectiva.setDisabled(true);
 			}
 		}
 	}
@@ -739,10 +742,14 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
+		String perspectivaCombo = cmbPerspectiva.getSelectedItem()
+				.getContext();
+		Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
+				.parseInt(perspectivaCombo));
 		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
 				.buscarObjetivosId(idObjetivo);
 		objetivoLista.setDescripcionObjetivo(objetivo);
-		objetivoLista.setPerspectiva(perspectiva1);
+		objetivoLista.setPerspectiva(perspectiva);
 		objetivoLista.setPeso(peso);
 		objetivoLista.setCorresponsables(corresponsables);
 		servicioEvaluacionObjetivo.guardar(objetivoLista);

@@ -622,9 +622,50 @@ public class CAgregarEvaluacion extends CGenerico {
 				txtPeso.setValue(peso1);
 				cmbPerspectiva.setValue(perspectiva.getDescripcion());
 				pers = perspectiva.getDescripcion();
-				cmbPerspectiva.setDisabled(true);
+				//cmbPerspectiva.setDisabled(true);
 			}
 		}
+	}
+	
+	@Listen("onClick = #btnIr")
+	public void mostrarPestannaIndicadores() {
+		tbIndicadores.setSelected(true);
+		gpxAgregados.setOpen(true);
+		if (lbxObjetivosGuardados.getItemCount() != 0) {
+			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
+						.getValue();
+				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
+						.buscarObjetivos(fichaE, numero);
+				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
+				System.out.println("objeto" + evaluacionObjetivoIndicadores);
+				if (evaluacionObjetivo1.size() == 1) {
+					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0)
+							.getDescripcionObjetivo());
+					idO = evaluacionObjetivoIndicadores.get(0).getIdObjetivo();
+
+				}
+				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+					Integer idOb = evaluacionObjetivoIndicadores.get(i)
+							.getIdObjetivo();
+					if (idOb == idObjetivo) {
+						cmbObjetivos.setValue(evaluacionObjetivo1.get(i)
+								.getDescripcionObjetivo());
+						idO = evaluacionObjetivoIndicadores.get(i)
+								.getIdObjetivo();
+					}
+				}
+			}
+			indicadores = servicioEvaluacionIndicador
+					.buscarIndicadores(idObjetivo);
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(
+							indicadores));
+		}
+		idObjetivo = 0;
 	}
 
 	@Listen("onDoubleClick = #lbxIndicadoresAgregados")
@@ -683,10 +724,14 @@ public class CAgregarEvaluacion extends CGenerico {
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
+		String perspectivaCombo = cmbPerspectiva.getSelectedItem()
+				.getContext();
+		Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
+				.parseInt(perspectivaCombo));
 		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
 				.buscarObjetivosId(idObjetivo);
 		objetivoLista.setDescripcionObjetivo(objetivo);
-		objetivoLista.setPerspectiva(perspectiva1);
+		objetivoLista.setPerspectiva(perspectiva);
 		objetivoLista.setPeso(peso);
 		objetivoLista.setCorresponsables(corresponsables);
 		servicioEvaluacionObjetivo.guardar(objetivoLista);
@@ -724,46 +769,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	// }
 	// }
 
-	@Listen("onClick = #btnIr")
-	public void mostrarPestannaIndicadores() {
-		tbIndicadores.setSelected(true);
-		gpxAgregados.setOpen(true);
-		if (lbxObjetivosGuardados.getItemCount() != 0) {
-			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
-			if (listItem != null) {
-				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
-						.getValue();
-				idObjetivo = evaluacionObjetivo.getIdObjetivo();
-				List<EvaluacionObjetivo> evaluacionObjetivo1 = servicioEvaluacionObjetivo
-						.buscarObjetivos(fichaE, numero);
-				evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
-						.buscarObjetivosEvaluar(idEva);
-				System.out.println("objeto" + evaluacionObjetivoIndicadores);
-				if (evaluacionObjetivo1.size() == 1) {
-					cmbObjetivos.setValue(evaluacionObjetivoIndicadores.get(0)
-							.getDescripcionObjetivo());
-					idO = evaluacionObjetivoIndicadores.get(0).getIdObjetivo();
 
-				}
-				for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
-					Integer idOb = evaluacionObjetivoIndicadores.get(i)
-							.getIdObjetivo();
-					if (idOb == idObjetivo) {
-						cmbObjetivos.setValue(evaluacionObjetivo1.get(i)
-								.getDescripcionObjetivo());
-						idO = evaluacionObjetivoIndicadores.get(i)
-								.getIdObjetivo();
-					}
-				}
-			}
-			indicadores = servicioEvaluacionIndicador
-					.buscarIndicadores(idObjetivo);
-			lbxIndicadoresAgregados
-					.setModel(new ListModelList<EvaluacionIndicador>(
-							indicadores));
-		}
-		idObjetivo = 0;
-	}
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
 	public void mostrarDatosCatalogo() {
