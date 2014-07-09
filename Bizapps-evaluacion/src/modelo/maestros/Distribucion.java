@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 
 /**
- * The persistent class for the perspectiva database table.
+ * The persistent class for the distribucion database table.
  * 
  */
 @Entity
-@Table(name = "perspectiva")
-public class Perspectiva implements Serializable {
+@Table(name = "distribucion")
+public class Distribucion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_perspectiva")
+	@Column(name = "id_distribucion")
 	private int id;
 
 	@Column(name = "descripcion")
@@ -31,38 +31,42 @@ public class Perspectiva implements Serializable {
 	@Column(name = "hora_auditoria")
 	private String horaAuditoria;
 
-	@Column(name = "orden")
-	private int orden;
+	@Column(name = "porcentaje")
+	private int porcentaje;
 
-	public Perspectiva() {
-	}
-
-	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
-			Timestamp fechaAuditoria, String horaAuditoria) {
+	public Distribucion() {
 		super();
-		this.id = idPerspectiva;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Distribucion(int id, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria, int porcentaje) {
+		super();
+		this.id = id;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
+		this.porcentaje = porcentaje;
 	}
+
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
-	public void setId(int idPerspectiva) {
-		this.id = idPerspectiva;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDescripcion() {
-		return this.descripcion;
+		return descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -87,12 +91,16 @@ public class Perspectiva implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	public int getOrden() {
-		return orden;
+	public int getPorcentaje() {
+		return porcentaje;
 	}
 
-	public void setOrden(int orden) {
-		this.orden = orden;
+	public void setPorcentaje(int porcentaje) {
+		this.porcentaje = porcentaje;
 	}
+	
+	
+	
 
+	
 }
