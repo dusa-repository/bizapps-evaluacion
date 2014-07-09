@@ -11,8 +11,9 @@ public class SBitacora {
 
 	@Autowired
 	private IBitacoraDAO bitacoraDAO;
-	
+
 	public void guardar(Bitacora bitacora) {
+		System.out.println("save"+bitacora.getEvaluacion().getIdEvaluacion());
 		bitacoraDAO.save(bitacora);
 	}
 }

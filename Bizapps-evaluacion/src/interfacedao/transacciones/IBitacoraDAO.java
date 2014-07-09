@@ -4,6 +4,6 @@ import modelo.maestros.Evaluacion;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IBitacoraDAO extends JpaRepository<Bitacora, Long> {
-	
+public interface IBitacoraDAO extends JpaRepository<Bitacora, Evaluacion> {
+
 }

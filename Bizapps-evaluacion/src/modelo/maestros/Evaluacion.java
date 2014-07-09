@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 
 /**
@@ -90,6 +91,9 @@ public class Evaluacion implements Serializable {
 
 	private String valoracion;
 
+	@OneToMany(mappedBy="evaluacion")
+	private Set<Bitacora> bitacoras;
+	
 	public Evaluacion() {
 	}
 
@@ -307,6 +311,14 @@ public class Evaluacion implements Serializable {
 
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
+	}
+
+	public Set<Bitacora> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<Bitacora> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 
 	

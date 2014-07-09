@@ -16,10 +16,14 @@ import java.sql.Timestamp;
 @Table(name="bitacora")
 public class Bitacora implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_evaluacion", referencedColumnName = "id_evaluacion")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_bitacora", unique = true, nullable = false)
+	private long idBitacora;
+	
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_evaluacion")
 	private Evaluacion evaluacion;
 
 	@ManyToOne
@@ -38,9 +42,20 @@ public class Bitacora implements Serializable {
 	public Bitacora() {
 	}
 	
+
 	public Evaluacion getEvaluacion() {
 		return evaluacion;
 	}
+
+	public long getIdBitacora() {
+		return idBitacora;
+	}
+
+
+	public void setIdBitacora(long idBitacora) {
+		this.idBitacora = idBitacora;
+	}
+
 
 	public void setEvaluacion(Evaluacion evaluacion) {
 		this.evaluacion = evaluacion;

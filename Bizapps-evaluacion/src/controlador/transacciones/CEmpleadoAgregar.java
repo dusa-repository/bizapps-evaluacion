@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import modelo.maestros.Bitacora;
 import modelo.maestros.Cargo;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
@@ -246,6 +247,19 @@ public class CEmpleadoAgregar extends CGenerico {
 			evaluacion.setResultadoGeneral(0);
 			evaluacion.setCargo(cargo);
 			evaluacion.setHoraAuditoria(horaAuditoria);
+			
+			Bitacora bitacora = new Bitacora();
+
+			bitacora.setEvaluacion(evaluacion);
+			bitacora.setIdUsuario(u);
+			bitacora.setFechaAuditoria(fechaHora);
+			bitacora.setHoraAuditoria(horaAuditoria);
+			bitacora.setEstadoEvaluacion("EN EDICION");
+			System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
+			System.out.println(evaluacion + " " + u + " " + fechaHora
+					+ horaAuditoria);
+
+			//servicioBitacora.guardar(bitacora);
 			servicioEvaluacion.guardar(evaluacion);
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ficha", item);

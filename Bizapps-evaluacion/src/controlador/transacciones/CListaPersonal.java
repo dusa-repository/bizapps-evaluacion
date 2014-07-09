@@ -160,7 +160,7 @@ public class CListaPersonal extends CGenerico {
 				+ horaAuditoria);
 
 		servicioEvaluacion.guardar(evaluacion);
-		//servicioBitacora.guardar(bitacora);
+		servicioBitacora.guardar(bitacora);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("idEva", idEva);
 		System.out.println("va" + idEva);
