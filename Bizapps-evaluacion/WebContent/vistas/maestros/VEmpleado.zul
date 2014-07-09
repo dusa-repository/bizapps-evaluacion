@@ -15,8 +15,8 @@
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="15%" />
-					<column label="" width="20%" />
+					<column label="" width="8%" />
+					<column label="" width="27%" />
 				</columns>
 				<rows>
 					<row>
@@ -129,6 +129,6 @@
 		tooltiptext="Click para Seleccionar un Codigo" />
 	<div id="divCatalogoUnidad"
 		tooltiptext="Click para Seleccionar un Codigo" />
-		<div id="divCatalogoSupervisor"
+	<div id="divCatalogoSupervisor"
 		tooltiptext="Click para Seleccionar un Codigo" />
 </window>

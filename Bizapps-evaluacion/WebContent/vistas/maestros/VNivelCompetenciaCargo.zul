@@ -1,0 +1,97 @@
+<window id="wdwVNivelCompetenciaCargo" border="normal" height="auto"
+	apply="controlador.maestros.CNivelCompetenciaCargo"
+	style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="left">
+					<button id="btnGuardar" tooltiptext="Guardar"
+						style="height:27px;width:90px;margin-left:5px" label="Guardar"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnLimpiar" label="Limpiar"
+						tooltiptext="Limpiar" style=" height:27px; width:90px"
+						image="/public/imagenes/botones/limpiar.png">
+					</button>
+					<button id="btnSalir" label="Salir"
+						style=" height:27px; width:80px " tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
+		<separator />
+		<separator />
+		<groupbox>
+			<separator />
+			<separator />
+			<grid width="100%" style="border:0px">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="45%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta"
+								value="Código del Cargo:" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+						<textbox id="txtCargoNivelCompetenciaCargo"
+							tabindex="1" width="100%" maxlength="100"
+							tooltiptext="Ingrese el codigo del cargo" />
+						<button id="btnBuscarCargo" label=""
+							tooltiptext="Catalogo de codigos de cargo"
+							image="/public/imagenes/botones/buscar.png" />
+						<label id="lblCargoNivelCompetencia" />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<separator />
+
+			<listbox id="lsbCompetencia" width="100%" mold="paging"
+				pageSize="7" oddRowSclass="non-odd"
+				emptyMessage="No ha seleccionado el cargo">
+				<listhead>
+					<listheader label="Código competencia" width="15%" />
+					<listheader label="Descripción" width="20%" />
+					<listheader label="Nivel" width="13%" />
+					<listheader label="Comentario" />
+					<listheader label="Dominio" width="15%" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each.id}"></listcell>
+						<listcell label="${each.descripcion}"></listcell>
+						<listcell label="${each.nivel}"></listcell>
+						<listcell label="${each.comentario}"></listcell>
+						<listcell>
+							<combobox model="${$composer.tipos}" width="90%"
+								style="background-color:white;border:none" readonly="true">
+								<template name="model">
+									<comboitem label="${each.descripcionDominio}" />
+								</template>
+							</combobox>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<separator />
+			<separator />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+	<div id="divCatalogoCargo"
+		tooltiptext="Click para Seleccionar un Codigo" />
+</window>
