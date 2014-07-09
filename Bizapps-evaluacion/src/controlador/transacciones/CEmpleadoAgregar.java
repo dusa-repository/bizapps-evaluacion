@@ -258,9 +258,9 @@ public class CEmpleadoAgregar extends CGenerico {
 			System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
 			System.out.println(evaluacion + " " + u + " " + fechaHora
 					+ horaAuditoria);
-
-			//servicioBitacora.guardar(bitacora);
 			servicioEvaluacion.guardar(evaluacion);
+			servicioBitacora.guardar(bitacora);
+			
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ficha", item);
 			map.put("id", idEva);
