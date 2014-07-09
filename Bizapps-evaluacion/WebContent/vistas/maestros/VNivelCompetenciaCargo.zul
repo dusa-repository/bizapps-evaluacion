@@ -33,8 +33,8 @@
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="15%" />
-					<column label="" width="20%" />
+					<column label="" width="8%" />
+					<column label="" width="27%" />
 				</columns>
 				<rows>
 					<row>
@@ -71,15 +71,22 @@
 				</listhead>
 				<template name="model">
 					<listitem>
-						<listcell label="${each.id}"></listcell>
+						<listcell>
+
+							<intbox value="${each.id}" width="auto"
+								style="border:none" readonly="true" />
+
+						</listcell>
 						<listcell label="${each.descripcion}"></listcell>
 						<listcell label="${each.nivel}"></listcell>
 						<listcell label="${each.comentario}"></listcell>
 						<listcell>
-							<combobox model="${$composer.tipos}" width="90%"
-								style="background-color:white;border:none" readonly="true">
+							<combobox model="${$composer.tipos}"
+								width="90%" style="background-color:white;border:none"
+								readonly="true">
 								<template name="model">
-									<comboitem label="${each.descripcionDominio}" />
+									<comboitem
+										label="${each.descripcionDominio}" />
 								</template>
 							</combobox>
 						</listcell>

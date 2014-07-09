@@ -34,6 +34,17 @@ public class NivelCompetenciaCargo implements Serializable {
 	public NivelCompetenciaCargo() {
 		super ();
 	}
+	
+	
+	public NivelCompetenciaCargo(Competencia competencia, Cargo cargo,
+			Dominio dominio) {
+		super();
+		this.competencia = competencia;
+		this.cargo = cargo;
+		this.dominio = dominio;
+	}
+
+
 
 	public Dominio getDominio() {
 		return dominio;

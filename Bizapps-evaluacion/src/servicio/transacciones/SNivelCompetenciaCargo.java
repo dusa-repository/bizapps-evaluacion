@@ -22,6 +22,11 @@ public class SNivelCompetenciaCargo {
 	@Autowired
 	private INivelCompetenciaCargoDAO nivelCompetenciaCargoDAO;
 
+	/* Servicio que permite guardar los datos de un nivel de competencia por cargo*/
+	public void guardar(NivelCompetenciaCargo nivel) {
+		nivelCompetenciaCargoDAO.save(nivel);
+	}
+	
 	public List<NivelCompetenciaCargo> buscar(Cargo cargo) {
 		return nivelCompetenciaCargoDAO.findByCargo(cargo);
 	}

@@ -8,21 +8,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import modelo.maestros.Area;
 import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 import modelo.maestros.Dominio;
+import modelo.maestros.NivelCompetenciaCargo;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -51,19 +56,20 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	private Listbox lsbCompetencia;
 	@Wire
 	private Div divCatalogoCargo;
+	private Listbox lsbCompetenciasSeleccionadas;
 	List<Competencia> competenciasDisponibles = new ArrayList<Competencia>();
 	ListModelList<Dominio> tipos;
+	private int idCargo = 0;
 
 	Mensaje msj = new Mensaje();
 	Catalogo<Cargo> catalogoCargo;
 
-	
 	public ListModelList<Dominio> getTipos() {
 		tipos = new ListModelList<Dominio>(
 				servicioDominio.buscarPorTipo("REQUERIDO"));
 		return tipos;
 	}
-	
+
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
@@ -143,6 +149,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 		Cargo cargo = catalogoCargo.objetoSeleccionadoDelCatalogo();
 		txtCargoNivelCompetenciaCargo.setValue(String.valueOf(cargo.getId()));
 		lblCargoNivelCompetencia.setValue(cargo.getDescripcion());
+		idCargo = cargo.getId();
 		catalogoCargo.setParent(null);
 		llenarLista();
 	}
@@ -156,7 +163,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 			msj.mensajeAlerta(Mensaje.codigoCargo);
 			txtCargoNivelCompetenciaCargo.setFocus(true);
 		} else {
-
+			idCargo = cargo.getId();
 			lblCargoNivelCompetencia.setValue(cargo.getDescripcion());
 			llenarLista();
 		}
@@ -166,6 +173,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Listen("onClick = #btnLimpiar")
 	public void limpiarCampos() {
 
+		idCargo = 0;
 		txtCargoNivelCompetenciaCargo.setValue("");
 		lblCargoNivelCompetencia.setValue("");
 		lsbCompetencia.setModel(new ListModelList<Competencia>());
@@ -187,6 +195,32 @@ public class CNivelCompetenciaCargo extends CGenerico {
 		lsbCompetencia.setCheckmark(false);
 		lsbCompetencia.setMultiple(true);
 		lsbCompetencia.setCheckmark(true);
+	}
+
+	@Listen("onClick = #btnGuardar")
+	public void guardar() {
+
+		if (lsbCompetencia.getItemCount() != 0) {
+			for (int i = 0; i < lsbCompetencia.getItemCount(); i++) {
+				Listitem listItem = lsbCompetencia.getItemAtIndex(i);
+				int codigoCompetencia = ((Intbox) ((listItem.getChildren()
+						.get(0))).getFirstChild()).getValue();
+				String tipoDominio = ((Combobox) ((listItem.getChildren()
+						.get(4))).getFirstChild()).getValue();
+
+				Cargo cargo = servicioCargo.buscarCargo(idCargo);
+				Competencia competencia = servicioCompetencia
+						.buscarCompetencia(codigoCompetencia);
+				Dominio dominio = servicioDominio.buscarPorNombre(tipoDominio);
+				NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
+						competencia, cargo, dominio);
+				servicioNivelCompetenciaCargo.guardar(nivel);
+				msj.mensajeInformacion(Mensaje.guardado);
+				limpiarCampos();
+
+			}
+		}
+
 	}
 
 }
