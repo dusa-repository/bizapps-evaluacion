@@ -417,14 +417,10 @@ public class CEvaluacionAgregar extends CGenerico {
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
 		EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
-		idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
-		System.out.println(idObjetivo);
-		System.out.println(idEva);
 		Integer linea = objetivosG.size() + 1;
 		objetivoLista.setIdEvaluacion(idEva);
 		objetivoLista.setDescripcionObjetivo(objetivo);
 		objetivoLista.setPerspectiva(perspectiva);
-		objetivoLista.setIdObjetivo(idObjetivo);
 		objetivoLista.setLinea(linea);
 		objetivoLista.setPeso(peso);
 		objetivoLista.setResultado(0);

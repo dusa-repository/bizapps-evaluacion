@@ -117,7 +117,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso" maxlength="3"
-										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso" />
+										constraint="min 1; max 100" mold="rounded" width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
 									<textbox value="0"
@@ -193,7 +193,7 @@
 									</listcell>
 									<listcell>
 										<textbox
-											value="${each.resultado}" disabled="true">
+											value="${each.resultado}" disabled="true" inplace="true">
 										</textbox>
 									</listcell>
 									<!-- 									<listcell -->
@@ -289,7 +289,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso %" maxlength="3"
-										constraint="min 0; max 100" mold="rounded" width="100%"
+										constraint="min 1; max 100" mold="rounded" width="100%"
 										id="txtPeso1" />
 								</listcell>
 								<listcell>
@@ -389,22 +389,22 @@
 									</listcell>
 									<listcell>
 										<spinner  disabled= "true"
-											value="${each.valorResultado}">
+											value="${each.valorResultado}" inplace="true">
 										</spinner>
 									</listcell>
 									<listcell>
 										<spinner disabled= "true"
-											value="${each.resultadoFyAnterior}">
+											value="${each.resultadoFyAnterior}" inplace="true">
 										</spinner>
 									</listcell>
 									<listcell>
 										<textbox disabled="true"
-											value="${each.resultadoPorc}" />
+											value="${each.resultadoPorc}" inplace="true"/>
 										<!-- 										onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
 										<textbox disabled="true"
-											value="${each.resultadoPeso}" />
+											value="${each.resultadoPeso}" inplace="true" />
 									</listcell>
 								</listitem>
 							</template>
@@ -531,14 +531,6 @@
 							</row>
 						</rows>
 					</grid>
-					<separator></separator>
-					<separator></separator>
-					<div align="right" height="100%">
-						<button id="btnGuardarCompromisos"
-							label="Agregar" image="/public/imagenes/botones/annadir.png"
-							style="height:27px">
-						</button>
-					</div>
 					<separator></separator>
 					<separator></separator>
 				</tabpanel>

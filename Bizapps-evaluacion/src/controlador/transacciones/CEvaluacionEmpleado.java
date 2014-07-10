@@ -205,6 +205,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	String tipo = "EVIDENCIADO";
 	ListModelList<Dominio> dominio;
 	private static int idEva;
+	private static boolean bool = false;
+	private static boolean bool1 = false;
 	private static Double valor = 0.0;
 	private static Double total = 0.0;
 	private static Double totalObjetivo = 0.0;
@@ -220,6 +222,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static int num;
 	Usuario u;
 	public static Integer idO = 0;
+	private static int idIndicadorE;
+	private static int idObjetivoE;
+	public static EvaluacionObjetivo ev;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -355,13 +360,12 @@ public class CEvaluacionEmpleado extends CGenerico {
 					btnAprobada.setVisible(true);
 					btnFinalizada.setVisible(true);
 				} else if (evaluacion.getEstadoEvaluacion().equals("FINALIZADA")) {
-					btnAgregarObjetivo.setVisible(false);
-					btnEliminar.setVisible(false);
-					btnEliminarIndicador.setVisible(false);
-					btnAgregarIndicador.setVisible(false);
-					btnIr.setVisible(false);
-					btnGuardarCompromisos.setVisible(false);
-					btnCambiarEstado.setVisible(false);
+					//btnAgregarObjetivo.setVisible(false);
+					//btnEliminar.setVisible(false);
+					//btnEliminarIndicador.setVisible(false);
+					//btnAgregarIndicador.setVisible(false);
+					//btnIr.setVisible(false);
+					//btnCambiarEstado.setVisible(false);
 				}
 				evaluacionconductas = servicioEvaluacionConducta
 						.buscarConductas(idEva);
@@ -378,6 +382,15 @@ public class CEvaluacionEmpleado extends CGenerico {
 	// return cambio;
 	//
 	// }
+	
+	@Listen("onClick = #tbIndicadores")
+	public void mostrarObjetivos() {
+		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+				.buscarObjetivos(fichaE, num);
+		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
+				evaluacionObjetivo));
+		bool1 = true;
+	}
 
 	@Listen("onClick = #btnAgregarObjetivo")
 	public void agregarObjetivo() {
@@ -775,17 +788,33 @@ public class CEvaluacionEmpleado extends CGenerico {
 			objetivoLista.setResultado(0);
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
-			objetivosG.add(objetivoLista);
-			lbxObjetivosGuardados
-					.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
-			servicioEvaluacionObjetivo.guardar(objetivoLista);
-			gpxAgregar.setOpen(false);
-			Messagebox.show("Objetivos Guardados Exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+			ev = objetivoLista;
+			
+			if (objetivosG.size() == 0) {
+				servicioEvaluacionObjetivo.guardar(objetivoLista);
+				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+				lbxObjetivosGuardados
+				.setModel(new ListModelList<EvaluacionObjetivo>(
+						objetivosG));
+				
+				gpxAgregar.setOpen(false);
+				Messagebox.show("Objetivos Guardados Exitosamente",
+						"Información", Messagebox.OK, Messagebox.INFORMATION);
+				limpiar();
+			} else {
+				objetivosG.add(objetivoLista);
+				cambiarEstado1();
+				objetivosG.remove(objetivoLista);
+				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+				lbxObjetivosGuardados
+						.setModel(new ListModelList<EvaluacionObjetivo>(
+								objetivosG));
 
+			}
 		}
-		limpiar();
+
 		idObjetivo = 0;
+
 	}
 
 	@Listen("onDoubleClick = #lbxObjetivosGuardados")
@@ -985,8 +1014,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 			if (listItem != null) {
 				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
 						.getValue();
-				idIndicador = evaluacionIndicador.getIdIndicador();
-				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				idIndicadorE = evaluacionIndicador.getIdIndicador();
+				idObjetivoE = evaluacionIndicador.getIdObjetivo();
 				Messagebox.show("Desea Eliminar el Indicador", "Alerta",
 						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
 						new org.zkoss.zk.ui.event.EventListener<Event>() {
@@ -995,11 +1024,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
 									servicioEvaluacionIndicador
-											.eliminarUno(idIndicador);
+											.eliminarUno(idIndicadorE);
 									msj.mensajeInformacion(Mensaje.eliminado);
 									lbxIndicadoresAgregados.getItems().clear();
 									indicadores = servicioEvaluacionIndicador
-											.buscarIndicadores(idObjetivo);
+											.buscarIndicadores(idObjetivoE);
 									lbxIndicadoresAgregados
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
@@ -1018,9 +1047,9 @@ public class CEvaluacionEmpleado extends CGenerico {
 			if (listItem != null) {
 				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
 						.getValue();
-				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				idObjetivoE = evaluacionObjetivo.getIdObjetivo();
 				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
-						.buscarIndicadores(idObjetivo);
+						.buscarIndicadores(idObjetivoE);
 				if (evaluacionIndicador.size() != 0) {
 					Messagebox
 							.show("El objetivo tiene indicadores asocioados desea eliminarlo",
@@ -1032,11 +1061,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 												throws InterruptedException {
 											if (evt.getName().equals("onOK")) {
 												List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
-														.buscarIndicadores(idObjetivo);
+														.buscarIndicadores(idObjetivoE);
 												servicioEvaluacionIndicador
 														.eliminarVarios(evaluacionIndicador);
 												servicioEvaluacionObjetivo
-														.eliminarUno(idObjetivo);
+														.eliminarUno(idObjetivoE);
 												msj.mensajeInformacion(Mensaje.eliminado);
 												lbxObjetivosGuardados
 														.getItems().clear();
@@ -1058,7 +1087,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
 										servicioEvaluacionObjetivo
-												.eliminarUno(idObjetivo);
+												.eliminarUno(idObjetivoE);
 										msj.mensajeInformacion(Mensaje.eliminado);
 										lbxObjetivosGuardados.getItems()
 												.clear();
@@ -1137,7 +1166,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		}
 
 	}
-	@Listen("onClick = #btnGuardarCompromisos")
+	@Listen("onClick = #btnCambiarEstado")
 	public void guardarComportamiento() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		String compromisos = txtCompromisos.getValue();
@@ -1201,6 +1230,71 @@ public class CEvaluacionEmpleado extends CGenerico {
 		if (cmbMedicion.getValue().equals("CONTINUA")) {
 			txtResFy.setDisabled(false);
 		}
+	}
+	
+	public void validar1() {
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		String ficha = evaluacion.getFicha();
+		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
+		List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
+		if (evaluacionObjetivoIndicadores != null) {
+			for (int i = 0; i < evaluacionObjetivoIndicadores.size(); i++) {
+				int idObjetivo = evaluacionObjetivoIndicadores.get(i)
+						.getIdObjetivo();
+				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
+						.buscarIndicadores(idObjetivo);
+				Double sumaPeso = (double) 0;
+				for (int j = 0; j < evaluacionObjetivoIndicador.size(); j++) {
+					Double peso = evaluacionObjetivoIndicador.get(j).getPeso();
+					sumaPeso = peso + sumaPeso;
+				}
+
+				if (sumaPeso > 100) {
+					bool = true;
+					i = 1000000000;
+				}
+			}
+
+		}
+
+	}
+
+	public void cambiarEstado1() {
+		System.out.println("METODO");
+		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
+		validar1();
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < objetivosG.size(); j++) {
+			Double peso = objetivosG.get(j).getPeso();
+			sumaPeso = sumaPeso + peso;
+			System.out.println("SUMA" + sumaPeso);
+		}
+		if (sumaPeso > 100) {
+			Messagebox
+					.show("La suma de los pesos de los objetivos no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+			objetivosG.remove(ev);
+
+		}
+
+		else if (bool == true) {
+			Messagebox
+					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+
+		} else {
+			servicioEvaluacionObjetivo.guardar(ev);
+			Messagebox.show("Objetivos Guardados Exitosamente", "Información",
+					Messagebox.OK, Messagebox.INFORMATION);
+			gpxAgregar.setOpen(false);
+			limpiar();
+
+		}
+
 	}
 	
 
