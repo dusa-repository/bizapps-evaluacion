@@ -116,7 +116,7 @@
 										width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso" constraint = "min 0; max 100"
+									<spinner placeholder="Peso" constraint = "min 1; max 100"
 										mold="rounded"  width="100%" id="txtPeso" maxlength="3" />
 								</listcell>
 								<listcell>
@@ -192,7 +192,7 @@
 										<textbox value="${each.totalInd}" disabled = "true" visible = "false"></textbox>
 									</listcell>
 									<listcell>
-										<textbox value="${each.resultado}" disabled = "true"></textbox>
+										<textbox value="${each.resultado}" disabled = "true" inplace="true"></textbox>
 									</listcell>
 									
 <!-- 									<listcell label="${each.peso}"></listcell> -->
@@ -309,7 +309,7 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %" constraint = "min 0; max 100"
+									<spinner placeholder="Peso %" constraint = "min 1; max 100"
 										mold="rounded" width="100%" id="txtPeso1" maxlength="3"/>
 								</listcell>
 								<listcell>
@@ -319,10 +319,10 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" value = "0" constraint = "min 0" />
+										id="txtValorResultado" value = "0"  />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant" value = "0" constraint = "min 0"
+									<spinner placeholder="Res.Fy.Ant" value = "0" 
 										mold="rounded" width="100%" id="txtResFy" disabled= "true" />
 								</listcell>
 								<listcell>
@@ -405,17 +405,19 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<spinner  constraint = "min 0"  value="${each.valorResultado}"></spinner>
+										<spinner   value="${each.valorResultado}"
+										disabled= "true" inplace="true"></spinner>
 									</listcell>
 									<listcell>
-										<spinner constraint = "min 0"  value="${each.resultadoFyAnterior}"></spinner>
+										<spinner   value="${each.resultadoFyAnterior}"
+										disabled= "true" inplace="true"></spinner>
 									</listcell>
 									<listcell>
-										<textbox  disabled = "true" value="${each.resultadoPorc}"/>
+										<textbox  disabled = "true" value="${each.resultadoPorc}" inplace="true"/>
 <!-- 										onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
-										<textbox disabled = "true" value="${each.resultadoPeso}"/>
+										<textbox disabled = "true" value="${each.resultadoPeso}" inplace="true"/>
 									</listcell>
 <!-- 									<listcell -->
 <!-- 										label="${each.valorResultado}"> -->
@@ -613,14 +615,6 @@
 					</grid>
 					<separator></separator>
 					<separator></separator>
-						<div align="right" height="100%">
-						<button id="btnAgregarF" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png">
-						</button>
-						<separator />
-						<separator />
-						</div>
 <!-- 						<panel border="normal" width="95%" -->
 <!-- 						style="margin-left:2%;margin-right:3%"> -->
 <!-- 						<panelchildren> -->

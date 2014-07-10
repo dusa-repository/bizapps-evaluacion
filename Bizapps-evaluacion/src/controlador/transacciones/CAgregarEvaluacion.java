@@ -193,6 +193,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Panel panBotones;
 	@Wire
 	private Tab tbIndicadores;
+	@Wire
+	private Tab tbEvaluacionObjetivos;
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -219,6 +221,9 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static Double totalObjetivo = 0.0;
 	private static Double totalInd = 0.0;
 	Usuario u;
+	private static int idIndicadorE;
+	private static int idObjetivoE;
+	
 
 	@Override
 	public void inicializar() throws IOException {
@@ -333,7 +338,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		eliminarObjetivo();
 	}
 
-	@Listen("onClick = #cmbObjetivos")
+	@Listen("onClick = #tbIndicadores")
 	public void mostrarObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, numero);
@@ -341,6 +346,12 @@ public class CAgregarEvaluacion extends CGenerico {
 				evaluacionObjetivo));
 		bool1 = true;
 	}
+	
+	@Listen("onClick = #tbEvaluacionObjetivos")
+	public void ir() {
+		cmbObjetivos.setValue(null);
+	}
+	
 
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
@@ -374,7 +385,9 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-
+// este es el metodo q agrega, y el eliminar?voy.. probemos de nuevo cariñito oki spero revisando la d bd en cada agregacion y eliminacion =)okis
+//		no entiendo porque en la lista agarra el item 2027
+//		menos yo :(
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -388,8 +401,10 @@ public class CAgregarEvaluacion extends CGenerico {
 			Double peso = Double.valueOf(txtPeso.getValue());
 			EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 			Integer linea = objetivosG.size() + 1;
-			idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
-			objetivoLista.setIdObjetivo(idObjetivo);
+			//idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
+			System.out.println(servicioEvaluacionObjetivo.buscarId());
+			//objetivoLista.setIdObjetivo(idObjetivo);
+			System.out.println("idobjetivo"+idObjetivo);
 			objetivoLista.setIdEvaluacion(idEva);
 			objetivoLista.setDescripcionObjetivo(objetivo);
 			objetivoLista.setPerspectiva(perspectiva);
@@ -399,14 +414,14 @@ public class CAgregarEvaluacion extends CGenerico {
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
 			ev = objetivoLista;
+			
 			if (objetivosG.size() == 0) {
-				objetivosG.add(objetivoLista);
-				System.out.println("entroiffff");
-				lbxObjetivosGuardados
-						.setModel(new ListModelList<EvaluacionObjetivo>(
-								objetivosG));
 				servicioEvaluacionObjetivo.guardar(objetivoLista);
-
+				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+				lbxObjetivosGuardados
+				.setModel(new ListModelList<EvaluacionObjetivo>(
+						objetivosG));
+				
 				gpxAgregar.setOpen(false);
 				Messagebox.show("Objetivos Guardados Exitosamente",
 						"Información", Messagebox.OK, Messagebox.INFORMATION);
@@ -414,6 +429,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			} else {
 				objetivosG.add(objetivoLista);
 				cambiarEstado1();
+				objetivosG.remove(objetivoLista);
+				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
 				lbxObjetivosGuardados
 						.setModel(new ListModelList<EvaluacionObjetivo>(
 								objetivosG));
@@ -566,7 +583,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	}
 
-	@Listen("onClick = #btnCambiarEstado")
+	//@Listen("onClick = #btnCambiarEstado")
 	public void cambiarEstado() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		validar();
@@ -629,6 +646,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
+		mostrarObjetivos();
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -840,7 +858,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	}
 
-	@Listen("onClick = #btnAgregarF")
+	@Listen("onClick = #btnCambiarEstado")
 	public void Guardar() {
 		String fortalezas = txtFortalezas.getValue();
 		String oportunidades = txtOportunidades.getValue();
@@ -867,8 +885,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			if (listItem != null) {
 				EvaluacionIndicador evaluacionIndicador = (EvaluacionIndicador) listItem
 						.getValue();
-				idIndicador = evaluacionIndicador.getIdIndicador();
-				idObjetivo = evaluacionIndicador.getIdObjetivo();
+				idIndicadorE = evaluacionIndicador.getIdIndicador();
+				idObjetivoE = evaluacionIndicador.getIdObjetivo();
 				Messagebox.show("Desea Eliminar el Indicador", "Alerta",
 						Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
 						new org.zkoss.zk.ui.event.EventListener<Event>() {
@@ -877,34 +895,39 @@ public class CAgregarEvaluacion extends CGenerico {
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
 									servicioEvaluacionIndicador
-											.eliminarUno(idIndicador);
+											.eliminarUno(idIndicadorE);
 									msj.mensajeInformacion(Mensaje.eliminado);
 									lbxIndicadoresAgregados.getItems().clear();
 									indicadores = servicioEvaluacionIndicador
-											.buscarIndicadores(idObjetivo);
+											.buscarIndicadores(idObjetivoE);
 									lbxIndicadoresAgregados
 											.setModel(new ListModelList<EvaluacionIndicador>(
 													indicadores));
 								}
 								evaluarIndicadores();
-								idIndicador = 0;
-							}
+								
+							}//sera por esto ya te muestro
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
+		idObjetivoE = 0;
+		idIndicadorE = 0;
 		
 	}
 
-	public void eliminarObjetivo() {
+	public void eliminarObjetivo() { // este
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
 			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
 			if (listItem != null) {
 				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
 						.getValue();
-				idObjetivo = evaluacionObjetivo.getIdObjetivo();
+				evaluacionObjetivo =  listItem.getValue();
+				//porque no utilizas aqui el selected?conchale no se donde? ese cast me confundio XD
+				idObjetivoE = evaluacionObjetivo.getIdObjetivo();
+				System.out.println("idObjetivoE" + idObjetivoE);
 				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
-						.buscarIndicadores(idObjetivo);
+						.buscarIndicadores(idObjetivoE);
 				if (evaluacionIndicador.size() != 0) {
 					Messagebox
 							.show("El objetivo tiene indicadores asocioados desea eliminarlo",
@@ -916,11 +939,11 @@ public class CAgregarEvaluacion extends CGenerico {
 												throws InterruptedException {
 											if (evt.getName().equals("onOK")) {
 												List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
-														.buscarIndicadores(idObjetivo);
+														.buscarIndicadores(idObjetivoE);
 												servicioEvaluacionIndicador
 														.eliminarVarios(evaluacionIndicador);
 												servicioEvaluacionObjetivo
-														.eliminarUno(idObjetivo);
+														.eliminarUno(idObjetivoE);
 												msj.mensajeInformacion(Mensaje.eliminado);
 												lbxObjetivosGuardados
 														.getItems().clear();
@@ -930,11 +953,12 @@ public class CAgregarEvaluacion extends CGenerico {
 														.setModel(new ListModelList<EvaluacionObjetivo>(
 																objetivosG));
 											}
-											idObjetivo = 0;
+							
 										}
 									});
 				} else {
 
+					idObjetivoE = evaluacionObjetivo.getIdObjetivo();
 					Messagebox.show("Desea Eliminar el Objetivo", "Alerta",
 							Messagebox.OK | Messagebox.CANCEL,
 							Messagebox.QUESTION,
@@ -942,8 +966,9 @@ public class CAgregarEvaluacion extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
+										
 										servicioEvaluacionObjetivo
-												.eliminarUno(idObjetivo);
+												.eliminarUno(idObjetivoE);
 										msj.mensajeInformacion(Mensaje.eliminado);
 										lbxObjetivosGuardados.getItems()
 												.clear();
@@ -953,7 +978,7 @@ public class CAgregarEvaluacion extends CGenerico {
 												.setModel(new ListModelList<EvaluacionObjetivo>(
 														objetivosG));
 									}
-									idObjetivo = 0;
+									
 								}
 							});
 
@@ -962,6 +987,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
+		
 		
 	}
 

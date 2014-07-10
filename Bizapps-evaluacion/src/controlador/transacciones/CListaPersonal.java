@@ -210,6 +210,17 @@ public class CListaPersonal extends CGenerico {
 										lbxEvaluacion
 												.setModel(new ListModelList<Evaluacion>(
 														evaluacion));
+										lbxEvaluacion.renderAll();
+										for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
+											Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
+											List<Listitem> listItem2 = lbxEvaluacion.getItems();
+											Evaluacion eva = listItem2.get(j).getValue();
+											String fichaS = eva.getFichaEvaluador();
+											Empleado empleado = servicioEmpleado.buscarPorFicha(fichaS);
+											String nombre = empleado.getNombre();
+											((Label) ((listItem.getChildren().get(5))).getFirstChild())
+													.setValue(nombre);
+										}
 									} else {
 										Messagebox
 												.show("No puede Eliminar la Evaluación",

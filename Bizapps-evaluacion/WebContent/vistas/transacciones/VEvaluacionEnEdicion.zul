@@ -300,11 +300,11 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" value="0" constraint="min 0" />
+										id="txtValorResultado" value="0"  />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant"
-										value="0" constraint="min 0" mold="rounded" width="100%"
+										value="0"  mold="rounded" width="100%"
 										id="txtResFy" disabled="true" />
 								</listcell>
 								<listcell>
@@ -388,12 +388,12 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<spinner constraint="min 0"
+										<spinner  disabled= "true"
 											value="${each.valorResultado}">
 										</spinner>
 									</listcell>
 									<listcell>
-										<spinner constraint="min 0"
+										<spinner disabled= "true"
 											value="${each.resultadoFyAnterior}">
 										</spinner>
 									</listcell>

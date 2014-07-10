@@ -36,6 +36,7 @@ public class SEvaluacionObjetivo {
 	}
 	
 	public void eliminarUno(Integer id) {
+		System.out.println("I"+id);
 		evaluacionObjetivoDAO.delete(id);
 	}
 
@@ -48,5 +49,11 @@ public class SEvaluacionObjetivo {
 	public void eliminarVarios(List<EvaluacionObjetivo> evaluacionObjetivo) {
 		evaluacionObjetivoDAO.delete(evaluacionObjetivo);
 	}
+
+	public EvaluacionObjetivo buscarUltimo() {
+		Integer in = evaluacionObjetivoDAO.buscar();
+		return evaluacionObjetivoDAO.findOne(in);
+	}
+	
 	
 }
