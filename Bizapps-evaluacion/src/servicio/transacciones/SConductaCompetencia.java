@@ -9,6 +9,7 @@ import java.util.List;
 import modelo.maestros.Area;
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Dominio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,8 @@ public class SConductaCompetencia {
 		return conductaCompetenciaDAO.findByCompetencia(id);
 	}
 	
-	
+	public List<ConductaCompetencia> buscarConductaCompetenciasDominio(Competencia id,Dominio id2 ) {
+		return conductaCompetenciaDAO.findByCompetenciaAndDominio(id, id2);
+	}
 
 }

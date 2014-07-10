@@ -1,58 +1,48 @@
-<window id="wdwConductasRectoras" closable="true" apply="controlador.transacciones.CEvaluacionConductas" width="950px" border="normal" height="auto">
+<window id="wdwConductasRectoras" closable="true"
+	apply="controlador.transacciones.CEvaluacionConductas" width="950px"
+	border="normal" height="auto">
+	<groupbox>
+		<listbox id="lbxConductasRectoras" checkmark="true" 
+			height="10%" emptyMessage="No hay conductas registradas" rows="5">
+			<listhead>
+				<listheader width="5%" />
+				<listheader label="Conducta" width="60%" />
+				<listheader label="Observacion" width="35%" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell></listcell>
+					<listcell label="${each.descripcion}"></listcell>
+					<listcell>
+						<textbox width="75%" />
+					</listcell>
 
-
-		<groupbox>
-			<div >
-				<listbox id="lbxConductasRectoras"  checkmark="true" 
-				width="auto" height="auto" 
-				emptyMessage="No hay conductas registradas" rows="10">
-						<listhead>
-							<listheader width="5%" />
-							<listheader label="Conducta" width="60%" />
-							<listheader label="Observacion" width="35%" />
-						</listhead>						
-						<template name="model">
-							<listitem>
-							<listcell></listcell>
-								<listcell label="${each.descripcion}">
-								</listcell>
-								<listcell>
-									<textbox width="75%" />
-								</listcell>
-
-							</listitem>
-						</template>
-					</listbox>
-				</div>	
-					
-					
-					
-		<separator />
-		<separator />
-
-		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%">
+				</listitem>
+			</template>
+		</listbox>
+		<space></space>
+		<panel border="normal" width="100%">
 			<panelchildren>
-				
-					<separator />
-					<div sclass="btn-group" align="center">
 
-						<button id="btnGuardar" tabindex="5"
-							sclass="btn" label="Guardar"
-							image="/public/iconos/guardar.png">
-						</button>
-						<button id="btnCancelar"
-							label="Cancelar" sclass="btn" tabindex="5"
-							image="/public/iconos/limpiar.png">
-						</button>
-																				
-						<separator />											
-					</div>
+				<separator />
+				<div sclass="btn-group" align="center">
+
+					<button id="btnGuardar" tabindex="5" sclass="btn"
+						label="Guardar" image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnCancelar" label="Cancelar"
+						sclass="btn" tabindex="5"
+						image="/public/imagenes/botones/limpiar.png">
+					</button>
+
+					<separator />
+				</div>
 
 			</panelchildren>
-		</panel>		
-					<listbox id = "lbxConductasEn" disabled = "true"> </listbox>
-					
-		</groupbox>
-		
+		</panel>
+
+		<listbox id="lbxConductasEn" disabled="true"></listbox>
+
+	</groupbox>
+
 </window>

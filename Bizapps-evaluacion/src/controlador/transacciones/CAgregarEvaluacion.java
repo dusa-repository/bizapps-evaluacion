@@ -806,6 +806,7 @@ public class CAgregarEvaluacion extends CGenerico {
 							.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					String titulo = "Competencias Especificas";
+					map.put("idEva", idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
@@ -840,6 +841,8 @@ public class CAgregarEvaluacion extends CGenerico {
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
 							.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("idEva", idEva);
+					System.out.println("va"+idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);

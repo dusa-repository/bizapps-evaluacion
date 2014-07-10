@@ -7,6 +7,7 @@ import java.util.List;
 
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Dominio;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
@@ -55,7 +56,7 @@ public class CEvaluacionConductas extends CGenerico {
 	private static int idCompetencia;
 	private static int idDominio;
 	private static int numeroEvaluacion;
-	private static int idEva;
+	private static Integer idEva;
 
 	EvaluacionCompetencia evaluacionCompetencia = new EvaluacionCompetencia();
 	EvaluacionConducta evaluacionConducta = new EvaluacionConducta();
@@ -73,7 +74,8 @@ public class CEvaluacionConductas extends CGenerico {
 		if (map != null) {
 			if (map.get("id") != null) {
 				String dominio1 = (String) (map.get("idnivel"));
-				idEva = (Integer) (map.get("idEva"));
+				idEva = (Integer) map.get("idEva");
+				System.out.println("vi"+idEva);
 				idDominio = Integer.parseInt(dominio1);
 				idCompetencia = (Integer) map.get("id");
 				conductasE = (List<EvaluacionConducta>) map.get("conductas");
@@ -93,16 +95,21 @@ public class CEvaluacionConductas extends CGenerico {
 				numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
 				evaluacion = servicioEvaluacion.buscarIdEvaluacion(
 						numeroEvaluacion, ficha);
+				Dominio dominio = servicioDominio.buscarDominio(idDominio);
 				List<ConductaCompetencia> conductas = new ArrayList<ConductaCompetencia>();
 				conductas = servicioConductaCompetencia
-						.buscarConductaCompetencias(competencia);
+						.buscarConductaCompetenciasDominio(competencia,dominio);
+				
 				lbxConductasRectoras
 						.setModel(new ListModelList<ConductaCompetencia>(
 								conductas));
-				lbxConductasEn.setModel(new ListModelList<EvaluacionConducta>(
-						conductasE));
+			
+				
 				multiple();
-				System.out.println("lalala" + conductasE.size());
+			
+				if (conductasE != null){
+					lbxConductasEn.setModel(new ListModelList<EvaluacionConducta>(
+							conductasE));
 				lbxConductasRectoras.renderAll();
 				for (int i = 0; i < conductasE.size(); i++) {
 					Integer id = conductasE.get(i).getConductaCompetencia()
@@ -123,6 +130,7 @@ public class CEvaluacionConductas extends CGenerico {
 
 					}
 
+				}
 				}
 			}
 		}

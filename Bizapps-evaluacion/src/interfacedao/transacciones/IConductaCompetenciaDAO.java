@@ -4,6 +4,7 @@ import java.util.List;
 
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Dominio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -28,4 +29,7 @@ public interface IConductaCompetenciaDAO extends
 
 	public List<ConductaCompetencia> findByOrdenStartingWithAllIgnoreCase(
 			String valor);
+
+	public List<ConductaCompetencia> findByCompetenciaAndDominio(Competencia id,
+			Dominio id2);
 }
