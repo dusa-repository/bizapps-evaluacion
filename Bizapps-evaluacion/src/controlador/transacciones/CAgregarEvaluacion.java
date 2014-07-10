@@ -385,9 +385,6 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-// este es el metodo q agrega, y el eliminar?voy.. probemos de nuevo cariñito oki spero revisando la d bd en cada agregacion y eliminacion =)okis
-//		no entiendo porque en la lista agarra el item 2027
-//		menos yo :(
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -906,24 +903,23 @@ public class CAgregarEvaluacion extends CGenerico {
 								}
 								evaluarIndicadores();
 								
-							}//sera por esto ya te muestro
+							}
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
-		idObjetivoE = 0;
-		idIndicadorE = 0;
+		
 		
 	}
 
-	public void eliminarObjetivo() { // este
+	public void eliminarObjetivo() { 
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
 			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
 			if (listItem != null) {
 				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
 						.getValue();
 				evaluacionObjetivo =  listItem.getValue();
-				//porque no utilizas aqui el selected?conchale no se donde? ese cast me confundio XD
+			
 				idObjetivoE = evaluacionObjetivo.getIdObjetivo();
 				System.out.println("idObjetivoE" + idObjetivoE);
 				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador

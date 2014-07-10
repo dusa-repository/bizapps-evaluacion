@@ -119,7 +119,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso" maxlength="3"
-										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso" />
+										constraint="min 1; max 100" mold="rounded" width="100%" id="txtPeso" />
 								</listcell>
 								<listcell>
 									<textbox value="0"
@@ -192,7 +192,7 @@
 										<textbox value="${each.totalInd}" disabled = "true" visible = "false"></textbox>
 									</listcell>
 									<listcell>
-										<textbox value="${each.resultado}" disabled = "true"></textbox>
+										<textbox value="${each.resultado}" disabled = "true" inplace="true"></textbox>
 									</listcell>
 <!-- 									<listcell label="${each.peso}"></listcell> -->
 <!-- 									<listcell -->
@@ -309,7 +309,7 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso %" maxlength="3"
-										constraint="min 0; max 100" mold="rounded" width="100%" id="txtPeso1" />
+										constraint="min 1; max 100" mold="rounded" width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Valor Meta"
@@ -411,18 +411,18 @@
 									</listcell>
 									<listcell>
 										<spinner    value="${each.valorResultado}"
-										disabled= "true"></spinner>
+										disabled= "true" inplace="true"></spinner>
 									</listcell>
 									<listcell>
 										<spinner  value="${each.resultadoFyAnterior}"
-										disabled= "true"></spinner>
+										disabled= "true" inplace="true"></spinner>
 									</listcell>
 									<listcell>
-										<textbox  disabled = "true" value="${each.resultadoPorc}"/>
+										<textbox  disabled = "true" value="${each.resultadoPorc}" inplace="true"/>
 <!-- 										onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
-										<textbox disabled = "true" value="${each.resultadoPeso}"/>
+										<textbox disabled = "true" value="${each.resultadoPeso}" inplace="true"/>
 									</listcell>
 <!-- 									<listcell -->
 <!-- 										label="${each.valorResultado}"> -->
@@ -597,14 +597,6 @@
 					</grid>
 					<separator />
 					<separator />
-					<div align="right" height="100%">
-						<button id="btnGuardarCompromisos"
-							label="Agregar" image="/public/imagenes/botones/annadir.png"
-							style="height:27px">
-						</button>
-					</div>
-					<separator></separator>
-					<separator></separator>
 <!-- 					<panel border="normal" width="95%" -->
 <!-- 						style="margin-left:2%;margin-right:3%"> -->
 <!-- 						<panelchildren> -->

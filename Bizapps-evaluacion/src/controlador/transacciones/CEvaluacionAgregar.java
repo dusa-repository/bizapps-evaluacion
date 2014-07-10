@@ -183,6 +183,8 @@ public class CEvaluacionAgregar extends CGenerico {
 	private Button btnCancelarEvaluacion;
 	@Wire
 	private Button btnIr;
+	@Wire
+	private Tab tbEvaluacionObjetivos;
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -214,6 +216,9 @@ public class CEvaluacionAgregar extends CGenerico {
 	private static Double totalObjetivo = 0.0;
 	private static Double totalInd = 0.0;
 	Usuario u;
+	private static int idIndicadorE;
+	private static int idObjetivoE;
+	
 	@Override
 	public void inicializar() throws IOException {
 		revision = servicioRevision.buscarPorEstado("ACTIVO");
@@ -350,7 +355,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		eliminarIndicador();
 	}
 
-	@Listen("onClick = #cmbObjetivos")
+	@Listen("onClick = #tbIndicadores")
 	public void verObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, num);
@@ -377,6 +382,12 @@ public class CEvaluacionAgregar extends CGenerico {
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 	}
 	
+	
+	@Listen("onClick = #tbEvaluacionObjetivos")
+	public void ir() {
+		cmbObjetivos.setValue(null);
+	}
+	
 	public void limpiarIndicador() {
 		txtIndicador.setValue("");
 		txtValorMeta.setValue(null);
@@ -394,32 +405,7 @@ public class CEvaluacionAgregar extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		
-		gpxAgregados.setOpen(true);
-//		Integer numeroEvaluacion;
-//		Integer idEvaluacion;
-//		if (objetivosG.size() == 0) {
-//			idEvaluacion = servicioEvaluacion.buscarId() + 1;
-//			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size() + 1;
-//		}
-//		else{
-//			idEvaluacion = servicioEvaluacion.buscarId();
-//			numeroEvaluacion = servicioEvaluacion.buscar(fichaE).size();
-//		}
-		
-//		Evaluacion evaluacion = new Evaluacion();
-//		evaluacion.setIdEvaluacion(idEvaluacion);
-//		evaluacion.setEstadoEvaluacion("EN EDICION");
-//		evaluacion.setFechaCreacion(fechaHora);
-//		evaluacion.setFicha(fichaE);
-//		evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
-//		evaluacion.setIdUsuario(usuario);
-//		evaluacion.setRevision(revision);
-//		evaluacion.setPeso(0);
-//		evaluacion.setResultado(0);
-//		evaluacion.setResultadoObjetivos(0);
-//		evaluacion.setResultadoGeneral(0);
-//		evaluacion.setResultadoFinal(0);
-//		
+		gpxAgregados.setOpen(true);	
 		if (idObjetivo != 0) {
 			EvaluacionObjetivoActualizar();
 		} else {
@@ -446,13 +432,12 @@ public class CEvaluacionAgregar extends CGenerico {
 		objetivoLista.setCorresponsables(corresponsables);
 		ev = objetivoLista;
 		if (objetivosG.size() == 0) {
-			objetivosG.add(objetivoLista);
-			System.out.println("entroiffff");
-			lbxObjetivosGuardados
-					.setModel(new ListModelList<EvaluacionObjetivo>(
-							objetivosG));
 			servicioEvaluacionObjetivo.guardar(objetivoLista);
-
+			objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+			lbxObjetivosGuardados
+			.setModel(new ListModelList<EvaluacionObjetivo>(
+					objetivosG));
+			
 			gpxAgregar.setOpen(false);
 			Messagebox.show("Objetivos Guardados Exitosamente",
 					"Información", Messagebox.OK, Messagebox.INFORMATION);
@@ -460,10 +445,12 @@ public class CEvaluacionAgregar extends CGenerico {
 		} else {
 			objetivosG.add(objetivoLista);
 			cambiarEstado1();
+			objetivosG.remove(objetivoLista);
+			objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
 			lbxObjetivosGuardados
 					.setModel(new ListModelList<EvaluacionObjetivo>(
 							objetivosG));
-		
+
 		}
 	}
 	
@@ -570,7 +557,7 @@ public class CEvaluacionAgregar extends CGenerico {
 		}
 	}
 
-	@Listen("onClick = #btnGuardarCompromisos")
+	@Listen("onClick = #btnCambiarEstado")
 	public void guardarComportamiento() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		String compromisos = txtCompromisos.getValue();
@@ -732,7 +719,7 @@ public class CEvaluacionAgregar extends CGenerico {
 													indicadores));
 								}
 								evaluarIndicadores();
-								idIndicador = 0;
+								
 							}
 						});
 			} else
@@ -807,7 +794,7 @@ public class CEvaluacionAgregar extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
-		idObjetivo = 0;
+		
 	}
 	
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
@@ -887,6 +874,7 @@ public class CEvaluacionAgregar extends CGenerico {
 
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
+		verObjetivos();
 		tbIndicadores.setSelected(true);
 		gpxAgregados.setOpen(true);
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
@@ -1260,7 +1248,7 @@ public class CEvaluacionAgregar extends CGenerico {
 
 	}
 
-	@Listen("onClick = #btnCambiarEstado")
+	
 	public void cambiarEstado() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		validar();
