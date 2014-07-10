@@ -37,14 +37,15 @@ public class Perspectiva implements Serializable {
 	public Perspectiva() {
 	}
 
-	public Perspectiva(int idPerspectiva, String descripcion, String usuario,
-			Timestamp fechaAuditoria, String horaAuditoria) {
+	public Perspectiva(int id, String descripcion, String usuario,
+			Timestamp fechaAuditoria, String horaAuditoria, int orden) {
 		super();
-		this.id = idPerspectiva;
+		this.id = id;
 		this.descripcion = descripcion;
 		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
+		this.orden = orden;
 	}
 
 	public int getId() {
@@ -62,7 +63,7 @@ public class Perspectiva implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}

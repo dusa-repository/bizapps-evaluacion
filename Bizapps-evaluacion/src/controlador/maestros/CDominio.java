@@ -89,19 +89,21 @@ public class CDominio extends CGenerico {
 				boolean guardar = true;
 				guardar = validar();
 				if (guardar) {
-				String descripcionDominio = txtDescripcionDominio.getValue();
-				String tipo = cmbTipoDominio.getValue();
-				String comentario = txtComentarioDominio.getValue();
-				String usuario = nombreUsuarioSesion();
-				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-				Dominio dominio = new Dominio(idDominio, comentario,
-						descripcionDominio, tipo, usuario, fechaAuditoria,
-						horaAuditoria);
-				servicioDominio.guardar(dominio);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiar();
-				catalogo.actualizarLista(servicioDominio.buscarTodos());
-				abrirCatalogo();
+					String descripcionDominio = txtDescripcionDominio
+							.getValue();
+					String tipo = cmbTipoDominio.getValue();
+					String comentario = txtComentarioDominio.getValue();
+					String usuario = nombreUsuarioSesion();
+					Timestamp fechaAuditoria = new Timestamp(
+							new Date().getTime());
+					Dominio dominio = new Dominio(idDominio, comentario,
+							descripcionDominio, tipo, usuario, fechaAuditoria,
+							horaAuditoria);
+					servicioDominio.guardar(dominio);
+					msj.mensajeInformacion(Mensaje.guardado);
+					limpiar();
+					catalogo.actualizarLista(servicioDominio.buscarTodos());
+					abrirCatalogo();
 				}
 
 			}
@@ -253,10 +255,10 @@ public class CDominio extends CGenerico {
 			}
 		}
 	}
-	
+
 	public boolean camposLLenos() {
 		if (txtDescripcionDominio.getText().compareTo("") == 0
-				||cmbTipoDominio.getText().compareTo("") == 0) {
+				|| cmbTipoDominio.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -283,22 +285,20 @@ public class CDominio extends CGenerico {
 
 		final List<Dominio> listDominio = servicioDominio.buscarTodos();
 		catalogo = new Catalogo<Dominio>(catalogoDominio,
-				"Catalogo de Dominios", listDominio, "Código dominio",
-				"Descripción", "Tipo", "Comentario") {
+				"Catalogo de Dominios", listDominio, "Descripción", "Tipo",
+				"Comentario") {
 
 			@Override
 			protected List<Dominio> buscarCampos(List<String> valores) {
 				List<Dominio> lista = new ArrayList<Dominio>();
 
 				for (Dominio dominio : listDominio) {
-					if (String.valueOf(dominio.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& dominio.getDescripcionDominio().toLowerCase()
-									.startsWith(valores.get(1))
+					if (dominio.getDescripcionDominio().toLowerCase()
+									.startsWith(valores.get(0))
 							&& dominio.getTipo().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& dominio.getComentario().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.startsWith(valores.get(2))) {
 						lista.add(dominio);
 					}
 				}
@@ -308,11 +308,10 @@ public class CDominio extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Dominio dominio) {
-				String[] registros = new String[4];
-				registros[0] = String.valueOf(dominio.getId());
-				registros[1] = dominio.getDescripcionDominio();
-				registros[2] = dominio.getTipo();
-				registros[3] = dominio.getComentario();
+				String[] registros = new String[3];
+				registros[0] = dominio.getDescripcionDominio();
+				registros[1] = dominio.getTipo();
+				registros[2] = dominio.getComentario();
 
 				return registros;
 			}
@@ -320,9 +319,7 @@ public class CDominio extends CGenerico {
 			@Override
 			protected List<Dominio> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código dominio"))
-					return servicioDominio.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioDominio.filtroDescripcion(valor);
 				else if (combo.equals("Tipo"))
 					return servicioDominio.filtroTipo(valor);

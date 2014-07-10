@@ -23,7 +23,7 @@
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código Competencia:" />
+								value="Competencia:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -35,12 +35,11 @@
 						<button id="btnBuscarCompetencia" label=""
 							tooltiptext="Catalogo de codigos de competencia"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblCompetencia" />
 					</row>
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código Dominio:" />
+								value="Dominio:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -52,7 +51,6 @@
 						<button id="btnBuscarDominio" label=""
 							tooltiptext="Catalogo de codigos de dominio"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblDominio" />
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />

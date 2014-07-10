@@ -40,7 +40,7 @@
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código del Cargo:" />
+								value="Cargo:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -48,11 +48,10 @@
 						</hbox>
 						<textbox id="txtCargoNivelCompetenciaCargo"
 							tabindex="1" width="100%" maxlength="100"
-							tooltiptext="Ingrese el codigo del cargo" />
+							tooltiptext="Ingrese el nombre del cargo" />
 						<button id="btnBuscarCargo" label=""
 							tooltiptext="Catalogo de codigos de cargo"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblCargoNivelCompetencia" />
 					</row>
 				</rows>
 			</grid>
@@ -63,7 +62,7 @@
 				pageSize="7" oddRowSclass="non-odd"
 				emptyMessage="No ha seleccionado el cargo">
 				<listhead>
-					<listheader label="Código competencia" width="15%" />
+					<listheader label="Código competencia" width="15%"/>
 					<listheader label="Descripción" width="20%" />
 					<listheader label="Nivel" width="13%" />
 					<listheader label="Comentario" />

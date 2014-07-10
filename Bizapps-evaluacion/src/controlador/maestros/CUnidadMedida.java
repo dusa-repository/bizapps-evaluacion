@@ -272,17 +272,15 @@ public class CUnidadMedida extends CGenerico {
 				.buscarTodas();
 		catalogo = new Catalogo<UnidadMedida>(catalogoUnidadMedida,
 				"Catalogo de Unidades de Medidas", listUnidadMedida,
-				"Código Unidad Medida", "Descripción") {
+				"Descripción") {
 
 			@Override
 			protected List<UnidadMedida> buscarCampos(List<String> valores) {
 				List<UnidadMedida> lista = new ArrayList<UnidadMedida>();
 
 				for (UnidadMedida unidadMedida : listUnidadMedida) {
-					if (String.valueOf(unidadMedida.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& unidadMedida.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (unidadMedida.getDescripcion().toLowerCase()
+									.startsWith(valores.get(0))) {
 						lista.add(unidadMedida);
 					}
 				}
@@ -292,9 +290,8 @@ public class CUnidadMedida extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(UnidadMedida unidadMedida) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(unidadMedida.getId());
-				registros[1] = unidadMedida.getDescripcion();
+				String[] registros = new String[1];
+				registros[0] = unidadMedida.getDescripcion();
 
 				return registros;
 			}
@@ -302,9 +299,7 @@ public class CUnidadMedida extends CGenerico {
 			@Override
 			protected List<UnidadMedida> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Unidad Medida"))
-					return servicioUnidadMedida.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioUnidadMedida.filtroDescripcion(valor);
 				else
 					return servicioUnidadMedida.buscarTodas();

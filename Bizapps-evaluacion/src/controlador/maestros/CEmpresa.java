@@ -296,27 +296,24 @@ public class CEmpresa extends CGenerico {
 
 		final List<Empresa> listEmpresa = servicioEmpresa.buscarTodas();
 		catalogo = new Catalogo<Empresa>(catalogoEmpresa,
-				"Catalogo de Empresas", listEmpresa, "Código empresa",
-				"Nombre", "Dirección", "Teléfono 1", "Teléfono 2",
-				"Empresa Auxiliar") {
+				"Catalogo de Empresas", listEmpresa, "Nombre", "Dirección",
+				"Teléfono 1", "Teléfono 2", "Empresa Auxiliar") {
 
 			@Override
 			protected List<Empresa> buscarCampos(List<String> valores) {
 				List<Empresa> lista = new ArrayList<Empresa>();
 
 				for (Empresa empresa : listEmpresa) {
-					if (String.valueOf(empresa.getId()).toLowerCase()
+					if (empresa.getNombre().toLowerCase()
 							.startsWith(valores.get(0))
-							&& empresa.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
 							&& empresa.getDireccion().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& empresa.getTelefono1().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(2))
 							&& empresa.getTelefono2().toLowerCase()
-									.startsWith(valores.get(4))
+									.startsWith(valores.get(3))
 							&& empresa.getIdEmpresaAuxiliar().toLowerCase()
-									.startsWith(valores.get(5))) {
+									.startsWith(valores.get(4))) {
 						lista.add(empresa);
 					}
 				}
@@ -326,13 +323,12 @@ public class CEmpresa extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Empresa empresa) {
-				String[] registros = new String[6];
-				registros[0] = String.valueOf(empresa.getId());
-				registros[1] = empresa.getNombre();
-				registros[2] = empresa.getDireccion();
-				registros[3] = empresa.getTelefono1();
-				registros[4] = empresa.getTelefono2();
-				registros[5] = empresa.getIdEmpresaAuxiliar();
+				String[] registros = new String[5];
+				registros[0] = empresa.getNombre();
+				registros[1] = empresa.getDireccion();
+				registros[2] = empresa.getTelefono1();
+				registros[3] = empresa.getTelefono2();
+				registros[4] = empresa.getIdEmpresaAuxiliar();
 
 				return registros;
 			}
@@ -340,9 +336,7 @@ public class CEmpresa extends CGenerico {
 			@Override
 			protected List<Empresa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código empresa"))
-					return servicioEmpresa.filtroId(valor);
-				else if (combo.equals("Nombre"))
+				if (combo.equals("Nombre"))
 					return servicioEmpresa.filtroNombre(valor);
 				else if (combo.equals("Dirección"))
 					return servicioEmpresa.filtroDireccion(valor);

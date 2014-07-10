@@ -268,18 +268,15 @@ public class CGerencia extends CGenerico {
 
 		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
 		catalogo = new Catalogo<Gerencia>(catalogoGerencia,
-				"Catalogo de Gerencias", listGerencia, "Código gerencia",
-				"Descripción") {
+				"Catalogo de Gerencias", listGerencia, "Descripción") {
 
 			@Override
 			protected List<Gerencia> buscarCampos(List<String> valores) {
 				List<Gerencia> lista = new ArrayList<Gerencia>();
 
 				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& gerencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (gerencia.getDescripcion().toLowerCase()
+									.startsWith(valores.get(0))) {
 						lista.add(gerencia);
 					}
 				}
@@ -289,9 +286,8 @@ public class CGerencia extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Gerencia gerencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getId());
-				registros[1] = gerencia.getDescripcion();
+				String[] registros = new String[1];
+				registros[0] = gerencia.getDescripcion();
 
 				return registros;
 			}
@@ -299,9 +295,7 @@ public class CGerencia extends CGenerico {
 			@Override
 			protected List<Gerencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código gerencia"))
-					return servicioGerencia.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioGerencia.filtroDescripcion(valor);
 				else
 					return servicioGerencia.buscarTodas();

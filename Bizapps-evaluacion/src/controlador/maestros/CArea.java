@@ -44,8 +44,6 @@ public class CArea extends CGenerico {
 	@Wire
 	private Button btnBuscarTipoFormacion;
 	@Wire
-	private Label lblTipoFormacionArea;
-	@Wire
 	private Groupbox gpxDatosArea;
 	@Wire
 	private Div catalogoArea;
@@ -54,6 +52,7 @@ public class CArea extends CGenerico {
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	private int idArea = 0;
+	private int idTipoFormacion = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
@@ -77,9 +76,8 @@ public class CArea extends CGenerico {
 						abrirRegistro();
 						Area area = catalogo.objetoSeleccionadoDelCatalogo();
 						idArea = area.getId();
-						txtTipoFormacionArea.setValue(String.valueOf(area
-								.getTipoFormacion().getId()));
-						lblTipoFormacionArea.setValue(area.getTipoFormacion()
+						idTipoFormacion = area.getTipoFormacion().getId();
+						txtTipoFormacionArea.setValue(area.getTipoFormacion()
 								.getDescripcion());
 						txtDescripcionArea.setValue(area.getDescripcion());
 						txtTipoFormacionArea.setFocus(true);
@@ -101,8 +99,7 @@ public class CArea extends CGenerico {
 					Timestamp fechaAuditoria = new Timestamp(
 							new Date().getTime());
 					TipoFormacion tipoFormacion = servicioTipoFormacion
-							.buscarTipoFormacion(Integer
-									.valueOf(txtTipoFormacionArea.getValue()));
+							.buscarTipoFormacion(idTipoFormacion);
 					if (tipoFormacion != null) {
 						Area area = new Area(idArea, descripcion, usuario,
 								fechaAuditoria, horaAuditoria, tipoFormacion);
@@ -200,9 +197,9 @@ public class CArea extends CGenerico {
 
 	public void limpiarCampos() {
 		idArea = 0;
+		idTipoFormacion = 0;
 		txtDescripcionArea.setValue("");
 		txtTipoFormacionArea.setValue("");
-		lblTipoFormacionArea.setValue("");
 		catalogo.limpiarSeleccion();
 		txtTipoFormacionArea.setFocus(true);
 
@@ -296,22 +293,17 @@ public class CArea extends CGenerico {
 
 		final List<Area> listArea = servicioArea.buscarTodas();
 		catalogo = new Catalogo<Area>(catalogoArea, "Catalogo de Areas",
-				listArea, "Código Área", "Código Tipo Formción",
-				"Tipo de Formación", "Descripción") {
+				listArea, "Tipo de Formación", "Descripción") {
 
 			@Override
 			protected List<Area> buscarCampos(List<String> valores) {
 				List<Area> lista = new ArrayList<Area>();
 
 				for (Area area : listArea) {
-					if (String.valueOf(area.getId()).toLowerCase()
+					if (area.getTipoFormacion().getDescripcion().toLowerCase()
 							.startsWith(valores.get(0))
-							&& String.valueOf(area.getTipoFormacion().getId())
-									.toLowerCase().startsWith(valores.get(1))
-							&& area.getTipoFormacion().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2))
 							&& area.getDescripcion().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.startsWith(valores.get(1))) {
 						lista.add(area);
 					}
 				}
@@ -321,11 +313,9 @@ public class CArea extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Area area) {
-				String[] registros = new String[4];
-				registros[0] = String.valueOf(area.getId());
-				registros[1] = String.valueOf(area.getTipoFormacion().getId());
-				registros[2] = area.getTipoFormacion().getDescripcion();
-				registros[3] = area.getDescripcion();
+				String[] registros = new String[2];
+				registros[0] = area.getTipoFormacion().getDescripcion();
+				registros[1] = area.getDescripcion();
 
 				return registros;
 			}
@@ -333,10 +323,6 @@ public class CArea extends CGenerico {
 			@Override
 			protected List<Area> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Área"))
-					return servicioArea.filtroId(valor);
-				if (combo.equals("Código Tipo Formción"))
-					return servicioArea.filtroTipoFormacion(valor);
 				if (combo.equals("Tipo de Formación"))
 					return servicioArea.filtroTipoFormacion(valor);
 				else if (combo.equals("Descripción"))
@@ -349,24 +335,22 @@ public class CArea extends CGenerico {
 		catalogo.setParent(catalogoArea);
 
 	}
-	
+
 	@Listen("onClick = #btnBuscarTipoFormacion")
 	public void mostrarCatalogoTipoFormacion() {
 		final List<TipoFormacion> listTipoFormacion = servicioTipoFormacion
 				.buscarTodos();
-		catalogoTipoFormacion = new Catalogo<TipoFormacion>(divCatalogoTipoFormacion,
-				"Catalogo de Tipos de Formacion", listTipoFormacion,
-				"Código Tipo Formación", "Descripción") {
+		catalogoTipoFormacion = new Catalogo<TipoFormacion>(
+				divCatalogoTipoFormacion, "Catalogo de Tipos de Formacion",
+				listTipoFormacion, "Descripción") {
 
 			@Override
 			protected List<TipoFormacion> buscarCampos(List<String> valores) {
 				List<TipoFormacion> lista = new ArrayList<TipoFormacion>();
 
 				for (TipoFormacion tipoFormacion : listTipoFormacion) {
-					if (String.valueOf(tipoFormacion.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& tipoFormacion.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (tipoFormacion.getDescripcion().toLowerCase()
+							.startsWith(valores.get(0))) {
 						lista.add(tipoFormacion);
 					}
 				}
@@ -376,9 +360,8 @@ public class CArea extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(TipoFormacion tipoFormacion) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(tipoFormacion.getId());
-				registros[1] = tipoFormacion.getDescripcion();
+				String[] registros = new String[1];
+				registros[0] = tipoFormacion.getDescripcion();
 
 				return registros;
 			}
@@ -386,9 +369,7 @@ public class CArea extends CGenerico {
 			@Override
 			protected List<TipoFormacion> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Tipo Formación"))
-					return servicioTipoFormacion.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioTipoFormacion.filtroDescripcion(valor);
 				else
 					return servicioTipoFormacion.buscarTodos();
@@ -404,21 +385,24 @@ public class CArea extends CGenerico {
 
 	@Listen("onSeleccion = #divCatalogoTipoFormacion")
 	public void seleccionTipoFormacion() {
-		TipoFormacion tipoFormacion = catalogoTipoFormacion.objetoSeleccionadoDelCatalogo();
-		txtTipoFormacionArea
-				.setValue(String.valueOf(tipoFormacion.getId()));
-		lblTipoFormacionArea.setValue(tipoFormacion.getDescripcion());
+		TipoFormacion tipoFormacion = catalogoTipoFormacion
+				.objetoSeleccionadoDelCatalogo();
+		idTipoFormacion = tipoFormacion.getId();
+		txtTipoFormacionArea.setValue(tipoFormacion.getDescripcion());
 		catalogoTipoFormacion.setParent(null);
 	}
 
 	@Listen("onChange = #txtTipoFormacionArea")
 	public void buscarTipoFormacion() {
-		TipoFormacion tipoFormacion = servicioTipoFormacion.buscarTipoFormacion(Integer
-				.valueOf(txtTipoFormacionArea.getValue()));
-				
-		if (tipoFormacion == null) {
+		List<TipoFormacion> tipos = servicioTipoFormacion
+				.buscarPorNombres(txtTipoFormacionArea.getValue());
+
+		if (tipos.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoTipoFormacion);
 			txtTipoFormacionArea.setFocus(true);
+		} else {
+
+			idTipoFormacion = tipos.get(0).getId();
 		}
 
 	}

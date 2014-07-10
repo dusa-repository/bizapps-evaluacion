@@ -42,11 +42,11 @@ public class CValoracion extends CGenerico {
 	@Wire
 	private Spinner spnOrdenValoracion;
 	@Wire
-	private Textbox txtRangoInferiorValoracion;
+	private Spinner spnRangoInferiorValoracion;
 	@Wire
-	private Textbox txtRangoSuperiorValoracion;
+	private Spinner spnRangoSuperiorValoracion;
 	@Wire
-	private Textbox txtValorValoracion;
+	private Spinner spnValorValoracion;
 	@Wire
 	private Groupbox gpxDatosValoracion;
 	@Wire
@@ -81,12 +81,11 @@ public class CValoracion extends CGenerico {
 						txtDescripcionValoracion.setValue(valoracion
 								.getDescripcion());
 						spnOrdenValoracion.setValue(valoracion.getOrden());
-						txtRangoInferiorValoracion.setValue(String
-								.valueOf(valoracion.getRangoInferior()));
-						txtRangoSuperiorValoracion.setValue(String
-								.valueOf(valoracion.getRangoSuperior()));
-						txtValorValoracion.setValue(String.valueOf(valoracion
-								.getValor()));
+						spnRangoInferiorValoracion.setValue(valoracion
+								.getRangoInferior());
+						spnRangoSuperiorValoracion.setValue(valoracion
+								.getRangoSuperior());
+						spnValorValoracion.setValue(valoracion.getValor());
 						txtNombreValoracion.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -103,12 +102,10 @@ public class CValoracion extends CGenerico {
 				if (guardar) {
 					String nombre = txtNombreValoracion.getValue();
 					String descripcion = txtDescripcionValoracion.getValue();
-					int orden = Integer.valueOf(spnOrdenValoracion.getValue());
-					int rangoInferior = Integer
-							.valueOf(txtRangoInferiorValoracion.getValue());
-					int rangoSuperior = Integer
-							.valueOf(txtRangoSuperiorValoracion.getValue());
-					int valor = Integer.valueOf(txtValorValoracion.getValue());
+					int orden = spnOrdenValoracion.getValue();
+					int rangoInferior = spnRangoInferiorValoracion.getValue();
+					int rangoSuperior = spnRangoSuperiorValoracion.getValue();
+					int valor = spnValorValoracion.getValue();
 					String usuario = nombreUsuarioSesion();
 					Timestamp fechaAuditoria = new Timestamp(
 							new Date().getTime());
@@ -207,18 +204,9 @@ public class CValoracion extends CGenerico {
 		txtNombreValoracion.setValue("");
 		txtDescripcionValoracion.setValue("");
 		spnOrdenValoracion.setValue(null);
-		txtRangoInferiorValoracion.setConstraint("");
-		txtRangoInferiorValoracion.setValue("");
-		txtRangoInferiorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango inferior de la valoración debe ser numérico");
-		txtRangoSuperiorValoracion.setConstraint("");
-		txtRangoSuperiorValoracion.setValue("");
-		txtRangoSuperiorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango superior de la valoración debe ser numérico");
-		txtValorValoracion.setConstraint("");
-		txtValorValoracion.setValue("");
-		txtValorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El valor de la valoración debe ser numérico");
+		spnRangoInferiorValoracion.setValue(null);
+		spnRangoSuperiorValoracion.setValue(null);
+		spnValorValoracion.setValue(null);
 		catalogo.limpiarSeleccion();
 		txtNombreValoracion.setFocus(true);
 
@@ -228,9 +216,9 @@ public class CValoracion extends CGenerico {
 		if (txtNombreValoracion.getText().compareTo("") != 0
 				|| txtDescripcionValoracion.getText().compareTo("") != 0
 				|| spnOrdenValoracion.getText().compareTo("") != 0
-				|| txtRangoInferiorValoracion.getText().compareTo("") != 0
-				|| txtRangoSuperiorValoracion.getText().compareTo("") != 0
-				|| txtValorValoracion.getText().compareTo("") != 0) {
+				|| spnRangoInferiorValoracion.getText().compareTo("") != 0
+				|| spnRangoSuperiorValoracion.getText().compareTo("") != 0
+				|| spnValorValoracion.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -240,24 +228,12 @@ public class CValoracion extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosValoracion.setOpen(false);
 		gpxRegistroValoracion.setOpen(true);
-		txtRangoInferiorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango inferior de la valoración debe ser numérico");
-		txtRangoSuperiorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El rango superior de la valoración debe ser numérico");
-		txtValorValoracion
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El valor de la valoración debe ser numérico");
 		mostrarBotones(false);
 
 	}
 
 	@Listen("onOpen = #gpxDatosValoracion")
 	public void abrirCatalogo() {
-		txtRangoInferiorValoracion.setConstraint("");
-		txtRangoInferiorValoracion.setValue("");
-		txtRangoSuperiorValoracion.setConstraint("");
-		txtRangoSuperiorValoracion.setValue("");
-		txtValorValoracion.setConstraint("");
-		txtValorValoracion.setValue("");
 		gpxDatosValoracion.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -329,29 +305,27 @@ public class CValoracion extends CGenerico {
 		final List<Valoracion> listValoracion = servicioValoracion
 				.buscarTodas();
 		catalogo = new Catalogo<Valoracion>(catalogoValoracion,
-				"Catalogo de Valoraciones", listValoracion,
-				"Código valoración", "Nombre", "Descripción", "Orden",
-				"Rango inferior", "Rango superior", "Valor") {
+				"Catalogo de Valoraciones", listValoracion, "Nombre",
+				"Descripción", "Orden", "Rango inferior", "Rango superior",
+				"Valor") {
 
 			@Override
 			protected List<Valoracion> buscarCampos(List<String> valores) {
 				List<Valoracion> lista = new ArrayList<Valoracion>();
 
 				for (Valoracion valoracion : listValoracion) {
-					if (String.valueOf(valoracion.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& valoracion.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
+					if (valoracion.getNombre().toLowerCase()
+									.startsWith(valores.get(0))
 							&& valoracion.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& String.valueOf(valoracion.getOrden())
-									.toLowerCase().startsWith(valores.get(3))
+									.toLowerCase().startsWith(valores.get(2))
 							&& String.valueOf(valoracion.getRangoInferior())
-									.toLowerCase().startsWith(valores.get(4))
+									.toLowerCase().startsWith(valores.get(3))
 							&& String.valueOf(valoracion.getRangoSuperior())
-									.toLowerCase().startsWith(valores.get(5))
+									.toLowerCase().startsWith(valores.get(4))
 							&& String.valueOf(valoracion.getValor())
-									.toLowerCase().startsWith(valores.get(6))) {
+									.toLowerCase().startsWith(valores.get(5))) {
 						lista.add(valoracion);
 					}
 				}
@@ -361,14 +335,13 @@ public class CValoracion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Valoracion valoracion) {
-				String[] registros = new String[7];
-				registros[0] = String.valueOf(valoracion.getId());
-				registros[1] = valoracion.getNombre();
-				registros[2] = valoracion.getDescripcion();
-				registros[3] = String.valueOf(valoracion.getOrden());
-				registros[4] = String.valueOf(valoracion.getRangoInferior());
-				registros[5] = String.valueOf(valoracion.getRangoSuperior());
-				registros[6] = String.valueOf(valoracion.getValor());
+				String[] registros = new String[6];
+				registros[0] = valoracion.getNombre();
+				registros[1] = valoracion.getDescripcion();
+				registros[2] = String.valueOf(valoracion.getOrden());
+				registros[3] = String.valueOf(valoracion.getRangoInferior());
+				registros[4] = String.valueOf(valoracion.getRangoSuperior());
+				registros[5] = String.valueOf(valoracion.getValor());
 
 				return registros;
 			}
@@ -376,8 +349,6 @@ public class CValoracion extends CGenerico {
 			@Override
 			protected List<Valoracion> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código valoración"))
-					return servicioValoracion.filtroId(valor);
 				if (combo.equals("Nombre"))
 					return servicioValoracion.filtroNombre(valor);
 				else if (combo.equals("Descripción"))

@@ -276,17 +276,15 @@ public class CTipoFormacion extends CGenerico {
 				.buscarTodos();
 		catalogo = new Catalogo<TipoFormacion>(catalogoTipoFormacion,
 				"Catalogo de Tipos de Formacion", listTipoFormacion,
-				"Código Tipo Formación", "Descripción") {
+				"Descripción") {
 
 			@Override
 			protected List<TipoFormacion> buscarCampos(List<String> valores) {
 				List<TipoFormacion> lista = new ArrayList<TipoFormacion>();
 
 				for (TipoFormacion tipoFormacion : listTipoFormacion) {
-					if (String.valueOf(tipoFormacion.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& tipoFormacion.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (tipoFormacion.getDescripcion().toLowerCase()
+							.startsWith(valores.get(0))) {
 						lista.add(tipoFormacion);
 					}
 				}
@@ -296,9 +294,8 @@ public class CTipoFormacion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(TipoFormacion tipoFormacion) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(tipoFormacion.getId());
-				registros[1] = tipoFormacion.getDescripcion();
+				String[] registros = new String[1];
+				registros[0] = tipoFormacion.getDescripcion();
 
 				return registros;
 			}
@@ -306,9 +303,7 @@ public class CTipoFormacion extends CGenerico {
 			@Override
 			protected List<TipoFormacion> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Tipo Formación"))
-					return servicioTipoFormacion.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioTipoFormacion.filtroDescripcion(valor);
 				else
 					return servicioTipoFormacion.buscarTodos();
@@ -318,6 +313,5 @@ public class CTipoFormacion extends CGenerico {
 		catalogo.setParent(catalogoTipoFormacion);
 
 	}
-
 
 }

@@ -7,6 +7,7 @@ import interfacedao.maestros.IEmpleadoDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.seguridad.Arbol;
@@ -131,6 +132,14 @@ public class SEmpleado {
 	public List<Empleado> filtroFichaSupervisor(String valor) {
 		return empleadoDAO.findByFichaSupervisorStartingWithAllIgnoreCase(valor);
 	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Empleado> buscarPorNombres(String descripcion) {
+		List<Empleado> empleado;
+		empleado = empleadoDAO.findByNombreAllIgnoreCase(descripcion);
+		return empleado;
+	}
+
 	
 		
 

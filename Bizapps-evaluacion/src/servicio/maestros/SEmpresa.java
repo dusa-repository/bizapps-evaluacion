@@ -5,6 +5,7 @@ import interfacedao.maestros.IEmpresaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empresa;
 
@@ -98,6 +99,14 @@ public class SEmpresa {
 	public List<Empresa> filtroEmpresaAuxiliar(String valor) {
 		return empresaDAO.findByIdEmpresaAuxiliarStartingWithAllIgnoreCase(valor);
 	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Empresa> buscarPorNombres(String nombre) {
+		List<Empresa> empresa;
+		empresa = empresaDAO.findByNombreAllIgnoreCase(nombre);
+		return empresa;
+	}
+
 
 
 

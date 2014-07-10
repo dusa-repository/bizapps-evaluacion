@@ -62,4 +62,13 @@ public class SPerspectiva {
 	}
 	
 	
+	/*
+	 * Servicio que permite filtrar las perspectivas de una lista de acuerdo al
+	 * orden
+	 */
+	public List<Perspectiva> filtroOrden(String valor) {
+		return perspectivaDAO.findByOrdenStartingWithAllIgnoreCase(valor);
+	}
+	
+	
 }

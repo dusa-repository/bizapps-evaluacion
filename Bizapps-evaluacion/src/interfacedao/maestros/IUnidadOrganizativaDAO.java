@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IUnidadOrganizativaDAO extends JpaRepository<UnidadOrganizativa, Integer> {
 
-	UnidadOrganizativa findByDescripcion(String descripcion);
-
 	public List<UnidadOrganizativa> findByIdStartingWithAllIgnoreCase(String valor);
 
 	public List<UnidadOrganizativa> findByGerenciaStartingWithAllIgnoreCase(
@@ -30,6 +28,11 @@ public interface IUnidadOrganizativaDAO extends JpaRepository<UnidadOrganizativa
 
 	public List<UnidadOrganizativa> findByIdUnidadOrganizativaAuxiliarStartingWithAllIgnoreCase(
 			String valor);
+
+	public UnidadOrganizativa findByDescripcion(String descripcion);
+
+	public List<UnidadOrganizativa> findByDescripcionAllIgnoreCase(
+			String descripcion);
 
 	
 

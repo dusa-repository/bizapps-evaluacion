@@ -21,8 +21,7 @@
 				<rows>
 					<row>
 						<hbox>
-							<label class="etiqueta"
-								value="Código Empresa:" />
+							<label class="etiqueta" value="Empresa:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -34,12 +33,10 @@
 						<button id="btnBuscarEmpresa" label=""
 							tooltiptext="Catalogo de codigos de empresas"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblEmpresaEmpleado" />
 					</row>
 					<row>
 						<hbox>
-							<label class="etiqueta"
-								value="Código Cargo:" />
+							<label class="etiqueta" value="Cargo:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -51,12 +48,11 @@
 						<button id="btnBuscarCargo" label=""
 							tooltiptext="Catalogo de codigos de cargos"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblCargoEmpleado" />
 					</row>
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código Unidad Organizativa:" />
+								value="Unidad Organizativa:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -68,7 +64,6 @@
 						<button id="btnBuscarUnidad" label=""
 							tooltiptext="Catalogo de codigos de cargos"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblUnidadEmpleado" />
 					</row>
 					<row>
 						<label value="Nombre:" class="etiqueta" />
@@ -100,13 +95,13 @@
 						<button id="btnBuscarSupervisor" label=""
 							tooltiptext="Catalogo de codigos de empleados"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblSupervisorEmpleado" />
 					</row>
 					<row>
 						<label value="Grado Auxiliar:" class="etiqueta" />
 
-						<textbox id="txtGradoAuxiliarEmpleado"
-							tabindex="7" width="100%" maxlength="100"
+						<spinner id="spnGradoAuxiliarEmpleado"
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="7"
 							tooltiptext="Ingrese aqui el grado auxiliar del empleado" />
 					</row>
 				</rows>

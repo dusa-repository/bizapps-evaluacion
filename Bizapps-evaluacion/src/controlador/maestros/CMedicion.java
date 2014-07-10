@@ -271,18 +271,15 @@ public class CMedicion extends CGenerico {
 
 		final List<Medicion> listMedicion = servicioMedicion.buscarTodas();
 		catalogo = new Catalogo<Medicion>(catalogoMedicion,
-				"Catalogo de Mediciones", listMedicion, "Código medición",
-				"Descripción") {
+				"Catalogo de Mediciones", listMedicion, "Descripción") {
 
 			@Override
 			protected List<Medicion> buscarCampos(List<String> valores) {
 				List<Medicion> lista = new ArrayList<Medicion>();
 
 				for (Medicion medicion : listMedicion) {
-					if (String.valueOf(medicion.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& medicion.getDescripcionMedicion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (medicion.getDescripcionMedicion().toLowerCase()
+									.startsWith(valores.get(0))) {
 						lista.add(medicion);
 					}
 				}
@@ -292,9 +289,8 @@ public class CMedicion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Medicion medicion) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(medicion.getId());
-				registros[1] = medicion.getDescripcionMedicion();
+				String[] registros = new String[1];
+				registros[0] = medicion.getDescripcionMedicion();
 
 				return registros;
 			}
@@ -302,9 +298,7 @@ public class CMedicion extends CGenerico {
 			@Override
 			protected List<Medicion> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código medición"))
-					return servicioMedicion.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioMedicion.filtroDescripcion(valor);
 				else
 					return servicioMedicion.buscarTodas();

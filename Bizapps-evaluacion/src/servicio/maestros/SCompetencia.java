@@ -4,6 +4,7 @@ import interfacedao.maestros.ICompetenciaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class SCompetencia {
 	/* Servicio que permite eliminar una competencia */
 	public void eliminarUnaCompetencia(int id) {
 		competenciaDAO.delete(id);
+	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public Competencia buscarPorNombre(String descripcion) {
+		Competencia competencia;
+		competencia = competenciaDAO.findByDescripcion(descripcion);
+		return competencia;
 	}
 
 	/* Servicio que permite eliminar varias competencias */
@@ -76,6 +84,14 @@ public class SCompetencia {
 	 */
 	public List<Competencia> filtroComentario(String valor) {
 		return competenciaDAO.findByComentarioStartingWithAllIgnoreCase(valor);
+	}
+	
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Competencia> buscarPorNombres(String descripcion) {
+		List<Competencia> competencia;
+		competencia = competenciaDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return competencia;
 	}
 
 }

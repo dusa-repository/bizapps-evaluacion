@@ -22,6 +22,8 @@ public interface IDominioDAO extends JpaRepository<Dominio, Integer> {
 
 	public List<Dominio> findByComentarioStartingWithAllIgnoreCase(String valor);
 
+	public List<Dominio> findByDescripcionDominioAllIgnoreCase(String descripcion);
+
 
 	
 }

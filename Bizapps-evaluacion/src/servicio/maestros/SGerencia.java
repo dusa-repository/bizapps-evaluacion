@@ -4,6 +4,7 @@ import interfacedao.maestros.IGerenciaDAO;
 
 import java.util.List;
 
+import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
 import modelo.maestros.Gerencia;
 
@@ -62,6 +63,13 @@ public class SGerencia {
 	 */
 	public List<Gerencia> filtroDescripcion(String valor) {
 		return gerenciaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Gerencia> buscarPorNombres(String descripcion) {
+		List<Gerencia> gerencias;
+		gerencias = gerenciaDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return gerencias;
 	}
 
 	

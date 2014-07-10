@@ -21,7 +21,7 @@
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código Tipo de Formación:" />
+								value="Tipo de Formación:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -33,7 +33,6 @@
 						<button id="btnBuscarTipoFormacion" label=""
 							tooltiptext="Catalogo de codigos de tipo de formacion"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblTipoFormacionArea" />
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />

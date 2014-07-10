@@ -6,6 +6,7 @@ import interfacedao.maestros.ITipoFormacionDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
 import modelo.maestros.TipoFormacion;
 
@@ -65,6 +66,13 @@ public class STipoFormacion {
 	 */
 	public List<TipoFormacion> filtroDescripcion(String valor) {
 		return tipoFormacionDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
+	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<TipoFormacion> buscarPorNombres(String descripcion) {
+		List<TipoFormacion> tipos;
+		tipos = tipoFormacionDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return tipos;
 	}
 	
 	

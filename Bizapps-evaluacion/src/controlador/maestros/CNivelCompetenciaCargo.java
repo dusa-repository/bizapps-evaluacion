@@ -51,8 +51,6 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Wire
 	private Button btnBuscarCargo;
 	@Wire
-	private Label lblCargoNivelCompetencia;
-	@Wire
 	private Listbox lsbCompetencia;
 	@Wire
 	private Div divCatalogoCargo;
@@ -82,24 +80,22 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	public void mostrarCatalogoCargo() {
 		final List<Cargo> listCargo = servicioCargo.buscarTodos();
 		catalogoCargo = new Catalogo<Cargo>(divCatalogoCargo,
-				"Catalogo de Cargos", listCargo, "Código cargo", "Descripción",
-				"Nómina", "Cargo Auxiliar", "Empresa Auxiliar") {
+				"Catalogo de Cargos", listCargo, "Descripción", "Nómina",
+				"Cargo Auxiliar", "Empresa Auxiliar") {
 
 			@Override
 			protected List<Cargo> buscarCampos(List<String> valores) {
 				List<Cargo> lista = new ArrayList<Cargo>();
 
 				for (Cargo cargo : listCargo) {
-					if (String.valueOf(cargo.getId()).toLowerCase()
+					if (cargo.getDescripcion().toLowerCase()
 							.startsWith(valores.get(0))
-							&& cargo.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))
 							&& cargo.getNomina().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& cargo.getIdCargoAuxiliar().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(2))
 							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
-									.startsWith(valores.get(4))) {
+									.startsWith(valores.get(3))) {
 						lista.add(cargo);
 					}
 				}
@@ -109,12 +105,11 @@ public class CNivelCompetenciaCargo extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Cargo cargo) {
-				String[] registros = new String[5];
-				registros[0] = String.valueOf(cargo.getId());
-				registros[1] = cargo.getDescripcion();
-				registros[2] = cargo.getNomina();
-				registros[3] = cargo.getIdCargoAuxiliar();
-				registros[4] = cargo.getIdEmpresaAuxiliar();
+				String[] registros = new String[4];
+				registros[0] = cargo.getDescripcion();
+				registros[1] = cargo.getNomina();
+				registros[2] = cargo.getIdCargoAuxiliar();
+				registros[3] = cargo.getIdEmpresaAuxiliar();
 
 				return registros;
 			}
@@ -122,9 +117,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 			@Override
 			protected List<Cargo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código cargo"))
-					return servicioCargo.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioCargo.filtroDescripcion(valor);
 				else if (combo.equals("Nómina"))
 					return servicioCargo.filtroNomina(valor);
@@ -147,8 +140,8 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoCargo")
 	public void seleccionCargo() {
 		Cargo cargo = catalogoCargo.objetoSeleccionadoDelCatalogo();
-		txtCargoNivelCompetenciaCargo.setValue(String.valueOf(cargo.getId()));
-		lblCargoNivelCompetencia.setValue(cargo.getDescripcion());
+		idCargo = cargo.getId();
+		txtCargoNivelCompetenciaCargo.setValue(cargo.getDescripcion());
 		idCargo = cargo.getId();
 		catalogoCargo.setParent(null);
 		llenarLista();
@@ -156,15 +149,14 @@ public class CNivelCompetenciaCargo extends CGenerico {
 
 	@Listen("onChange = #txtCargoNivelCompetenciaCargo")
 	public void buscarCargo() {
-		Cargo cargo = servicioCargo.buscarCargo(Integer
-				.valueOf(txtCargoNivelCompetenciaCargo.getValue()));
+		List<Cargo> cargos = servicioCargo
+				.buscarPorNombres(txtCargoNivelCompetenciaCargo.getValue());
 
-		if (cargo == null) {
+		if (cargos.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoCargo);
 			txtCargoNivelCompetenciaCargo.setFocus(true);
 		} else {
-			idCargo = cargo.getId();
-			lblCargoNivelCompetencia.setValue(cargo.getDescripcion());
+			idCargo = cargos.get(0).getId();
 			llenarLista();
 		}
 
@@ -175,7 +167,6 @@ public class CNivelCompetenciaCargo extends CGenerico {
 
 		idCargo = 0;
 		txtCargoNivelCompetenciaCargo.setValue("");
-		lblCargoNivelCompetencia.setValue("");
 		lsbCompetencia.setModel(new ListModelList<Competencia>());
 		txtCargoNivelCompetenciaCargo.setFocus(true);
 	}

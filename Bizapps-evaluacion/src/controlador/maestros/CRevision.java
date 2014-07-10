@@ -45,8 +45,6 @@ public class CRevision extends CGenerico {
 	@Wire
 	private Button btnBuscarPeriodo;
 	@Wire
-	private Label lblPeriodoRevision;
-	@Wire
 	private Textbox txtDescripcionRevision;
 	@Wire
 	private Groupbox gpxDatosRevision;
@@ -57,6 +55,7 @@ public class CRevision extends CGenerico {
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	private int idRevision = 0;
+	private int idPeriodo = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
@@ -81,12 +80,11 @@ public class CRevision extends CGenerico {
 						Revision revision = catalogo
 								.objetoSeleccionadoDelCatalogo();
 						idRevision = revision.getId();
+						idPeriodo = revision.getPeriodo().getId();
 						txtDescripcionRevision.setValue(revision
 								.getDescripcion());
-						txtPeriodoRevision.setValue(String.valueOf(revision
-								.getPeriodo().getId()));
-						lblPeriodoRevision.setValue(revision.getPeriodo()
-								.getDescripcion());
+						txtPeriodoRevision.setValue(revision.getPeriodo()
+								.getNombre());
 						cmbEstadoRevision
 								.setValue(revision.getEstadoRevision());
 						txtPeriodoRevision.setFocus(true);
@@ -103,8 +101,7 @@ public class CRevision extends CGenerico {
 				boolean guardar = true;
 				guardar = validar();
 				if (guardar) {
-					Periodo periodo = servicioPeriodo.buscarPeriodo(Integer
-							.valueOf(txtPeriodoRevision.getValue()));
+					Periodo periodo = servicioPeriodo.buscarPeriodo(idPeriodo);
 
 					if (periodo != null) {
 
@@ -128,11 +125,11 @@ public class CRevision extends CGenerico {
 									.buscarTodas());
 							abrirCatalogo();
 
-						}else{
-							
+						} else {
+
 							msj.mensajeAlerta(Mensaje.revisionActiva);
 							cmbEstadoRevision.setFocus(true);
-							
+
 						}
 
 					} else {
@@ -222,12 +219,9 @@ public class CRevision extends CGenerico {
 
 	public void limpiarCampos() {
 		idRevision = 0;
+		idPeriodo = 0;
 		txtDescripcionRevision.setValue("");
-		txtPeriodoRevision.setConstraint("");
 		txtPeriodoRevision.setValue("");
-		txtPeriodoRevision
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del periodo debe ser numérico");
-		lblPeriodoRevision.setValue("");
 		cmbEstadoRevision.setValue("");
 		catalogo.limpiarSeleccion();
 		txtPeriodoRevision.setFocus(true);
@@ -245,7 +239,7 @@ public class CRevision extends CGenerico {
 
 	public boolean camposLLenos() {
 		if (txtPeriodoRevision.getText().compareTo("") == 0
-				||cmbEstadoRevision.getText().compareTo("") == 0) {
+				|| cmbEstadoRevision.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -265,16 +259,12 @@ public class CRevision extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosRevision.setOpen(false);
 		gpxRegistroRevision.setOpen(true);
-		txtPeriodoRevision
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código del periodo debe ser numérico");
 		mostrarBotones(false);
 
 	}
 
 	@Listen("onOpen = #gpxDatosRevision")
 	public void abrirCatalogo() {
-		txtPeriodoRevision.setConstraint("");
-		txtPeriodoRevision.setValue("");
 		gpxDatosRevision.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -319,8 +309,7 @@ public class CRevision extends CGenerico {
 
 	protected boolean validarRevisionActiva() {
 
-		Revision revision = servicioRevision
-				.buscarRevisionActiva();
+		Revision revision = servicioRevision.buscarRevisionActiva();
 
 		if (cmbEstadoRevision.getValue().equals("ACTIVO") && revision != null) {
 			return true;
@@ -340,24 +329,20 @@ public class CRevision extends CGenerico {
 	public void mostrarCatalogo() {
 		final List<Revision> listRevision = servicioRevision.buscarTodas();
 		catalogo = new Catalogo<Revision>(catalogoRevision,
-				"Catalogo de Revisiones", listRevision, "Código Revisión",
-				"Código periodo", "Periodo", "Descripción", "Estado") {
+				"Catalogo de Revisiones", listRevision, "Periodo",
+				"Descripción", "Estado") {
 
 			@Override
 			protected List<Revision> buscarCampos(List<String> valores) {
 				List<Revision> lista = new ArrayList<Revision>();
 
 				for (Revision revision : listRevision) {
-					if (String.valueOf(revision.getId()).toLowerCase()
+					if (revision.getPeriodo().getDescripcion().toLowerCase()
 							.startsWith(valores.get(0))
-							&& String.valueOf(revision.getPeriodo().getId())
-									.toLowerCase().startsWith(valores.get(1))
-							&& revision.getPeriodo().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2))
 							&& revision.getDescripcion().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(1))
 							&& revision.getEstadoRevision().toLowerCase()
-									.startsWith(valores.get(4))) {
+									.startsWith(valores.get(2))) {
 						lista.add(revision);
 					}
 				}
@@ -367,12 +352,10 @@ public class CRevision extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Revision revision) {
-				String[] registros = new String[5];
-				registros[0] = String.valueOf(revision.getId());
-				registros[1] = String.valueOf(revision.getPeriodo().getId());
-				registros[2] = revision.getPeriodo().getDescripcion();
-				registros[3] = revision.getDescripcion();
-				registros[4] = revision.getEstadoRevision();
+				String[] registros = new String[3];
+				registros[0] = revision.getPeriodo().getDescripcion();
+				registros[1] = revision.getDescripcion();
+				registros[2] = revision.getEstadoRevision();
 
 				return registros;
 			}
@@ -380,11 +363,7 @@ public class CRevision extends CGenerico {
 			@Override
 			protected List<Revision> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Revisión"))
-					return servicioRevision.filtroId(valor);
-				else if (combo.equals("Código periodo"))
-					return servicioRevision.filtroPeriodo(valor);
-				else if (combo.equals("Periodo"))
+				if (combo.equals("Periodo"))
 					return servicioRevision.filtroPeriodo(valor);
 				else if (combo.equals("Descripción"))
 					return servicioRevision.filtroDescripcion(valor);
@@ -401,11 +380,15 @@ public class CRevision extends CGenerico {
 
 	@Listen("onChange = #txtPeriodoRevision")
 	public void buscarPeriodo() {
-		Periodo periodo = servicioPeriodo.buscarPeriodo(Integer
-				.valueOf(txtPeriodoRevision.getValue()));
-		if (periodo == null) {
+		List<Periodo> periodos = servicioPeriodo.buscarPorNombres(txtPeriodoRevision
+				.getValue());
+		if (periodos.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoPeriodo);
 			txtPeriodoRevision.setFocus(true);
+		}else{
+			
+			idPeriodo = periodos.get(idPeriodo).getId();
+			
 		}
 
 	}
@@ -414,32 +397,30 @@ public class CRevision extends CGenerico {
 	public void mostrarCatalogoPeriodo() {
 		final List<Periodo> listPeriodo = servicioPeriodo.buscarTodos();
 		catalogoPeriodo = new Catalogo<Periodo>(divCatalogoPeriodo,
-				"Catalogo de Periodos", listPeriodo, "Código periodo",
-				"Nombre", "Descripción", "Fecha Inicio", "Fecha Fin", "Estado") {
+				"Catalogo de Periodos", listPeriodo, "Nombre", "Descripción",
+				"Fecha Inicio", "Fecha Fin", "Estado") {
 
 			@Override
 			protected List<Periodo> buscarCampos(List<String> valores) {
 				List<Periodo> lista = new ArrayList<Periodo>();
 
 				for (Periodo periodo : listPeriodo) {
-					if (String.valueOf(periodo.getId()).toLowerCase()
+					if (periodo.getNombre().toLowerCase()
 							.startsWith(valores.get(0))
-							&& periodo.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
 							&& periodo.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& String
 									.valueOf(
 											formatoFecha.format(periodo
 													.getFechaInicio()))
-									.toLowerCase().startsWith(valores.get(3))
+									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
 											formatoFecha.format(periodo
 													.getFechaFin()))
-									.toLowerCase().startsWith(valores.get(4))
+									.toLowerCase().startsWith(valores.get(3))
 							&& periodo.getEstadoPeriodo().toLowerCase()
-									.startsWith(valores.get(5))) {
+									.startsWith(valores.get(4))) {
 						lista.add(periodo);
 					}
 				}
@@ -449,13 +430,12 @@ public class CRevision extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Periodo periodo) {
-				String[] registros = new String[6];
-				registros[0] = String.valueOf(periodo.getId());
-				registros[1] = periodo.getNombre();
-				registros[2] = periodo.getDescripcion();
-				registros[3] = formatoFecha.format(periodo.getFechaInicio());
-				registros[4] = formatoFecha.format(periodo.getFechaFin());
-				registros[5] = periodo.getEstadoPeriodo();
+				String[] registros = new String[5];
+				registros[0] = periodo.getNombre();
+				registros[1] = periodo.getDescripcion();
+				registros[2] = formatoFecha.format(periodo.getFechaInicio());
+				registros[3] = formatoFecha.format(periodo.getFechaFin());
+				registros[4] = periodo.getEstadoPeriodo();
 
 				return registros;
 			}
@@ -463,9 +443,7 @@ public class CRevision extends CGenerico {
 			@Override
 			protected List<Periodo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código periodo"))
-					return servicioPeriodo.filtroId(valor);
-				else if (combo.equals("Nombre"))
+				if (combo.equals("Nombre"))
 					return servicioPeriodo.filtroNombre(valor);
 				else if (combo.equals("Descripción"))
 					return servicioPeriodo.filtroDescripcion(valor);
@@ -491,8 +469,9 @@ public class CRevision extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoPeriodo")
 	public void seleccionPeriodo() {
 		Periodo periodo = catalogoPeriodo.objetoSeleccionadoDelCatalogo();
-		txtPeriodoRevision.setValue(String.valueOf(periodo.getId()));
-		lblPeriodoRevision.setValue(periodo.getDescripcion());
+		idPeriodo = periodo.getId();
+		txtPeriodoRevision.setValue(periodo.getNombre());
+		txtPeriodoRevision.setFocus(true);
 		catalogoPeriodo.setParent(null);
 	}
 

@@ -21,7 +21,7 @@
 					<row>
 						<hbox>
 							<label class="etiqueta"
-								value="Código Periodo:" />
+								value="Periodo:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -33,7 +33,6 @@
 						<button id="btnBuscarPeriodo" label=""
 							tooltiptext="Catalogo de codigos de periodos"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblPeriodoRevision" />
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />

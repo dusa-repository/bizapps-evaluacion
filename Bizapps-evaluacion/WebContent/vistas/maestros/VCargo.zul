@@ -28,7 +28,7 @@
 						</hbox>
 
 						<textbox id="txtDescripcionCargo" width="60%"
-							maxlength="100" tabindex="1" rows="3" cols="100"
+							maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion del cargo" />
 					</row>
 					<row>
@@ -57,7 +57,7 @@
 			</grid>
 		</groupbox>
 		<separator />
-		<separator/>
+		<separator />
 		<groupbox id="gpxDatosCargo" width="auto" title="">
 			<caption label="Registros" style="font-weight:bold"
 				tooltiptext="Presione para visualizar los cargos registrados" />

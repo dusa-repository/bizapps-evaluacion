@@ -32,6 +32,13 @@ public class SCargo {
 		cargo = cargoDAO.findByDescripcion(descripcion);
 		return cargo;
 	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Cargo> buscarPorNombres(String descripcion) {
+		List<Cargo> cargos;
+		cargos = cargoDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return cargos;
+	}
 
 	/* Servicio que permite buscar todos los cargos */
 	public List<Cargo> buscarTodos() {

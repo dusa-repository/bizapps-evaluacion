@@ -273,18 +273,15 @@ public class CUrgencia extends CGenerico {
 
 		final List<Urgencia> listUrgencia = servicioUrgencia.buscarTodas();
 		catalogo = new Catalogo<Urgencia>(catalogoUrgencia,
-				"Catalogo de Urgencias", listUrgencia, "Código Urgencia",
-				"Descripción") {
+				"Catalogo de Urgencias", listUrgencia, "Descripción") {
 
 			@Override
 			protected List<Urgencia> buscarCampos(List<String> valores) {
 				List<Urgencia> lista = new ArrayList<Urgencia>();
 
 				for (Urgencia urgencia : listUrgencia) {
-					if (String.valueOf(urgencia.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& urgencia.getDescripcionUrgencia().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (urgencia.getDescripcionUrgencia().toLowerCase()
+									.startsWith(valores.get(0))) {
 						lista.add(urgencia);
 					}
 				}
@@ -294,9 +291,8 @@ public class CUrgencia extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Urgencia urgencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(urgencia.getId());
-				registros[1] = urgencia.getDescripcionUrgencia();
+				String[] registros = new String[1];
+				registros[0] = urgencia.getDescripcionUrgencia();
 
 				return registros;
 			}
@@ -304,9 +300,7 @@ public class CUrgencia extends CGenerico {
 			@Override
 			protected List<Urgencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Urgencia"))
-					return servicioUrgencia.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioUrgencia.filtroDescripcion(valor);
 				else
 					return servicioUrgencia.buscarTodas();

@@ -32,7 +32,15 @@
 							width="90%" maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la perspectiva" />
 					</row>
+					<row>
+						<label value="Orden:" class="etiqueta" />
+
+						<spinner id="spnOrdenPerspectiva"
+							constraint="no negative" width="91%" maxlength="100"
+							tabindex="2" tooltiptext="Ingrese aqui el orden" />
+					</row>
 				</rows>
+
 			</grid>
 		</groupbox>
 		<separator />

@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
 
-	Empresa findByNombre(String nombre);
-
 	public List<Empresa> findByIdStartingWithAllIgnoreCase(String valor);
 
 	public List<Empresa> findByNombreStartingWithAllIgnoreCase(String valor);
@@ -23,6 +21,10 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
 	public List<Empresa> findByTelefono2StartingWithAllIgnoreCase(String valor);
 
 	public List<Empresa> findByIdEmpresaAuxiliarStartingWithAllIgnoreCase(String valor);
+
+	public Empresa findByNombre(String nombre);
+
+	public List<Empresa> findByNombreAllIgnoreCase(String nombre);
 
 
 	

@@ -26,5 +26,7 @@ public interface IPeriodoDAO extends JpaRepository<Periodo, Integer> {
 
 	Periodo findByEstadoPeriodo(String estadoPeriodo);
 
+	public List<Periodo> findByNombreAllIgnoreCase(String nombre);
+
 	
 }

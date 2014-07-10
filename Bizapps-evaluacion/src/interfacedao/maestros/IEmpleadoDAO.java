@@ -49,4 +49,7 @@ public interface IEmpleadoDAO extends JpaRepository<Empleado, Integer> {
 
 	public List<Empleado> findByGradoAuxiliarStartingWithAllIgnoreCase(
 			String valor);
+
+
+	public List<Empleado> findByNombreAllIgnoreCase(String descripcion);
 }

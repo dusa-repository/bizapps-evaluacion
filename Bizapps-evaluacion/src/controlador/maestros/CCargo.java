@@ -289,24 +289,22 @@ public class CCargo extends CGenerico {
 
 		final List<Cargo> listCargo = servicioCargo.buscarTodos();
 		catalogo = new Catalogo<Cargo>(catalogoCargo, "Catalogo de Cargos",
-				listCargo, "Código cargo", "Descripción", "Nómina",
-				"Cargo Auxiliar", "Empresa Auxiliar") {
+				listCargo, "Descripción", "Nómina", "Cargo Auxiliar",
+				"Empresa Auxiliar") {
 
 			@Override
 			protected List<Cargo> buscarCampos(List<String> valores) {
 				List<Cargo> lista = new ArrayList<Cargo>();
 
 				for (Cargo cargo : listCargo) {
-					if (String.valueOf(cargo.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& cargo.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))
+					if (cargo.getDescripcion().toLowerCase()
+									.startsWith(valores.get(0))
 							&& cargo.getNomina().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& cargo.getIdCargoAuxiliar().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(2))
 							&& cargo.getIdEmpresaAuxiliar().toLowerCase()
-									.startsWith(valores.get(4))) {
+									.startsWith(valores.get(3))) {
 						lista.add(cargo);
 					}
 				}
@@ -316,12 +314,11 @@ public class CCargo extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Cargo cargo) {
-				String[] registros = new String[5];
-				registros[0] = String.valueOf(cargo.getId());
-				registros[1] = cargo.getDescripcion();
-				registros[2] = cargo.getNomina();
-				registros[3] = cargo.getIdCargoAuxiliar();
-				registros[4] = cargo.getIdEmpresaAuxiliar();
+				String[] registros = new String[4];
+				registros[0] = cargo.getDescripcion();
+				registros[1] = cargo.getNomina();
+				registros[2] = cargo.getIdCargoAuxiliar();
+				registros[3] = cargo.getIdEmpresaAuxiliar();
 
 				return registros;
 			}
@@ -329,9 +326,7 @@ public class CCargo extends CGenerico {
 			@Override
 			protected List<Cargo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código cargo"))
-					return servicioCargo.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioCargo.filtroDescripcion(valor);
 				else if (combo.equals("Nómina"))
 					return servicioCargo.filtroNomina(valor);

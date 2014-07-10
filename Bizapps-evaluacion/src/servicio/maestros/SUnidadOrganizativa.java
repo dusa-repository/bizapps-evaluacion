@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.maestros.Area;
 import modelo.maestros.Dominio;
+import modelo.maestros.Empresa;
 import modelo.maestros.UnidadOrganizativa;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,13 @@ public class SUnidadOrganizativa {
 	 */
 	public List<UnidadOrganizativa> filtroUnidadAuxiliar(String valor) {
 		return unidadOrganizativaDAO.findByIdUnidadOrganizativaAuxiliarStartingWithAllIgnoreCase(valor);
+	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<UnidadOrganizativa> buscarPorNombres(String descripcion) {
+		List<UnidadOrganizativa> unidad;
+		unidad = unidadOrganizativaDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return unidad;
 	}
 
 

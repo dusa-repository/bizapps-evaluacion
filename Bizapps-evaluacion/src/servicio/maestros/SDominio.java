@@ -89,6 +89,14 @@ public class SDominio {
 	public List<Dominio> filtroComentario(String valor) {
 		return dominioDAO.findByComentarioStartingWithAllIgnoreCase(valor);
 	}
+	
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Dominio> buscarPorNombres(String descripcion) {
+		List<Dominio> dominios;
+		dominios = dominioDAO.findByDescripcionDominioAllIgnoreCase(descripcion);
+		return dominios;
+	}
 
 	
 	

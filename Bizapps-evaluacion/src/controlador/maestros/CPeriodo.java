@@ -118,11 +118,11 @@ public class CPeriodo extends CGenerico {
 						catalogo.actualizarLista(servicioPeriodo.buscarTodos());
 						abrirCatalogo();
 
-					}else{
-						
+					} else {
+
 						msj.mensajeAlerta(Mensaje.periodoActivo);
 						cmbEstadoPeriodo.setFocus(true);
-				
+
 					}
 
 				}
@@ -278,9 +278,9 @@ public class CPeriodo extends CGenerico {
 
 	public boolean camposLLenos() {
 		if (txtNombrePeriodo.getText().compareTo("") == 0
-				||dtbFechaInicioPeriodo.getText().compareTo("") == 0
-				||dtbFechaFinPeriodo.getText().compareTo("") == 0
-				||cmbEstadoPeriodo.getText().compareTo("") == 0) {
+				|| dtbFechaInicioPeriodo.getText().compareTo("") == 0
+				|| dtbFechaFinPeriodo.getText().compareTo("") == 0
+				|| cmbEstadoPeriodo.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -297,7 +297,7 @@ public class CPeriodo extends CGenerico {
 	}
 
 	protected boolean validarEstadoActivo() {
-		
+
 		Periodo periodo = servicioPeriodo.buscarPeriodoActivo();
 
 		if (cmbEstadoPeriodo.getValue().equals("ACTIVO") && periodo != null) {
@@ -319,32 +319,30 @@ public class CPeriodo extends CGenerico {
 
 		final List<Periodo> listPeriodo = servicioPeriodo.buscarTodos();
 		catalogo = new Catalogo<Periodo>(catalogoPeriodo,
-				"Catalogo de Periodos", listPeriodo, "Código periodo",
-				"Nombre", "Descripción", "Fecha Inicio", "Fecha Fin", "Estado") {
+				"Catalogo de Periodos", listPeriodo, "Nombre", "Descripción",
+				"Fecha Inicio", "Fecha Fin", "Estado") {
 
 			@Override
 			protected List<Periodo> buscarCampos(List<String> valores) {
 				List<Periodo> lista = new ArrayList<Periodo>();
 
 				for (Periodo periodo : listPeriodo) {
-					if (String.valueOf(periodo.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& periodo.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
+					if (periodo.getNombre().toLowerCase()
+									.startsWith(valores.get(0))
 							&& periodo.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& String
 									.valueOf(
 											formatoFecha.format(periodo
 													.getFechaInicio()))
-									.toLowerCase().startsWith(valores.get(3))
+									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
 											formatoFecha.format(periodo
 													.getFechaFin()))
-									.toLowerCase().startsWith(valores.get(4))
+									.toLowerCase().startsWith(valores.get(3))
 							&& periodo.getEstadoPeriodo().toLowerCase()
-									.startsWith(valores.get(5))) {
+									.startsWith(valores.get(4))) {
 						lista.add(periodo);
 					}
 				}
@@ -355,12 +353,11 @@ public class CPeriodo extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Periodo periodo) {
 				String[] registros = new String[6];
-				registros[0] = String.valueOf(periodo.getId());
-				registros[1] = periodo.getNombre();
-				registros[2] = periodo.getDescripcion();
-				registros[3] = formatoFecha.format(periodo.getFechaInicio());
-				registros[4] = formatoFecha.format(periodo.getFechaFin());
-				registros[5] = periodo.getEstadoPeriodo();
+				registros[0] = periodo.getNombre();
+				registros[1] = periodo.getDescripcion();
+				registros[2] = formatoFecha.format(periodo.getFechaInicio());
+				registros[3] = formatoFecha.format(periodo.getFechaFin());
+				registros[4] = periodo.getEstadoPeriodo();
 
 				return registros;
 			}
@@ -368,9 +365,7 @@ public class CPeriodo extends CGenerico {
 			@Override
 			protected List<Periodo> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código periodo"))
-					return servicioPeriodo.filtroId(valor);
-				else if (combo.equals("Nombre"))
+				if (combo.equals("Nombre"))
 					return servicioPeriodo.filtroNombre(valor);
 				else if (combo.equals("Descripción"))
 					return servicioPeriodo.filtroDescripcion(valor);

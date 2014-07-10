@@ -21,6 +21,7 @@ import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -41,13 +42,11 @@ public class CUnidadOrganizativa extends CGenerico {
 	@Wire
 	private Button btnBuscarGerencia;
 	@Wire
-	private Label lblGerenciaUnidadOrganizativa;
-	@Wire
 	private Textbox txtDescripcionUnidadOrganizativa;
 	@Wire
-	private Textbox txtNivelUnidadOrganizativa;
+	private Spinner spnNivelUnidadOrganizativa;
 	@Wire
-	private Textbox txtSubNivelUnidadOrganizativa;
+	private Spinner spnSubNivelUnidadOrganizativa;
 	@Wire
 	private Textbox txtEmpresaAuxiliarUnidadOrganizativa;
 	@Wire
@@ -61,6 +60,7 @@ public class CUnidadOrganizativa extends CGenerico {
 	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	private int idUnidadOrganizativa = 0;
+	private int idGerencia = 0;
 
 	Mensaje msj = new Mensaje();
 	Botonera botonera;
@@ -85,22 +85,19 @@ public class CUnidadOrganizativa extends CGenerico {
 						UnidadOrganizativa unidad = catalogo
 								.objetoSeleccionadoDelCatalogo();
 						idUnidadOrganizativa = unidad.getId();
-						txtGerenciaUnidadOrganizativa.setValue(String
-								.valueOf(unidad.getGerencia().getId()));
-						lblGerenciaUnidadOrganizativa.setValue(servicioGerencia
-								.buscarGerencia(unidad.getGerencia().getId())
-								.getDescripcion());
+						idGerencia = unidad.getGerencia().getId();
+						txtGerenciaUnidadOrganizativa.setValue(unidad
+								.getGerencia().getDescripcion());
 						txtDescripcionUnidadOrganizativa.setValue(unidad
 								.getDescripcion());
-						txtNivelUnidadOrganizativa.setValue(String
-								.valueOf(unidad.getNivel()));
-						txtSubNivelUnidadOrganizativa.setValue(String
-								.valueOf(unidad.getSubNivel()));
+						spnNivelUnidadOrganizativa.setValue(unidad.getNivel());
+						spnSubNivelUnidadOrganizativa.setValue(unidad
+								.getSubNivel());
 						txtEmpresaAuxiliarUnidadOrganizativa.setValue(unidad
 								.getIdEmpresaAuxiliar());
 						txtUnidadOrganizativaAuxiliar.setValue(unidad
 								.getIdUnidadOrganizativaAuxiliar());
-						txtDescripcionUnidadOrganizativa.setFocus(true);
+						txtGerenciaUnidadOrganizativa.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
 				}
@@ -116,20 +113,14 @@ public class CUnidadOrganizativa extends CGenerico {
 				if (guardar) {
 					String descripcion = txtDescripcionUnidadOrganizativa
 							.getValue();
-					Gerencia gerencia = servicioGerencia.buscarGerencia(Integer
-							.valueOf(txtGerenciaUnidadOrganizativa.getValue()));
+					Gerencia gerencia = servicioGerencia
+							.buscarGerencia(idGerencia);
 
 					if (gerencia != null) {
 
-						int nivel = 0;
-						int subNivel = 0;
-						if (txtNivelUnidadOrganizativa.getValue() != null)
-							nivel = Integer.valueOf(txtNivelUnidadOrganizativa
-									.getValue());
-						if (txtSubNivelUnidadOrganizativa.getValue() != null)
-							subNivel = Integer
-									.valueOf(txtSubNivelUnidadOrganizativa
-											.getValue());
+						int nivel = spnNivelUnidadOrganizativa.getValue();
+
+						int subNivel = spnSubNivelUnidadOrganizativa.getValue();
 						String idEmpresaAuxiliar = txtEmpresaAuxiliarUnidadOrganizativa
 								.getValue();
 						String idUnidadOrganizativaAuxiliar = txtUnidadOrganizativaAuxiliar
@@ -237,32 +228,23 @@ public class CUnidadOrganizativa extends CGenerico {
 
 	public void limpiarCampos() {
 		idUnidadOrganizativa = 0;
-		txtGerenciaUnidadOrganizativa.setConstraint("");
+		idGerencia = 0;
 		txtGerenciaUnidadOrganizativa.setValue("");
-		txtGerenciaUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la gerencia debe ser numérico");
 		txtDescripcionUnidadOrganizativa.setValue("");
-		txtNivelUnidadOrganizativa.setConstraint("");
-		txtNivelUnidadOrganizativa.setValue("");
-		txtNivelUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El nivel debe ser numérico");
-		txtSubNivelUnidadOrganizativa.setConstraint("");
-		txtSubNivelUnidadOrganizativa.setValue("");
-		txtSubNivelUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El sub-nivel debe ser numérico");
+		spnNivelUnidadOrganizativa.setValue(null);
+		spnSubNivelUnidadOrganizativa.setValue(null);
 		txtEmpresaAuxiliarUnidadOrganizativa.setValue("");
 		txtUnidadOrganizativaAuxiliar.setValue("");
-		lblGerenciaUnidadOrganizativa.setValue("");
 		catalogo.limpiarSeleccion();
-		txtDescripcionUnidadOrganizativa.setFocus(true);
+		txtGerenciaUnidadOrganizativa.setFocus(true);
 
 	}
 
 	public boolean camposEditando() {
 		if (txtGerenciaUnidadOrganizativa.getText().compareTo("") != 0
 				|| txtDescripcionUnidadOrganizativa.getText().compareTo("") != 0
-				|| txtNivelUnidadOrganizativa.getText().compareTo("") != 0
-				|| txtSubNivelUnidadOrganizativa.getText().compareTo("") != 0
+				|| spnNivelUnidadOrganizativa.getText().compareTo("") != 0
+				|| spnSubNivelUnidadOrganizativa.getText().compareTo("") != 0
 				|| txtEmpresaAuxiliarUnidadOrganizativa.getText().compareTo("") != 0
 				|| txtUnidadOrganizativaAuxiliar.getText().compareTo("") != 0) {
 			return true;
@@ -274,24 +256,12 @@ public class CUnidadOrganizativa extends CGenerico {
 	public void abrirRegistro() {
 		gpxDatosUnidadOrganizativa.setOpen(false);
 		gpxRegistroUnidadOrganizativa.setOpen(true);
-		txtGerenciaUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El código de la gerencia debe ser numérico");
-		txtNivelUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El nivel debe ser numérico");
-		txtSubNivelUnidadOrganizativa
-				.setConstraint("/[0,1,2,3,4,5,6,7,8,9,-]+/: El sub-nivel debe ser numérico");
 		mostrarBotones(false);
 
 	}
 
 	@Listen("onOpen = #gpxDatosUnidadOrganizativa")
 	public void abrirCatalogo() {
-		txtGerenciaUnidadOrganizativa.setConstraint("");
-		txtGerenciaUnidadOrganizativa.setValue("");
-		txtNivelUnidadOrganizativa.setConstraint("");
-		txtNivelUnidadOrganizativa.setValue("");
-		txtSubNivelUnidadOrganizativa.setConstraint("");
-		txtSubNivelUnidadOrganizativa.setValue("");
 		gpxDatosUnidadOrganizativa.setOpen(false);
 		if (camposEditando()) {
 			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
@@ -366,30 +336,26 @@ public class CUnidadOrganizativa extends CGenerico {
 				.buscarTodas();
 		catalogo = new Catalogo<UnidadOrganizativa>(catalogoUnidadOrganizativa,
 				"Catalogo de UnidadOrganizativas", listUnidadOrganizativa,
-				"Código Unidad", "Código Gerencia", "Gerencia", "Descripción", "Nivel",
-				"Sub-Nivel", "Empresa Auxiliar", "Unidad Auxiliar") {
+				"Gerencia", "Descripción", "Nivel", "Sub-Nivel",
+				"Empresa Auxiliar", "Unidad Auxiliar") {
 
 			@Override
 			protected List<UnidadOrganizativa> buscarCampos(List<String> valores) {
 				List<UnidadOrganizativa> lista = new ArrayList<UnidadOrganizativa>();
 
 				for (UnidadOrganizativa unidad : listUnidadOrganizativa) {
-					if (String.valueOf(unidad.getId()).toLowerCase()
+					if (unidad.getGerencia().getDescripcion().toLowerCase()
 							.startsWith(valores.get(0))
-							&& String.valueOf(unidad.getGerencia().getId())
-									.toLowerCase().startsWith(valores.get(1))
-							&& unidad.getGerencia().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2))
 							&& unidad.getDescripcion().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(1))
 							&& String.valueOf(unidad.getNivel()).toLowerCase()
-									.startsWith(valores.get(4))
+									.startsWith(valores.get(2))
 							&& String.valueOf(unidad.getSubNivel())
-									.toLowerCase().startsWith(valores.get(5))
+									.toLowerCase().startsWith(valores.get(3))
 							&& unidad.getIdEmpresaAuxiliar().toLowerCase()
-									.startsWith(valores.get(6))
+									.startsWith(valores.get(4))
 							&& unidad.getIdUnidadOrganizativaAuxiliar()
-									.toLowerCase().startsWith(valores.get(7))) {
+									.toLowerCase().startsWith(valores.get(5))) {
 						lista.add(unidad);
 					}
 				}
@@ -399,15 +365,13 @@ public class CUnidadOrganizativa extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(UnidadOrganizativa unidad) {
-				String[] registros = new String[8];
-				registros[0] = String.valueOf(unidad.getId());
-				registros[1] = String.valueOf(unidad.getGerencia().getId());
-				registros[2] = unidad.getGerencia().getDescripcion();
-				registros[3] = unidad.getDescripcion();
-				registros[4] = String.valueOf(unidad.getNivel());
-				registros[5] = String.valueOf(unidad.getSubNivel());
-				registros[6] = String.valueOf(unidad.getIdEmpresaAuxiliar());
-				registros[7] = String.valueOf(unidad
+				String[] registros = new String[6];
+				registros[0] = unidad.getGerencia().getDescripcion();
+				registros[1] = unidad.getDescripcion();
+				registros[2] = String.valueOf(unidad.getNivel());
+				registros[3] = String.valueOf(unidad.getSubNivel());
+				registros[4] = String.valueOf(unidad.getIdEmpresaAuxiliar());
+				registros[5] = String.valueOf(unidad
 						.getIdUnidadOrganizativaAuxiliar());
 				return registros;
 			}
@@ -415,11 +379,7 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected List<UnidadOrganizativa> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código Unidad"))
-					return servicioUnidadOrganizativa.filtroId(valor);
-				else if (combo.equals("Código Gerencia"))
-					return servicioUnidadOrganizativa.filtroGerencia(valor);
-				else if (combo.equals("Gerencia"))
+				if (combo.equals("Gerencia"))
 					return servicioUnidadOrganizativa.filtroGerencia(valor);
 				else if (combo.equals("Descripción"))
 					return servicioUnidadOrganizativa.filtroDescripcion(valor);
@@ -444,11 +404,14 @@ public class CUnidadOrganizativa extends CGenerico {
 
 	@Listen("onChange = #txtGerenciaUnidadOrganizativa")
 	public void buscarGerencia() {
-		Gerencia gerencia = servicioGerencia.buscarGerencia(Integer
-				.valueOf(txtGerenciaUnidadOrganizativa.getValue()));
-		if (gerencia == null) {
+		List<Gerencia> gerencias = servicioGerencia
+				.buscarPorNombres(txtGerenciaUnidadOrganizativa.getValue());
+		if (gerencias.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoGerencia);
 			txtGerenciaUnidadOrganizativa.setFocus(true);
+		} else {
+
+			idGerencia = gerencias.get(0).getId();
 		}
 
 	}
@@ -457,18 +420,15 @@ public class CUnidadOrganizativa extends CGenerico {
 	public void mostrarCatalogoGerencia() {
 		final List<Gerencia> listGerencia = servicioGerencia.buscarTodas();
 		catalogoGerencia = new Catalogo<Gerencia>(divCatalogoGerencia,
-				"Catalogo de Gerencias", listGerencia, "Código gerencia",
-				"Descripción") {
+				"Catalogo de Gerencias", listGerencia, "Descripción") {
 
 			@Override
 			protected List<Gerencia> buscarCampos(List<String> valores) {
 				List<Gerencia> lista = new ArrayList<Gerencia>();
 
 				for (Gerencia gerencia : listGerencia) {
-					if (String.valueOf(gerencia.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& gerencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+					if (gerencia.getDescripcion().toLowerCase()
+							.startsWith(valores.get(0))) {
 						lista.add(gerencia);
 					}
 				}
@@ -478,9 +438,8 @@ public class CUnidadOrganizativa extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Gerencia gerencia) {
-				String[] registros = new String[2];
-				registros[0] = String.valueOf(gerencia.getId());
-				registros[1] = gerencia.getDescripcion();
+				String[] registros = new String[1];
+				registros[0] = gerencia.getDescripcion();
 
 				return registros;
 			}
@@ -488,9 +447,7 @@ public class CUnidadOrganizativa extends CGenerico {
 			@Override
 			protected List<Gerencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código gerencia"))
-					return servicioGerencia.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioGerencia.filtroDescripcion(valor);
 				else
 					return servicioGerencia.buscarTodas();
@@ -507,9 +464,9 @@ public class CUnidadOrganizativa extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoGerencia")
 	public void seleccionGerencia() {
 		Gerencia gerencia = catalogoGerencia.objetoSeleccionadoDelCatalogo();
-		txtGerenciaUnidadOrganizativa
-				.setValue(String.valueOf(gerencia.getId()));
-		lblGerenciaUnidadOrganizativa.setValue(gerencia.getDescripcion());
+		idGerencia = gerencia.getId();
+		txtGerenciaUnidadOrganizativa.setValue(gerencia.getDescripcion());
+		txtGerenciaUnidadOrganizativa.setFocus(true);
 		catalogoGerencia.setParent(null);
 	}
 

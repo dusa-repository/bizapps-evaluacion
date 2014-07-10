@@ -5,6 +5,7 @@ import interfacedao.maestros.IPeriodoDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
@@ -107,6 +108,13 @@ public class SPeriodo {
 	 */
 	public List<Periodo> filtroEstado(String valor) {
 		return periodoDAO.findByEstadoPeriodoStartingWithAllIgnoreCase(valor);
+	}
+	
+	/* Servicio que permite buscar un cargo de acuerdo al nombre */
+	public List<Periodo> buscarPorNombres(String nombre) {
+		List<Periodo> periodos;
+		periodos = periodoDAO.findByNombreAllIgnoreCase(nombre);
+		return periodos;
 	}
 
 

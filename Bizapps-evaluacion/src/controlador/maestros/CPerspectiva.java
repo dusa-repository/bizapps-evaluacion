@@ -19,6 +19,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -36,6 +37,8 @@ public class CPerspectiva extends CGenerico {
 	private Groupbox gpxRegistroPerspectiva;
 	@Wire
 	private Textbox txtDescripcionPerspectiva;
+	@Wire
+	private Spinner spnOrdenPerspectiva;
 	@Wire
 	private Groupbox gpxDatosPerspectiva;
 	@Wire
@@ -68,6 +71,7 @@ public class CPerspectiva extends CGenerico {
 						idPerspectiva = perspectiva.getId();
 						txtDescripcionPerspectiva.setValue(perspectiva
 								.getDescripcion());
+						spnOrdenPerspectiva.setValue(perspectiva.getOrden());
 						txtDescripcionPerspectiva.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -86,8 +90,10 @@ public class CPerspectiva extends CGenerico {
 					String usuario = nombreUsuarioSesion();
 					Timestamp fechaAuditoria = new Timestamp(
 							new Date().getTime());
+					int orden = spnOrdenPerspectiva.getValue();
 					Perspectiva perspectiva = new Perspectiva(idPerspectiva,
-							descripcion, usuario, fechaAuditoria, horaAuditoria);
+							descripcion, usuario, fechaAuditoria,
+							horaAuditoria, orden);
 					servicioPerspectiva.guardar(perspectiva);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
@@ -177,13 +183,15 @@ public class CPerspectiva extends CGenerico {
 	public void limpiarCampos() {
 		idPerspectiva = 0;
 		txtDescripcionPerspectiva.setValue("");
+		spnOrdenPerspectiva.setValue(null);
 		catalogo.limpiarSeleccion();
 		txtDescripcionPerspectiva.setFocus(true);
 
 	}
 
 	public boolean camposEditando() {
-		if (txtDescripcionPerspectiva.getText().compareTo("") != 0) {
+		if (txtDescripcionPerspectiva.getText().compareTo("") != 0
+				|| spnOrdenPerspectiva.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -269,18 +277,18 @@ public class CPerspectiva extends CGenerico {
 
 		final List<Perspectiva> listPerspectiva = servicioPerspectiva.buscar();
 		catalogo = new Catalogo<Perspectiva>(catalogoPerspectiva,
-				"Catalogo de Perspectivas", listPerspectiva,
-				"Código perspectiva", "Descripción") {
+				"Catalogo de Perspectivas", listPerspectiva, "Descripción",
+				"Orden") {
 
 			@Override
 			protected List<Perspectiva> buscarCampos(List<String> valores) {
 				List<Perspectiva> lista = new ArrayList<Perspectiva>();
 
 				for (Perspectiva perspectiva : listPerspectiva) {
-					if (String.valueOf(perspectiva.getId()).toLowerCase()
+					if (perspectiva.getDescripcion().toLowerCase()
 							.startsWith(valores.get(0))
-							&& perspectiva.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))) {
+							&& String.valueOf(perspectiva.getOrden())
+									.toLowerCase().startsWith(valores.get(1))) {
 						lista.add(perspectiva);
 					}
 				}
@@ -291,8 +299,8 @@ public class CPerspectiva extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Perspectiva perspectiva) {
 				String[] registros = new String[2];
-				registros[0] = String.valueOf(perspectiva.getId());
-				registros[1] = perspectiva.getDescripcion();
+				registros[0] = String.valueOf(perspectiva.getDescripcion());
+				registros[1] = String.valueOf(perspectiva.getOrden());
 
 				return registros;
 			}
@@ -300,10 +308,10 @@ public class CPerspectiva extends CGenerico {
 			@Override
 			protected List<Perspectiva> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código perspectiva"))
-					return servicioPerspectiva.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioPerspectiva.filtroDescripcion(valor);
+				else if (combo.equals("Orden"))
+					return servicioPerspectiva.filtroOrden(valor);
 				else
 					return servicioPerspectiva.buscar();
 			}

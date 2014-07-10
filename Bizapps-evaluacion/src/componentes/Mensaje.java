@@ -23,16 +23,16 @@ public class Mensaje {
 	public static String telefonoInvalido = "El número de Teléfono es invalido.";
 	public static String contrasennasInvalidas = "Las contraseñas no coinciden.";
 	public static String seleccionarPrograma = "Las contraseñas no coinciden.";
-	public static String codigoEmpresa = "El codigo de la empresa definido por el usuario no existe";
-	public static String codigoCargo = "El codigo del cargo definido por el usuario no existe";
-	public static String codigoUnidad = "El codigo de la unidad organizativa definido por el usuario no existe";
+	public static String codigoEmpresa = "La empresa definida por el usuario no existe";
+	public static String codigoCargo = "El cargo definido por el usuario no existe";
+	public static String codigoUnidad = "La unidad organizativa definida por el usuario no existe";
 	public static String codigoPeriodo = "El codigo del periodo definido por el usuario no existe";
 	public static String codigoArea = "El codigo del area definido por el usuario no existe";
-	public static String codigoGerencia = "El codigo de la gerencia definido por el usuario no existe";
-	public static String codigoCompetencia = "El codigo de la competencia definido por el usuario no existe";
-	public static String codigoTipoFormacion = "El codigo del tipo de formacion definido por el usuario no existe";
-	public static String codigoDominio = "El codigo del dominio definido por el usuario no existe";
-	public static String codigoSupervisor = "El codigo del supervisor definido por el usuario no existe";
+	public static String codigoGerencia = "La gerencia definida por el usuario no existe";
+	public static String codigoCompetencia = "La competencia definida por el usuario no existe";
+	public static String codigoTipoFormacion = "El tipo de formacion definido por el usuario no existe";
+	public static String codigoDominio = "El dominio definido por el usuario no existe";
+	public static String codigoSupervisor = "El supervisor definido por el usuario no existe";
 	public static String periodoActivo = "Ya existe un periodo con el estado ACTIVO";
 	public static String revisionActiva = "Ya existe una revision con el estado ACTIVO";
 

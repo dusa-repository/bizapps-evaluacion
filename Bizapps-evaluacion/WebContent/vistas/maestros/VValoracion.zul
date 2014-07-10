@@ -45,21 +45,26 @@
 					</row>
 					<row>
 						<label value="Rango inferior:" class="etiqueta" />
-						<textbox id="txtRangoInferiorValoracion"
-							width="80%" tabindex="4"
+
+						<spinner id="spnRangoInferiorValoracion"
+							constraint="no negative" width="80%" maxlength="100" tabindex="4"
 							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
 					</row>
 					<row>
 						<label value="Rango superior:" class="etiqueta" />
-						<textbox id="txtRangoSuperiorValoracion"
-							width="80%" tabindex="5"
-							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
+
+						<spinner id="spnRangoSuperiorValoracion"
+							constraint="no negative" width="80%" maxlength="100" tabindex="5"
+							tooltiptext="Ingrese aqui el rango superior de la valoracion" />
+
 					</row>
 					<row>
 						<label value="Valor:" class="etiqueta" />
-						<textbox id="txtValorValoracion" width="80%"
-							tabindex="6"
-							tooltiptext="Ingrese aqui el rango inferior de la valoracion" />
+
+						<spinner id="spnValorValoracion"
+							constraint="no negative" width="80%" maxlength="100" tabindex="6"
+							tooltiptext="Ingrese aqui el valor de la valoracion" />
+
 					</row>
 				</rows>
 			</grid>

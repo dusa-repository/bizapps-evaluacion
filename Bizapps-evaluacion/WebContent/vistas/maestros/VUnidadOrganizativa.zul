@@ -21,8 +21,7 @@
 				<rows>
 					<row>
 						<hbox>
-							<label class="etiqueta"
-								value="Código Gerencia:" />
+							<label class="etiqueta" value="Gerencia:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -34,7 +33,6 @@
 						<button id="btnBuscarGerencia" label=""
 							tooltiptext="Catalogo de codigos de gerencia"
 							image="/public/imagenes/botones/buscar.png" />
-						<label id="lblGerenciaUnidadOrganizativa" />
 					</row>
 					<row>
 						<label value="Descripción:" class="etiqueta" />
@@ -46,15 +44,17 @@
 					<row>
 						<label value="Nivel:" class="etiqueta" />
 
-						<textbox id="txtNivelUnidadOrganizativa"
-							width="100%" tabindex="3"
+						<spinner id="spnNivelUnidadOrganizativa"
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="3"
 							tooltiptext="Ingrese aqui el nivel de la unidad organizativa" />
 					</row>
 					<row>
 						<label value="Sub-Nivel:" class="etiqueta" />
 
-						<textbox id="txtSubNivelUnidadOrganizativa"
-							width="100%" tabindex="4"
+						<spinner id="spnSubNivelUnidadOrganizativa"
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="4"
 							tooltiptext="Ingrese aqui el sub-nivel de la unidad organizativa" />
 					</row>
 					<row>

@@ -258,7 +258,7 @@ public class CCompetencia extends CGenerico {
 
 	public boolean camposLLenos() {
 		if (txtDescripcionCompetencia.getText().compareTo("") == 0
-				||cmbNivelCompetencia.getText().compareTo("") == 0) {
+				|| cmbNivelCompetencia.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -286,22 +286,20 @@ public class CCompetencia extends CGenerico {
 		final List<Competencia> listCompetencia = servicioCompetencia
 				.buscarTodas();
 		catalogo = new Catalogo<Competencia>(catalogoCompetencia,
-				"Catalogo de Competencias", listCompetencia,
-				"Código competencia", "Descripción", "Nivel", "Comentario") {
+				"Catalogo de Competencias", listCompetencia, "Descripción",
+				"Nivel", "Comentario") {
 
 			@Override
 			protected List<Competencia> buscarCampos(List<String> valores) {
 				List<Competencia> lista = new ArrayList<Competencia>();
 
 				for (Competencia competencia : listCompetencia) {
-					if (String.valueOf(competencia.getId()).toLowerCase()
-							.startsWith(valores.get(0))
-							&& competencia.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))
+					if (competencia.getDescripcion().toLowerCase()
+									.startsWith(valores.get(0))
 							&& competencia.getNivel().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(1))
 							&& competencia.getComentario().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.startsWith(valores.get(2))) {
 						lista.add(competencia);
 					}
 				}
@@ -311,11 +309,10 @@ public class CCompetencia extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Competencia competencia) {
-				String[] registros = new String[4];
-				registros[0] = String.valueOf(competencia.getId());
-				registros[1] = competencia.getDescripcion();
-				registros[2] = competencia.getNivel();
-				registros[3] = competencia.getComentario();
+				String[] registros = new String[3];
+				registros[0] = competencia.getDescripcion();
+				registros[1] = competencia.getNivel();
+				registros[2] = competencia.getComentario();
 
 				return registros;
 			}
@@ -323,9 +320,7 @@ public class CCompetencia extends CGenerico {
 			@Override
 			protected List<Competencia> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Código competencia"))
-					return servicioCompetencia.filtroId(valor);
-				else if (combo.equals("Descripción"))
+				if (combo.equals("Descripción"))
 					return servicioCompetencia.filtroDescripcion(valor);
 				else if (combo.equals("Nivel"))
 					return servicioCompetencia.filtroNivel(valor);
