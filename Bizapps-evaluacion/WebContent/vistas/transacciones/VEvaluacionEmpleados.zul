@@ -66,6 +66,7 @@
 					label="Sección II - Evaluación Competencias Especificas" />
 				<tab id="tbCompromisos"
 					label="Sección III - Registros de Feedback y Establecimientos de Compromisos" />
+				<tab id="tbResultados" label="Resultados" />
 			</tabs>
 			<tabpanels>
 				<tabpanel>
@@ -80,7 +81,8 @@
 									width="33%" />
 								<listheader label="Corresponsables"
 									width="13%" />
-								<listheader label="Peso (%)" width="10%" />
+								<listheader label="Peso (%)"
+									width="10%" />
 								<!-- 								<listheader label="Total Ind(%)" -->
 								<!-- 									width="8%" /> -->
 								<listheader label="Resultados (%)"
@@ -113,18 +115,18 @@
 								</listcell>
 								<listcell>
 									<spinner placeholder="Peso"
-										constraint="min 1; max 100" mold="rounded" width="100%" id="txtPeso"
-										maxlength="3" />
+										constraint="min 1; max 100" mold="rounded" width="100%"
+										id="txtPeso" maxlength="3" />
 								</listcell>
-<!-- 								<listcell> -->
-<!-- 									<textbox value="0" -->
-<!-- 										placeholder="Total" mold="rounded" rows="1" width="100%" -->
-<!-- 										id="txtTotal" /> -->
-<!-- 								</listcell> -->
+								<!-- 								<listcell> -->
+								<!-- 									<textbox value="0" -->
+								<!-- 										placeholder="Total" mold="rounded" rows="1" width="100%" -->
+								<!-- 										id="txtTotal" /> -->
+								<!-- 								</listcell> -->
 								<listcell>
 									<textbox value="0"
 										placeholder="Resultados" mold="rounded" rows="1" width="100%"
-										id="txtResultados" disabled="true"/>
+										id="txtResultados" disabled="true" />
 								</listcell>
 								<listcell>
 									<button id="btnOk" width="auto"
@@ -154,8 +156,8 @@
 							image="/public/imagenes/botones/eliminar.png">
 
 						</button>
-							<button id="btnIr" width="auto"
-							height="auto" mold="trendy" label="Ir Indicador"
+						<button id="btnIr" width="auto" height="auto"
+							mold="trendy" label="Ir Indicador"
 							image="/public/imagenes/botones/adelante.png"
 							style="background-color:#F8E0E0;">
 						</button>
@@ -172,8 +174,7 @@
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader 
-									width="0%" />
+								<listheader width="0%" />
 								<listheader label="Resultados (%)"
 									width="10%" />
 							</listhead>
@@ -192,7 +193,7 @@
 									<listcell label="${each.peso}"></listcell>
 									<listcell>
 										<textbox
-											value="${each.totalInd}" disabled="true" visible = "false">
+											value="${each.totalInd}" disabled="true" visible="false">
 										</textbox>
 									</listcell>
 									<listcell>
@@ -287,8 +288,9 @@
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %" maxlength="3"
-										constraint="min 1; max 100" mold="rounded" width="100%" id="txtPeso1" />
+									<spinner placeholder="Peso %"
+										maxlength="3" constraint="min 1; max 100" mold="rounded"
+										width="100%" id="txtPeso1" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Valor Meta"
@@ -298,13 +300,12 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado1" value="0"
-										 />
+										id="txtValorResultado1" value="0" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant"
-										value="0"  mold="rounded" width="100%"
-										id="txtResFy" disabled="true" />
+										value="0" mold="rounded" width="100%" id="txtResFy"
+										disabled="true" />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Resultado %"
@@ -335,8 +336,17 @@
 							height="auto" image="/public/imagenes/botones/eliminar.png"
 							mold="trendy" label="Eliminar">
 						</button>
-					
+
 					</div>
+					<separator></separator>
+					<separator></separator>
+					<div align="right" height="100%">
+						<label value="Total Indicador"></label>
+						<textbox id="txttotalIndicador"
+							disabled="true">
+						</textbox>
+					</div>
+					<separator></separator>
 					<groupbox id="gpxAgregados">
 						<listbox height="auto"
 							id="lbxIndicadoresAgregados" mold="paging" pageSize="10"
@@ -378,23 +388,23 @@
 										label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<spinner  disabled= "true" inplace="true"
-											value="${each.valorResultado}">
+										<spinner disabled="true"
+											inplace="true" value="${each.valorResultado}">
 										</spinner>
 									</listcell>
 									<listcell>
-										<spinner  disabled= "true" inplace="true"
-											value="${each.resultadoFyAnterior}">
+										<spinner disabled="true"
+											inplace="true" value="${each.resultadoFyAnterior}">
 										</spinner>
 									</listcell>
 									<listcell>
-										<textbox disabled="true" inplace="true"
-											value="${each.resultadoPorc}" />
+										<textbox disabled="true"
+											inplace="true" value="${each.resultadoPorc}" />
 										<!-- 										onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
 										<textbox disabled="true"
-											value="${each.resultadoPeso}" inplace="true"/>
+											value="${each.resultadoPeso}" inplace="true" />
 									</listcell>
 								</listitem>
 							</template>
@@ -525,6 +535,54 @@
 					<separator></separator>
 					<separator></separator>
 				</tabpanel>
+				<tabpanel>
+					<separator></separator>
+					<separator></separator>
+					<grid width="100%" align="center">
+						<columns visible="true">
+							<column label="Resultados" width="25%"
+								 />
+							<column label="Distribución (%)" width="25%"
+								/>
+							<column label="Resultado (%)" width="25%"
+								 />
+							<column label="Resultado según Peso (%)"
+								width="25%"  />
+						</columns>
+						<rows>
+							<row>
+								<label value="Objetivos"
+									>
+								</label>
+								<label id="lblDistribucion"
+									>
+								</label>
+								<label id="lblResultado"
+								>
+								</label>
+								<label id="lblResultadoPeso"
+									>
+								</label>
+							</row>
+							<row>
+								<label value="Competencias"
+									>
+								</label>
+								<label id="lblDistribucion1"
+									>
+								</label>
+								<label id="lblResultado1"
+									>
+								</label>
+								<label id="lblResultadoPeso1"
+									>
+								</label>
+							</row>
+						</rows>
+					</grid>
+
+
+				</tabpanel>
 			</tabpanels>
 		</tabbox>
 		<panel border="normal" width="95%"
@@ -538,23 +596,29 @@
 						sclass="btn" label="Guardar"
 						image="/public/imagenes/botones/guardar.png">
 					</button>
-					<button id="btnEdicion" label="En Edición" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/enedicion.png">
+					<button id="btnEdicion" label="En Edición"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/enedicion.png">
 					</button>
-					<button id="btnPendiente" label="A Pendiente" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/pendiente.png">
+					<button id="btnPendiente" label="A Pendiente"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/pendiente.png">
 					</button>
-					<button id="btnRevisada" label="Revisada" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/revisada.png">
+					<button id="btnRevisada" label="Revisada"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/revisada.png">
 					</button>
-					<button id="btnAprobada" label="Aprobada" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/aprobada.png">
+					<button id="btnAprobada" label="Aprobada"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/aprobada.png">
 					</button>
-					<button id="btnCalibrada" label="Calibarada" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/calibrada.png">
+					<button id="btnCalibrada" label="Calibarada"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/calibrada.png">
 					</button>
-					<button id="btnfinalizada" label="Finalizada" visible = "false"
-						sclass="btn" tabindex="1" image="/public/imagenes/botones/finalizada.png">
+					<button id="btnfinalizada" label="Finalizada"
+						visible="false" sclass="btn" tabindex="1"
+						image="/public/imagenes/botones/finalizada.png">
 					</button>
 					<button id="btnCancelar" label="Cancelar"
 						sclass="btn" tabindex="2"

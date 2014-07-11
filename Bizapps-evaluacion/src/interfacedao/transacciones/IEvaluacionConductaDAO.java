@@ -19,4 +19,5 @@ public interface IEvaluacionConductaDAO extends JpaRepository<EvaluacionConducta
 	public EvaluacionConducta buscar(Integer id);
 
 	public EvaluacionConducta findByEvaluacionAndConductaCompetencia (Evaluacion eva, ConductaCompetencia cc);
+
 }

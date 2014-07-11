@@ -262,7 +262,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 					btnEliminarIndicador.setVisible(false);
 					btnCambiarEstado.setVisible(false);
 					btnCancelar.setVisible(true);
-					btnCalcular.setVisible(false);
+
 				}
 				txtCompromisos.setValue(evaluacion.getCompromisos());
 				txtFortalezas.setValue(evaluacion.getFortalezas());

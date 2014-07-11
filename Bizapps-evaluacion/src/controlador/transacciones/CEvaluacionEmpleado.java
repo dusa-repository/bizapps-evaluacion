@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -166,6 +167,18 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Label lblGerencia;
 	@Wire
+	private Label lblDistribucion;
+	@Wire
+	private Label lblDistribucion1;
+	@Wire
+	private Label lblResultado;
+	@Wire
+	private Label lblResultado1;
+	@Wire
+	private Label lblResultadoPeso;
+	@Wire
+	private Label lblResultadoPeso1;
+	@Wire
 	private Combobox cmbNivelRequerido;
 	@Wire
 	private Combobox cmbUnidad;
@@ -180,7 +193,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Tab tbIndicadores;
 	@Wire
-	private Button btnEnEdicion;
+	private Button btnEdicion;
 	@Wire
 	private Button btnPendiente;
 	@Wire
@@ -195,6 +208,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Button btnCambiarEstado;
 	@Wire
 	private Button btnGuardarCompromisos;
+	NumberFormat numberFormat = NumberFormat.getInstance();
+	
 
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
@@ -225,6 +240,19 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static int idIndicadorE;
 	private static int idObjetivoE;
 	public static EvaluacionObjetivo ev;
+	public static Double totalCompetencia = 0.0;
+	public static Double totalConducta = 0.0;
+	public static Double calculo = 0.0;
+	public static Double porcentaje = 0.0;
+	public static Double totalCompetencia1 = 0.0;
+	public static Double totalConducta1 = 0.0;
+	public static Double calculo1 = 0.0;
+	public static Double porcentaje1 = 0.0;
+	public static Double resultadoCompetencia = 0.0;
+	public static Double resultadoPesoCompetencia = 0.0;
+	public static Double resultadoPesoObjetivo = 0.0;
+	List<NivelCompetenciaCargo> nivelCompetencia = new ArrayList<NivelCompetenciaCargo>();
+	List<NivelCompetenciaCargo> nivelCompetencia1 = new ArrayList<NivelCompetenciaCargo>();
 
 	@Override
 	public void inicializar() throws IOException {
@@ -312,6 +340,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 							.equals("RECTORAS")) {
 						nivelRectoras = nivel.get(j);
 						nivel2.add(nivelRectoras);
+						nivelCompetencia = nivel2;
 					} else {
 						nivel.remove(j);
 					}
@@ -326,6 +355,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 							.equals("ESPECIFICAS")) {
 						nivelEspecificas = nivel4.get(j);
 						nivel3.add(nivelEspecificas);
+						nivelCompetencia1 = nivel3;
 					} else {
 						nivel4.remove(j);
 					}
@@ -348,7 +378,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")) {
 					btnPendiente.setVisible(true);
 				} else if (evaluacion.getEstadoEvaluacion().equals("PENDIENTE")) {
-					btnEnEdicion.setVisible(true);
+					btnEdicion.setVisible(true);
 					btnRevisada.setVisible(true);
 				} else if (evaluacion.getEstadoEvaluacion().equals("REVISADA")) {
 					btnPendiente.setVisible(true);
@@ -373,16 +403,137 @@ public class CEvaluacionEmpleado extends CGenerico {
 					mostrarDominioRectora();
 					mostrarDominioEspecifica();
 				}
-			}
-		}
-	}
+				
+				//CALCULO DE COMPETENCIAS RECTORAS
+				List<EvaluacionConducta> ecc = new ArrayList<EvaluacionConducta>();
+				EvaluacionConducta e = new EvaluacionConducta();
+				for (int i = 0; i < nivelCompetencia.size(); i++) {
+					ecc.removeAll(ecc);
+					System.out.println(nivelCompetencia.size());
+					Competencia competencia = nivelCompetencia.get(i).getCompetencia();
+					EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia);
+					System.out.println("size1"+ec);
 
-	// public Double getCambio() {
-	// evaluarIndicadores ();
-	// return cambio;
-	//
-	// }
-	
+					if (ec != null){
+					List<EvaluacionConducta> evco = servicioEvaluacionConducta.buscarConductas(idEva);
+					
+					for (int j = 0; j < evco.size(); j++) {
+						int idCompetencia = evco.get(j).getCompetencia().getId();
+						if (idCompetencia == competencia.getId()) {
+							e = evco.get(j);
+							ecc.add(e);
+						} 
+					}
+					
+					
+					porcentaje = ecc.size() * 0.20;
+					System.out.println("ecc"+ecc.size());
+					System.out.println("por"+porcentaje);
+					if (ec!= null){
+					int idDominioEvidenciado = ec.getIdDominio();
+					int idDominioRequerido = nivelCompetencia.get(i).getDominio().getId();
+					if (idDominioRequerido == 6){
+						idDominioRequerido = 1;
+					}
+					if (idDominioRequerido == 7){
+						idDominioRequerido = 2;
+					}
+					if (idDominioRequerido == 8){
+						idDominioRequerido = 3;
+					}
+					if (idDominioRequerido == 9){
+						idDominioRequerido = 4;
+					}
+					System.out.println(idDominioEvidenciado);
+					System.out.println(idDominioRequerido);
+					calculo = calculo + (porcentaje * idDominioEvidenciado);
+					totalCompetencia = idDominioRequerido + totalCompetencia;
+					System.out.println("cal"+calculo);
+					System.out.println("tc"+totalCompetencia);
+					}
+					
+					
+				}
+				
+				totalConducta =  (calculo * 100)/ totalCompetencia;
+				System.out.println("t"+totalConducta);
+			}
+			//CALCULO DE COMPETENCIAS ESPECIFICAS 
+				
+				List<EvaluacionConducta> ecc1 = new ArrayList<EvaluacionConducta>();
+				EvaluacionConducta e1 = new EvaluacionConducta();
+				for (int i = 0; i < nivelCompetencia1.size(); i++) {
+					ecc1.removeAll(ecc1);
+					System.out.println(nivelCompetencia1.size());
+					Competencia competencia = nivelCompetencia.get(i).getCompetencia();
+					EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia);
+					System.out.println("size1"+ec);
+
+					if (ec != null){
+					List<EvaluacionConducta> evco = servicioEvaluacionConducta.buscarConductas(idEva);
+					
+					for (int j = 0; j < evco.size(); j++) {
+						int idCompetencia = evco.get(j).getCompetencia().getId();
+						if (idCompetencia == competencia.getId()) {
+							e1 = evco.get(j);
+							ecc1.add(e);
+						} 
+					}
+					
+					
+					porcentaje1 = ecc1.size() * 0.20;
+					System.out.println("ecc1"+ecc.size());
+					System.out.println("por1"+porcentaje);
+					if (ec!= null){
+					int idDominioEvidenciado = ec.getIdDominio();
+					int idDominioRequerido = nivelCompetencia.get(i).getDominio().getId();
+					if (idDominioRequerido == 6){
+						idDominioRequerido = 1;
+					}
+					if (idDominioRequerido == 7){
+						idDominioRequerido = 2;
+					}
+					if (idDominioRequerido == 8){
+						idDominioRequerido = 3;
+					}
+					if (idDominioRequerido == 9){
+						idDominioRequerido = 4;
+					}
+					System.out.println(idDominioEvidenciado);
+					System.out.println(idDominioRequerido);
+					calculo1 = calculo1 + (porcentaje1 * idDominioEvidenciado);
+					totalCompetencia1 = idDominioRequerido + totalCompetencia1;
+					System.out.println("cal"+calculo1);
+					System.out.println("tc"+totalCompetencia1);
+					}
+					
+					
+				}
+				
+				totalConducta1 =  (calculo1 * 100)/ totalCompetencia1;
+				System.out.println("t"+totalConducta1);
+			}
+				resultadoCompetencia = (totalConducta + totalConducta1)/ 2;
+				numberFormat.format(resultadoCompetencia);
+				System.out.println(resultadoCompetencia);
+			}
+			String r = String.valueOf(resultadoCompetencia);
+			int resul = evaluacion1.getResultadoObjetivos();
+			String o = String.valueOf(evaluacion1.getResultadoObjetivos());
+			Double resul1 = Double.parseDouble(o);
+			lblResultado.setValue(o);
+			lblResultado1.setValue(r);
+			lblDistribucion.setValue("60");
+			lblDistribucion1.setValue("40");
+			resultadoPesoCompetencia = (40 * resultadoCompetencia)/100;
+			resultadoPesoObjetivo = (60 * resul1)/100;
+			lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
+			lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
+			
+			}
+		
+		}
+
 	@Listen("onClick = #tbIndicadores")
 	public void mostrarObjetivos() {
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
@@ -477,6 +628,16 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 
 		}
+//		for (int i = 0; i < conductas.size(); i++) {
+//			int idCompetencia = conductas.get(i).getId();
+//			Competencia competencia1 = servicioCompetencia.buscarCompetencia(idCompetencia);
+//			List<EvaluacionConducta> econd = servicioEvaluacionConducta.buscarConductasCompetencia(idCompetencia);
+//			
+//			for (int j = 0; j < econd.size(); j++) {
+//				int idConducta= econd.get(j).getConductaCompetencia().getId();
+//			}
+//			EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia1);
+//			int idDom = ec.getIdDominio(); 
 
 	}
 
@@ -736,6 +897,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 		}
 		guardarIndicadores();
+	
 		totalObjetivo = 0.0;
 		totalInd = 0.0;
 		total = 0.0;

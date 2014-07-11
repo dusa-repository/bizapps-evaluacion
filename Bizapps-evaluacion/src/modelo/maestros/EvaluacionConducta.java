@@ -28,7 +28,11 @@ public class EvaluacionConducta implements Serializable {
 	@JoinColumn(name = "id_conducta", referencedColumnName = "id_conducta")
 	private ConductaCompetencia conductaCompetencia;
 	
-
+	
+	@ManyToOne
+	@JoinColumn(name = "id_competencia")
+	private Competencia competencia;
+	
 	private String observacion;
 
 	private boolean valor;
@@ -72,5 +76,16 @@ public class EvaluacionConducta implements Serializable {
 	public void setValor(boolean valor) {
 		this.valor = valor;
 	}
+
+
+	public Competencia getCompetencia() {
+		return competencia;
+	}
+
+
+	public void setCompetencia(Competencia competencia) {
+		this.competencia = competencia;
+	}
+	
 
 }
