@@ -347,7 +347,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 
 				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")) {
-					btnPendiente.setVisible(true);
+					btnPendiente.setVisible(false);
 				} else if (evaluacion.getEstadoEvaluacion().equals("PENDIENTE")) {
 					btnEnEdicion.setVisible(true);
 					btnRevisada.setVisible(true);
@@ -424,6 +424,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnCancelarI")
 	public void cerrarPanelI() {
+		idIndicador=0;
+		limpiarI();
 		gpxAgregarIndicador.setOpen(false);
 	}
 
@@ -532,9 +534,23 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
 	}
+	
+	public void limpiarI() {
+		txtIndicador.setValue("");
+		txtPesoPorc.setValue(0);
+		txtResFy.setValue(0);
+		txtResultadoPorc.setValue(0);
+		txtValorMeta.setValue(null);
+		txtValorResultado.setValue(0);
+		//cmbMedicion.setValue(null);
+		//cmbUnidad.setValue(null);
+		txtPeso1.setValue(null);
+	}
 
 	@Listen("onClick = #btnAgregarIndicador")
 	public void AgregarIndicador() {
+		idIndicador=0;
+		limpiarI();
 		gpxAgregarIndicador.setOpen(true);
 	}
 

@@ -255,8 +255,8 @@ public class CNivelCompetenciaCargo extends CGenerico {
 							Cargo cargo = servicioCargo.buscarCargo(idCargo);
 							Competencia competencia = servicioCompetencia
 									.buscarCompetencia(codigoCompetencia);
-							Dominio dominio = servicioDominio
-									.buscarPorNombre(tipoDominio);
+							//Dominio dominio = servicioDominio.buscarPorNombre(tipoDominio);
+							Dominio dominio = servicioDominio.buscarPorNombreTipo("REQUERIDO",tipoDominio);
 							NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
 									competencia, cargo, dominio);
 							servicioNivelCompetenciaCargo.guardar(nivel);

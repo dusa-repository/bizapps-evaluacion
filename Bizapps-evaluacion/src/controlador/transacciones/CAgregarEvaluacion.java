@@ -330,6 +330,8 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCancelarI")
 	public void cerrarPanelI() {
+		idIndicador=0;
+		limpiarI();
 		gpxAgregarIndicador.setOpen(false);
 	}
 
@@ -454,14 +456,19 @@ public class CAgregarEvaluacion extends CGenerico {
 		txtResultadoPorc.setValue(0);
 		txtValorMeta.setValue(null);
 		txtValorResultado.setValue(0);
-		cmbMedicion.setValue(null);
-		cmbUnidad.setValue(null);
+		//cmbMedicion.setValue(null);
+		//cmbUnidad.setValue(null);
 		txtPeso1.setValue(null);
 	}
 
 	@Listen("onClick = #btnAgregarIndicador")
 	public void AgregarIndicador() {
+	
+		idIndicador=0;
+		limpiarI();
 		gpxAgregarIndicador.setOpen(true);
+		
+
 	}
 
 	@Listen("onClick = #btnOk2")
@@ -536,7 +543,7 @@ public class CAgregarEvaluacion extends CGenerico {
 						+ "ha sido guardado exitosamente", "Información",
 						Messagebox.OK, Messagebox.INFORMATION);
 				gpxAgregarIndicador.setOpen(false);
-
+				idIndicador=0;
 				limpiarI();
 			}
 		}

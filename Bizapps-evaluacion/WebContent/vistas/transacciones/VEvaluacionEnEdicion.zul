@@ -580,7 +580,7 @@
 						visible="false" sclass="btn" tabindex="1"
 						image="/public/imagenes/botones/finalizada.png">
 					</button>
-					<button id="btnCancelar" label="Cancelar"
+					<button id="btnCancelar" label="Salir"
 						sclass="btn" tabindex="2"
 						image="/public/imagenes/botones/cancelar.png">
 					</button>

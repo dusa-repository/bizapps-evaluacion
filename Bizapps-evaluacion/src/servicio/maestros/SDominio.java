@@ -37,6 +37,13 @@ public class SDominio {
 		return dominio;
 	}
 	
+	/* Servicio que permite buscar un dominio de acuerdo al nombre */
+	public Dominio buscarPorNombreTipo(String descripcion,String tipo) {
+		Dominio dominio;
+		dominio = dominioDAO.findByDescripcionDominioAndTipo(descripcion,tipo);
+		return dominio;
+	}
+	
 	/* Servicio que permite buscar todos los dominios */
 	public List<Dominio> buscarTodos() {
 		return dominioDAO.findAll();

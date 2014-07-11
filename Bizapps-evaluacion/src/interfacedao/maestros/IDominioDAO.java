@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface IDominioDAO extends JpaRepository<Dominio, Integer> {
 
 	Dominio findByDescripcionDominio(String descripcion);
+	
+	Dominio findByDescripcionDominioAndTipo(String descripcion,String tipo);
 
 	public List<Dominio> findByTipo(String tipo);
 
