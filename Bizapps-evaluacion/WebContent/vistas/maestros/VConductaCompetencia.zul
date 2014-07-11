@@ -31,9 +31,9 @@
 						</hbox>
 						<textbox id="txtCompetenciaConductaCompetencia"
 							width="100%" tabindex="1" maxlength="100"
-							tooltiptext="Ingrese el codigo del area" />
+							tooltiptext="Ingrese aqui la competencia" />
 						<button id="btnBuscarCompetencia" label=""
-							tooltiptext="Catalogo de codigos de competencia"
+							tooltiptext="Catalogo de competencias"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -47,9 +47,9 @@
 						</hbox>
 						<textbox id="txtDominioConductaCompetencia"
 							width="100%" tabindex="2" maxlength="100"
-							tooltiptext="Ingrese el codigo del area" />
+							tooltiptext="Ingrese el dominio" />
 						<button id="btnBuscarDominio" label=""
-							tooltiptext="Catalogo de codigos de dominio"
+							tooltiptext="Catalogo de dominios"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -57,7 +57,7 @@
 
 						<textbox id="txtDescripcionConductaCompetencia"
 							rows="3" cols="100" width="100%" maxlength="255" tabindex="3"
-							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
+							tooltiptext="Ingrese aqui la descripcion" />
 					</row>
 					<row>
 						<label value="Orden:" class="etiqueta" />
@@ -74,15 +74,15 @@
 		<groupbox id="gpxDatosConductaCompetencia" width="auto"
 			title="">
 			<caption label="Registros" style="font-weight:bold"
-				tooltiptext="Presione para visua+lizar las gerencias registradas" />
+				tooltiptext="Presione para visua+lizar las conductas registradas" />
 			<div id="catalogoConductaCompetencia"
-				tooltiptext="Seleccione la gerencia para realizar una accion" />
+				tooltiptext="Seleccione la conducta para realizar una accion" />
 		</groupbox>
 		<separator />
 		<separator />
 	</groupbox>
 	<div id="divCatalogoCompetencia"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar una competencia" />
 	<div id="divCatalogoDominio"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar un dominio" />
 </window>

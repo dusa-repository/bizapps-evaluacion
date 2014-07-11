@@ -29,9 +29,9 @@
 						</hbox>
 						<textbox id="txtPeriodoRevision" tabindex="1"
 							width="100%" maxlength="100"
-							tooltiptext="Ingrese el codigo del periodo" />
+							tooltiptext="Ingrese aqui el periodo" />
 						<button id="btnBuscarPeriodo" label=""
-							tooltiptext="Catalogo de codigos de periodos"
+							tooltiptext="Catalogo de periodos"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -74,5 +74,5 @@
 		<separator />
 	</groupbox>
 	<div id="divCatalogoPeriodo"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar un periodo" />
 </window>

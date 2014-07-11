@@ -48,9 +48,9 @@
 						</hbox>
 						<textbox id="txtCargoNivelCompetenciaCargo"
 							tabindex="1" width="100%" maxlength="100"
-							tooltiptext="Ingrese el nombre del cargo" />
+							tooltiptext="Ingrese aqui el nombre del cargo" />
 						<button id="btnBuscarCargo" label=""
-							tooltiptext="Catalogo de codigos de cargo"
+							tooltiptext="Catalogo de cargos"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 				</rows>

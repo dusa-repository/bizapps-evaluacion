@@ -29,9 +29,9 @@
 						</hbox>
 						<textbox id="txtGerenciaUnidadOrganizativa"
 							tabindex="1" width="100%" maxlength="100"
-							tooltiptext="Ingrese el codigo de la gerencia" />
+							tooltiptext="Ingrese aqui la gerencia" />
 						<button id="btnBuscarGerencia" label=""
-							tooltiptext="Catalogo de codigos de gerencia"
+							tooltiptext="Catalogo de gerencias"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -90,5 +90,5 @@
 		<separator />
 	</groupbox>
 	<div id="divCatalogoGerencia"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar una gerencia" />
 </window>

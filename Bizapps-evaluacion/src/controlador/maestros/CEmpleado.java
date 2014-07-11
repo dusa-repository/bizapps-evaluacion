@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
@@ -41,7 +42,15 @@ public class CEmpleado extends CGenerico {
 	@Wire
 	private Groupbox gpxRegistroEmpleado;
 	@Wire
+	private Textbox txtCedulaEmpleado;
+	@Wire
 	private Textbox txtNombreEmpleado;
+	@Wire
+	private Combobox cmbNivelAcademicoEmpleado;
+	@Wire
+	private Textbox txtEspecialidadEmpleado;
+	@Wire
+	private Textbox txtEspecializacionEmpleado;
 	@Wire
 	private Textbox txtEmpresaEmpleado;
 	@Wire
@@ -119,7 +128,14 @@ public class CEmpleado extends CGenerico {
 								.getDescripcion());
 						txtUnidadEmpleado.setValue(empleado
 								.getUnidadOrganizativa().getDescripcion());
+						txtCedulaEmpleado.setValue(empleado.getCedula());
 						txtNombreEmpleado.setValue(empleado.getNombre());
+						cmbNivelAcademicoEmpleado.setValue(empleado
+								.getNivelAcademico());
+						txtEspecialidadEmpleado.setValue(empleado
+								.getEspecialidad());
+						txtEspecializacionEmpleado.setValue(empleado
+								.getEspecializacion());
 						txtFichaEmpleado.setValue(empleado.getFicha());
 						Empleado fichaSupervisor = servicioEmpleado
 								.buscar(Integer.parseInt(empleado
@@ -158,6 +174,13 @@ public class CEmpleado extends CGenerico {
 							&& unidadOrganizativa != null
 							&& fichaSupervisorEmpleado != null) {
 						String nombre = txtNombreEmpleado.getValue();
+						String cedula = txtCedulaEmpleado.getValue();
+						String nivelAcademico = cmbNivelAcademicoEmpleado
+								.getValue();
+						String especialidad = txtEspecialidadEmpleado
+								.getValue();
+						String especializacion = txtEspecializacionEmpleado
+								.getValue();
 						String ficha = txtFichaEmpleado.getValue();
 						String fichaSupervisor = String
 								.valueOf(fichaSupervisorEmpleado.getId());
@@ -167,8 +190,9 @@ public class CEmpleado extends CGenerico {
 								new Date().getTime());
 						Empleado empleado = new Empleado(idEmpleado,
 								fechaAuditoria, ficha, fichaSupervisor,
-								gradoAuxiliar, horaAuditoria, nombre, usuario,
-								cargo, empresa, unidadOrganizativa);
+								gradoAuxiliar, nivelAcademico, especialidad,
+								especializacion, horaAuditoria, nombre, cedula,
+								usuario, cargo, empresa, unidadOrganizativa);
 						servicioEmpleado.guardar(empleado);
 						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
@@ -280,6 +304,10 @@ public class CEmpleado extends CGenerico {
 		idUnidad = 0;
 		idFichaSupervisor = 0;
 		txtNombreEmpleado.setValue("");
+		txtCedulaEmpleado.setValue("");
+		cmbNivelAcademicoEmpleado.setValue("");
+		txtEspecialidadEmpleado.setValue("");
+		txtEspecializacionEmpleado.setValue("");
 		txtEmpresaEmpleado.setValue("");
 		spnGradoAuxiliarEmpleado.setValue(null);
 		txtCargoEmpleado.setValue("");
@@ -297,6 +325,10 @@ public class CEmpleado extends CGenerico {
 				|| txtCargoEmpleado.getText().compareTo("") != 0
 				|| txtUnidadEmpleado.getText().compareTo("") != 0
 				|| txtNombreEmpleado.getText().compareTo("") != 0
+				|| txtCedulaEmpleado.getText().compareTo("") != 0
+				|| cmbNivelAcademicoEmpleado.getText().compareTo("") != 0
+				|| txtEspecialidadEmpleado.getText().compareTo("") != 0
+				|| txtEspecializacionEmpleado.getText().compareTo("") != 0
 				|| txtFichaEmpleado.getText().compareTo("") != 0
 				|| txtFichaSupervisorEmpleado.getText().compareTo("") != 0
 				|| spnGradoAuxiliarEmpleado.getText().compareTo("") != 0) {

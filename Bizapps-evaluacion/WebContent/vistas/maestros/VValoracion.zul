@@ -35,7 +35,7 @@
 						<label value="Descripción:" class="etiqueta" />
 						<textbox id="txtDescripcionValoracion" rows="3"
 							cols="100" width="80%" maxlength="500" tabindex="2"
-							tooltiptext="Ingrese aqui la descripcion de la gerencia" />
+							tooltiptext="Ingrese aqui la descripcion de la valoracion" />
 					</row>
 					<row>
 						<label value="Orden:" class="etiqueta" />
@@ -73,9 +73,9 @@
 		<separator />
 		<groupbox id="gpxDatosValoracion" width="auto" title="">
 			<caption label="Registros" style="font-weight:bold"
-				tooltiptext="Presione para visua+lizar las gerencias registradas" />
+				tooltiptext="Presione para visualizar las valoraciones registradas" />
 			<div id="catalogoValoracion"
-				tooltiptext="Seleccione la gerencia para realizar una accion" />
+				tooltiptext="Seleccione la valoracion para realizar una accion" />
 		</groupbox>
 		<separator />
 		<separator />

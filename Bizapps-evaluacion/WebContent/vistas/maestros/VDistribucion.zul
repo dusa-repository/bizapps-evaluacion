@@ -1,0 +1,57 @@
+<window id="wdwVDistribucion" border="normal" height="auto"
+	style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraDistribucion" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroDistribucion" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar una nueva distribucion" />
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="55%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtDescripcionDistribucion"
+							width="90%" maxlength="100" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion de la distribucion" />
+					</row>
+					<row>
+						<label value="Porcentaje:" class="etiqueta" />
+
+						<spinner id="txtPorcentajeDistribucion"
+							width="90%" maxlength="100" tabindex="2" constraint="no negative"
+							tooltiptext="Ingrese aqui el porcentaje de la distribucion" />
+					</row>
+
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosDistribucion" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar las distribuciones registradas" />
+			<div id="catalogoDistribucion"
+				tooltiptext="Seleccione la distribucion para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

@@ -29,9 +29,9 @@
 						</hbox>
 						<textbox id="txtEmpresaEmpleado" tabindex="1"
 							width="100%" maxlength="100"
-							tooltiptext="Ingrese el codigo de la empresa" />
+							tooltiptext="Ingrese aqui la empresa" />
 						<button id="btnBuscarEmpresa" label=""
-							tooltiptext="Catalogo de codigos de empresas"
+							tooltiptext="Catalogo de empresas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -44,9 +44,9 @@
 						</hbox>
 						<textbox id="txtCargoEmpleado" width="100%"
 							tabindex="2" maxlength="100"
-							tooltiptext="Ingrese el codigo del cargo" />
+							tooltiptext="Ingrese aqui el cargo" />
 						<button id="btnBuscarCargo" label=""
-							tooltiptext="Catalogo de codigos de cargos"
+							tooltiptext="Catalogo de cargos"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -60,23 +60,61 @@
 						</hbox>
 						<textbox id="txtUnidadEmpleado" width="100%"
 							tabindex="3" maxlength="100"
-							tooltiptext="Ingrese el codigo del cargo" />
+							tooltiptext="Ingrese aqui la unidad organizativa" />
 						<button id="btnBuscarUnidad" label=""
-							tooltiptext="Catalogo de codigos de cargos"
+							tooltiptext="Catalogo de unidades organizativas"
 							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<label value="Cédula:" class="etiqueta" />
+
+						<textbox id="txtCedulaEmpleado" width="100%"
+							maxlength="8" tabindex="4"
+							tooltiptext="Ingrese aqui la cedula del empleado" />
 					</row>
 					<row>
 						<label value="Nombre:" class="etiqueta" />
 
 						<textbox id="txtNombreEmpleado" width="100%"
-							maxlength="100" tabindex="4"
+							maxlength="100" tabindex="5"
 							tooltiptext="Ingrese aqui el nombre del empleado" />
+					</row>
+					<row>
+						<label value="Nivel Académico:"
+							class="etiqueta" />
+
+						<combobox id="cmbNivelAcademicoEmpleado"
+							readonly="true"
+							tooltiptext="Seleccione el nivel academico del empleado"
+							width="100%" tabindex="6">
+							<comboitem label="PRIMARIA" />
+							<comboitem label="BACHILLER" />
+							<comboitem label="TECNICO MEDIO" />
+							<comboitem label="APRENDIZ I.N.C.E.S" />
+							<comboitem
+								label="PROFESIONAL UNIVERSITARIO" />
+						</combobox>
+					</row>
+					<row>
+						<label value="Especialidad:" class="etiqueta" />
+
+						<textbox id="txtEspecialidadEmpleado"
+							width="100%" maxlength="100" tabindex="7"
+							tooltiptext="Ingrese aqui la especialidad del empleado" />
+					</row>
+					<row>
+						<label value="Especialización:"
+							class="etiqueta" />
+
+						<textbox id="txtEspecializacionEmpleado" rows="3" cols="100"
+							width="100%" maxlength="100" tabindex="8"
+							tooltiptext="Ingrese aqui la especializacion del empleado" />
 					</row>
 					<row>
 						<label value="Ficha:" class="etiqueta" />
 
 						<textbox id="txtFichaEmpleado" width="100%"
-							maxlength="100" tabindex="5"
+							maxlength="100" tabindex="9"
 							tooltiptext="Ingrese aqui la ficha del empleado" />
 					</row>
 					<row>
@@ -90,10 +128,10 @@
 						</hbox>
 
 						<textbox id="txtFichaSupervisorEmpleado"
-							tabindex="6" width="100%" maxlength="100"
+							tabindex="10" width="100%" maxlength="100"
 							tooltiptext="Ingrese aqui la ficha del supervisor del empleado" />
 						<button id="btnBuscarSupervisor" label=""
-							tooltiptext="Catalogo de codigos de empleados"
+							tooltiptext="Catalogo de empleados"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -101,7 +139,7 @@
 
 						<spinner id="spnGradoAuxiliarEmpleado"
 							constraint="no negative" width="100%" maxlength="100"
-							tabindex="7"
+							tabindex="11"
 							tooltiptext="Ingrese aqui el grado auxiliar del empleado" />
 					</row>
 				</rows>
@@ -111,19 +149,19 @@
 		<separator />
 		<groupbox id="gpxDatosEmpleado" width="auto" title="">
 			<caption label="Registros" style="font-weight:bold"
-				tooltiptext="Presione para visualizar los tipos de formacion registrados" />
+				tooltiptext="Presione para visualizar los empleados registrados" />
 			<div id="catalogoEmpleado"
-				tooltiptext="Seleccione el tipo de formacion para realizar una accion" />
+				tooltiptext="Seleccione el empleado para realizar una accion" />
 		</groupbox>
 		<separator />
 		<separator />
 	</groupbox>
 	<div id="divCatalogoEmpresa"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar una empresa" />
 	<div id="divCatalogoCargo"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar un Cargo" />
 	<div id="divCatalogoUnidad"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar una unidad organizativa" />
 	<div id="divCatalogoSupervisor"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar la ficha del supervisor" />
 </window>

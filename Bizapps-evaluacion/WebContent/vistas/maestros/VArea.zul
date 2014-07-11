@@ -29,9 +29,9 @@
 						</hbox>
 						<textbox id="txtTipoFormacionArea" tabindex="1"
 							width="100%" maxlength="100"
-							tooltiptext="Ingrese el codigo del tipo de formacion" />
+							tooltiptext="Ingrese aqui el tipo de formacion" />
 						<button id="btnBuscarTipoFormacion" label=""
-							tooltiptext="Catalogo de codigos de tipo de formacion"
+							tooltiptext="Catalogo de tipos de formacion"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -56,5 +56,5 @@
 		<separator />
 	</groupbox>
 	<div id="divCatalogoTipoFormacion"
-		tooltiptext="Click para Seleccionar un Codigo" />
+		tooltiptext="Click para Seleccionar un tipo de formacion" />
 </window>
