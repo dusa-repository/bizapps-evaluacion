@@ -122,6 +122,7 @@ public class CConductaCompetencia extends CGenerico {
 
 					if (competencia != null && dominio != null) {
 
+						System.out.println("Entre en el if");
 						String descripcion = txtDescripcionConductaCompetencia
 								.getValue();
 						int orden = Integer.valueOf(spnOrdenConductaCompetencia
@@ -417,10 +418,10 @@ public class CConductaCompetencia extends CGenerico {
 		if (dominios.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoDominio);
 			txtDominioConductaCompetencia.setFocus(true);
-		}else{
-			
+		} else {
+
 			idDominio = dominios.get(0).getId();
-			
+
 		}
 
 	}

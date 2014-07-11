@@ -35,6 +35,7 @@ public class Mensaje {
 	public static String codigoSupervisor = "El supervisor definido por el usuario no existe";
 	public static String periodoActivo = "Ya existe un periodo con el estado ACTIVO";
 	public static String revisionActiva = "Ya existe una revision con el estado ACTIVO";
+	public static String noSeleccionoCompetencia = "No ha seleccionado ninguna competencia";
 
 	public static String seleccionarEmpresa = "Debe seleccionar una Empresa";
 	public static String seleccionarPeriodo = "Debe seleccionar un Periodo";

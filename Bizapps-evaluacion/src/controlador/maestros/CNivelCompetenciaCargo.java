@@ -171,6 +171,23 @@ public class CNivelCompetenciaCargo extends CGenerico {
 		txtCargoNivelCompetenciaCargo.setFocus(true);
 	}
 
+	public boolean camposLLenos() {
+		if (txtCargoNivelCompetenciaCargo.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
 	@Listen("onClick = #btnSalir")
 	public void salir() {
 
@@ -188,28 +205,80 @@ public class CNivelCompetenciaCargo extends CGenerico {
 		lsbCompetencia.setCheckmark(true);
 	}
 
+	public List<Competencia> obtenerSeleccionados() {
+		List<Competencia> valores = new ArrayList<Competencia>();
+		boolean entro = false;
+		if (lsbCompetencia.getItemCount() != 0) {
+			final List<Listitem> list1 = lsbCompetencia.getItems();
+			for (int i = 0; i < list1.size(); i++) {
+				if (list1.get(i).isSelected()) {
+					Competencia competencia = list1.get(i).getValue();
+					entro = true;
+					valores.add(competencia);
+				}
+			}
+			if (!entro) {
+				valores.clear();
+				return valores;
+			}
+			return valores;
+		} else
+			return null;
+	}
+
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
 
-		if (lsbCompetencia.getItemCount() != 0) {
-			for (int i = 0; i < lsbCompetencia.getItemCount(); i++) {
-				Listitem listItem = lsbCompetencia.getItemAtIndex(i);
-				int codigoCompetencia = ((Intbox) ((listItem.getChildren()
-						.get(0))).getFirstChild()).getValue();
-				String tipoDominio = ((Combobox) ((listItem.getChildren()
-						.get(4))).getFirstChild()).getValue();
+		boolean guardar = true;
+		guardar = validar();
+		if (guardar) {
 
-				Cargo cargo = servicioCargo.buscarCargo(idCargo);
-				Competencia competencia = servicioCompetencia
-						.buscarCompetencia(codigoCompetencia);
-				Dominio dominio = servicioDominio.buscarPorNombre(tipoDominio);
-				NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
-						competencia, cargo, dominio);
-				servicioNivelCompetenciaCargo.guardar(nivel);
-				msj.mensajeInformacion(Mensaje.guardado);
-				limpiarCampos();
+			Cargo cargoEmpleado = servicioCargo.buscarCargo(idCargo);
+
+			if (cargoEmpleado != null) {
+
+				System.out.println(lsbCompetencia.getItemCount());
+
+				if (obtenerSeleccionados().size() != 0) {
+
+					if (lsbCompetencia.getItemCount() != 0) {
+						for (int i = 0; i < lsbCompetencia.getItemCount(); i++) {
+							Listitem listItem = lsbCompetencia
+									.getItemAtIndex(i);
+							int codigoCompetencia = ((Intbox) ((listItem
+									.getChildren().get(0))).getFirstChild())
+									.getValue();
+							String tipoDominio = ((Combobox) ((listItem
+									.getChildren().get(4))).getFirstChild())
+									.getValue();
+
+							Cargo cargo = servicioCargo.buscarCargo(idCargo);
+							Competencia competencia = servicioCompetencia
+									.buscarCompetencia(codigoCompetencia);
+							Dominio dominio = servicioDominio
+									.buscarPorNombre(tipoDominio);
+							NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
+									competencia, cargo, dominio);
+							servicioNivelCompetenciaCargo.guardar(nivel);
+							msj.mensajeInformacion(Mensaje.guardado);
+							limpiarCampos();
+
+						}
+					}
+
+				} else {
+
+					msj.mensajeAlerta(Mensaje.noSeleccionoCompetencia);
+					txtCargoNivelCompetenciaCargo.setFocus(true);
+				}
+
+			} else {
+
+				msj.mensajeAlerta(Mensaje.codigoCargo);
+				txtCargoNivelCompetenciaCargo.setFocus(true);
 
 			}
+
 		}
 
 	}
