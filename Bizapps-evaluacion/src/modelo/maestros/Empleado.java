@@ -7,78 +7,94 @@ import modelo.seguridad.Usuario;
 
 import java.sql.Timestamp;
 
-
 /**
  * The persistent class for the empleado database table.
  * 
  */
 @Entity
-@Table(name="empleado")
+@Table(name = "empleado")
 public class Empleado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_empleado")
+	@Column(name = "id_empleado")
 	private int id;
 
-	@Column(name="fecha_auditoria")
+	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
-	@Column(name="ficha")
+	@Column(name = "ficha")
 	private String ficha;
 
-	@Column(name="ficha_supervisor")
+	@Column(name = "ficha_supervisor")
 	private String fichaSupervisor;
 
-	@Column(name="grado_auxiliar")
+	@Column(name = "grado_auxiliar")
 	private int gradoAuxiliar;
 
-	@Column(name="hora_auditoria")
+	@Column(name = "nivel_academico")
+	private String nivelAcademico;
+
+	@Column(name = "especialidad")
+	private String especialidad;
+
+	@Column(name = "especializacion")
+	private String especializacion;
+
+	@Column(name = "hora_auditoria")
 	private String horaAuditoria;
 
-	@Column(name="nombre")
+	@Column(name = "nombre")
 	private String nombre;
-	
-	@Column(name="usuario")
+
+	@Column(name = "cedula")
+	private String cedula;
+
+	@Column(name = "usuario")
 	private String usuario;
 
-	//bi-directional many-to-one association to Cargo
+	// bi-directional many-to-one association to Cargo
 	@ManyToOne
-	@JoinColumn(name="id_cargo")
+	@JoinColumn(name = "id_cargo")
 	private Cargo cargo;
 
-	//bi-directional many-to-one association to Empresa
+	// bi-directional many-to-one association to Empresa
 	@ManyToOne
-	@JoinColumn(name="id_empresa")
+	@JoinColumn(name = "id_empresa")
 	private Empresa empresa;
 
-	//bi-directional many-to-one association to UnidadOrganizativa
+	// bi-directional many-to-one association to UnidadOrganizativa
 	@ManyToOne
-	@JoinColumn(name="id_unidad_organizativa")
+	@JoinColumn(name = "id_unidad_organizativa")
 	private UnidadOrganizativa unidadOrganizativa;
 
-	
 	public Empleado() {
 	}
-	
-	public Empleado(int idEmpleado, Timestamp fechaAuditoria, String ficha,
-			String fichaSupervisor, int gradoAuxiliar, String horaAuditoria,
-			String nombre, String usuario, Cargo cargo, Empresa empresa,
-			UnidadOrganizativa unidadOrganizativa) {
+
+	public Empleado(int id, Timestamp fechaAuditoria, String ficha,
+			String fichaSupervisor, int gradoAuxiliar, String nivelAcademico,
+			String especialidad, String especializacion, String horaAuditoria,
+			String nombre, String cedula, String usuario, Cargo cargo,
+			Empresa empresa, UnidadOrganizativa unidadOrganizativa) {
 		super();
-		this.id = idEmpleado;
+		this.id = id;
 		this.fechaAuditoria = fechaAuditoria;
 		this.ficha = ficha;
 		this.fichaSupervisor = fichaSupervisor;
 		this.gradoAuxiliar = gradoAuxiliar;
+		this.nivelAcademico = nivelAcademico;
+		this.especialidad = especialidad;
+		this.especializacion = especializacion;
 		this.horaAuditoria = horaAuditoria;
 		this.nombre = nombre;
+		this.cedula = cedula;
 		this.usuario = usuario;
 		this.cargo = cargo;
 		this.empresa = empresa;
 		this.unidadOrganizativa = unidadOrganizativa;
 	}
+
 
 
 
@@ -161,7 +177,7 @@ public class Empleado implements Serializable {
 	public void setUnidadOrganizativa(UnidadOrganizativa unidadOrganizativa) {
 		this.unidadOrganizativa = unidadOrganizativa;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -170,5 +186,37 @@ public class Empleado implements Serializable {
 		this.usuario = usuario;
 	}
 
+	public String getNivelAcademico() {
+		return nivelAcademico;
+	}
+
+	public void setNivelAcademico(String nivelAcademico) {
+		this.nivelAcademico = nivelAcademico;
+	}
+
+	public String getEspecialidad() {
+		return especialidad;
+	}
+
+	public void setEspecialidad(String especialidad) {
+		this.especialidad = especialidad;
+	}
+
+	public String getEspecializacion() {
+		return especializacion;
+	}
+
+	public void setEspecializacion(String especializacion) {
+		this.especializacion = especializacion;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	
 	
 }

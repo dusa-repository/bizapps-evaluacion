@@ -7,46 +7,45 @@ import modelo.seguridad.Usuario;
 
 import java.sql.Timestamp;
 
-
 /**
  * The persistent class for the cargo database table.
  * 
  */
 @Entity
-@Table(name="cargo")
+@Table(name = "cargo")
 public class Cargo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_cargo")
+	@Column(name = "id_cargo")
 	private int id;
 
-	@Column(name="descripcion")
+	@Column(name = "descripcion")
 	private String descripcion;
 
-	@Column(name="fecha_auditoria")
+	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
-	@Column(name="hora_auditoria")
+	@Column(name = "hora_auditoria")
 	private String horaAuditoria;
 
-	@Column(name="id_cargo_auxiliar")
+	@Column(name = "id_cargo_auxiliar")
 	private String idCargoAuxiliar;
 
-	@Column(name="id_empresa_auxiliar")
+	@Column(name = "id_empresa_auxiliar")
 	private String idEmpresaAuxiliar;
 
-	@Column(name="nomina")
+	@Column(name = "nomina")
 	private String nomina;
-	
-	@Column(name="usuario")
+
+	@Column(name = "usuario")
 	private String usuario;
 
-	
+
 	public Cargo() {
 	}
-	
+
 	public Cargo(int idCargo, String descripcion, Timestamp fechaAuditoria,
 			String horaAuditoria, String idCargoAuxiliar,
 			String idEmpresaAuxiliar, String nomina, String usuario) {
@@ -60,9 +59,6 @@ public class Cargo implements Serializable {
 		this.nomina = nomina;
 		this.usuario = usuario;
 	}
-
-
-
 
 	public int getId() {
 		return this.id;
@@ -119,7 +115,7 @@ public class Cargo implements Serializable {
 	public void setNomina(String nomina) {
 		this.nomina = nomina;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -127,7 +123,5 @@ public class Cargo implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
-	
 
 }

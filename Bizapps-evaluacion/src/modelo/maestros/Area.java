@@ -8,42 +8,44 @@ import modelo.seguridad.Usuario;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the area database table.
  * 
  */
 @Entity
-@Table(name="area")
+@Table(name = "area")
 public class Area implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_area")
+	@Column(name = "id_area")
 	private int id;
 
-	@Column(name="descripcion")
+	@Column(name = "descripcion")
 	private String descripcion;
-	
-	@Column(name="usuario")
+
+	@Column(name = "usuario")
 	private String usuario;
 
-	@Column(name="fecha_auditoria")
+	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
-	@Column(name="hora_auditoria")
+	@Column(name = "hora_auditoria")
 	private String horaAuditoria;
 
-	//bi-directional many-to-one association to Area
+	// bi-directional many-to-one association to TipoFormacion
 	@ManyToOne
-	@JoinColumn(name="id_tipo_formacion")
+	@JoinColumn(name = "id_tipo_formacion")
 	private TipoFormacion tipoFormacion;
-	
+
+	// bi-directional many-to-one association to Curso
+	@OneToMany(mappedBy = "area")
+	private List<Curso> cursos;
 
 	public Area() {
 	}
-	
+
 	public Area(int id, String descripcion, String usuario,
 			Timestamp fechaAuditoria, String horaAuditoria,
 			TipoFormacion tipoFormacion) {
@@ -71,7 +73,7 @@ public class Area implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
+
 	public TipoFormacion getTipoFormacion() {
 		return tipoFormacion;
 	}
@@ -96,7 +98,6 @@ public class Area implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 	}
 
-	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -104,6 +105,16 @@ public class Area implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+	
+	
 	
 
 }

@@ -3,48 +3,42 @@ package modelo.maestros;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import modelo.seguridad.Usuario;
-import java.util.List;
 import java.sql.Timestamp;
+import java.util.List;
+
 
 /**
- * The persistent class for the tipo_formacion database table.
+ * The persistent class for the actividad database table.
  * 
  */
 @Entity
-@Table(name = "tipo_formacion")
-public class TipoFormacion implements Serializable {
+@Table(name="actividad")
+public class Actividad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_tipo_formacion")
+	@Column(name="id_actividad")
 	private int id;
 
-	@Column(name = "descripcion")
+	@Column(name="descripcion")
 	private String descripcion;
 
-	@Column(name = "fecha_auditoria")
+	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
-	@Column(name = "hora_auditoria")
+	@Column(name="hora_auditoria")
 	private String horaAuditoria;
-
-	// bi-directional many-to-one association to area
-	@OneToMany(mappedBy = "tipoFormacion")
-	private List<Area> areas;
-
-	// bi-directional many-to-one association to Curso
-	@OneToMany(mappedBy = "tipoFormacion")
-	private List<Curso> cursos;
-
-	@Column(name = "usuario")
+	
+	@Column(name="usuario")
 	private String usuario;
 
-	public TipoFormacion() {
+	public Actividad() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public TipoFormacion(int id, String descripcion, Timestamp fechaAuditoria,
+	public Actividad(int id, String descripcion, Timestamp fechaAuditoria,
 			String horaAuditoria, String usuario) {
 		super();
 		this.id = id;
@@ -55,31 +49,23 @@ public class TipoFormacion implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
-	public void setId(int idTipoFormacion) {
-		this.id = idTipoFormacion;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDescripcion() {
-		return this.descripcion;
+		return descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	public List<Area> getAreas() {
-		return areas;
-	}
-
-	public void setAreas(List<Area> areas) {
-		this.areas = areas;
-	}
-
 	public Timestamp getFechaAuditoria() {
-		return this.fechaAuditoria;
+		return fechaAuditoria;
 	}
 
 	public void setFechaAuditoria(Timestamp fechaAuditoria) {
@@ -87,7 +73,7 @@ public class TipoFormacion implements Serializable {
 	}
 
 	public String getHoraAuditoria() {
-		return this.horaAuditoria;
+		return horaAuditoria;
 	}
 
 	public void setHoraAuditoria(String horaAuditoria) {
@@ -101,17 +87,6 @@ public class TipoFormacion implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
-	public List<Curso> getCursos() {
-		return cursos;
-	}
-
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
-	}
 	
 	
-	
-	
-
 }
