@@ -1,4 +1,5 @@
 <window id="wdwVDistribucion" border="normal" height="auto"
+	apply="controlador.maestros.CDistribucion"
 	style="background-color:#8A0808;">
 
 	<groupbox width="auto">
@@ -33,9 +34,15 @@
 							tooltiptext="Ingrese aqui la descripcion de la distribucion" />
 					</row>
 					<row>
-						<label value="Porcentaje:" class="etiqueta" />
+						<hbox>
+							<label value="Porcentaje:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
-						<spinner id="txtPorcentajeDistribucion"
+						<spinner id="spnPorcentajeDistribucion"
 							width="90%" maxlength="100" tabindex="2" constraint="no negative"
 							tooltiptext="Ingrese aqui el porcentaje de la distribucion" />
 					</row>
