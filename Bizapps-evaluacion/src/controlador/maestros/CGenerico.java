@@ -33,6 +33,7 @@ import servicio.maestros.SActividad;
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
 import servicio.maestros.SCompetencia;
+import servicio.maestros.SCurso;
 import servicio.maestros.SDistribucion;
 import servicio.maestros.SDominio;
 import servicio.maestros.SEmpleado;
@@ -86,6 +87,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SNivelCompetenciaCargo servicioNivelCompetenciaCargo;
 	@WireVariable("SCargo")
 	protected SCargo servicioCargo;
+	@WireVariable("SCurso")
+	protected SCurso servicioCurso;
 	@WireVariable("SEmpresa")
 	protected SEmpresa servicioEmpresa;
 	@WireVariable("SGerencia")

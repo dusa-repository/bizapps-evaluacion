@@ -25,11 +25,6 @@ public class Curso implements Serializable {
 	@JoinColumn(name = "id_area")
 	private Area area;
 
-	// bi-directional many-to-one association to Tipo_Formacion
-	@ManyToOne
-	@JoinColumn(name = "id_tipo_formacion")
-	private TipoFormacion tipoFormacion;
-
 	@Column(name = "nombre")
 	private String nombre;
 
@@ -57,13 +52,12 @@ public class Curso implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Curso(int id, Area area, TipoFormacion tipoFormacion, String nombre,
-			int duracion, String estado, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuario) {
+	
+	public Curso(int id, Area area, String nombre, int duracion, String estado,
+			Timestamp fechaAuditoria, String horaAuditoria, String usuario) {
 		super();
 		this.id = id;
 		this.area = area;
-		this.tipoFormacion = tipoFormacion;
 		this.nombre = nombre;
 		this.duracion = duracion;
 		this.estado = estado;
@@ -86,14 +80,6 @@ public class Curso implements Serializable {
 
 	public void setArea(Area area) {
 		this.area = area;
-	}
-
-	public TipoFormacion getTipoFormacion() {
-		return tipoFormacion;
-	}
-
-	public void setTipoFormacion(TipoFormacion tipoFormacion) {
-		this.tipoFormacion = tipoFormacion;
 	}
 
 	public List<Clase> getClases() {

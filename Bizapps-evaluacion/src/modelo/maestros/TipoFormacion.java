@@ -34,10 +34,6 @@ public class TipoFormacion implements Serializable {
 	@OneToMany(mappedBy = "tipoFormacion")
 	private List<Area> areas;
 
-	// bi-directional many-to-one association to Curso
-	@OneToMany(mappedBy = "tipoFormacion")
-	private List<Curso> cursos;
-
 	@Column(name = "usuario")
 	private String usuario;
 
@@ -102,16 +98,5 @@ public class TipoFormacion implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public List<Curso> getCursos() {
-		return cursos;
-	}
-
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
-	}
-	
-	
-	
-	
 
 }

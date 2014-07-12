@@ -1,4 +1,5 @@
 <window id="wdwVCurso" border="normal" height="auto"
+	apply="controlador.maestros.CCurso"
 	style="background-color:#8A0808;">
 
 	<groupbox width="auto">
@@ -28,40 +29,23 @@
 							</label>
 						</hbox>
 						<textbox id="txtAreaCurso" tabindex="1"
-							width="100%" maxlength="100"
-							tooltiptext="Ingrese aqui el area" />
+							width="100%" maxlength="100" tooltiptext="Ingrese aqui el area" />
 						<button id="btnBuscarArea" label=""
 							tooltiptext="Catalogo de areas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
-						<hbox>
-							<label class="etiqueta"
-								value="Tipo de Formación:" />
-							<space />
-							<label value="*"
-								style="font-weight:bold;color:red">
-							</label>
-						</hbox>
-						<textbox id="txtTipoFormacionCurso" tabindex="2"
-							width="100%" maxlength="100"
-							tooltiptext="Ingrese aqui el tipo de formacion" />
-						<button id="btnBuscarTipoFormacion" label=""
-							tooltiptext="Catalogo de tipos de formacion"
-							image="/public/imagenes/botones/buscar.png" />
-					</row>
-					<row>
 						<label value="Nombre:" class="etiqueta" />
 
-						<textbox id="txtNombreCurso" width="90%"
-							maxlength="100" tabindex="3"
+						<textbox id="txtNombreCurso" width="100%"
+							maxlength="100" tabindex="2"
 							tooltiptext="Ingrese aqui el nombre del curso" />
 					</row>
 					<row>
-						<label value="Horas:" class="etiqueta" />
+						<label value="Duración:" class="etiqueta" />
 
-						<spinner id="spnHorasCurso"
-							constraint="no negative" width="80%" maxlength="100" tabindex="4"
+						<spinner id="spnDuracionCurso"
+							constraint="no negative" width="100%" maxlength="100" tabindex="3"
 							tooltiptext="Ingrese aqui las horas del curso" />
 					</row>
 					<row>
@@ -73,9 +57,9 @@
 							</label>
 						</hbox>
 
-						<combobox id="cmbEstadoPeriodo" readonly="true"
-							tooltiptext="Seleccione el estado del curso" width="80%"
-							tabindex="5">
+						<combobox id="cmbEstadoCurso" readonly="true"
+							tooltiptext="Seleccione el estado del curso" width="100%"
+							tabindex="4">
 							<comboitem label="ACTIVO" />
 							<comboitem label="INACTIVO" />
 						</combobox>
@@ -96,6 +80,4 @@
 	</groupbox>
 	<div id="divCatalogoArea"
 		tooltiptext="Click para Seleccionar un area" />
-	<div id="divCatalogoTipoFormacion"
-		tooltiptext="Click para Seleccionar un tipo de formacion" />
 </window>

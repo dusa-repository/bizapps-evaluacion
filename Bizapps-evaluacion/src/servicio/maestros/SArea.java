@@ -5,6 +5,7 @@ import interfacedao.maestros.IAreaDAO;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Empleado;
 import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,22 +56,27 @@ public class SArea {
 	public List<Area> filtroNombre(String valor) {
 		return areaDAO.findByDescripcionStartingWithAllIgnoreCase(valor);
 	}
-	
-	
+
 	/*
-	 * Servicio que permite filtrar las areas de una lista de acuerdo al
-	 * tipo de formacion
+	 * Servicio que permite filtrar las areas de una lista de acuerdo al tipo de
+	 * formacion
 	 */
 	public List<Area> filtroTipoFormacion(String valor) {
 		return areaDAO.findByTipoFormacionStartingWithAllIgnoreCase(valor);
 	}
-	
+
 	/*
-	 * Servicio que permite filtrar las areas de una lista de acuerdo al
-	 * id
+	 * Servicio que permite filtrar las areas de una lista de acuerdo al id
 	 */
 	public List<Area> filtroId(String valor) {
 		return areaDAO.findByIdStartingWithAllIgnoreCase(valor);
+	}
+
+	/* Servicio que permite buscar una lista de areas de acuerdo al nombre */
+	public List<Area> buscarPorNombres(String descripcion) {
+		List<Area> area;
+		area = areaDAO.findByDescripcionAllIgnoreCase(descripcion);
+		return area;
 	}
 
 }
