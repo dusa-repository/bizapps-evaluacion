@@ -29,7 +29,7 @@ import org.zkoss.zul.Window;
 
 import arbol.CArbol;
 
-
+import servicio.maestros.SActividad;
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
 import servicio.maestros.SCompetencia;
@@ -60,13 +60,10 @@ import servicio.transacciones.SEvaluacionIndicador;
 import servicio.transacciones.SEvaluacionObjetivo;
 import servicio.transacciones.SNivelCompetenciaCargo;
 
-
-
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public abstract class CGenerico extends SelectorComposer<Component> {
 
 	private static final long serialVersionUID = -2264423023637489596L;
-
 
 	@WireVariable("SArbol")
 	protected SArbol servicioArbol;
@@ -100,6 +97,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected STipoFormacion servicioTipoFormacion;
 	@WireVariable("SArea")
 	protected SArea servicioArea;
+	@WireVariable("SActividad")
+	protected SActividad servicioActividad;
 	@WireVariable("SDominio")
 	protected SDominio servicioDominio;
 	@WireVariable("SMedicion")
@@ -126,7 +125,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SReporte servicioReporte;
 	protected static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	public static  List<Tab> tabs = new ArrayList<Tab>();
+	public static List<Tab> tabs = new ArrayList<Tab>();
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario
@@ -137,11 +136,10 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			+ String.valueOf(calendario.get(Calendar.SECOND));
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
-	
+
 	/* Titulos de Mensaje */
 	public String informacion = "INFORMACION";
 	public String alerta = "ALERTA";
-
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -153,35 +151,36 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 
 	public void cerrarVentana(Div div, String id) {
 		div.setVisible(false);
-		for(int i =0; i<tabs.size();i++){
-			if(tabs.get(i).getLabel().equals(id)){
-				if(i==(tabs.size()-1)&& tabs.size()>1){
-					tabs.get(i-1).setSelected(true);
+		for (int i = 0; i < tabs.size(); i++) {
+			if (tabs.get(i).getLabel().equals(id)) {
+				if (i == (tabs.size() - 1) && tabs.size() > 1) {
+					tabs.get(i - 1).setSelected(true);
 				}
 				tabs.get(i).onClose();
 				tabs.remove(i);
 			}
 		}
 	}
+
 	public void cerrarVentana1(Window window, String id) {
 		window.setVisible(false);
-		for(int i =0; i<tabs.size();i++){
-			if(tabs.get(i).getLabel().equals(id)){
-				if(i==(tabs.size()-1)&& tabs.size()>1){
-					tabs.get(i-1).setSelected(true);
+		for (int i = 0; i < tabs.size(); i++) {
+			if (tabs.get(i).getLabel().equals(id)) {
+				if (i == (tabs.size() - 1) && tabs.size() > 1) {
+					tabs.get(i - 1).setSelected(true);
 				}
 				tabs.get(i).onClose();
 				tabs.remove(i);
 			}
 		}
 	}
-	
+
 	public void cerrarWindow(Window win, String id) {
 		win.setVisible(false);
-		for(int i =0; i<tabs.size();i++){
-			if(tabs.get(i).getLabel().equals(id)){
-				if(i==(tabs.size()-1)&& tabs.size()>1){
-					tabs.get(i-1).setSelected(true);
+		for (int i = 0; i < tabs.size(); i++) {
+			if (tabs.get(i).getLabel().equals(id)) {
+				if (i == (tabs.size() - 1) && tabs.size() > 1) {
+					tabs.get(i - 1).setSelected(true);
 				}
 				tabs.get(i).onClose();
 				tabs.remove(i);
@@ -194,7 +193,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 				.getAuthentication();
 		return sesion.getName();
 	}
-	
+
 	/* Metodo que permite enviar un correo electronico a cualquier destinatario */
 	public boolean enviarEmailNotificacion(String correo, String mensajes) {
 		try {

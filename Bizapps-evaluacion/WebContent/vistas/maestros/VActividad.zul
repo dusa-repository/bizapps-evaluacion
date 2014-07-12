@@ -1,5 +1,5 @@
 <window id="wdwVActividad" border="normal" height="auto"
-	style="background-color:#8A0808;">
+	style="background-color:#8A0808;" apply="controlador.maestros.CActividad">
 
 	<groupbox width="auto">
 		<separator />
