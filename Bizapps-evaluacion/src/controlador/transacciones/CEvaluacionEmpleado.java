@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Distribucion;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
@@ -58,6 +59,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 	@Wire
 	private Textbox txtFortalezas;
+	@Wire
+	private Label txtResultadoFinal;
 	@Wire
 	private Textbox txtOportunidades;
 	@Wire
@@ -402,7 +405,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				if (evaluacionconductas.size() != 0) {
 					mostrarDominioRectora();
 					mostrarDominioEspecifica();
-				}
+				
 				
 				//CALCULO DE COMPETENCIAS RECTORAS
 				List<EvaluacionConducta> ecc = new ArrayList<EvaluacionConducta>();
@@ -506,31 +509,40 @@ public class CEvaluacionEmpleado extends CGenerico {
 					System.out.println("cal"+calculo1);
 					System.out.println("tc"+totalCompetencia1);
 					}
-					
-					
+						
 				}
-				
 				totalConducta1 =  (calculo1 * 100)/ totalCompetencia1;
 				System.out.println("t"+totalConducta1);
 			}
-				resultadoCompetencia = (totalConducta + totalConducta1)/ 2;
-				numberFormat.format(resultadoCompetencia);
-				System.out.println(resultadoCompetencia);
+				resultadoCompetencia = Math.rint((totalConducta + totalConducta1)/ 2);
+		
 			}
+			int id = 1;
+			int id2 = 2;
+			Distribucion dis = servicioDistribucion.buscarDistribucion(id);
+			Distribucion dist = servicioDistribucion.buscarDistribucion(id2);
+			int distO = dis.getPorcentaje();
+			int distC = dist.getPorcentaje();
+			String dO = String.valueOf(distO);
+			String dC = String.valueOf(distC);
+		
 			String r = String.valueOf(resultadoCompetencia);
-			int resul = evaluacion1.getResultadoObjetivos();
 			String o = String.valueOf(evaluacion1.getResultadoObjetivos());
 			Double resul1 = Double.parseDouble(o);
 			lblResultado.setValue(o);
 			lblResultado1.setValue(r);
-			lblDistribucion.setValue("60");
-			lblDistribucion1.setValue("40");
-			resultadoPesoCompetencia = (40 * resultadoCompetencia)/100;
-			resultadoPesoObjetivo = (60 * resul1)/100;
+			lblDistribucion.setValue(dO);
+			lblDistribucion1.setValue(dC);
+			resultadoPesoCompetencia = Math.rint(distC * resultadoCompetencia)/100;
+			resultadoPesoObjetivo = Math.rint(distO * resul1)/100;
 			lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
 			lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
-			
+			double resultadoFinal = Math.rint(resultadoPesoObjetivo) + Math.rint(resultadoPesoCompetencia);
+			String rf = String.valueOf(resultadoFinal);
+			txtResultadoFinal.setValue(rf);
+	
 			}
+		}
 		
 		}
 

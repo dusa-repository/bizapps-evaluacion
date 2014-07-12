@@ -226,7 +226,13 @@ public class CEmpleadoAgregar extends CGenerico {
 					.getAuthentication();
 			Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 			Integer idUsuario = u.getIdUsuario();
-			Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
+			Integer numeroEvaluacion;
+			if (servicioEvaluacion.buscarIdSecundario(item) != null){
+			numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
+			}
+			else {
+				numeroEvaluacion = 1;
+			}
 			idEva = servicioEvaluacion.buscarId() + 1;
 			Empleado empleado = servicioEmpleado.buscarPorFicha(item);
 			String fichaEvaluador = empleado.getFichaSupervisor();
@@ -266,6 +272,11 @@ public class CEmpleadoAgregar extends CGenerico {
 			map.put("id", idEva);
 			map.put("numero", numeroEvaluacion);
 			Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+			if (winEvaluacionEmpleadoAgregar != null){
+				winEvaluacionEmpleadoAgregar.detach();
+				winEvaluacionEmpleadoAgregar = null;
+			}
+			else{
 			winEvaluacionEmpleadoAgregar = (Window) Executions
 					.createComponents(
 							"/vistas/transacciones/VPersonalAgregarEvaluacion.zul",
@@ -274,5 +285,6 @@ public class CEmpleadoAgregar extends CGenerico {
 			winEvaluacionEmpleadoAgregar.setClosable(true);
 
 		}
+	}
 	}
 }

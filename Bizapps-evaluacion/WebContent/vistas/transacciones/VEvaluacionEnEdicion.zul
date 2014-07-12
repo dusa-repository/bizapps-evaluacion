@@ -556,7 +556,7 @@
 						sclass="btn" label="Guardar"
 						image="/public/imagenes/botones/guardar.png">
 					</button>
-					<button id="btnEdicion" label="En Edición"
+					<button id="btnEnEdicion" label="En Edición"
 						visible="false" sclass="btn" tabindex="1"
 						image="/public/imagenes/botones/enedicion.png">
 					</button>

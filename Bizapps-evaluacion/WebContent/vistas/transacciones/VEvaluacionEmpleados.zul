@@ -170,7 +170,7 @@
 								<listheader label="Plan Estratégico"
 									width="25%" />
 								<listheader label="Objetivo"
-									width="33%" />
+									width="39%" />
 								<listheader label="Corresponsables"
 									width="13%" />
 								<listheader label="Peso (%)" width="8%" />
@@ -201,6 +201,7 @@
 											value="${each.resultado}" disabled="true" inplace="true">
 										</textbox>
 									</listcell>
+									
 								</listitem>
 							</template>
 						</listbox>
@@ -405,7 +406,9 @@
 									<listcell>
 										<textbox disabled="true"
 											value="${each.resultadoPeso}" inplace="true" />
+											
 									</listcell>
+									
 								</listitem>
 							</template>
 						</listbox>
@@ -540,51 +543,43 @@
 					<separator></separator>
 					<grid width="100%" align="center">
 						<columns visible="true">
-							<column label="Resultados" width="25%"
-								 />
-							<column label="Distribución (%)" width="25%"
-								/>
-							<column label="Resultado (%)" width="25%"
-								 />
+							<column label="Resultados" width="25%" />
+							<column label="Distribución (%)"
+								width="25%" />
+							<column label="Resultado (%)" width="25%" />
 							<column label="Resultado según Peso (%)"
-								width="25%"  />
+								width="25%" />
 						</columns>
 						<rows>
 							<row>
-								<label value="Objetivos"
-									>
-								</label>
-								<label id="lblDistribucion"
-									>
-								</label>
-								<label id="lblResultado"
-								>
-								</label>
-								<label id="lblResultadoPeso"
-									>
-								</label>
+								<label value="Objetivos"></label>
+								<label id="lblDistribucion"></label>
+								<label id="lblResultado"></label>
+								<label id="lblResultadoPeso"></label>
 							</row>
 							<row>
-								<label value="Competencias"
-									>
-								</label>
-								<label id="lblDistribucion1"
-									>
-								</label>
-								<label id="lblResultado1"
-									>
-								</label>
-								<label id="lblResultadoPeso1"
-									>
-								</label>
+								<label value="Competencias"></label>
+								<label id="lblDistribucion1"></label>
+								<label id="lblResultado1"></label>
+								<label id="lblResultadoPeso1"></label>
 							</row>
 						</rows>
 					</grid>
-
-
+					<separator></separator>
+					<separator></separator>
+					<div align="right" height="100%" width="80%">
+						<label value="Resultado Final ="
+							style="font-size: 14px;">
+						</label>
+						<label id="txtResultadoFinal"
+							style="font-size: 14px;">
+						</label>
+					</div>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
+		<separator></separator>
+		<separator></separator>
 		<panel border="normal" width="95%"
 			style="margin-left:2%;margin-right:3%" id="panBotones">
 			<panelchildren>
