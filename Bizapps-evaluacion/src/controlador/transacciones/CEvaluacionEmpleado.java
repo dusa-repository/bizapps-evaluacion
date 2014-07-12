@@ -60,6 +60,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Textbox txtFortalezas;
 	@Wire
+	private Textbox txttotalIndicador;
+	@Wire
 	private Label txtResultadoFinal;
 	@Wire
 	private Textbox txtOportunidades;
@@ -107,6 +109,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private Button btnEliminar;
 	@Wire
 	private Button btnIr;
+	@Wire
+	private Button btnCancelarI;
 	@Wire
 	private Listbox lbxIndicadoresAgregados;
 	@Wire
@@ -229,6 +233,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static Double total = 0.0;
 	private static Double totalObjetivo = 0.0;
 	private static Double totalInd = 0.0;
+	private static Double totalIndicador = 0.0;
 	private static Evaluacion evaluacion1;
 	private Double cambio;
 	private static int idObjetivo;
@@ -559,6 +564,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 	public void agregarObjetivo() {
 		gpxAgregar.setOpen(true);
 	}
+	
+	@Listen("onClick = #btnCancelarI")
+	public void cerrarPanelI() {
+		idIndicador=0;
+		limpiarIndicador();
+		gpxAgregarIndicador.setOpen(false);
+	}
 
 	@Listen("onClick = #btnAgregarIndicador")
 	public void agregarIndicador() {
@@ -591,6 +603,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		txtPeso.setValue(null);
 
 	}
+	
+	
 
 	public void limpiarIndicador() {
 		txtIndicador.setValue("");
@@ -640,16 +654,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 
 		}
-//		for (int i = 0; i < conductas.size(); i++) {
-//			int idCompetencia = conductas.get(i).getId();
-//			Competencia competencia1 = servicioCompetencia.buscarCompetencia(idCompetencia);
-//			List<EvaluacionConducta> econd = servicioEvaluacionConducta.buscarConductasCompetencia(idCompetencia);
-//			
-//			for (int j = 0; j < econd.size(); j++) {
-//				int idConducta= econd.get(j).getConductaCompetencia().getId();
-//			}
-//			EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia1);
-//			int idDom = ec.getIdDominio(); 
 
 	}
 
@@ -661,6 +665,14 @@ public class CEvaluacionEmpleado extends CGenerico {
 		indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(indicadores));
+		for (int i = 0; i < indicadores.size(); i++) {
+			EvaluacionIndicador ei = indicadores.get(i);
+			Double resultado = ei.getResultadoPeso();
+			totalIndicador = totalIndicador + resultado;
+			
+		}
+		txttotalIndicador.setValue(String.valueOf(totalIndicador));
+		totalIndicador = 0.0;
 
 	}
 
@@ -883,6 +895,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				if (idObjetivo.equals(idObjetivo1)) {
 					totalInd = 0.0;
 					totalInd = (total * peso) / 100;
+					totalIndicador = totalInd;
 					String total = totalInd.toString();
 					((Textbox) ((listItem3.get(j).getChildren().get(5)))
 							.getFirstChild()).setValue(total);

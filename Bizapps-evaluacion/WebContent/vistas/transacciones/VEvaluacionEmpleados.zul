@@ -258,7 +258,8 @@
 									width="12%" />
 								<listheader label="Resul. Peso (%)"
 									width="12%" />
-								<listheader width="7%" />
+								<listheader width="5%" />
+								<listheader width="5%" />
 							</listhead>
 							<listitem>
 								<listcell></listcell>
@@ -322,6 +323,13 @@
 									<button id="btnOk2" width="auto"
 										height="auto" mold="trendy"
 										image="/public/imagenes/botones/agregar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+								<listcell>
+									<button id="btnCancelarI"
+										width="auto" height="auto" mold="trendy"
+										image="/public/imagenes/botones/anular.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
