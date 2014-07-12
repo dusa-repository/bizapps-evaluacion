@@ -665,6 +665,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 		indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(indicadores));
+		totalIndicador ();
+
+	}
+	
+	public void totalIndicador (){
 		for (int i = 0; i < indicadores.size(); i++) {
 			EvaluacionIndicador ei = indicadores.get(i);
 			Double resultado = ei.getResultadoPeso();
@@ -673,7 +678,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 		}
 		txttotalIndicador.setValue(String.valueOf(totalIndicador));
 		totalIndicador = 0.0;
-
 	}
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
@@ -1126,6 +1130,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 			idIndicador = 0;
 		}
 		evaluarIndicadores();
+		totalIndicador ();
 	}
 
 	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")
