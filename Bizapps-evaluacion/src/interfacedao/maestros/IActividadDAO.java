@@ -14,7 +14,4 @@ public interface IActividadDAO extends JpaRepository<Actividad, Integer> {
 
 	public List<Actividad> findByDescripcionStartingWithAllIgnoreCase(String valor);
 
-
-
-	
 }
