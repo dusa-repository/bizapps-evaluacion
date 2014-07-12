@@ -84,7 +84,7 @@ public class SEmpleado {
 	 * la empresa
 	 */
 	public List<Empleado> filtroEmpresa(String valor) {
-		return empleadoDAO.findByEmpresaStartingWithAllIgnoreCase(valor);
+		return empleadoDAO.findByEmpresaNombreStartingWithAllIgnoreCase(valor);
 	}
 
 	/*
@@ -92,7 +92,7 @@ public class SEmpleado {
 	 * cargo
 	 */
 	public List<Empleado> filtroCargo(String valor) {
-		return empleadoDAO.findByCargoStartingWithAllIgnoreCase(valor);
+		return empleadoDAO.findByCargoDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	/*
@@ -107,7 +107,7 @@ public class SEmpleado {
 	 * Servicio que permite filtrar los empleados de una lista de acuerdo al nombre
 	 */
 	public List<Empleado> filtroUnidadOrganizativa(String valor) {
-		return empleadoDAO.findByUnidadOrganizativaStartingWithAllIgnoreCase(valor);
+		return empleadoDAO.findByUnidadOrganizativaDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	

@@ -18,12 +18,6 @@ public interface IConductaCompetenciaDAO extends
 	public List<ConductaCompetencia> findByIdStartingWithAllIgnoreCase(
 			String valor);
 
-	public List<ConductaCompetencia> findByCompetenciaStartingWithAllIgnoreCase(
-			String valor);
-
-	public List<ConductaCompetencia> findByDominioStartingWithAllIgnoreCase(
-			String valor);
-
 	public List<ConductaCompetencia> findByDescripcionStartingWithAllIgnoreCase(
 			String valor);
 
@@ -32,4 +26,10 @@ public interface IConductaCompetenciaDAO extends
 
 	public List<ConductaCompetencia> findByCompetenciaAndDominio(Competencia id,
 			Dominio id2);
+
+	public List<ConductaCompetencia> findByCompetenciaDescripcionStartingWithAllIgnoreCase(
+			String valor);
+
+	public List<ConductaCompetencia> findByDominioDescripcionDominioStartingWithAllIgnoreCase(
+			String valor);
 }

@@ -27,16 +27,6 @@ public interface IEmpleadoDAO extends JpaRepository<Empleado, Integer> {
 	public List<Empleado> findByIdStartingWithAllIgnoreCase(String valor);
 
 
-	public List<Empleado> findByEmpresaStartingWithAllIgnoreCase(String valor);
-
-
-	public List<Empleado> findByCargoStartingWithAllIgnoreCase(String valor);
-
-
-	public List<Empleado> findByUnidadOrganizativaStartingWithAllIgnoreCase(
-			String valor);
-
-
 	public List<Empleado> findByNombreStartingWithAllIgnoreCase(String valor);
 
 
@@ -52,4 +42,16 @@ public interface IEmpleadoDAO extends JpaRepository<Empleado, Integer> {
 
 
 	public List<Empleado> findByNombreAllIgnoreCase(String descripcion);
+
+
+	public List<Empleado> findByEmpresaNombreStartingWithAllIgnoreCase(
+			String valor);
+
+
+	public List<Empleado> findByCargoDescripcionStartingWithAllIgnoreCase(
+			String valor);
+
+
+	public List<Empleado> findByUnidadOrganizativaDescripcionStartingWithAllIgnoreCase(
+			String valor);
 }

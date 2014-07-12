@@ -12,9 +12,6 @@ public interface IUnidadOrganizativaDAO extends JpaRepository<UnidadOrganizativa
 
 	public List<UnidadOrganizativa> findByIdStartingWithAllIgnoreCase(String valor);
 
-	public List<UnidadOrganizativa> findByGerenciaStartingWithAllIgnoreCase(
-			String valor);
-
 	public List<UnidadOrganizativa> findByDescripcionStartingWithAllIgnoreCase(
 			String valor);
 
@@ -33,6 +30,9 @@ public interface IUnidadOrganizativaDAO extends JpaRepository<UnidadOrganizativa
 
 	public List<UnidadOrganizativa> findByDescripcionAllIgnoreCase(
 			String descripcion);
+
+	public List<UnidadOrganizativa> findByGerenciaDescripcionStartingWithAllIgnoreCase(
+			String valor);
 
 	
 

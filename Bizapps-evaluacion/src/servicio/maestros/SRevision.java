@@ -93,7 +93,7 @@ public class SRevision {
 	 * periodo
 	 */
 	public List<Revision> filtroPeriodo(String valor) {
-		return revisionDAO.findByPeriodoStartingWithAllIgnoreCase(valor);
+		return revisionDAO.findByPeriodoDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	/*

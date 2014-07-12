@@ -17,13 +17,14 @@ public interface IRevisionDAO extends JpaRepository<Revision, Integer> {
 	public Revision findByEstadoRevision(String estado);
 	public List<Revision> findByIdStartingWithAllIgnoreCase(String valor);
 
-	public List<Revision> findByPeriodoStartingWithAllIgnoreCase(String valor);
-
 	public List<Revision> findByDescripcionStartingWithAllIgnoreCase(String valor);
 
 	public List<Revision> findByEstadoRevisionStartingWithAllIgnoreCase(String valor);
 
 	Revision findByPeriodoAndEstadoRevision(Periodo periodo, String estadoRevision);
+
+	public List<Revision> findByPeriodoDescripcionStartingWithAllIgnoreCase(
+			String valor);
 
 	
 

@@ -72,7 +72,7 @@ public class SUnidadOrganizativa {
 	 * codigo de gerencia
 	 */
 	public List<UnidadOrganizativa> filtroGerencia(String valor) {
-		return unidadOrganizativaDAO.findByGerenciaStartingWithAllIgnoreCase(valor);
+		return unidadOrganizativaDAO.findByGerenciaDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	/*

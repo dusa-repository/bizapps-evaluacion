@@ -62,7 +62,7 @@ public class SArea {
 	 * formacion
 	 */
 	public List<Area> filtroTipoFormacion(String valor) {
-		return areaDAO.findByTipoFormacionStartingWithAllIgnoreCase(valor);
+		return areaDAO.findByTipoFormacionDescripcionStartingWithAllIgnoreCase(valor);
 	}
 
 	/*

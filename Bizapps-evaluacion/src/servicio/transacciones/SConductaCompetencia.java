@@ -66,7 +66,7 @@ public class SConductaCompetencia {
 	 * competencia
 	 */
 	public List<ConductaCompetencia> filtroCompetencia(String valor) {
-		return conductaCompetenciaDAO.findByCompetenciaStartingWithAllIgnoreCase(valor);
+		return conductaCompetenciaDAO.findByCompetenciaDescripcionStartingWithAllIgnoreCase(valor);
 	}
 	
 	/*
@@ -74,7 +74,7 @@ public class SConductaCompetencia {
 	 * dominio
 	 */
 	public List<ConductaCompetencia> filtroDominio(String valor) {
-		return conductaCompetenciaDAO.findByDominioStartingWithAllIgnoreCase(valor);
+		return conductaCompetenciaDAO.findByDominioDescripcionDominioStartingWithAllIgnoreCase(valor);
 	}
 	
 	/*
