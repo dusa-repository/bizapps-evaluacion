@@ -254,9 +254,9 @@
 								<listheader label="Res.Fy.Ant."
 									width="9%" />
 								<listheader label="Resultado (%)"
-									width="12%" />
+									width="0%" />
 								<listheader label="Resul. Peso (%)"
-									width="12%" />
+									width="0%" />
 								<listheader width="5%" />
 								<listheader width="5%" />
 							</listhead>
@@ -311,12 +311,13 @@
 								<listcell>
 									<spinner placeholder="Resultado %"
 										value="0" constraint="min 0" mold="rounded" width="100%"
-										id="txtResultadoPorc" disabled="true" />
+										id="txtResultadoPorc" disabled="true" visible = "false"/>
 								</listcell>
 								<listcell>
 									<spinner
 										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" disabled="true" value="0" constraint="min 0" />
+										id="txtPesoPorc" disabled="true" value="0" constraint="min 0" 
+										visible = "false"/>
 								</listcell>
 								<listcell>
 									<button id="btnOk2" width="auto"

@@ -228,6 +228,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
 		if (map != null) {
@@ -241,7 +242,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
-		revision = servicioRevision.buscarPorEstado("ACTIVO");
+		
 		List<Medicion> medicion = servicioMedicion.buscar();
 		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
 
