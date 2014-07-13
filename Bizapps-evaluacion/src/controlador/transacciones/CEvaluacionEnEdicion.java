@@ -476,11 +476,6 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				evaluacion.setResultadoObjetivos(0);
 				evaluacion.setResultadoGeneral(0);
 				evaluacion.setResultadoFinal(0);
-				if (objetivosG.size() == 0) {
-					Messagebox.show("Debe agregar sus objetivos",
-							"Advertencia", Messagebox.OK,
-							Messagebox.EXCLAMATION);
-				} else {
 					if (idObjetivo != 0) {
 						EvaluacionObjetivoActualizar();
 					} else {
@@ -518,7 +513,6 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 			}
 		}
-	}
 
 	public void limpiar() {
 		txtObjetivo.setValue("");
