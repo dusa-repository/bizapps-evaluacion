@@ -1179,20 +1179,27 @@ public class CEvaluacionEmpleado extends CGenerico {
 				txtValorResultado1.setValue(valorR);
 				txtResultadoPorc.setValue(resulPorc);
 				txtPesoPorc.setValue(resulP);
-				cmbMedicion.setDisabled(true);
-				cmbUnidad.setDisabled(true);
+			
 			}
 		}
 	}
 
 	private void EvaluacionIndicadorActualizar() {
-		UnidadMedida unidadMedida = servicioUnidadMedida.buscarPorNombre(unid);
-		Medicion medicion = servicioMedicion.buscarPorNombre(medic);
+		String UnidadCombo = cmbUnidad.getSelectedItem()
+				.getContext();
+		UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
+				.parseInt(UnidadCombo));
+		String medicionCombo = cmbMedicion.getSelectedItem()
+				.getContext();
+		Medicion medicion = servicioMedicion.buscarMedicion(Integer.parseInt(medicionCombo));
 		EvaluacionIndicador indicador = servicioEvaluacionIndicador
 				.buscarIndicadorId(idIndicador);
 		indicador.setDescripcionIndicador(txtIndicador.getValue());
 		indicador.setPeso(txtPeso1.getValue());
 		indicador.setValorMeta(txtValorMeta.getValue());
+		indicador.setResultadoFyAnterior(txtResFy.getValue());
+		indicador.setUnidadMedida(unidad);
+		indicador.setMedicion(medicion);
 		servicioEvaluacionIndicador.guardar(indicador);
 		List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador
 				.buscarIndicadores(idObjetivo);

@@ -279,7 +279,7 @@ public class CEmpleadoAgregar extends CGenerico {
 			else{
 			winEvaluacionEmpleadoAgregar = (Window) Executions
 					.createComponents(
-							"/vistas/transacciones/VPersonalAgregarEvaluacion.zul",
+							"/vistas/transacciones/VAgregarEvaluacion.zul",
 							null, map);
 			winEvaluacionEmpleadoAgregar.doModal();
 			winEvaluacionEmpleadoAgregar.setClosable(true);
