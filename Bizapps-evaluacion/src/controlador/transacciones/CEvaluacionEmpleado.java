@@ -1056,6 +1056,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObje));
 		gpxAgregar.setOpen(false);
+		limpiar();
+		idObjetivo = 0;
 	}
 
 	@Listen("onClick = #btnOk2")

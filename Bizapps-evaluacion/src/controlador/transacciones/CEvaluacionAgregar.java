@@ -621,6 +621,8 @@ public class CEvaluacionAgregar extends CGenerico {
 		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObje));
 		gpxAgregar.setOpen(false);
+		limpiar();
+		idObjetivo = 0;
 	}
 	
 	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")

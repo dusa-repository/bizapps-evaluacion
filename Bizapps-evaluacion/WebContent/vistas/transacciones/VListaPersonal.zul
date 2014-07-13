@@ -20,15 +20,15 @@
 				<separator />
 				<div align="left">
 					<button id="btnAgregar"
-						tooltiptext="Agregar" style= "height:27px; width:80px"
+						tooltiptext="Agregar" style= "height:27px; width:90px"
 						label="Agregar" image="/public/imagenes/botones/annadir.png">
 					</button>
 					<button id="btnEliminar" label="Eliminar"
-						tooltiptext="Eliminar" style=" height:27px; width:80px"
+						tooltiptext="Eliminar" style=" height:27px; width:90px"
 						image="/public/imagenes/botones/eliminar.png">
 					</button>
 					<button id="btnSalir" label="Salir"
-						style=" height:27px; width:80px " tooltiptext="Salir"
+						style=" height:27px; width:90px " tooltiptext="Salir"
 						image="/public/imagenes/botones/salir.png">
 					</button>
 					<separator />

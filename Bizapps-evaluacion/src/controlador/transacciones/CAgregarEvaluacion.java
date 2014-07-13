@@ -763,6 +763,8 @@ public class CAgregarEvaluacion extends CGenerico {
 		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObje));
 		gpxAgregar.setOpen(false);
+		limpiar();
+		idObjetivo = 0;
 	}
 
 	private void EvaluacionIndicadorActualizar() {
