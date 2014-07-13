@@ -83,13 +83,13 @@
 								<listheader label="Plan Estratégico"
 									width="22%" />
 								<listheader label="Objetivo"
-									width="38%" />
+									width="46%" />
 								<listheader label="Corresponsables"
-									width="13%" />
+									width="15%" />
 								<listheader label="Peso (%)"
 									width="10%" />
 								<listheader label="Resultados (%)"
-									width="10%" />
+									width="0%" />
 								<listheader width="5%" />
 								<listheader width="5%" />
 							</listhead>
@@ -122,7 +122,7 @@
 										id="txtPeso" maxlength="3" />
 								</listcell>
 								<listcell>
-									<textbox value="0"
+									<textbox value="0" visible = "false"
 										placeholder="Resultados" mold="rounded" rows="1" width="100%"
 										readonly="true" id="txtResultados" />
 								</listcell>
