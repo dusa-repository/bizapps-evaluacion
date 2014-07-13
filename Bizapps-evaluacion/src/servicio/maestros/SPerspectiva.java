@@ -22,7 +22,7 @@ public class SPerspectiva {
 	}
 	
 	public List<Perspectiva> buscar() {
-		return perspectivaDAO.findAll();
+		return perspectivaDAO.buscar();
 	}
 	
 	public Perspectiva buscarId(Integer value) {

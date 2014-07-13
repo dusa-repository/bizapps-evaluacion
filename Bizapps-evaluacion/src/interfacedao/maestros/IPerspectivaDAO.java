@@ -12,7 +12,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface IPerspectivaDAO extends JpaRepository<Perspectiva, Integer> {
 	
-	 public List<Perspectiva> findAll();
+	 
+	 
+	 @Query("select p from Perspectiva p order by orden asc")
+	 public List<Perspectiva> buscar ();
 	 
 	 Perspectiva findById (Integer value);
 
