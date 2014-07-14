@@ -6,6 +6,7 @@ import interfacedao.maestros.IAreaDAO;
 import java.util.List;
 
 import modelo.maestros.Curso;
+import modelo.maestros.Empleado;
 import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,13 @@ public class SCurso {
 	public List<Curso> filtroArea(String valor) {
 		return cursoDAO.findByAreaDescripcionStartingWithAllIgnoreCase(valor);
 	}
+	
+	/* Servicio que permite buscar un curso de acuerdo al nombre */
+	public List<Curso> buscarPorNombres(String nombre) {
+		List<Curso> cursos;
+		cursos = cursoDAO.findByNombreAllIgnoreCase(nombre);
+		return cursos;
+	}
+
 
 }

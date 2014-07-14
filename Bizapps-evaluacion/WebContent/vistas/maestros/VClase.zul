@@ -1,4 +1,5 @@
 <window id="wdwVClase" border="normal" height="auto"
+	apply="controlador.maestros.CClase"
 	style="background-color:#8A0808;">
 
 	<groupbox width="auto">
@@ -73,8 +74,8 @@
 						<label value="Duración:" class="etiqueta" />
 
 						<spinner id="spnDuracionClase"
-							constraint="no negative" width="100%" maxlength="100" tabindex="7"
-							tooltiptext="Ingrese aqui la duracion de la clase" />
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="7" tooltiptext="Ingrese aqui la duracion de la clase" />
 					</row>
 					<row>
 						<label value="Lugar:" class="etiqueta" />

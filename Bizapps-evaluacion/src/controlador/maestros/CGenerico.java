@@ -32,6 +32,7 @@ import arbol.CArbol;
 import servicio.maestros.SActividad;
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
+import servicio.maestros.SClase;
 import servicio.maestros.SCompetencia;
 import servicio.maestros.SCurso;
 import servicio.maestros.SDistribucion;
@@ -78,6 +79,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEmpleado servicioEmpleado;
 	@WireVariable("SPerspectiva")
 	protected SPerspectiva servicioPerspectiva;
+	@WireVariable("SClase")
+	protected SClase servicioClase;
 	@WireVariable("SEvaluacion")
 	protected SEvaluacion servicioEvaluacion;
 	@WireVariable("SCompetencia")

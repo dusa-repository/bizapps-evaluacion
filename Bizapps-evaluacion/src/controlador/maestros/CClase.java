@@ -1,0 +1,526 @@
+package controlador.maestros;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import modelo.maestros.Cargo;
+import modelo.maestros.Clase;
+import modelo.maestros.Curso;
+import modelo.maestros.Empleado;
+
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Doublespinner;
+import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Spinner;
+import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
+
+import componentes.Botonera;
+import componentes.Catalogo;
+import componentes.Mensaje;
+
+public class CClase extends CGenerico {
+
+	@Wire
+	private Window wdwVClase;
+	@Wire
+	private Div botoneraClase;
+	@Wire
+	private Groupbox gpxRegistroClase;
+	@Wire
+	private Textbox txtCursoClase;
+	@Wire
+	private Button btnBuscarCurso;
+	@Wire
+	private Textbox txtContenidoClase;
+	@Wire
+	private Textbox txtObjetivoClase;
+	@Wire
+	private Textbox txtFacilitadorClase;
+	@Wire
+	private Textbox txtEntidadDidacticaClase;
+	@Wire
+	private Datebox dtbFechaClase;
+	@Wire
+	private Spinner spnDuracionClase;
+	@Wire
+	private Textbox txtLugarClase;
+	@Wire
+	private Combobox cmbTipoEntrenamientoClase;
+	@Wire
+	private Combobox cmbModalidadClase;
+	@Wire
+	private Groupbox gpxDatosClase;
+	@Wire
+	private Div catalogoClase;
+	@Wire
+	private Div divCatalogoCurso;
+	private static SimpleDateFormat formatoFecha = new SimpleDateFormat(
+			"dd-MM-yyyy");
+	private int idClase = 0;
+	private int idCurso = 0;
+
+	Mensaje msj = new Mensaje();
+	Botonera botonera;
+	Catalogo<Clase> catalogo;
+	Catalogo<Curso> catalogoCurso;
+
+	@Override
+	public void inicializar() throws IOException {
+		// TODO Auto-generated method stub
+
+		txtCursoClase.setFocus(true);
+		mostrarCatalogo();
+		botonera = new Botonera() {
+
+			@Override
+			public void seleccionar() {
+				// TODO Auto-generated method stub
+				if (validarSeleccion()) {
+					if (catalogo.obtenerSeleccionados().size() == 1) {
+						mostrarBotones(false);
+						abrirRegistro();
+						Clase clase = catalogo.objetoSeleccionadoDelCatalogo();
+						idClase = clase.getId();
+						idCurso = clase.getCurso().getId();
+						txtCursoClase.setValue(clase.getCurso().getNombre());
+						txtContenidoClase.setValue(clase.getContenido());
+						txtObjetivoClase.setValue(clase.getObjetivo());
+						txtFacilitadorClase.setValue(clase.getFacilitador());
+						txtEntidadDidacticaClase.setValue(clase
+								.getEntidadDidactica());
+						dtbFechaClase.setValue(clase.getFecha());
+						spnDuracionClase.setValue(clase.getDuracion());
+						txtLugarClase.setValue(clase.getLugar());
+						cmbTipoEntrenamientoClase.setValue(clase
+								.getTipoEntrenamiento());
+						cmbModalidadClase.setValue(clase.getModalidad());
+						txtCursoClase.setFocus(true);
+					} else
+						msj.mensajeAlerta(Mensaje.editarSoloUno);
+				}
+
+			}
+
+			@Override
+			public void guardar() {
+				// TODO Auto-generated method stub
+
+				boolean guardar = true;
+				guardar = validar();
+				if (guardar) {
+
+					Curso curso = servicioCurso.buscarCurso(idCurso);
+
+					if (curso != null) {
+
+						String contenido = txtContenidoClase.getValue();
+						String objetivo = txtObjetivoClase.getValue();
+						String facilitador = txtFacilitadorClase.getValue();
+						String entidadDidactica = txtEntidadDidacticaClase
+								.getValue();
+						Timestamp fecha = new java.sql.Timestamp(dtbFechaClase
+								.getValue().getTime());
+						int duracion = spnDuracionClase.getValue();
+						String lugar = txtLugarClase.getValue();
+						String tipoEntrenamiento = cmbTipoEntrenamientoClase
+								.getValue();
+						String modalidad = cmbModalidadClase.getValue();
+						String usuario = nombreUsuarioSesion();
+						Timestamp fechaAuditoria = new Timestamp(
+								new Date().getTime());
+						Clase clase = new Clase(idClase, curso, contenido,
+								objetivo, facilitador, entidadDidactica, fecha,
+								duracion, lugar, tipoEntrenamiento, modalidad,
+								fechaAuditoria, horaAuditoria, usuario);
+						servicioClase.guardar(clase);
+						msj.mensajeInformacion(Mensaje.guardado);
+						limpiar();
+						catalogo.actualizarLista(servicioClase.buscarTodas());
+						abrirCatalogo();
+
+					} else {
+
+						msj.mensajeAlerta(Mensaje.codigoCurso);
+						txtCursoClase.setFocus(true);
+					}
+
+				}
+
+			}
+
+			@Override
+			public void limpiar() {
+				// TODO Auto-generated method stub
+				mostrarBotones(false);
+				limpiarCampos();
+			}
+
+			@Override
+			public void salir() {
+				// TODO Auto-generated method stub
+				cerrarVentana1(wdwVClase, "Clase");
+			}
+
+			@Override
+			public void eliminar() {
+				// TODO Auto-generated method stub
+				if (gpxDatosClase.isOpen()) {
+					/* Elimina Varios Registros */
+					if (validarSeleccion()) {
+						final List<Clase> eliminarLista = catalogo
+								.obtenerSeleccionados();
+						Messagebox
+								.show("¿Desea Eliminar los "
+										+ eliminarLista.size() + " Registros?",
+										"Alerta",
+										Messagebox.OK | Messagebox.CANCEL,
+										Messagebox.QUESTION,
+										new org.zkoss.zk.ui.event.EventListener<Event>() {
+											public void onEvent(Event evt)
+													throws InterruptedException {
+												if (evt.getName()
+														.equals("onOK")) {
+													servicioClase
+															.eliminarVariasClases(eliminarLista);
+													msj.mensajeInformacion(Mensaje.eliminado);
+													catalogo.actualizarLista(servicioClase
+															.buscarTodas());
+												}
+											}
+										});
+					}
+				} else {
+					/* Elimina un solo registro */
+					if (idClase != 0) {
+						Messagebox
+								.show(Mensaje.deseaEliminar,
+										"Alerta",
+										Messagebox.OK | Messagebox.CANCEL,
+										Messagebox.QUESTION,
+										new org.zkoss.zk.ui.event.EventListener<Event>() {
+											public void onEvent(Event evt)
+													throws InterruptedException {
+												if (evt.getName()
+														.equals("onOK")) {
+													servicioClase
+															.eliminarUnaClase(idClase);
+													msj.mensajeInformacion(Mensaje.eliminado);
+													limpiar();
+													catalogo.actualizarLista(servicioClase
+															.buscarTodas());
+													abrirCatalogo();
+												}
+											}
+										});
+					} else
+						msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+				}
+
+			}
+
+		};
+		botonera.getChildren().get(1).setVisible(false);
+		botonera.getChildren().get(3).setVisible(false);
+		botoneraClase.appendChild(botonera);
+
+	}
+
+	public void limpiarCampos() {
+		idClase = 0;
+		idCurso = 0;
+		txtCursoClase.setValue("");
+		txtContenidoClase.setValue("");
+		txtObjetivoClase.setValue("");
+		txtFacilitadorClase.setValue("");
+		txtEntidadDidacticaClase.setValue("");
+		dtbFechaClase.setValue(null);
+		spnDuracionClase.setValue(null);
+		txtLugarClase.setValue("");
+		cmbTipoEntrenamientoClase.setValue("");
+		cmbModalidadClase.setValue("");
+		txtCursoClase.setFocus(true);
+
+	}
+
+	public boolean camposEditando() {
+		if (txtCursoClase.getText().compareTo("") != 0
+				|| txtContenidoClase.getText().compareTo("") != 0
+				|| txtObjetivoClase.getText().compareTo("") != 0
+				|| txtFacilitadorClase.getText().compareTo("") != 0
+				|| txtEntidadDidacticaClase.getText().compareTo("") != 0
+				|| dtbFechaClase.getText().compareTo("") != 0
+				|| spnDuracionClase.getText().compareTo("") != 0
+				|| txtLugarClase.getText().compareTo("") != 0
+				|| cmbTipoEntrenamientoClase.getText().compareTo("") != 0
+				|| cmbModalidadClase.getText().compareTo("") != 0) {
+			return true;
+		} else
+			return false;
+	}
+
+	@Listen("onClick = #gpxRegistroClase")
+	public void abrirRegistro() {
+		gpxDatosClase.setOpen(false);
+		gpxRegistroClase.setOpen(true);
+		mostrarBotones(false);
+
+	}
+
+	@Listen("onOpen = #gpxDatosClase")
+	public void abrirCatalogo() {
+		gpxDatosClase.setOpen(false);
+		if (camposEditando()) {
+			Messagebox.show(Mensaje.estaEditando, "Alerta", Messagebox.YES
+					| Messagebox.NO, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onYes")) {
+								gpxDatosClase.setOpen(false);
+								gpxRegistroClase.setOpen(true);
+							} else {
+								if (evt.getName().equals("onNo")) {
+									gpxDatosClase.setOpen(true);
+									gpxRegistroClase.setOpen(false);
+									limpiarCampos();
+									mostrarBotones(true);
+								}
+							}
+						}
+					});
+		} else {
+			gpxDatosClase.setOpen(true);
+			gpxRegistroClase.setOpen(false);
+			mostrarBotones(true);
+		}
+	}
+
+	public boolean validarSeleccion() {
+		List<Clase> seleccionados = catalogo.obtenerSeleccionados();
+		if (seleccionados == null) {
+			msj.mensajeAlerta(Mensaje.noHayRegistros);
+			return false;
+		} else {
+			if (seleccionados.isEmpty()) {
+				msj.mensajeAlerta(Mensaje.noSeleccionoItem);
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+
+	public boolean camposLLenos() {
+		if (txtCursoClase.getText().compareTo("") == 0) {
+			return false;
+		} else
+			return true;
+	}
+
+	protected boolean validar() {
+
+		if (!camposLLenos()) {
+			msj.mensajeAlerta(Mensaje.camposVacios);
+			return false;
+		} else
+			return true;
+
+	}
+
+	public void mostrarBotones(boolean bol) {
+		botonera.getChildren().get(0).setVisible(bol);
+		botonera.getChildren().get(1).setVisible(!bol);
+		botonera.getChildren().get(3).setVisible(!bol);
+
+	}
+
+	public void mostrarCatalogo() {
+
+		final List<Clase> listClase = servicioClase.buscarTodas();
+		catalogo = new Catalogo<Clase>(catalogoClase, "Catalogo de Clases",
+				listClase, "Curso", "Contenido", "Objetivo", "Facilitador",
+				"Entidad Didáctica", "Fecha", "Duración", "Lugar",
+				"Tipo de Entrenamiento", "Modalidad") {
+
+			@Override
+			protected List<Clase> buscarCampos(List<String> valores) {
+				List<Clase> lista = new ArrayList<Clase>();
+
+				for (Clase clase : listClase) {
+					if (clase.getCurso().getNombre().toLowerCase()
+							.startsWith(valores.get(0))
+							&& clase.getContenido().toLowerCase()
+									.startsWith(valores.get(1))
+							&& clase.getObjetivo().toLowerCase()
+									.startsWith(valores.get(2))
+							&& clase.getFacilitador().toLowerCase()
+									.startsWith(valores.get(3))
+							&& clase.getEntidadDidactica().toLowerCase()
+									.startsWith(valores.get(4))
+							&& String
+									.valueOf(
+											formatoFecha.format(clase
+													.getFecha())).toLowerCase()
+									.startsWith(valores.get(5))
+							&& String.valueOf(clase.getDuracion())
+									.toLowerCase().startsWith(valores.get(6))
+							&& clase.getLugar().toLowerCase()
+									.startsWith(valores.get(7))
+							&& clase.getTipoEntrenamiento().toLowerCase()
+									.startsWith(valores.get(8))
+							&& clase.getModalidad().toLowerCase()
+									.startsWith(valores.get(10))) {
+						lista.add(clase);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(Clase clase) {
+				String[] registros = new String[10];
+				registros[0] = clase.getCurso().getNombre();
+				registros[1] = clase.getContenido();
+				registros[2] = clase.getObjetivo();
+				registros[3] = clase.getFacilitador();
+				registros[4] = clase.getEntidadDidactica();
+				registros[5] = String.valueOf(formatoFecha.format(clase
+						.getFecha()));
+				registros[6] = String.valueOf(clase.getDuracion());
+				registros[7] = clase.getLugar();
+				registros[8] = clase.getTipoEntrenamiento();
+				registros[9] = clase.getModalidad();
+
+				return registros;
+			}
+
+			@Override
+			protected List<Clase> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				if (combo.equals("Curso"))
+					return servicioClase.filtroCurso(valor);
+				else if (combo.equals("Contenido"))
+					return servicioClase.filtroContenido(valor);
+				else if (combo.equals("Objetivo"))
+					return servicioClase.filtroObjetivo(valor);
+				else if (combo.equals("Facilitador"))
+					return servicioClase.filtroFacilitador(valor);
+				else if (combo.equals("Entidad Didáctica"))
+					return servicioClase.filtroEntidadDidactica(valor);
+				else if (combo.equals("Fecha"))
+					return servicioClase.filtroFecha(valor);
+				else if (combo.equals("Duración"))
+					return servicioClase.filtroDuracion(valor);
+				else if (combo.equals("Lugar"))
+					return servicioClase.filtroLugar(valor);
+				else if (combo.equals("Tipo de Entrenamiento"))
+					return servicioClase.filtroTipoEntrenamiento(valor);
+				else if (combo.equals("Modalidad"))
+					return servicioClase.filtroModalidad(valor);
+				return servicioClase.buscarTodas();
+			}
+
+		};
+		catalogo.setParent(catalogoClase);
+
+	}
+
+	@Listen("onClick = #btnBuscarCurso")
+	public void mostrarCatalogoCargo() {
+		final List<Curso> listCurso = servicioCurso.buscarTodos();
+		catalogoCurso = new Catalogo<Curso>(divCatalogoCurso,
+				"Catalogo de Cursoes", listCurso, "Área", "Nombre", "Duración",
+				"Estado") {
+
+			@Override
+			protected List<Curso> buscarCampos(List<String> valores) {
+				List<Curso> lista = new ArrayList<Curso>();
+
+				for (Curso curso : listCurso) {
+					if (curso.getArea().getDescripcion().toLowerCase()
+							.startsWith(valores.get(0))
+							&& curso.getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+
+							&& String.valueOf(curso.getDuracion())
+									.toLowerCase().startsWith(valores.get(2))
+							&& curso.getEstado().toLowerCase()
+									.startsWith(valores.get(3))) {
+						lista.add(curso);
+					}
+				}
+				return lista;
+
+			}
+
+			@Override
+			protected String[] crearRegistros(Curso curso) {
+				String[] registros = new String[4];
+				registros[0] = curso.getArea().getDescripcion();
+				registros[1] = curso.getNombre();
+				registros[2] = String.valueOf(curso.getDuracion());
+				registros[3] = curso.getEstado();
+
+				return registros;
+			}
+
+			@Override
+			protected List<Curso> buscar(String valor, String combo) {
+				// TODO Auto-generated method stub
+				if (combo.equals("Área"))
+					return servicioCurso.filtroArea(valor);
+				else if (combo.equals("Nombre"))
+					return servicioCurso.filtroNombre(valor);
+				else if (combo.equals("Duración"))
+					return servicioCurso.filtroDuracion(valor);
+				else if (combo.equals("Estado"))
+					return servicioCurso.filtroEstado(valor);
+				else
+					return servicioCurso.buscarTodos();
+			}
+
+		};
+
+		catalogoCurso.setClosable(true);
+		catalogoCurso.setWidth("80%");
+		catalogoCurso.setParent(divCatalogoCurso);
+		catalogoCurso.doModal();
+	}
+
+	@Listen("onSeleccion = #divCatalogoCurso")
+	public void seleccionCurso() {
+		Curso curso = catalogoCurso.objetoSeleccionadoDelCatalogo();
+		idCurso = curso.getId();
+		txtCursoClase.setValue(curso.getNombre());
+		catalogoCurso.setParent(null);
+	}
+
+	@Listen("onChange = #txtCursoClase")
+	public void buscarCurso() {
+		List<Curso> cursos = servicioCurso.buscarPorNombres(txtCursoClase
+				.getValue());
+		if (cursos.size() == 0) {
+			msj.mensajeAlerta(Mensaje.codigoCurso);
+			txtCursoClase.setFocus(true);
+		} else {
+
+			idCurso = cursos.get(0).getId();
+		}
+
+	}
+
+}

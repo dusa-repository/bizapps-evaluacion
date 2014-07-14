@@ -20,5 +20,7 @@ public interface ICursoDAO extends JpaRepository<Curso, Integer> {
 	public List<Curso> findByAreaDescripcionStartingWithAllIgnoreCase(
 			String valor);
 
+	public List<Curso> findByNombreAllIgnoreCase(String nombre);
+
 
 }
