@@ -301,12 +301,12 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" value="0" />
+										id="txtValorResultado"  />
 								</listcell>
 								<listcell>
 									<spinner placeholder="Res.Fy.Ant"
-										value="0" mold="rounded" width="100%" id="txtResFy"
-										disabled="true" />
+										 mold="rounded" width="100%" id="txtResFy"
+										disabled="true" value="0"/>
 								</listcell>
 								<listcell>
 									<spinner placeholder="Resultado %"

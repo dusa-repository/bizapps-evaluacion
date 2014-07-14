@@ -216,7 +216,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 	@Wire
 	private Button btnGuardarCompromisos;
 	NumberFormat numberFormat = NumberFormat.getInstance();
-	
 
 	ListModelList<Perspectiva> perspectiva;
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
@@ -244,6 +243,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static String fichaE;
 	private static int num;
 	Usuario u;
+	public static EvaluacionIndicador evi;
 	public static Integer idO = 0;
 	private static int idIndicadorE;
 	private static int idObjetivoE;
@@ -382,7 +382,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				lblRevision.setValue(evaluacion.getRevision().getDescripcion());
 				gpxAgregar.setOpen(false);
 				gpxAgregarIndicador.setOpen(false);
-				
+
 				if (evaluacion.getEstadoEvaluacion().equals("EN EDICION")) {
 					btnPendiente.setVisible(true);
 				} else if (evaluacion.getEstadoEvaluacion().equals("PENDIENTE")) {
@@ -397,159 +397,174 @@ public class CEvaluacionEmpleado extends CGenerico {
 				} else if (evaluacion.getEstadoEvaluacion().equals("CALIBRADA")) {
 					btnAprobada.setVisible(true);
 					btnFinalizada.setVisible(true);
-				} else if (evaluacion.getEstadoEvaluacion().equals("FINALIZADA")) {
-					//btnAgregarObjetivo.setVisible(false);
-					//btnEliminar.setVisible(false);
-					//btnEliminarIndicador.setVisible(false);
-					//btnAgregarIndicador.setVisible(false);
-					//btnIr.setVisible(false);
-					//btnCambiarEstado.setVisible(false);
+				} else if (evaluacion.getEstadoEvaluacion()
+						.equals("FINALIZADA")) {
+					// btnAgregarObjetivo.setVisible(false);
+					// btnEliminar.setVisible(false);
+					// btnEliminarIndicador.setVisible(false);
+					// btnAgregarIndicador.setVisible(false);
+					// btnIr.setVisible(false);
+					// btnCambiarEstado.setVisible(false);
 				}
 				evaluacionconductas = servicioEvaluacionConducta
 						.buscarConductas(idEva);
 				if (evaluacionconductas.size() != 0) {
 					mostrarDominioRectora();
 					mostrarDominioEspecifica();
-				
-				
-				//CALCULO DE COMPETENCIAS RECTORAS
-				List<EvaluacionConducta> ecc = new ArrayList<EvaluacionConducta>();
-				EvaluacionConducta e = new EvaluacionConducta();
-				for (int i = 0; i < nivelCompetencia.size(); i++) {
-					ecc.removeAll(ecc);
-					System.out.println(nivelCompetencia.size());
-					Competencia competencia = nivelCompetencia.get(i).getCompetencia();
-					EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia);
-					System.out.println("size1"+ec);
 
-					if (ec != null){
-					List<EvaluacionConducta> evco = servicioEvaluacionConducta.buscarConductas(idEva);
-					
-					for (int j = 0; j < evco.size(); j++) {
-						int idCompetencia = evco.get(j).getCompetencia().getId();
-						if (idCompetencia == competencia.getId()) {
-							e = evco.get(j);
-							ecc.add(e);
-						} 
-					}
-					
-					
-					porcentaje = ecc.size() * 0.20;
-					System.out.println("ecc"+ecc.size());
-					System.out.println("por"+porcentaje);
-					if (ec!= null){
-					int idDominioEvidenciado = ec.getIdDominio();
-					int idDominioRequerido = nivelCompetencia.get(i).getDominio().getId();
-					if (idDominioRequerido == 6){
-						idDominioRequerido = 1;
-					}
-					if (idDominioRequerido == 7){
-						idDominioRequerido = 2;
-					}
-					if (idDominioRequerido == 8){
-						idDominioRequerido = 3;
-					}
-					if (idDominioRequerido == 9){
-						idDominioRequerido = 4;
-					}
-					System.out.println(idDominioEvidenciado);
-					System.out.println(idDominioRequerido);
-					calculo = calculo + (porcentaje * idDominioEvidenciado);
-					totalCompetencia = idDominioRequerido + totalCompetencia;
-					System.out.println("cal"+calculo);
-					System.out.println("tc"+totalCompetencia);
-					}
-					
-					
-				}
-				
-				totalConducta =  (calculo * 100)/ totalCompetencia;
-				System.out.println("t"+totalConducta);
-			}
-			//CALCULO DE COMPETENCIAS ESPECIFICAS 
-				
-				List<EvaluacionConducta> ecc1 = new ArrayList<EvaluacionConducta>();
-				EvaluacionConducta e1 = new EvaluacionConducta();
-				for (int i = 0; i < nivelCompetencia1.size(); i++) {
-					ecc1.removeAll(ecc1);
-					System.out.println(nivelCompetencia1.size());
-					Competencia competencia = nivelCompetencia.get(i).getCompetencia();
-					EvaluacionCompetencia ec = servicioEvaluacionCompetencia.buscar(evaluacion, competencia);
-					System.out.println("size1"+ec);
+					// CALCULO DE COMPETENCIAS RECTORAS
+					List<EvaluacionConducta> ecc = new ArrayList<EvaluacionConducta>();
+					EvaluacionConducta e = new EvaluacionConducta();
+					for (int i = 0; i < nivelCompetencia.size(); i++) {
+						ecc.removeAll(ecc);
+						System.out.println(nivelCompetencia.size());
+						Competencia competencia = nivelCompetencia.get(i)
+								.getCompetencia();
+						EvaluacionCompetencia ec = servicioEvaluacionCompetencia
+								.buscar(evaluacion, competencia);
+						System.out.println("size1" + ec);
 
-					if (ec != null){
-					List<EvaluacionConducta> evco = servicioEvaluacionConducta.buscarConductas(idEva);
-					
-					for (int j = 0; j < evco.size(); j++) {
-						int idCompetencia = evco.get(j).getCompetencia().getId();
-						if (idCompetencia == competencia.getId()) {
-							e1 = evco.get(j);
-							ecc1.add(e);
-						} 
+						if (ec != null) {
+							List<EvaluacionConducta> evco = servicioEvaluacionConducta
+									.buscarConductas(idEva);
+
+							for (int j = 0; j < evco.size(); j++) {
+								int idCompetencia = evco.get(j)
+										.getCompetencia().getId();
+								if (idCompetencia == competencia.getId()) {
+									e = evco.get(j);
+									ecc.add(e);
+								}
+							}
+
+							porcentaje = ecc.size() * 0.20;
+							System.out.println("ecc" + ecc.size());
+							System.out.println("por" + porcentaje);
+							if (ec != null) {
+								int idDominioEvidenciado = ec.getIdDominio();
+								int idDominioRequerido = nivelCompetencia
+										.get(i).getDominio().getId();
+								if (idDominioRequerido == 6) {
+									idDominioRequerido = 1;
+								}
+								if (idDominioRequerido == 7) {
+									idDominioRequerido = 2;
+								}
+								if (idDominioRequerido == 8) {
+									idDominioRequerido = 3;
+								}
+								if (idDominioRequerido == 9) {
+									idDominioRequerido = 4;
+								}
+								System.out.println(idDominioEvidenciado);
+								System.out.println(idDominioRequerido);
+								calculo = calculo
+										+ (porcentaje * idDominioEvidenciado);
+								totalCompetencia = idDominioRequerido
+										+ totalCompetencia;
+								System.out.println("cal" + calculo);
+								System.out.println("tc" + totalCompetencia);
+							}
+
+						}
+
+						totalConducta = (calculo * 100) / totalCompetencia;
+						System.out.println("t" + totalConducta);
 					}
-					
-					
-					porcentaje1 = ecc1.size() * 0.20;
-					System.out.println("ecc1"+ecc.size());
-					System.out.println("por1"+porcentaje);
-					if (ec!= null){
-					int idDominioEvidenciado = ec.getIdDominio();
-					int idDominioRequerido = nivelCompetencia.get(i).getDominio().getId();
-					if (idDominioRequerido == 6){
-						idDominioRequerido = 1;
+					// CALCULO DE COMPETENCIAS ESPECIFICAS
+
+					List<EvaluacionConducta> ecc1 = new ArrayList<EvaluacionConducta>();
+					EvaluacionConducta e1 = new EvaluacionConducta();
+					for (int i = 0; i < nivelCompetencia1.size(); i++) {
+						ecc1.removeAll(ecc1);
+						System.out.println(nivelCompetencia1.size());
+						Competencia competencia = nivelCompetencia.get(i)
+								.getCompetencia();
+						EvaluacionCompetencia ec = servicioEvaluacionCompetencia
+								.buscar(evaluacion, competencia);
+						System.out.println("size1" + ec);
+
+						if (ec != null) {
+							List<EvaluacionConducta> evco = servicioEvaluacionConducta
+									.buscarConductas(idEva);
+
+							for (int j = 0; j < evco.size(); j++) {
+								int idCompetencia = evco.get(j)
+										.getCompetencia().getId();
+								if (idCompetencia == competencia.getId()) {
+									e1 = evco.get(j);
+									ecc1.add(e);
+								}
+							}
+
+							porcentaje1 = ecc1.size() * 0.20;
+							System.out.println("ecc1" + ecc.size());
+							System.out.println("por1" + porcentaje);
+							if (ec != null) {
+								int idDominioEvidenciado = ec.getIdDominio();
+								int idDominioRequerido = nivelCompetencia
+										.get(i).getDominio().getId();
+								if (idDominioRequerido == 6) {
+									idDominioRequerido = 1;
+								}
+								if (idDominioRequerido == 7) {
+									idDominioRequerido = 2;
+								}
+								if (idDominioRequerido == 8) {
+									idDominioRequerido = 3;
+								}
+								if (idDominioRequerido == 9) {
+									idDominioRequerido = 4;
+								}
+								System.out.println(idDominioEvidenciado);
+								System.out.println(idDominioRequerido);
+								calculo1 = calculo1
+										+ (porcentaje1 * idDominioEvidenciado);
+								totalCompetencia1 = idDominioRequerido
+										+ totalCompetencia1;
+								System.out.println("cal" + calculo1);
+								System.out.println("tc" + totalCompetencia1);
+							}
+
+						}
+						totalConducta1 = (calculo1 * 100) / totalCompetencia1;
+						System.out.println("t" + totalConducta1);
 					}
-					if (idDominioRequerido == 7){
-						idDominioRequerido = 2;
-					}
-					if (idDominioRequerido == 8){
-						idDominioRequerido = 3;
-					}
-					if (idDominioRequerido == 9){
-						idDominioRequerido = 4;
-					}
-					System.out.println(idDominioEvidenciado);
-					System.out.println(idDominioRequerido);
-					calculo1 = calculo1 + (porcentaje1 * idDominioEvidenciado);
-					totalCompetencia1 = idDominioRequerido + totalCompetencia1;
-					System.out.println("cal"+calculo1);
-					System.out.println("tc"+totalCompetencia1);
-					}
-						
+					resultadoCompetencia = Math
+							.rint((totalConducta + totalConducta1) / 2);
+
 				}
-				totalConducta1 =  (calculo1 * 100)/ totalCompetencia1;
-				System.out.println("t"+totalConducta1);
-			}
-				resultadoCompetencia = Math.rint((totalConducta + totalConducta1)/ 2);
-		
-			}
-			int id = 1;
-			int id2 = 2;
-			Distribucion dis = servicioDistribucion.buscarDistribucion(id);
-			Distribucion dist = servicioDistribucion.buscarDistribucion(id2);
-			int distO = dis.getPorcentaje();
-			int distC = dist.getPorcentaje();
-			String dO = String.valueOf(distO);
-			String dC = String.valueOf(distC);
-		
-			String r = String.valueOf(resultadoCompetencia);
-			String o = String.valueOf(evaluacion1.getResultadoObjetivos());
-			Double resul1 = Double.parseDouble(o);
-			lblResultado.setValue(o);
-			lblResultado1.setValue(r);
-			lblDistribucion.setValue(dO);
-			lblDistribucion1.setValue(dC);
-			resultadoPesoCompetencia = Math.rint(distC * resultadoCompetencia)/100;
-			resultadoPesoObjetivo = Math.rint(distO * resul1)/100;
-			lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
-			lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
-			double resultadoFinal = Math.rint(resultadoPesoObjetivo) + Math.rint(resultadoPesoCompetencia);
-			String rf = String.valueOf(resultadoFinal);
-			txtResultadoFinal.setValue(rf);
-	
+				int id = 1;
+				int id2 = 2;
+				Distribucion dis = servicioDistribucion.buscarDistribucion(id);
+				Distribucion dist = servicioDistribucion
+						.buscarDistribucion(id2);
+				int distO = dis.getPorcentaje();
+				int distC = dist.getPorcentaje();
+				String dO = String.valueOf(distO);
+				String dC = String.valueOf(distC);
+
+				String r = String.valueOf(resultadoCompetencia);
+				String o = String.valueOf(evaluacion1.getResultadoObjetivos());
+				Double resul1 = Double.parseDouble(o);
+				lblResultado.setValue(o);
+				lblResultado1.setValue(r);
+				lblDistribucion.setValue(dO);
+				lblDistribucion1.setValue(dC);
+				resultadoPesoCompetencia = Math.rint(distC
+						* resultadoCompetencia) / 100;
+				resultadoPesoObjetivo = Math.rint(distO * resul1) / 100;
+				lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
+				lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
+				double resultadoFinal = Math.rint(resultadoPesoObjetivo)
+						+ Math.rint(resultadoPesoCompetencia);
+				String rf = String.valueOf(resultadoFinal);
+				txtResultadoFinal.setValue(rf);
+
 			}
 		}
-		
-		}
+
+	}
 
 	@Listen("onClick = #tbIndicadores")
 	public void mostrarObjetivos() {
@@ -564,10 +579,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 	public void agregarObjetivo() {
 		gpxAgregar.setOpen(true);
 	}
-	
+
 	@Listen("onClick = #btnCancelarI")
 	public void cerrarPanelI() {
-		idIndicador=0;
+		idIndicador = 0;
 		limpiarIndicador();
 		gpxAgregarIndicador.setOpen(false);
 	}
@@ -603,8 +618,6 @@ public class CEvaluacionEmpleado extends CGenerico {
 		txtPeso.setValue(null);
 
 	}
-	
-	
 
 	public void limpiarIndicador() {
 		txtIndicador.setValue("");
@@ -612,6 +625,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
 		txtPeso1.setValue(null);
+		cmbMedicion.setValue(null);
+		cmbUnidad.setValue(null);
 		cmbMedicion.setDisabled(false);
 		cmbUnidad.setDisabled(false);
 		List<Medicion> medicion = servicioMedicion.buscar();
@@ -665,16 +680,16 @@ public class CEvaluacionEmpleado extends CGenerico {
 		indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(indicadores));
-		totalIndicador ();
+		totalIndicador();
 
 	}
-	
-	public void totalIndicador (){
+
+	public void totalIndicador() {
 		for (int i = 0; i < indicadores.size(); i++) {
 			EvaluacionIndicador ei = indicadores.get(i);
 			Double resultado = ei.getResultadoPeso();
 			totalIndicador = totalIndicador + resultado;
-			
+
 		}
 		txttotalIndicador.setValue(String.valueOf(totalIndicador));
 		totalIndicador = 0.0;
@@ -830,8 +845,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 			guardarObjetivos();
 			guardarEvaluacion();
-//			Messagebox.show("Datos guardados exitosamente", "Información",
-//					Messagebox.OK, Messagebox.INFORMATION);
+			// Messagebox.show("Datos guardados exitosamente", "Información",
+			// Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}
@@ -926,7 +941,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 			}
 		}
 		guardarIndicadores();
-	
+
 		totalObjetivo = 0.0;
 		totalInd = 0.0;
 		total = 0.0;
@@ -980,14 +995,15 @@ public class CEvaluacionEmpleado extends CGenerico {
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
 			ev = objetivoLista;
-			
+
 			if (objetivosG.size() == 0) {
 				servicioEvaluacionObjetivo.guardar(objetivoLista);
-				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+				objetivosG = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
 				lbxObjetivosGuardados
-				.setModel(new ListModelList<EvaluacionObjetivo>(
-						objetivosG));
-				
+						.setModel(new ListModelList<EvaluacionObjetivo>(
+								objetivosG));
+
 				gpxAgregar.setOpen(false);
 				Messagebox.show("Objetivos Guardados Exitosamente",
 						"Información", Messagebox.OK, Messagebox.INFORMATION);
@@ -996,7 +1012,8 @@ public class CEvaluacionEmpleado extends CGenerico {
 				objetivosG.add(objetivoLista);
 				cambiarEstado1();
 				objetivosG.remove(objetivoLista);
-				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+				objetivosG = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
 				lbxObjetivosGuardados
 						.setModel(new ListModelList<EvaluacionObjetivo>(
 								objetivosG));
@@ -1029,7 +1046,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				txtPeso.setValue(peso1);
 				cmbPerspectiva.setValue(perspectiva.getDescripcion());
 				pers = perspectiva.getDescripcion();
-				//cmbPerspectiva.setDisabled(true);
+				// cmbPerspectiva.setDisabled(true);
 			}
 		}
 	}
@@ -1039,8 +1056,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
-		String perspectivaCombo = cmbPerspectiva.getSelectedItem()
-				.getContext();
+		String perspectivaCombo = cmbPerspectiva.getSelectedItem().getContext();
 		Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
 				.parseInt(perspectivaCombo));
 		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
@@ -1115,24 +1131,26 @@ public class CEvaluacionEmpleado extends CGenerico {
 				indicadorLista.setValorMeta(valorMeta);
 				indicadorLista.setValorResultado(valorResultado);
 				indicadorLista.setTotal(0);
+				evi = indicadorLista;
+				System.out.println("entroelseee");
 				indicadores.add(indicadorLista);
+				System.out.println("size" + indicadores.size());
+				cambiarEstado1();
+				indicadores.remove(indicadorLista);
+				indicadores = servicioEvaluacionIndicador
+						.buscarIndicadores(Integer.parseInt(idObjetivo));
 				lbxIndicadoresAgregados
 						.setModel(new ListModelList<EvaluacionIndicador>(
 								indicadores));
-				servicioEvaluacionIndicador.guardar(indicadorLista);
 
-				Messagebox.show("Indicador para el objetivo" + " "
-						+ cmbObjetivos.getValue() + " "
-						+ "ha sido guardado exitosamente", "Información",
-						Messagebox.OK, Messagebox.INFORMATION);
-				gpxAgregar.setOpen(false);
+				// }
 			}
 
-			limpiarIndicador();
 			idIndicador = 0;
+
 		}
 		evaluarIndicadores();
-		totalIndicador ();
+		totalIndicador();
 	}
 
 	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")
@@ -1179,19 +1197,18 @@ public class CEvaluacionEmpleado extends CGenerico {
 				txtValorResultado1.setValue(valorR);
 				txtResultadoPorc.setValue(resulPorc);
 				txtPesoPorc.setValue(resulP);
-			
+
 			}
 		}
 	}
 
 	private void EvaluacionIndicadorActualizar() {
-		String UnidadCombo = cmbUnidad.getSelectedItem()
-				.getContext();
+		String UnidadCombo = cmbUnidad.getSelectedItem().getContext();
 		UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
 				.parseInt(UnidadCombo));
-		String medicionCombo = cmbMedicion.getSelectedItem()
-				.getContext();
-		Medicion medicion = servicioMedicion.buscarMedicion(Integer.parseInt(medicionCombo));
+		String medicionCombo = cmbMedicion.getSelectedItem().getContext();
+		Medicion medicion = servicioMedicion.buscarMedicion(Integer
+				.parseInt(medicionCombo));
 		EvaluacionIndicador indicador = servicioEvaluacionIndicador
 				.buscarIndicadorId(idIndicador);
 		indicador.setDescripcionIndicador(txtIndicador.getValue());
@@ -1367,6 +1384,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		}
 
 	}
+
 	@Listen("onClick = #btnCambiarEstado")
 	public void guardarComportamiento() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
@@ -1379,11 +1397,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 		evaluacion.setOportunidades(oportunidades);
 		evaluacion.setResumen(resumen);
 		servicioEvaluacion.guardar(evaluacion);
-		Messagebox.show(
-				"Evaluacion Guardada Exitosamente",
-				"Información", Messagebox.OK, Messagebox.INFORMATION);
+		Messagebox.show("Evaluacion Guardada Exitosamente", "Información",
+				Messagebox.OK, Messagebox.INFORMATION);
 	}
-	
+
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
 		tbIndicadores.setSelected(true);
@@ -1432,8 +1449,10 @@ public class CEvaluacionEmpleado extends CGenerico {
 			txtResFy.setDisabled(false);
 		}
 	}
-	
+
 	public void validar1() {
+		System.out
+				.println("enttroooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		String ficha = evaluacion.getFicha();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
@@ -1446,10 +1465,13 @@ public class CEvaluacionEmpleado extends CGenerico {
 						.getIdObjetivo();
 				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
 						.buscarIndicadores(idObjetivo);
-				Double sumaPeso = (double) 0;
-				for (int j = 0; j < evaluacionObjetivoIndicador.size(); j++) {
-					Double peso = evaluacionObjetivoIndicador.get(j).getPeso();
+				Double sumaPeso = 0.0;
+				for (int j = 0; j < indicadores.size(); j++) {
+					System.out.println("ojoooooooooo");
+					Double peso = indicadores.get(j).getPeso();
+					System.out.println("pesooo" + peso);
 					sumaPeso = peso + sumaPeso;
+					System.out.println("sumapeso" + sumaPeso);
 				}
 
 				if (sumaPeso > 100) {
@@ -1486,17 +1508,25 @@ public class CEvaluacionEmpleado extends CGenerico {
 					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
+			indicadores.remove(evi);
 
 		} else {
-			servicioEvaluacionObjetivo.guardar(ev);
-			Messagebox.show("Objetivos Guardados Exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
-			gpxAgregar.setOpen(false);
-			limpiar();
+			if (evi != null) {
+				servicioEvaluacionIndicador.guardar(evi);
+				gpxAgregarIndicador.setOpen(false);
+				limpiarIndicador();
+				Messagebox.show("Guardado Exitosamente", "Información",
+						Messagebox.OK, Messagebox.INFORMATION);
+			} else {
+				servicioEvaluacionObjetivo.guardar(ev);
+				Messagebox.show("Guardado Exitosamente", "Información",
+						Messagebox.OK, Messagebox.INFORMATION);
+				gpxAgregar.setOpen(false);
+				limpiar();
 
+			}
 		}
-
+		bool = false;
 	}
-	
 
 }

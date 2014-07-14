@@ -325,12 +325,12 @@
 								<listcell>
 									<spinner
 										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado" value="0" />
+										id="txtValorResultado"  />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Res.Fy.Ant"
-										value="0" mold="rounded" width="100%" id="txtResFy"
-										disabled="true" />
+									<spinner  value="0" placeholder="Res.Fy.Ant"
+										 mold="rounded" width="100%" id="txtResFy"
+										disabled="true"/>
 								</listcell>
 								<listcell>
 									<spinner placeholder="Resultado %"
