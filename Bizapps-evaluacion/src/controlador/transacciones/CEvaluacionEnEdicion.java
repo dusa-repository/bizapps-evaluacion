@@ -612,10 +612,17 @@ public class CEvaluacionEnEdicion extends CGenerico {
 					cambiarEstado1();
 					indicadores.remove(indicadorLista);
 					indicadores = servicioEvaluacionIndicador.buscarIndicadores(Integer.parseInt(idObjetivo)); 
+					for (int i = 0; i < indicadores.size(); i++) {
+						int id = indicadores.get(i).getIdObjetivo();
+					if (Integer.valueOf(idObjetivo) == id){
 					lbxIndicadoresAgregados
 							.setModel(new ListModelList<EvaluacionIndicador>(
 									indicadores));
-
+					}
+					else{
+						indicadores.remove(indicadorLista);
+					}
+					}
 //				}
 			}
 

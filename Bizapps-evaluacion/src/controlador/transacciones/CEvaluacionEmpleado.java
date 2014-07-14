@@ -1119,6 +1119,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 				Integer linea = indicadores.size() + 1;
 				EvaluacionIndicador indicadorLista = new EvaluacionIndicador();
 				indicadorLista.setIdObjetivo(Integer.parseInt(idObjetivo));
+				idObjetivo = idObjetivo;
 				indicadorLista.setIdIndicador(idIndicador);
 				indicadorLista.setDescripcionIndicador(indicador);
 				indicadorLista.setMedicion(medicion);
@@ -1139,9 +1140,17 @@ public class CEvaluacionEmpleado extends CGenerico {
 				indicadores.remove(indicadorLista);
 				indicadores = servicioEvaluacionIndicador
 						.buscarIndicadores(Integer.parseInt(idObjetivo));
+				for (int i = 0; i < indicadores.size(); i++) {
+					int id = indicadores.get(i).getIdObjetivo();
+				if (Integer.valueOf(idObjetivo) == id){
 				lbxIndicadoresAgregados
 						.setModel(new ListModelList<EvaluacionIndicador>(
 								indicadores));
+				}
+				else{
+					indicadores.remove(indicadorLista);
+				}
+				}
 
 				// }
 			}

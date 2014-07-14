@@ -574,30 +574,23 @@ public class CAgregarEvaluacion extends CGenerico {
 				indicadorLista.setValorResultado(valorResultado);
 				indicadorLista.setTotal(0);
 				evi = indicadorLista;
-				
-//				if (indicadores.size() == 0) {
-//					System.out.println("entrooooiff");
-//					servicioEvaluacionIndicador.guardar(indicadorLista);
-//					indicadores = servicioEvaluacionIndicador.buscarIndicadores(Integer.parseInt(idObjetivo)); 
-//					lbxIndicadoresAgregados
-//					.setModel(new ListModelList<EvaluacionIndicador>(
-//							indicadores));
-//					
-//					gpxAgregarIndicador.setOpen(false);
-//					Messagebox.show("Indicador Guardado Exitosamente",
-//							"Información", Messagebox.OK, Messagebox.INFORMATION);
-//					limpiarI();
-//				} else {
 					System.out.println("entroelseee");
 					indicadores.add(indicadorLista);
 					System.out.println("size"+indicadores.size());
 					cambiarEstado1();
 					indicadores.remove(indicadorLista);
 					indicadores = servicioEvaluacionIndicador.buscarIndicadores(Integer.parseInt(idObjetivo)); 
+					for (int i = 0; i < indicadores.size(); i++) {
+						int id = indicadores.get(i).getIdObjetivo();
+					if (idO == id){
 					lbxIndicadoresAgregados
 							.setModel(new ListModelList<EvaluacionIndicador>(
 									indicadores));
-
+					}
+					else{
+						indicadores.remove(indicadorLista);
+					}
+					}
 //				}
 			}
 
