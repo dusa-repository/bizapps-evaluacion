@@ -515,6 +515,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
 		String idObjetivo;
+		
 		if (cmbObjetivos.getText().compareTo("") == 0
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
@@ -582,8 +583,11 @@ public class CAgregarEvaluacion extends CGenerico {
 					indicadores = servicioEvaluacionIndicador.buscarIndicadores(Integer.parseInt(idObjetivo)); 
 					for (int i = 0; i < indicadores.size(); i++) {
 						int id = indicadores.get(i).getIdObjetivo();
-					if (idO == id){
-					lbxIndicadoresAgregados
+						System.out.println("ido"+idO);
+						System.out.println("id"+id);
+
+						if (Integer.valueOf(idObjetivo) == id){
+											lbxIndicadoresAgregados
 							.setModel(new ListModelList<EvaluacionIndicador>(
 									indicadores));
 					}
