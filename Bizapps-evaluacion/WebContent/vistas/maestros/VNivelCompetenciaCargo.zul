@@ -39,8 +39,7 @@
 				<rows>
 					<row>
 						<hbox>
-							<label class="etiqueta"
-								value="Cargo:" />
+							<label class="etiqueta" value="Cargo:" />
 							<space />
 							<label value="*"
 								style="font-weight:bold;color:red">
@@ -62,7 +61,8 @@
 				pageSize="7" oddRowSclass="non-odd"
 				emptyMessage="No ha seleccionado el cargo">
 				<listhead>
-					<listheader label="Código competencia" width="15%"/>
+					<listheader label="Código competencia" width="15%"
+						visible="false" />
 					<listheader label="Descripción" width="20%" />
 					<listheader label="Nivel" width="13%" />
 					<listheader label="Comentario" />

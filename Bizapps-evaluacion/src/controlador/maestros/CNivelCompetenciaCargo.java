@@ -222,12 +222,15 @@ public class CNivelCompetenciaCargo extends CGenerico {
 							.get(j).getCompetencia().getId()) {
 
 						listItem.setSelected(true);
-						String descripcionDominio = nivelCompetencias.get(j)
-								.getDominio().getDescripcionDominio();
-						System.out.println(descripcionDominio);
-						((Combobox) ((listItem.getChildren().get(4)))
-								.getFirstChild())
-								.setValue((descripcionDominio));
+						if (nivelCompetencias.get(j).getDominio() != null) {
+							String descripcionDominio = nivelCompetencias
+									.get(j).getDominio()
+									.getDescripcionDominio();
+							System.out.println(descripcionDominio);
+							((Combobox) ((listItem.getChildren().get(4)))
+									.getFirstChild())
+									.setValue((descripcionDominio));
+						}
 
 					}
 

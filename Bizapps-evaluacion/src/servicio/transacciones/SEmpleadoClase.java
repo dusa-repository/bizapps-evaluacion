@@ -5,7 +5,10 @@ import interfacedao.transacciones.IEmpleadoClaseDAO;
 import java.util.List;
 
 
+import modelo.maestros.Clase;
+import modelo.maestros.Curso;
 import modelo.maestros.EmpleadoClase;
+import modelo.maestros.EmpleadoCurso;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,10 @@ public class SEmpleadoClase {
 	/* Servicio que permite guardar los datos de los empleados de acuerdo a una clase*/
 	public void guardar(EmpleadoClase empleado) {
 		empleadoClaseDAO.save(empleado);
+	}
+	
+	public List<EmpleadoClase> buscar(Clase clase) {
+		return empleadoClaseDAO.findByClase(clase);
 	}
 	
 	

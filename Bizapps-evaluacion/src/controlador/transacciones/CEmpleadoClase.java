@@ -61,6 +61,7 @@ public class CEmpleadoClase extends CGenerico {
 	@Wire
 	private Div divCatalogoClase;
 	List<EmpleadoCurso> empleadosCurso = new ArrayList<EmpleadoCurso>();
+	List<EmpleadoClase> empleadosClase = new ArrayList<EmpleadoClase>();
 	private int idClase = 0;
 	private int idCurso = 0;
 
@@ -242,6 +243,33 @@ public class CEmpleadoClase extends CGenerico {
 		}
 
 		lsbEmpleado.setModel(new ListModelList<Empleado>(empleados));
+		lsbEmpleado.renderAll();
+
+		Clase clase = servicioClase.buscarClase(idClase);
+		empleadosClase = servicioEmpleadoClase.buscar(clase);
+
+		if (empleadosClase.size() != 0) {
+
+			for (int i = 0; i < lsbEmpleado.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadosClase.size(); j++) {
+					Listitem listItem = lsbEmpleado.getItemAtIndex(j);
+					if (empleados.get(i).getId() == empleadosClase.get(j)
+							.getEmpleado().getId()) {
+						String asistencia = empleadosClase.get(j)
+								.getAsistencia();
+						System.out.println(asistencia);
+
+						((Combobox) ((listItem.getChildren().get(5)))
+								.getFirstChild()).setValue((asistencia));
+
+					}
+
+				}
+
+			}
+
+		}
 
 	}
 
