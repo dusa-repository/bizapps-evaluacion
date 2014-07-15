@@ -127,4 +127,12 @@ public class SClase {
 	}
 	
 	
+	/* Servicio que permite buscar una clase de acuerdo al nombre */
+	public List<Clase> buscarPorContenidos(String contenido) {
+		List<Clase> clases;
+		clases = claseDAO.findByContenidoAllIgnoreCase(contenido);
+		return clases;
+	}
+	
+	
 }

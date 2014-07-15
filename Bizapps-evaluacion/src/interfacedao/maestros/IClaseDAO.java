@@ -32,6 +32,8 @@ public interface IClaseDAO extends JpaRepository<Clase, Integer> {
 
 	public List<Clase> findByModalidadStartingWithAllIgnoreCase(String valor);
 
+	public List<Clase> findByContenidoAllIgnoreCase(String contenido);
+
 
 
 }

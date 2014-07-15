@@ -28,6 +28,7 @@ public class Mensaje {
 	public static String codigoUnidad = "La unidad organizativa definida por el usuario no existe";
 	public static String codigoPeriodo = "El codigo del periodo definido por el usuario no existe";
 	public static String codigoArea = "El codigo del area definido por el usuario no existe";
+	public static String codigoClase = "El contenido de la clase definido por el usuario no existe";
 	public static String codigoGerencia = "La gerencia definida por el usuario no existe";
 	public static String codigoCompetencia = "La competencia definida por el usuario no existe";
 	public static String codigoTipoFormacion = "El tipo de formacion definido por el usuario no existe";

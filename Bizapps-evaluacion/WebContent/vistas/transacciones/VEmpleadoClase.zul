@@ -1,0 +1,103 @@
+<window id="wdwVEmpleadoClase" border="normal" height="auto"
+	apply="controlador.transacciones.CEmpleadoClase"
+	style="background-color:#8A0808;">
+
+	<groupbox width="auto">
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
+				<div align="left">
+					<button id="btnGuardar" tooltiptext="Guardar"
+						style="height:27px;width:90px;margin-left:5px" label="Guardar"
+						image="/public/imagenes/botones/guardar.png">
+					</button>
+					<button id="btnLimpiar" label="Limpiar"
+						tooltiptext="Limpiar" style=" height:27px; width:90px"
+						image="/public/imagenes/botones/limpiar.png">
+					</button>
+					<button id="btnSalir" label="Salir"
+						style=" height:27px; width:80px " tooltiptext="Salir"
+						image="/public/imagenes/botones/salir.png">
+					</button>
+					<separator />
+				</div>
+			</panelchildren>
+		</panel>
+		<separator />
+		<separator />
+		<groupbox>
+			<separator />
+			<separator />
+			<grid width="100%" style="border:0px">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="8%" />
+					<column label="" width="27%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Tema de la Clase:" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+						<textbox id="txtClaseEmpleadoClase" tabindex="1"
+							width="100%" maxlength="100"
+							tooltiptext="Ingrese aqui el nombre de la clase" />
+						<button id="btnBuscarClase" label=""
+							tooltiptext="Catalogo de clases"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<separator />
+
+			<listbox id="lsbEmpleado" width="100%" mold="paging"
+				pageSize="7" oddRowSclass="non-odd"
+				emptyMessage="No ha seleccionado la clase">
+				<listhead>
+					<listheader label="Código Empleado" width="15%"
+						visible="false" />
+					<listheader label="Ficha" />
+					<listheader label="Nombre" />
+					<listheader label="Cargo" />
+					<listheader label="Gerencia" />
+					<listheader label="Asistencia" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>
+
+							<intbox value="${each.id}" width="auto"
+								style="border:none" readonly="true" />
+
+						</listcell>
+						<listcell label="${each.ficha}"></listcell>
+						<listcell label="${each.nombre}"></listcell>
+						<listcell label="${each.cargo.descripcion}"></listcell>
+						<listcell
+							label="${each.unidadOrganizativa.gerencia.descripcion}">
+						</listcell>
+						<listcell>
+							<combobox readonly="true">
+								<comboitem label="ASISTIO" />
+								<comboitem label="NO ASISTIO" />
+							</combobox>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<separator />
+			<separator />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+	<div id="divCatalogoClase"
+		tooltiptext="Click para Seleccionar una clase" />
+</window>

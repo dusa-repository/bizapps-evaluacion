@@ -32,6 +32,15 @@ public class EmpleadoClase implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public EmpleadoClase(Clase clase, Empleado empleado, String asistencia) {
+		super();
+		this.clase = clase;
+		this.empleado = empleado;
+		this.asistencia = asistencia;
+	}
+
 
 	public Clase getClase() {
 		return clase;
