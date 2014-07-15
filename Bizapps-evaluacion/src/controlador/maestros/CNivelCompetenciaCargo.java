@@ -203,6 +203,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 		lsbCompetencia.setCheckmark(false);
 		lsbCompetencia.setMultiple(true);
 		lsbCompetencia.setCheckmark(true);
+		lsbCompetencia.renderAll();
 		Cargo cargo = servicioCargo.buscarCargo(idCargo);
 		nivelCompetencias = servicioNivelCompetenciaCargo.buscar(cargo);
 
@@ -215,15 +216,18 @@ public class CNivelCompetenciaCargo extends CGenerico {
 
 			for (int i = 0; i < lsbCompetencia.getItems().size(); i++) {
 
+				Listitem listItem = lsbCompetencia.getItemAtIndex(i);
 				for (int j = 0; j < nivelCompetencias.size(); j++) {
-					final Listitem listItem = lsbCompetencia.getItemAtIndex(j);
 					if (competenciasDisponibles.get(i).getId() == nivelCompetencias
 							.get(j).getCompetencia().getId()) {
 
+						listItem.setSelected(true);
 						String descripcionDominio = nivelCompetencias.get(j)
 								.getDominio().getDescripcionDominio();
-
 						System.out.println(descripcionDominio);
+						((Combobox) ((listItem.getChildren().get(4)))
+								.getFirstChild())
+								.setValue((descripcionDominio));
 
 					}
 
