@@ -230,6 +230,10 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		revision = servicioRevision.buscarPorEstado("ACTIVO");
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
 		if (map != null) {
@@ -250,10 +254,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
 		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
 
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
+		
 		fichaE = ficha;
 		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha);
 		numero = numeroEvaluacion;
@@ -288,12 +289,16 @@ public class CAgregarEvaluacion extends CGenerico {
 					.getCurrent().getAttribute("itemsCatalogo");
 			if (map1 != null) {
 				if (map1.get("ficha") != null) {
-					String ficha = (String) map1.get("ficha");
+					String ficha1 = (String) map1.get("ficha");
 					Integer idEvaluacion1 = (Integer) map1.get("id");
-					fichaE = ficha;
+					fichaE = ficha1;
 					idEva = idEvaluacion1;
-					
-					empleado = servicioEmpleado.buscarPorFicha(ficha);
+					List<Medicion> medicion = servicioMedicion.buscar();
+					cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
+
+					List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
+					cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+					empleado = servicioEmpleado.buscarPorFicha(ficha1);
 					String cargo = empleado.getCargo().getDescripcion();
 					String unidadOrganizativa = empleado.getUnidadOrganizativa()
 							.getDescripcion();
@@ -303,7 +308,7 @@ public class CAgregarEvaluacion extends CGenerico {
 					Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(fichaE);
 					numero = numeroEvaluacion;
 					System.out.println(numeroEvaluacion);
-					lblFicha.setValue(ficha);
+					lblFicha.setValue(ficha1);
 					lblNombreTrabajador.setValue(nombreTrabajador);
 					lblCargo.setValue(cargo);
 					lblUnidadOrganizativa.setValue(unidadOrganizativa);
