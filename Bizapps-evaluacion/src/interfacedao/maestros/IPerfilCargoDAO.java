@@ -2,6 +2,7 @@ package interfacedao.maestros;
 
 import java.util.List;
 
+import modelo.maestros.Cargo;
 import modelo.maestros.PerfilCargo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +30,7 @@ public interface IPerfilCargoDAO extends JpaRepository<PerfilCargo, Integer> {
 
 	public List<PerfilCargo> findByCargoDescripcionStartingWithAllIgnoreCase(
 			String valor);
+
+	PerfilCargo findByCargo(Cargo cargo);
 
 }

@@ -176,7 +176,6 @@ public class CEmpleadoClase extends CGenerico {
 		Clase clase = catalogoClase.objetoSeleccionadoDelCatalogo();
 		idClase = clase.getId();
 		txtClaseEmpleadoClase.setValue(clase.getContenido());
-		idClase = clase.getId();
 		idCurso = clase.getCurso().getId();
 		catalogoClase.setParent(null);
 		llenarLista();

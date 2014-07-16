@@ -5,6 +5,7 @@ import interfacedao.maestros.IAreaDAO;
 
 import java.util.List;
 
+import modelo.maestros.Cargo;
 import modelo.maestros.Curso;
 import modelo.maestros.PerfilCargo;
 import modelo.seguridad.Grupo;
@@ -49,6 +50,16 @@ public class SPerfilCargo {
 	public void eliminarVariosPerfiles(List<PerfilCargo> eliminar) {
 		perfilCargoDAO.delete(eliminar);
 	}
+	
+	
+	/*
+	 * Servicio que permite buscar un perfil de acuerdo a un cargo
+	 */
+	public PerfilCargo buscarPorCargo(Cargo cargo) {
+		return perfilCargoDAO.findByCargo(cargo);
+	}
+
+	
 
 	/*
 	 * Servicio que permite filtrar las perfiles de Cargos de una lista de
