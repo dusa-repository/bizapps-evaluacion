@@ -56,6 +56,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	Mensaje msj = new Mensaje();
 
 	@Wire
+	private Label txttotalIndicador;
+	@Wire
 	private Textbox txtFortalezas;
 	@Wire
 	private Textbox txtOportunidades;
@@ -225,6 +227,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static int idIndicadorE;
 	private static int idObjetivoE;
 	private Empleado empleado;
+	private static double tind = 0.0; 
 	
 
 	@Override
@@ -354,6 +357,8 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		gpxAgregar.setOpen(false);
 		gpxAgregarIndicador.setOpen(false);
+		txttotalIndicador.setValue(String.valueOf(tind));
+
 	}
 	}
 			
@@ -388,21 +393,27 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #tbIndicadores")
 	public void mostrarObjetivos() {
+		
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, numero);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObjetivo));
+		
 		bool1 = true;
+		
 	}
 	
 	@Listen("onClick = #tbEvaluacionObjetivos")
 	public void ir() {
 		cmbObjetivos.setValue(null);
+		txtIndicador.setValue("0.0");
 	}
 	
 
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
+		tind = 0;
+		txttotalIndicador.setValue("0.0");
 		gpxAgregados.setOpen(true);
 		lbxIndicadoresAgregados.getItems().clear();
 		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
@@ -413,13 +424,23 @@ public class CAgregarEvaluacion extends CGenerico {
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(
 						evaluacionObjetivoIndicador));
+		
+//		if (cmbObjetivos.getValue() != ""){	
+//			String id = cmbObjetivos.getContext();
+//			int id1 = Integer.valueOf(id);
+			EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
+			txttotalIndicador.setValue("0.0");
+			txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
+			}
 
-	}
+
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 		winEvaluacionEmpleado.onClose();
+		txtIndicador.setValue("0.0");
+		
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -459,29 +480,29 @@ public class CAgregarEvaluacion extends CGenerico {
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
 			ev = objetivoLista;
-			
-			if (objetivosG.size() == 0) {
-				servicioEvaluacionObjetivo.guardar(objetivoLista);
-				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
-				lbxObjetivosGuardados
-				.setModel(new ListModelList<EvaluacionObjetivo>(
-						objetivosG));
-				
-				gpxAgregar.setOpen(false);
-				Messagebox.show("Objetivos Guardados Exitosamente",
-						"Información", Messagebox.OK, Messagebox.INFORMATION);
-				limpiar();
-			} else {
+//			
+//			if (objetivosG.size() == 0) {
+//				servicioEvaluacionObjetivo.guardar(objetivoLista);
+//				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
+//				lbxObjetivosGuardados
+//				.setModel(new ListModelList<EvaluacionObjetivo>(
+//						objetivosG));
+//				
+//				gpxAgregar.setOpen(false);
+//				Messagebox.show("Objetivos Guardados Exitosamente",
+//						"Información", Messagebox.OK, Messagebox.INFORMATION);
+//				limpiar();
+//			} else {
 				objetivosG.add(objetivoLista);
 				cambiarEstado1();
-				objetivosG.remove(objetivoLista);
+				
 				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
 				lbxObjetivosGuardados
 						.setModel(new ListModelList<EvaluacionObjetivo>(
 								objetivosG));
 
 			}
-		}
+		//}
 
 		idObjetivo = 0;
 
@@ -607,6 +628,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		}
 		evaluarIndicadores();
+		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 //				indicadores.add(indicadorLista);
 //				lbxIndicadoresAgregados
@@ -1151,6 +1173,7 @@ public class CAgregarEvaluacion extends CGenerico {
 					Messagebox.OK, Messagebox.INFORMATION);
 			}
 			else {
+				System.out.println("ojooooooooooooooooo");
 			servicioEvaluacionObjetivo.guardar(ev);
 			Messagebox.show("Guardado Exitosamente", "Información",
 					Messagebox.OK, Messagebox.INFORMATION);
@@ -1370,6 +1393,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 		guardarIndicadores();
 		totalObjetivo = 0.0;
+		tind= totalInd;
 		totalInd = 0.0;
 		total = 0.0;
 	}
