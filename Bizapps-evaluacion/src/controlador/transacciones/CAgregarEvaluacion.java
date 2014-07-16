@@ -439,7 +439,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void salir() {
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 		winEvaluacionEmpleado.onClose();
-		txtIndicador.setValue("0.0");
+		
 		
 	}
 

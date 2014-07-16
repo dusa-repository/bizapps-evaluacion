@@ -57,10 +57,11 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static final long serialVersionUID = -5393608637902961029L;
 	Mensaje msj = new Mensaje();
 
+	
 	@Wire
 	private Textbox txtFortalezas;
 	@Wire
-	private Textbox txttotalIndicador;
+	private Label txttotalIndicador;
 	@Wire
 	private Label txtResultadoFinal;
 	@Wire
@@ -243,6 +244,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 	private static String fichaE;
 	private static int num;
 	Usuario u;
+	private static double tind = 0.0;
 	public static EvaluacionIndicador evi;
 	public static Integer idO = 0;
 	private static int idIndicadorE;
@@ -563,6 +565,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 			}
 		}
+		txttotalIndicador.setValue(String.valueOf(tind));
 
 	}
 
@@ -674,13 +677,17 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
+		tind = 0;
+		txttotalIndicador.setValue("0.0");
 		lbxIndicadoresAgregados.getItems().clear();
 		Integer idObjetivo = Integer.parseInt(cmbObjetivos.getSelectedItem()
 				.getContext());
 		indicadores = servicioEvaluacionIndicador.buscarIndicadores(idObjetivo);
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(indicadores));
-		totalIndicador();
+		EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
+		txttotalIndicador.setValue("0.0");
+		txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
 
 	}
 
@@ -943,6 +950,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 		guardarIndicadores();
 
 		totalObjetivo = 0.0;
+		tind= totalInd;
 		totalInd = 0.0;
 		total = 0.0;
 	}
@@ -1159,7 +1167,7 @@ public class CEvaluacionEmpleado extends CGenerico {
 
 		}
 		evaluarIndicadores();
-		totalIndicador();
+		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 
 	@Listen("onDoubleClick  = #lbxIndicadoresAgregados")

@@ -348,11 +348,9 @@
 					</div>
 					<separator></separator>
 					<separator></separator>
-					<div align="right" height="100%">
-						<label value="Total Indicador"></label>
-						<textbox id="txttotalIndicador"
-							disabled="true">
-						</textbox>
+					<div align="right" height="100%" width="95%">
+						<label value="Total Indicador: " style="font-size: 14px;" ></label>
+						<label id="txttotalIndicador" style="font-size: 14px;"></label>
 					</div>
 					<separator></separator>
 					<groupbox id="gpxAgregados">

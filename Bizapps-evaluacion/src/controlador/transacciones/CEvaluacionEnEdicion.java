@@ -52,6 +52,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	Mensaje msj = new Mensaje();
 
 	@Wire
+	private Label txttotalIndicador;
+	@Wire
 	private Textbox txtFortalezas;
 	@Wire
 	private Textbox txtOportunidades;
@@ -227,6 +229,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	Usuario u;
 	private static int idIndicadorE;
 	private static int idObjetivoE;
+	private static double tind = 0.0; 
 
 	@Override
 	public void inicializar() throws IOException {
@@ -379,7 +382,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			mostrarDominioRectora();
 			mostrarDominioEspecifica();
 		}
-
+		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -390,6 +393,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
+		tind = 0;
+		txttotalIndicador.setValue("0.0");
 		gpxAgregados.setOpen(true);
 		lbxIndicadoresAgregados.getItems().clear();
 		List<EvaluacionIndicador> evaluacionObjetivoIndicador = new ArrayList<EvaluacionIndicador>();
@@ -400,6 +405,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(
 						evaluacionObjetivoIndicador));
+		EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
+		txttotalIndicador.setValue("0.0");
+		txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
 
 	}
 
@@ -630,6 +638,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 		}
 		evaluarIndicadores();
+		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 	public void validar() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
@@ -1259,6 +1268,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 		guardarIndicadores();
 		totalObjetivo = 0.0;
+		tind= totalInd;
 		totalInd = 0.0;
 		total = 0.0;
 	}
