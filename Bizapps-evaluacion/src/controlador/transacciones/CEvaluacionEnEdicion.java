@@ -382,6 +382,9 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			mostrarDominioRectora();
 			mostrarDominioEspecifica();
 		}
+		
+		
+		evaluarIndicadores();
 		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 
@@ -987,6 +990,15 @@ public class CEvaluacionEnEdicion extends CGenerico {
 			}
 		}
 		idObjetivo = 0;
+		
+		
+		tind = 0;
+		txttotalIndicador.setValue("0.0");
+		Integer idObjetivoAux = Integer.parseInt(cmbObjetivos.getSelectedItem()
+				.getContext());
+		EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivoAux);
+		txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
+		
 	}
 
 	private void mostrarDominioRectora() {
@@ -1185,6 +1197,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	public void evaluarIndicadores() {
 		lbxIndicadoresAgregados.renderAll();
+		lbxObjetivosGuardados.renderAll();
 		for (int i = 0; i < lbxIndicadoresAgregados.getItems().size(); i++) {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 			EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();

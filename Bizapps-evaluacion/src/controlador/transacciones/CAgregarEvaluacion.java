@@ -227,8 +227,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static int idIndicadorE;
 	private static int idObjetivoE;
 	private Empleado empleado;
-	private static double tind = 0.0; 
-	
+	private static double tind = 0.0;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -243,125 +242,130 @@ public class CAgregarEvaluacion extends CGenerico {
 			if (map.get("idEva") != null) {
 				Integer idEvaluacion = (Integer) map.get("idEva");
 				idEva = idEvaluacion;
-			
-		
 
-		System.out.println("viene" + idEva);
-		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
-		
-		List<Medicion> medicion = servicioMedicion.buscar();
-		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
+				System.out.println("viene" + idEva);
+				List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+				cmbPerspectiva.setModel(new ListModelList<Perspectiva>(
+						perspectiva));
+				cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 
-		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
-		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+				List<Medicion> medicion = servicioMedicion.buscar();
+				cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
 
-		
-		fichaE = ficha;
-		Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(ficha);
-		numero = numeroEvaluacion;
-		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
-		lblRevision.setValue(revision.getDescripcion());
-		String nombreTrabajador = u.getNombre() + " " + u.getApellido();
-		empleado = servicioEmpleado.buscarPorFicha(ficha);
-		String cargo = empleado.getCargo().getDescripcion();
-		String unidadOrganizativa = empleado.getUnidadOrganizativa()
-				.getDescripcion();
-		String gerenciaReporte = empleado.getUnidadOrganizativa().getGerencia()
-				.getDescripcion();
-		lblFicha.setValue(ficha);
-		lblNombreTrabajador.setValue(nombreTrabajador);
-		lblCargo.setValue(cargo);
-		lblUnidadOrganizativa.setValue(unidadOrganizativa);
-		lblGerencia.setValue(gerenciaReporte);
-		lblFicha.setValue(ficha);
-		lblNombreTrabajador.setValue(nombreTrabajador);
-		lblCargo.setValue(cargo);
-		lblUnidadOrganizativa.setValue(unidadOrganizativa);
-		lblGerencia.setValue(gerenciaReporte);
-		lblEvaluacion.setValue(numeroEvaluacion.toString());
-		lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+				List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
+				cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+
+				fichaE = ficha;
+				Integer numeroEvaluacion = servicioEvaluacion
+						.buscarIdSecundario(ficha);
+				numero = numeroEvaluacion;
+				lblEvaluacion.setValue(numeroEvaluacion.toString());
+				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
+				lblRevision.setValue(revision.getDescripcion());
+				String nombreTrabajador = u.getNombre() + " " + u.getApellido();
+				empleado = servicioEmpleado.buscarPorFicha(ficha);
+				String cargo = empleado.getCargo().getDescripcion();
+				String unidadOrganizativa = empleado.getUnidadOrganizativa()
+						.getDescripcion();
+				String gerenciaReporte = empleado.getUnidadOrganizativa()
+						.getGerencia().getDescripcion();
+				lblFicha.setValue(ficha);
+				lblNombreTrabajador.setValue(nombreTrabajador);
+				lblCargo.setValue(cargo);
+				lblUnidadOrganizativa.setValue(unidadOrganizativa);
+				lblGerencia.setValue(gerenciaReporte);
+				lblFicha.setValue(ficha);
+				lblNombreTrabajador.setValue(nombreTrabajador);
+				lblCargo.setValue(cargo);
+				lblUnidadOrganizativa.setValue(unidadOrganizativa);
+				lblGerencia.setValue(gerenciaReporte);
+				lblEvaluacion.setValue(numeroEvaluacion.toString());
+				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
 			}
-		
-		
-		else {
-			
-			HashMap<String, Object> map1 = (HashMap<String, Object>) Sessions
-					.getCurrent().getAttribute("itemsCatalogo");
-			if (map1 != null) {
-				if (map1.get("ficha") != null) {
-					String ficha1 = (String) map1.get("ficha");
-					Integer idEvaluacion1 = (Integer) map1.get("id");
-					fichaE = ficha1;
-					idEva = idEvaluacion1;
-					List<Medicion> medicion = servicioMedicion.buscar();
-					cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
 
-					List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
-					cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
-					empleado = servicioEmpleado.buscarPorFicha(ficha1);
-					String cargo = empleado.getCargo().getDescripcion();
-					String unidadOrganizativa = empleado.getUnidadOrganizativa()
-							.getDescripcion();
-					String gerenciaReporte = empleado.getUnidadOrganizativa()
-							.getGerencia().getDescripcion();
-					String nombreTrabajador = empleado.getNombre();
-					Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(fichaE);
-					numero = numeroEvaluacion;
-					System.out.println(numeroEvaluacion);
-					lblFicha.setValue(ficha1);
-					lblNombreTrabajador.setValue(nombreTrabajador);
-					lblCargo.setValue(cargo);
-					lblUnidadOrganizativa.setValue(unidadOrganizativa);
-					lblGerencia.setValue(gerenciaReporte);
-					lblEvaluacion.setValue(numeroEvaluacion.toString());
-					lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
-					lblRevision.setValue(revision.getDescripcion());
-				
-		}
+			else {
+
+				HashMap<String, Object> map1 = (HashMap<String, Object>) Sessions
+						.getCurrent().getAttribute("itemsCatalogo");
+				if (map1 != null) {
+					if (map1.get("ficha") != null) {
+						String ficha1 = (String) map1.get("ficha");
+						Integer idEvaluacion1 = (Integer) map1.get("id");
+						fichaE = ficha1;
+						idEva = idEvaluacion1;
+						List<Medicion> medicion = servicioMedicion.buscar();
+						cmbMedicion.setModel(new ListModelList<Medicion>(
+								medicion));
+
+						List<UnidadMedida> unidad = servicioUnidadMedida
+								.buscar();
+						cmbUnidad.setModel(new ListModelList<UnidadMedida>(
+								unidad));
+						empleado = servicioEmpleado.buscarPorFicha(ficha1);
+						String cargo = empleado.getCargo().getDescripcion();
+						String unidadOrganizativa = empleado
+								.getUnidadOrganizativa().getDescripcion();
+						String gerenciaReporte = empleado
+								.getUnidadOrganizativa().getGerencia()
+								.getDescripcion();
+						String nombreTrabajador = empleado.getNombre();
+						Integer numeroEvaluacion = servicioEvaluacion
+								.buscarIdSecundario(fichaE);
+						numero = numeroEvaluacion;
+						System.out.println(numeroEvaluacion);
+						lblFicha.setValue(ficha1);
+						lblNombreTrabajador.setValue(nombreTrabajador);
+						lblCargo.setValue(cargo);
+						lblUnidadOrganizativa.setValue(unidadOrganizativa);
+						lblGerencia.setValue(gerenciaReporte);
+						lblEvaluacion.setValue(numeroEvaluacion.toString());
+						lblFechaCreacion.setValue(formatoFecha
+								.format(fechaHora));
+						lblRevision.setValue(revision.getDescripcion());
+
+					}
+				}
+
 			}
-		
-		}
-		List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
-		List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
-		List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
-		List<NivelCompetenciaCargo> nivel4 = new ArrayList<NivelCompetenciaCargo>();
-		NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo();
-		NivelCompetenciaCargo nivelEspecificas = new NivelCompetenciaCargo();
+			List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
+			List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
+			List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
+			List<NivelCompetenciaCargo> nivel4 = new ArrayList<NivelCompetenciaCargo>();
+			NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo();
+			NivelCompetenciaCargo nivelEspecificas = new NivelCompetenciaCargo();
 
-		nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
-		for (int j = 0; j < nivel.size(); j++) {
-			if (nivel.get(j).getCompetencia().getNivel().equals("RECTORAS")) {
-				nivelRectoras = nivel.get(j);
-				nivel2.add(nivelRectoras);
-			} else {
-				nivel.remove(j);
+			nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
+			for (int j = 0; j < nivel.size(); j++) {
+				if (nivel.get(j).getCompetencia().getNivel().equals("RECTORAS")) {
+					nivelRectoras = nivel.get(j);
+					nivel2.add(nivelRectoras);
+				} else {
+					nivel.remove(j);
+				}
+				lbxCompetenciaRectora
+						.setModel(new ListModelList<NivelCompetenciaCargo>(
+								nivel2));
 			}
-			lbxCompetenciaRectora
-					.setModel(new ListModelList<NivelCompetenciaCargo>(nivel2));
-		}
-		nivel4 = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
-		for (int j = 0; j < nivel4.size(); j++) {
-			if (nivel4.get(j).getCompetencia().getNivel().equals("ESPECIFICAS")) {
-				nivelEspecificas = nivel4.get(j);
-				nivel3.add(nivelEspecificas);
-			} else {
-				nivel4.remove(j);
+			nivel4 = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
+			for (int j = 0; j < nivel4.size(); j++) {
+				if (nivel4.get(j).getCompetencia().getNivel()
+						.equals("ESPECIFICAS")) {
+					nivelEspecificas = nivel4.get(j);
+					nivel3.add(nivelEspecificas);
+				} else {
+					nivel4.remove(j);
+				}
+				lbxCompetenciaEspecifica
+						.setModel(new ListModelList<NivelCompetenciaCargo>(
+								nivel3));
 			}
-			lbxCompetenciaEspecifica
-					.setModel(new ListModelList<NivelCompetenciaCargo>(nivel3));
+
+			gpxAgregar.setOpen(false);
+			gpxAgregarIndicador.setOpen(false);
+			txttotalIndicador.setValue(String.valueOf(tind));
+
 		}
-
-
-		gpxAgregar.setOpen(false);
-		gpxAgregarIndicador.setOpen(false);
-		txttotalIndicador.setValue(String.valueOf(tind));
-
 	}
-	}
-			
 
 	public ListModelList<Dominio> getDominio() {
 		dominio = new ListModelList<Dominio>(
@@ -381,7 +385,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCancelarI")
 	public void cerrarPanelI() {
-		idIndicador=0;
+		idIndicador = 0;
 		limpiarI();
 		gpxAgregarIndicador.setOpen(false);
 	}
@@ -393,22 +397,21 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #tbIndicadores")
 	public void mostrarObjetivos() {
-		
+
 		List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
 				.buscarObjetivos(fichaE, numero);
 		cmbObjetivos.setModel(new ListModelList<EvaluacionObjetivo>(
 				evaluacionObjetivo));
-		
+
 		bool1 = true;
-		
+
 	}
-	
+
 	@Listen("onClick = #tbEvaluacionObjetivos")
 	public void ir() {
 		cmbObjetivos.setValue(null);
 		txtIndicador.setValue("0.0");
 	}
-	
 
 	@Listen("onSelect = #cmbObjetivos")
 	public void mostrarIndicadores() {
@@ -424,23 +427,21 @@ public class CAgregarEvaluacion extends CGenerico {
 		lbxIndicadoresAgregados
 				.setModel(new ListModelList<EvaluacionIndicador>(
 						evaluacionObjetivoIndicador));
-		
-//		if (cmbObjetivos.getValue() != ""){	
-//			String id = cmbObjetivos.getContext();
-//			int id1 = Integer.valueOf(id);
-			EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivo);
-			txttotalIndicador.setValue("0.0");
-			txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
-			}
 
-
+		// if (cmbObjetivos.getValue() != ""){
+		// String id = cmbObjetivos.getContext();
+		// int id1 = Integer.valueOf(id);
+		EvaluacionObjetivo eo = servicioEvaluacionObjetivo
+				.buscarObjetivosId(idObjetivo);
+		txttotalIndicador.setValue("0.0");
+		txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
+	}
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
 		winEvaluacionEmpleado.onClose();
-		
-		
+
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -467,10 +468,10 @@ public class CAgregarEvaluacion extends CGenerico {
 			Double peso = Double.valueOf(txtPeso.getValue());
 			EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
 			Integer linea = objetivosG.size() + 1;
-			//idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
+			// idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
 			System.out.println(servicioEvaluacionObjetivo.buscarId());
-			//objetivoLista.setIdObjetivo(idObjetivo);
-			System.out.println("idobjetivo"+idObjetivo);
+			// objetivoLista.setIdObjetivo(idObjetivo);
+			System.out.println("idobjetivo" + idObjetivo);
 			objetivoLista.setIdEvaluacion(idEva);
 			objetivoLista.setDescripcionObjetivo(objetivo);
 			objetivoLista.setPerspectiva(perspectiva);
@@ -480,29 +481,30 @@ public class CAgregarEvaluacion extends CGenerico {
 			objetivoLista.setTotalInd(0);
 			objetivoLista.setCorresponsables(corresponsables);
 			ev = objetivoLista;
-//			
-//			if (objetivosG.size() == 0) {
-//				servicioEvaluacionObjetivo.guardar(objetivoLista);
-//				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
-//				lbxObjetivosGuardados
-//				.setModel(new ListModelList<EvaluacionObjetivo>(
-//						objetivosG));
-//				
-//				gpxAgregar.setOpen(false);
-//				Messagebox.show("Objetivos Guardados Exitosamente",
-//						"Información", Messagebox.OK, Messagebox.INFORMATION);
-//				limpiar();
-//			} else {
-				objetivosG.add(objetivoLista);
-				cambiarEstado1();
-				
-				objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva); 
-				lbxObjetivosGuardados
-						.setModel(new ListModelList<EvaluacionObjetivo>(
-								objetivosG));
+			//
+			// if (objetivosG.size() == 0) {
+			// servicioEvaluacionObjetivo.guardar(objetivoLista);
+			// objetivosG =
+			// servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+			// lbxObjetivosGuardados
+			// .setModel(new ListModelList<EvaluacionObjetivo>(
+			// objetivosG));
+			//
+			// gpxAgregar.setOpen(false);
+			// Messagebox.show("Objetivos Guardados Exitosamente",
+			// "Información", Messagebox.OK, Messagebox.INFORMATION);
+			// limpiar();
+			// } else {
+			objetivosG.add(objetivoLista);
+			cambiarEstado1();
 
-			}
-		//}
+			objetivosG = servicioEvaluacionObjetivo
+					.buscarObjetivosEvaluar(idEva);
+			lbxObjetivosGuardados
+					.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
+
+		}
+		// }
 
 		idObjetivo = 0;
 
@@ -530,18 +532,17 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnAgregarIndicador")
 	public void AgregarIndicador() {
-	
-		idIndicador=0;
+
+		idIndicador = 0;
 		limpiarI();
 		gpxAgregarIndicador.setOpen(true);
-		
 
 	}
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
 		String idObjetivo;
-		
+
 		if (cmbObjetivos.getText().compareTo("") == 0
 				|| cmbUnidad.getText().compareTo("") == 0
 				|| cmbMedicion.getText().compareTo("") == 0
@@ -601,27 +602,27 @@ public class CAgregarEvaluacion extends CGenerico {
 				indicadorLista.setValorResultado(valorResultado);
 				indicadorLista.setTotal(0);
 				evi = indicadorLista;
-					System.out.println("entroelseee");
-					indicadores.add(indicadorLista);
-					System.out.println("size"+indicadores.size());
-					cambiarEstado1();
-					indicadores.remove(indicadorLista);
-					indicadores = servicioEvaluacionIndicador.buscarIndicadores(Integer.parseInt(idObjetivo)); 
-					for (int i = 0; i < indicadores.size(); i++) {
-						int id = indicadores.get(i).getIdObjetivo();
-						System.out.println("ido"+idO);
-						System.out.println("id"+id);
+				System.out.println("entroelseee");
+				indicadores.add(indicadorLista);
+				System.out.println("size" + indicadores.size());
+				cambiarEstado1();
+				indicadores.remove(indicadorLista);
+				indicadores = servicioEvaluacionIndicador
+						.buscarIndicadores(Integer.parseInt(idObjetivo));
+				for (int i = 0; i < indicadores.size(); i++) {
+					int id = indicadores.get(i).getIdObjetivo();
+					System.out.println("ido" + idO);
+					System.out.println("id" + id);
 
-						if (Integer.valueOf(idObjetivo) == id){
-											lbxIndicadoresAgregados
-							.setModel(new ListModelList<EvaluacionIndicador>(
-									indicadores));
-					}
-					else{
+					if (Integer.valueOf(idObjetivo) == id) {
+						lbxIndicadoresAgregados
+								.setModel(new ListModelList<EvaluacionIndicador>(
+										indicadores));
+					} else {
 						indicadores.remove(indicadorLista);
 					}
-					}
-//				}
+				}
+				// }
 			}
 
 			idIndicador = 0;
@@ -630,22 +631,23 @@ public class CAgregarEvaluacion extends CGenerico {
 		evaluarIndicadores();
 		txttotalIndicador.setValue(String.valueOf(tind));
 	}
-//				indicadores.add(indicadorLista);
-//				lbxIndicadoresAgregados
-//						.setModel(new ListModelList<EvaluacionIndicador>(
-//								indicadores));
-//				servicioEvaluacionIndicador.guardar(indicadorLista);
-//				Messagebox.show("Indicador para el objetivo" + " "
-//						+ cmbObjetivos.getValue() + " "
-//						+ "ha sido guardado exitosamente", "Información",
-//						Messagebox.OK, Messagebox.INFORMATION);
-//				gpxAgregarIndicador.setOpen(false);
-//				idIndicador=0;
-//				limpiarI();
-//			}
-//		}
-//		evaluarIndicadores();
-//	}
+
+	// indicadores.add(indicadorLista);
+	// lbxIndicadoresAgregados
+	// .setModel(new ListModelList<EvaluacionIndicador>(
+	// indicadores));
+	// servicioEvaluacionIndicador.guardar(indicadorLista);
+	// Messagebox.show("Indicador para el objetivo" + " "
+	// + cmbObjetivos.getValue() + " "
+	// + "ha sido guardado exitosamente", "Información",
+	// Messagebox.OK, Messagebox.INFORMATION);
+	// gpxAgregarIndicador.setOpen(false);
+	// idIndicador=0;
+	// limpiarI();
+	// }
+	// }
+	// evaluarIndicadores();
+	// }
 
 	@Listen("onSelect = #cmbMedicion")
 	public void mostrarResAnterior() {
@@ -684,7 +686,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	}
 
-	//@Listen("onClick = #btnCambiarEstado")
+	// @Listen("onClick = #btnCambiarEstado")
 	public void cambiarEstado() {
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		validar();
@@ -740,11 +742,11 @@ public class CAgregarEvaluacion extends CGenerico {
 				txtPeso.setValue(peso1);
 				cmbPerspectiva.setValue(perspectiva.getDescripcion());
 				pers = perspectiva.getDescripcion();
-				//cmbPerspectiva.setDisabled(true);
+				// cmbPerspectiva.setDisabled(true);
 			}
 		}
 	}
-	
+
 	@Listen("onClick = #btnIr")
 	public void mostrarPestannaIndicadores() {
 		mostrarObjetivos();
@@ -831,8 +833,8 @@ public class CAgregarEvaluacion extends CGenerico {
 				txtValorResultado.setValue(valorR);
 				txtResultadoPorc.setValue(resulPorc);
 				txtPesoPorc.setValue(resulP);
-				//cmbMedicion.setDisabled(true);
-				//cmbUnidad.setDisabled(true);
+				// cmbMedicion.setDisabled(true);
+				// cmbUnidad.setDisabled(true);
 			}
 		}
 	}
@@ -843,8 +845,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
-		String perspectivaCombo = cmbPerspectiva.getSelectedItem()
-				.getContext();
+		String perspectivaCombo = cmbPerspectiva.getSelectedItem().getContext();
 		Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
 				.parseInt(perspectivaCombo));
 		EvaluacionObjetivo objetivoLista = servicioEvaluacionObjetivo
@@ -865,13 +866,12 @@ public class CAgregarEvaluacion extends CGenerico {
 	}
 
 	private void EvaluacionIndicadorActualizar() {
-		String UnidadCombo = cmbUnidad.getSelectedItem()
-				.getContext();
+		String UnidadCombo = cmbUnidad.getSelectedItem().getContext();
 		UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
 				.parseInt(UnidadCombo));
-		String medicionCombo = cmbMedicion.getSelectedItem()
-				.getContext();
-		Medicion medicion = servicioMedicion.buscarMedicion(Integer.parseInt(medicionCombo));
+		String medicionCombo = cmbMedicion.getSelectedItem().getContext();
+		Medicion medicion = servicioMedicion.buscarMedicion(Integer
+				.parseInt(medicionCombo));
 
 		EvaluacionIndicador indicador = servicioEvaluacionIndicador
 				.buscarIndicadorId(idIndicador);
@@ -898,8 +898,6 @@ public class CAgregarEvaluacion extends CGenerico {
 	// txtResFy.setDisabled(false);
 	// }
 	// }
-
-
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
 	public void mostrarDatosCatalogo() {
@@ -957,7 +955,7 @@ public class CAgregarEvaluacion extends CGenerico {
 							.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("idEva", idEva);
-					System.out.println("va"+idEva);
+					System.out.println("va" + idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
@@ -1020,24 +1018,23 @@ public class CAgregarEvaluacion extends CGenerico {
 													indicadores));
 								}
 								evaluarIndicadores();
-								
+
 							}
 						});
 			} else
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 		}
-		
-		
+
 	}
 
-	public void eliminarObjetivo() { 
+	public void eliminarObjetivo() {
 		if (lbxObjetivosGuardados.getItemCount() != 0) {
 			Listitem listItem = lbxObjetivosGuardados.getSelectedItem();
 			if (listItem != null) {
 				EvaluacionObjetivo evaluacionObjetivo = (EvaluacionObjetivo) listItem
 						.getValue();
-				evaluacionObjetivo =  listItem.getValue();
-			
+				evaluacionObjetivo = listItem.getValue();
+
 				idObjetivoE = evaluacionObjetivo.getIdObjetivo();
 				System.out.println("idObjetivoE" + idObjetivoE);
 				List<EvaluacionIndicador> evaluacionIndicador = servicioEvaluacionIndicador
@@ -1067,7 +1064,7 @@ public class CAgregarEvaluacion extends CGenerico {
 														.setModel(new ListModelList<EvaluacionObjetivo>(
 																objetivosG));
 											}
-							
+
 										}
 									});
 				} else {
@@ -1080,7 +1077,7 @@ public class CAgregarEvaluacion extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										
+
 										servicioEvaluacionObjetivo
 												.eliminarUno(idObjetivoE);
 										msj.mensajeInformacion(Mensaje.eliminado);
@@ -1092,7 +1089,7 @@ public class CAgregarEvaluacion extends CGenerico {
 												.setModel(new ListModelList<EvaluacionObjetivo>(
 														objetivosG));
 									}
-									
+
 								}
 							});
 
@@ -1101,12 +1098,12 @@ public class CAgregarEvaluacion extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 		}
-		
-		
+
 	}
 
 	public void validar1() {
-		System.out.println("enttroooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+		System.out
+				.println("enttroooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
 		Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
 		String ficha = evaluacion.getFicha();
 		Integer numeroEvaluacion = servicioEvaluacion.buscar(ficha).size();
@@ -1119,13 +1116,13 @@ public class CAgregarEvaluacion extends CGenerico {
 						.getIdObjetivo();
 				evaluacionObjetivoIndicador = servicioEvaluacionIndicador
 						.buscarIndicadores(idObjetivo);
-				Double sumaPeso =  0.0;
+				Double sumaPeso = 0.0;
 				for (int j = 0; j < indicadores.size(); j++) {
 					System.out.println("ojoooooooooo");
 					Double peso = indicadores.get(j).getPeso();
-					System.out.println("pesooo"+ peso);
+					System.out.println("pesooo" + peso);
 					sumaPeso = peso + sumaPeso;
-					System.out.println("sumapeso"+sumaPeso);
+					System.out.println("sumapeso" + sumaPeso);
 				}
 
 				if (sumaPeso > 100) {
@@ -1165,22 +1162,21 @@ public class CAgregarEvaluacion extends CGenerico {
 			indicadores.remove(evi);
 
 		} else {
-			if (evi != null){
-			servicioEvaluacionIndicador.guardar(evi);
-			gpxAgregarIndicador.setOpen(false);
-			limpiarI();
-			Messagebox.show("Guardado Exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
-			}
-			else {
+			if (evi != null) {
+				servicioEvaluacionIndicador.guardar(evi);
+				gpxAgregarIndicador.setOpen(false);
+				limpiarI();
+				Messagebox.show("Guardado Exitosamente", "Información",
+						Messagebox.OK, Messagebox.INFORMATION);
+			} else {
 				System.out.println("ojooooooooooooooooo");
-			servicioEvaluacionObjetivo.guardar(ev);
-			Messagebox.show("Guardado Exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
-			gpxAgregar.setOpen(false);
-			limpiar();
+				servicioEvaluacionObjetivo.guardar(ev);
+				Messagebox.show("Guardado Exitosamente", "Información",
+						Messagebox.OK, Messagebox.INFORMATION);
+				gpxAgregar.setOpen(false);
+				limpiar();
 
-		}
+			}
 		}
 		bool = false;
 	}
@@ -1365,7 +1361,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				Integer idObjetivo1 = EvaluacionI.getIdObjetivo();
 				if (idObjetivo.equals(idObjetivo1)) {
 					totalInd = 0.0;
-					totalInd = (total * peso) / 100;
+					totalInd = (total * peso) / 100; 
 					String total = totalInd.toString();
 					((Textbox) ((listItem3.get(j).getChildren().get(5)))
 							.getFirstChild()).setValue(total);
@@ -1393,7 +1389,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 		guardarIndicadores();
 		totalObjetivo = 0.0;
-		tind= totalInd;
+		tind = totalInd;
 		totalInd = 0.0;
 		total = 0.0;
 	}

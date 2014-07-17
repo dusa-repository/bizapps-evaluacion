@@ -91,7 +91,7 @@ public class Evaluacion implements Serializable {
 
 	private String valoracion;
 
-	@OneToMany(mappedBy="evaluacion")
+	@OneToMany(mappedBy="evaluacion", orphanRemoval=true)
 	private Set<Bitacora> bitacoras;
 	
 	public Evaluacion() {

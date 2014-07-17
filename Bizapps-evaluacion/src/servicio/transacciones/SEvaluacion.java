@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 
 
+import interfacedao.transacciones.IBitacoraDAO;
 import interfacedao.transacciones.IEvaluacionDAO;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class SEvaluacion {
 
 	@Autowired
 	private IEvaluacionDAO evaluacionDAO;
+	
+	@Autowired
+	private IBitacoraDAO bitacoraDAO;
 
 	public List<Evaluacion> buscar(String ficha) {
 		return evaluacionDAO.findByFicha(ficha);
