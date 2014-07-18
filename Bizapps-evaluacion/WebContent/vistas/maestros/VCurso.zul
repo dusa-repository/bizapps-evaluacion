@@ -12,12 +12,11 @@
 			<caption label="Nuevo" style="font-weight:bold"
 				tooltiptext="Presione para registrar una nuevo curso" />
 			<separator />
-			<grid width="100%">
+			<grid width="100%" style="border:0px">
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="8%" />
-					<column label="" width="27%" />
+					<column label="" width="15%" />
 				</columns>
 				<rows>
 					<row>
@@ -35,19 +34,39 @@
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
-						<label value="Nombre:" class="etiqueta" />
+						<hbox>
+							<label value="Nombre:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<textbox id="txtNombreCurso" width="100%"
 							maxlength="100" tabindex="2"
 							tooltiptext="Ingrese aqui el nombre del curso" />
 					</row>
 					<row>
-						<label value="Duración:" class="etiqueta" />
+						<hbox>
+							<label value="Duración:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<spinner id="spnDuracionCurso"
-							constraint="no negative" width="100%" maxlength="100" tabindex="3"
-							tooltiptext="Ingrese aqui las horas del curso" />
+							constraint="no negative" width="100%" maxlength="100"
+							tabindex="3" tooltiptext="Ingrese aqui las horas del curso" />
+						<combobox id="cmbUnidadMedidaCurso"
+							readonly="true"
+							tooltiptext="Seleccione la unidad de medida de la duracion"
+							width="60%" tabindex="9">
+							<comboitem label="DIAS" />
+							<comboitem label="HORAS" />
+						</combobox>
 					</row>
+
 					<row>
 						<hbox>
 							<label value="Estado:" class="etiqueta" />

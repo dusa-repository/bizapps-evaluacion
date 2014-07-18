@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Clase;
 import modelo.maestros.Curso;
 
 import org.zkoss.zk.ui.event.Event;
@@ -48,6 +49,8 @@ public class CCurso extends CGenerico {
 	@Wire
 	private Combobox cmbEstadoCurso;
 	@Wire
+	private Combobox cmbUnidadMedidaCurso;
+	@Wire
 	private Groupbox gpxDatosCurso;
 	@Wire
 	private Div catalogoCurso;
@@ -69,6 +72,7 @@ public class CCurso extends CGenerico {
 		// TODO Auto-generated method stub
 
 		txtAreaCurso.setFocus(true);
+		cmbUnidadMedidaCurso.setValue("HORAS");
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -84,7 +88,8 @@ public class CCurso extends CGenerico {
 						idArea = curso.getArea().getId();
 						txtNombreCurso.setValue(curso.getNombre());
 						txtAreaCurso.setValue(curso.getArea().getDescripcion());
-						spnDuracionCurso.setValue(curso.getDuracion());
+						spnDuracionCurso.setValue((int) mostrarDuracion(curso));
+						cmbUnidadMedidaCurso.setValue(curso.getMedidaDuracion());
 						cmbEstadoCurso.setValue(curso.getEstado());
 						txtAreaCurso.setFocus(true);
 					} else
@@ -106,14 +111,16 @@ public class CCurso extends CGenerico {
 					if (area != null) {
 
 						String nombre = txtNombreCurso.getValue();
-						int duracion = spnDuracionCurso.getValue();
+						float duracion = transformarDuracion(spnDuracionCurso
+								.getValue());
+						String medidaDuracion = cmbUnidadMedidaCurso.getValue();
 						String estado = cmbEstadoCurso.getValue();
 						String usuario = nombreUsuarioSesion();
 						Timestamp fechaAuditoria = new Timestamp(
 								new Date().getTime());
-						Curso curso = new Curso(idCurso, area, nombre,
-								duracion, estado, fechaAuditoria,
-								horaAuditoria, usuario);
+						Curso curso = new Curso(idCurso, area, nombre, duracion,
+								medidaDuracion,  estado, fechaAuditoria,
+								 horaAuditoria, usuario);
 						servicioCurso.guardar(curso);
 						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
@@ -213,6 +220,7 @@ public class CCurso extends CGenerico {
 		txtAreaCurso.setValue("");
 		spnDuracionCurso.setValue(null);
 		cmbEstadoCurso.setValue("");
+		cmbUnidadMedidaCurso.setValue("");
 		catalogo.limpiarSeleccion();
 		txtAreaCurso.setFocus(true);
 
@@ -282,6 +290,9 @@ public class CCurso extends CGenerico {
 
 	public boolean camposLLenos() {
 		if (txtAreaCurso.getText().compareTo("") == 0
+				|| txtNombreCurso.getText().compareTo("") == 0
+				|| spnDuracionCurso.getText().compareTo("") == 0
+				|| cmbUnidadMedidaCurso.getText().compareTo("") == 0
 				|| cmbEstadoCurso.getText().compareTo("") == 0) {
 			return false;
 		} else
@@ -309,7 +320,7 @@ public class CCurso extends CGenerico {
 
 		final List<Curso> listCurso = servicioCurso.buscarTodos();
 		catalogo = new Catalogo<Curso>(catalogoCurso, "Catalogo de Cursoes",
-				listCurso, "Área", "Nombre", "Duración", "Estado") {
+				listCurso, "Área", "Nombre", "Duración") {
 
 			@Override
 			protected List<Curso> buscarCampos(List<String> valores) {
@@ -322,9 +333,7 @@ public class CCurso extends CGenerico {
 									.startsWith(valores.get(1))
 
 							&& String.valueOf(curso.getDuracion())
-									.toLowerCase().startsWith(valores.get(2))
-							&& curso.getEstado().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.toLowerCase().startsWith(valores.get(2))) {
 						lista.add(curso);
 					}
 				}
@@ -334,11 +343,10 @@ public class CCurso extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Curso curso) {
-				String[] registros = new String[4];
+				String[] registros = new String[3];
 				registros[0] = curso.getArea().getDescripcion();
 				registros[1] = curso.getNombre();
-				registros[2] = String.valueOf(curso.getDuracion());
-				registros[3] = curso.getEstado();
+				registros[2] = String.valueOf(mostrarDuracion(curso)) + " " + curso.getMedidaDuracion();
 
 				return registros;
 			}
@@ -352,8 +360,6 @@ public class CCurso extends CGenerico {
 					return servicioCurso.filtroNombre(valor);
 				else if (combo.equals("Duración"))
 					return servicioCurso.filtroDuracion(valor);
-				else if (combo.equals("Estado"))
-					return servicioCurso.filtroEstado(valor);
 				else
 					return servicioCurso.buscarTodos();
 			}
@@ -433,6 +439,45 @@ public class CCurso extends CGenerico {
 		idArea = area.getId();
 		txtAreaCurso.setValue(area.getDescripcion());
 		catalogoArea.setParent(null);
+	}
+	
+	public float transformarDuracion(int duracion) {
+
+		float duracionTransformada = 0;
+
+		if (cmbUnidadMedidaCurso.getValue().equals("HORAS")) {
+
+			duracionTransformada = duracion;
+			return duracionTransformada;
+
+		} else if (cmbUnidadMedidaCurso.getValue().equals("DIAS")) {
+
+			duracionTransformada = spnDuracionCurso.getValue() * 24;
+			return duracionTransformada;
+
+		} 
+
+		return duracion;
+
+	}
+
+	public float mostrarDuracion(Curso curso) {
+
+		float duracionTransformada = 0;
+
+		if (curso.getMedidaDuracion().equals("HORAS")) {
+
+			duracionTransformada = curso.getDuracion();
+			return duracionTransformada;
+
+		} else if (curso.getMedidaDuracion().equals("DIAS")) {
+
+			duracionTransformada = curso.getDuracion() / 24;
+			return duracionTransformada;
+		} 
+
+		return duracionTransformada;
+
 	}
 
 }

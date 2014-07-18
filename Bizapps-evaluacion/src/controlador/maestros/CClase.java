@@ -272,7 +272,6 @@ public class CClase extends CGenerico {
 				|| txtEntidadDidacticaClase.getText().compareTo("") != 0
 				|| dtbFechaClase.getText().compareTo("") != 0
 				|| spnDuracionClase.getText().compareTo("") != 0
-				|| cmbUnidadMedidaClase.getText().compareTo("") != 0
 				|| txtLugarClase.getText().compareTo("") != 0
 				|| cmbTipoEntrenamientoClase.getText().compareTo("") != 0
 				|| cmbModalidadClase.getText().compareTo("") != 0) {

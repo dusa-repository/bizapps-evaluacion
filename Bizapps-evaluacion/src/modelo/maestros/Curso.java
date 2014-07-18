@@ -29,7 +29,10 @@ public class Curso implements Serializable {
 	private String nombre;
 
 	@Column(name = "duracion")
-	private int duracion;
+	private float duracion;
+	
+	@Column(name = "medida_duracion")
+	private String medidaDuracion;
 
 	@Column(name = "estado")
 	private String estado;
@@ -53,18 +56,21 @@ public class Curso implements Serializable {
 	}
 
 	
-	public Curso(int id, Area area, String nombre, int duracion, String estado,
-			Timestamp fechaAuditoria, String horaAuditoria, String usuario) {
+	public Curso(int id, Area area, String nombre, float duracion,
+			String medidaDuracion, String estado, Timestamp fechaAuditoria,
+			String horaAuditoria, String usuario) {
 		super();
 		this.id = id;
 		this.area = area;
 		this.nombre = nombre;
 		this.duracion = duracion;
+		this.medidaDuracion = medidaDuracion;
 		this.estado = estado;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuario = usuario;
 	}
+
 
 	public int getId() {
 		return id;
@@ -98,11 +104,11 @@ public class Curso implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public int getDuracion() {
+	public float getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(int duracion) {
+	public void setDuracion(float duracion) {
 		this.duracion = duracion;
 	}
 
@@ -137,5 +143,18 @@ public class Curso implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+
+	public String getMedidaDuracion() {
+		return medidaDuracion;
+	}
+
+
+	public void setMedidaDuracion(String medidaDuracion) {
+		this.medidaDuracion = medidaDuracion;
+	}
+	
+	
+	
 	
 }
