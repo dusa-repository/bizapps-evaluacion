@@ -41,7 +41,10 @@ public class Clase implements Serializable {
 	private Timestamp fecha;
 
 	@Column(name = "duracion")
-	private int duracion;
+	private float duracion;
+	
+	@Column(name = "medida_duracion")
+	private String medidaDuracion;
 
 	@Column(name = "lugar")
 	private String lugar;
@@ -69,9 +72,9 @@ public class Clase implements Serializable {
 
 	public Clase(int id, Curso curso, String contenido, String objetivo,
 			String facilitador, String entidadDidactica, Timestamp fecha,
-			int duracion, String lugar, String tipoEntrenamiento,
-			String modalidad, Timestamp fechaAuditoria, String horaAuditoria,
-			String usuario) {
+			float duracion, String medidaDuracion, String lugar,
+			String tipoEntrenamiento, String modalidad,
+			Timestamp fechaAuditoria, String horaAuditoria, String usuario) {
 		super();
 		this.id = id;
 		this.curso = curso;
@@ -81,6 +84,7 @@ public class Clase implements Serializable {
 		this.entidadDidactica = entidadDidactica;
 		this.fecha = fecha;
 		this.duracion = duracion;
+		this.medidaDuracion = medidaDuracion;
 		this.lugar = lugar;
 		this.tipoEntrenamiento = tipoEntrenamiento;
 		this.modalidad = modalidad;
@@ -145,11 +149,11 @@ public class Clase implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public int getDuracion() {
+	public float getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(int duracion) {
+	public void setDuracion(float duracion) {
 		this.duracion = duracion;
 	}
 
@@ -200,6 +204,16 @@ public class Clase implements Serializable {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+	public String getMedidaDuracion() {
+		return medidaDuracion;
+	}
+
+	public void setMedidaDuracion(String medidaDuracion) {
+		this.medidaDuracion = medidaDuracion;
+	}
+	
+	
 	
 	
 

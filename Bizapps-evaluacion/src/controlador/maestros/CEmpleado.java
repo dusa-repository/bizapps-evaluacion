@@ -857,7 +857,7 @@ public class CEmpleado extends CGenerico {
 	@Listen("onSeleccion = #divCatalogoSupervisor")
 	public void seleccionSupervisor() {
 		Empleado empleado = catalogoSupervisor.objetoSeleccionadoDelCatalogo();
-		idFichaSupervisor = Integer.parseInt(empleado.getFichaSupervisor());
+		idFichaSupervisor = empleado.getId();
 		txtFichaSupervisorEmpleado.setValue(empleado.getNombre());
 		catalogoSupervisor.setParent(null);
 	}

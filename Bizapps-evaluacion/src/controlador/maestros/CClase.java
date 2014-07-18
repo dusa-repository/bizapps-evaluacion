@@ -56,6 +56,8 @@ public class CClase extends CGenerico {
 	@Wire
 	private Spinner spnDuracionClase;
 	@Wire
+	private Combobox cmbUnidadMedidaClase;
+	@Wire
 	private Textbox txtLugarClase;
 	@Wire
 	private Combobox cmbTipoEntrenamientoClase;
@@ -82,6 +84,7 @@ public class CClase extends CGenerico {
 		// TODO Auto-generated method stub
 
 		txtCursoClase.setFocus(true);
+		cmbUnidadMedidaClase.setValue("HORAS");
 		mostrarCatalogo();
 		botonera = new Botonera() {
 
@@ -102,7 +105,9 @@ public class CClase extends CGenerico {
 						txtEntidadDidacticaClase.setValue(clase
 								.getEntidadDidactica());
 						dtbFechaClase.setValue(clase.getFecha());
-						spnDuracionClase.setValue(clase.getDuracion());
+						spnDuracionClase.setValue((int) mostrarDuracion(clase));
+						cmbUnidadMedidaClase
+								.setValue(clase.getMedidaDuracion());
 						txtLugarClase.setValue(clase.getLugar());
 						cmbTipoEntrenamientoClase.setValue(clase
 								.getTipoEntrenamiento());
@@ -133,7 +138,9 @@ public class CClase extends CGenerico {
 								.getValue();
 						Timestamp fecha = new java.sql.Timestamp(dtbFechaClase
 								.getValue().getTime());
-						int duracion = spnDuracionClase.getValue();
+						float duracion = transformarDuracion(spnDuracionClase
+								.getValue());
+						String medidaDuracion = cmbUnidadMedidaClase.getValue();
 						String lugar = txtLugarClase.getValue();
 						String tipoEntrenamiento = cmbTipoEntrenamientoClase
 								.getValue();
@@ -143,8 +150,9 @@ public class CClase extends CGenerico {
 								new Date().getTime());
 						Clase clase = new Clase(idClase, curso, contenido,
 								objetivo, facilitador, entidadDidactica, fecha,
-								duracion, lugar, tipoEntrenamiento, modalidad,
-								fechaAuditoria, horaAuditoria, usuario);
+								duracion, medidaDuracion, lugar,
+								tipoEntrenamiento, modalidad, fechaAuditoria,
+								horaAuditoria, usuario);
 						servicioClase.guardar(clase);
 						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
@@ -251,6 +259,7 @@ public class CClase extends CGenerico {
 		txtLugarClase.setValue("");
 		cmbTipoEntrenamientoClase.setValue("");
 		cmbModalidadClase.setValue("");
+		cmbUnidadMedidaClase.setValue("");
 		txtCursoClase.setFocus(true);
 
 	}
@@ -263,6 +272,7 @@ public class CClase extends CGenerico {
 				|| txtEntidadDidacticaClase.getText().compareTo("") != 0
 				|| dtbFechaClase.getText().compareTo("") != 0
 				|| spnDuracionClase.getText().compareTo("") != 0
+				|| cmbUnidadMedidaClase.getText().compareTo("") != 0
 				|| txtLugarClase.getText().compareTo("") != 0
 				|| cmbTipoEntrenamientoClase.getText().compareTo("") != 0
 				|| cmbModalidadClase.getText().compareTo("") != 0) {
@@ -324,7 +334,10 @@ public class CClase extends CGenerico {
 	}
 
 	public boolean camposLLenos() {
-		if (txtCursoClase.getText().compareTo("") == 0) {
+		if (txtCursoClase.getText().compareTo("") == 0
+				|| txtContenidoClase.getText().compareTo("") == 0
+				|| spnDuracionClase.getText().compareTo("") == 0
+				|| cmbUnidadMedidaClase.getText().compareTo("") == 0) {
 			return false;
 		} else
 			return true;
@@ -400,7 +413,8 @@ public class CClase extends CGenerico {
 				registros[4] = clase.getEntidadDidactica();
 				registros[5] = String.valueOf(formatoFecha.format(clase
 						.getFecha()));
-				registros[6] = String.valueOf(clase.getDuracion());
+				registros[6] = String.valueOf(mostrarDuracion(clase)) + " "
+						+ clase.getMedidaDuracion();
 				registros[7] = clase.getLugar();
 				registros[8] = clase.getTipoEntrenamiento();
 				registros[9] = clase.getModalidad();
@@ -520,6 +534,56 @@ public class CClase extends CGenerico {
 
 			idCurso = cursos.get(0).getId();
 		}
+
+	}
+
+	public float transformarDuracion(int duracion) {
+
+		float duracionTransformada = 0;
+
+		if (cmbUnidadMedidaClase.getValue().equals("HORAS")) {
+
+			duracionTransformada = duracion;
+			return duracionTransformada;
+
+		} else if (cmbUnidadMedidaClase.getValue().equals("DIAS")) {
+
+			duracionTransformada = spnDuracionClase.getValue() * 24;
+			return duracionTransformada;
+
+		} else if (cmbUnidadMedidaClase.getValue().equals("MINUTOS")) {
+
+			duracionTransformada = spnDuracionClase.getValue() / 60;
+			return duracionTransformada;
+
+		}
+
+		return duracion;
+
+	}
+
+	public float mostrarDuracion(Clase clase) {
+
+		float duracionTransformada = 0;
+
+		if (clase.getMedidaDuracion().equals("HORAS")) {
+
+			duracionTransformada = clase.getDuracion();
+			return duracionTransformada;
+
+		} else if (clase.getMedidaDuracion().equals("DIAS")) {
+
+			duracionTransformada = clase.getDuracion() / 24;
+			return duracionTransformada;
+
+		} else if (clase.getMedidaDuracion().equals("MINUTOS")) {
+
+			duracionTransformada = clase.getDuracion() * 60;
+			return duracionTransformada;
+
+		}
+
+		return duracionTransformada;
 
 	}
 

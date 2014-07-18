@@ -12,11 +12,11 @@
 			<caption label="Nuevo" style="font-weight:bold"
 				tooltiptext="Presione para registrar una nueva clase" />
 			<separator />
-			<grid width="100%">
+			<grid width="100%" style="border:0px">
 				<columns visible="false">
 					<column label="" width="20%" />
-					<column label="" width="55%" />
-					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="15%" />
 				</columns>
 				<rows>
 					<row>
@@ -35,7 +35,13 @@
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
-						<label value="Contenido:" class="etiqueta" />
+						<hbox>
+							<label value="Contenido:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<textbox id="txtContenidoClase" width="100%"
 							maxlength="250" tabindex="2"
@@ -71,11 +77,26 @@
 							tooltiptext="Ingrese aqui la fecha de la clase" />
 					</row>
 					<row>
-						<label value="Duración:" class="etiqueta" />
+						<hbox>
+							<label value="Duración:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
 
 						<spinner id="spnDuracionClase"
 							constraint="no negative" width="100%" maxlength="100"
 							tabindex="7" tooltiptext="Ingrese aqui la duracion de la clase" />
+
+						<combobox id="cmbUnidadMedidaClase"
+							readonly="true"
+							tooltiptext="Seleccione la unidad de medida de la duracion"
+							width="60%" tabindex="9">
+							<comboitem label="DIAS" />
+							<comboitem label="HORAS" />
+							<comboitem label="MINUTOS" />
+						</combobox>
 					</row>
 					<row>
 						<label value="Lugar:" class="etiqueta" />
@@ -92,8 +113,8 @@
 							readonly="true"
 							tooltiptext="Seleccione el tipo de entrenamiento de la clase"
 							width="100%" tabindex="9">
-							<comboitem label="PLANIFICADO" />
-							<comboitem label="REACTIVO" />
+							<comboitem label="TECNICO" />
+							<comboitem label="CONDUCTUAL" />
 						</combobox>
 					</row>
 					<row>
