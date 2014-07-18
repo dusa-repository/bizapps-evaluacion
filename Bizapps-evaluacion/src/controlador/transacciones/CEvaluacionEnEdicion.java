@@ -54,6 +54,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 	@Wire
 	private Label txttotalIndicador;
 	@Wire
+	private Label txttotalObjetivos;
+	@Wire
 	private Textbox txtFortalezas;
 	@Wire
 	private Textbox txtOportunidades;
@@ -384,7 +386,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		}
 		
 		
-		evaluarIndicadores();
+		//evaluarIndicadores();
 		txttotalIndicador.setValue(String.valueOf(tind));
 	}
 
@@ -994,12 +996,24 @@ public class CEvaluacionEnEdicion extends CGenerico {
 		
 		tind = 0;
 		txttotalIndicador.setValue("0.0");
-		Integer idObjetivoAux = Integer.parseInt(cmbObjetivos.getSelectedItem()
-				.getContext());
-		EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivoAux);
-		txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
 		
-	}
+		
+		
+		try {
+			Integer idObjetivoAux = Integer.parseInt(cmbObjetivos.getSelectedItem()
+					.getContext());
+			EvaluacionObjetivo eo = servicioEvaluacionObjetivo.buscarObjetivosId(idObjetivoAux);
+			txttotalIndicador.setValue(String.valueOf(eo.getTotalInd()));
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+		
+		
+		
+	} 
+	
 
 	private void mostrarDominioRectora() {
 		lbxCompetenciaRectora.renderAll();
@@ -1254,15 +1268,17 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				if (idObjetivo.equals(idObjetivo1)) {
 					totalInd = 0.0;
 					totalInd = (total * peso) / 100;
-					String total = totalInd.toString();
+					//String total = totalInd.toString();
 					((Textbox) ((listItem3.get(j).getChildren().get(5)))
-							.getFirstChild()).setValue(total);
+							.getFirstChild()).setValue(total.toString());
 
 				}
 			}
 
 		}
-		int item = lbxObjetivosGuardados.getItems().size();
+		
+		
+		/*int item = lbxObjetivosGuardados.getItems().size();
 		System.out.println("k" + item);
 		for (int k = 0; k < lbxObjetivosGuardados.getItems().size(); k++) {
 
@@ -1278,13 +1294,55 @@ public class CEvaluacionEnEdicion extends CGenerico {
 							.getFirstChild()).setValue(resultado);
 				}
 			}
+		}*/
+		
+		int item = lbxObjetivosGuardados.getItems().size();
+		System.out.println("k" + item);
+		for (int k = 0; k < lbxObjetivosGuardados.getItems().size(); k++) {
+
+			List<Listitem> listItem4 = lbxObjetivosGuardados.getItems();
+		
+			EvaluacionObjetivo EvaluacionO = listItem4.get(k).getValue();
+			Double peso = EvaluacionO.getPeso();
+			
+			
+			String resultadoO = ((Textbox) ((listItem4.get(k).getChildren()
+					.get(5))).getFirstChild()).getValue();
+			
+			
+			String resultadoIndicadores = ((Textbox) ((listItem4.get(k).getChildren()
+					.get(5))).getFirstChild()).getValue();
+			
+			Double resultadoObjetivos = peso*Double.parseDouble(resultadoIndicadores)/100; 
+			
+			((Textbox) ((listItem4.get(k).getChildren().get(6)))
+					.getFirstChild()).setValue(resultadoObjetivos.toString());
+			
+			/*totalObjetivo = totalObjetivo + Double.parseDouble(resultadoO);
+			String resultado = totalObjetivo.toString();
+			if (k == item - 1) {
+				for (int l = 0; l < lbxObjetivosGuardados.getItems().size(); l++) {
+					List<Listitem> listItem5 = lbxObjetivosGuardados.getItems();
+					
+					
+					
+					
+					((Textbox) ((listItem5.get(l).getChildren().get(6)))
+							.getFirstChild()).setValue(resultado);
+				}
+			} */
 		}
+		
+		
 		guardarIndicadores();
 		totalObjetivo = 0.0;
-		tind= totalInd;
+		tind= total;
 		totalInd = 0.0;
 		total = 0.0;
 	}
+	
+	
+
 
 	public Integer calcularPorcentajeMetaIndicado(Integer valor) {
 		if (valor < 0)
@@ -1319,6 +1377,8 @@ public class CEvaluacionEnEdicion extends CGenerico {
 
 	@Listen("onClick = #btnGuardarObjetivo")
 	public void guardarObjetivos() {
+		
+		Double acumulador=0.0;
 
 		boolean campoBlanco = false;
 
@@ -1357,10 +1417,14 @@ public class CEvaluacionEnEdicion extends CGenerico {
 				EvaluacionObjetivo evaluacion = servicioEvaluacionObjetivo
 						.buscarObjetivosId(idObjetivo);
 				evaluacion.setTotalInd(Double.parseDouble(totalIndicador));
-				evaluacion.setResultado(Double.parseDouble(resultado));
+				
+				Double peso = EvaluacionO.getPeso();
+				evaluacion.setResultado(Double.parseDouble(resultado) * peso / 100);
 				servicioEvaluacionObjetivo.guardar(evaluacion);
 			}
 		}
+		
+		txttotalObjetivos.setValue(acumulador.toString());
 
 	}
 
