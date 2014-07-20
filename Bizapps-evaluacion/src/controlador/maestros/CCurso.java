@@ -220,7 +220,7 @@ public class CCurso extends CGenerico {
 		txtAreaCurso.setValue("");
 		spnDuracionCurso.setValue(null);
 		cmbEstadoCurso.setValue("");
-		cmbUnidadMedidaCurso.setValue("");
+		cmbUnidadMedidaCurso.setValue("HORAS");
 		catalogo.limpiarSeleccion();
 		txtAreaCurso.setFocus(true);
 
@@ -319,7 +319,7 @@ public class CCurso extends CGenerico {
 	public void mostrarCatalogo() {
 
 		final List<Curso> listCurso = servicioCurso.buscarTodos();
-		catalogo = new Catalogo<Curso>(catalogoCurso, "Catalogo de Cursoes",
+		catalogo = new Catalogo<Curso>(catalogoCurso, "Catalogo de Cursos",
 				listCurso, "Área", "Nombre", "Duración") {
 
 			@Override

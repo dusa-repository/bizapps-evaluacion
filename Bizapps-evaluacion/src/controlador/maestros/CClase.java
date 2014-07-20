@@ -259,7 +259,7 @@ public class CClase extends CGenerico {
 		txtLugarClase.setValue("");
 		cmbTipoEntrenamientoClase.setValue("");
 		cmbModalidadClase.setValue("");
-		cmbUnidadMedidaClase.setValue("");
+		cmbUnidadMedidaClase.setValue("HORAS");
 		txtCursoClase.setFocus(true);
 
 	}
@@ -456,8 +456,7 @@ public class CClase extends CGenerico {
 	public void mostrarCatalogoCargo() {
 		final List<Curso> listCurso = servicioCurso.buscarTodos();
 		catalogoCurso = new Catalogo<Curso>(divCatalogoCurso,
-				"Catalogo de Cursoes", listCurso, "Área", "Nombre", "Duración",
-				"Estado") {
+				"Catalogo de Cursos", listCurso, "Área", "Nombre", "Duración") {
 
 			@Override
 			protected List<Curso> buscarCampos(List<String> valores) {
@@ -470,9 +469,7 @@ public class CClase extends CGenerico {
 									.startsWith(valores.get(1))
 
 							&& String.valueOf(curso.getDuracion())
-									.toLowerCase().startsWith(valores.get(2))
-							&& curso.getEstado().toLowerCase()
-									.startsWith(valores.get(3))) {
+									.toLowerCase().startsWith(valores.get(2))) {
 						lista.add(curso);
 					}
 				}
@@ -482,11 +479,10 @@ public class CClase extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Curso curso) {
-				String[] registros = new String[4];
+				String[] registros = new String[3];
 				registros[0] = curso.getArea().getDescripcion();
 				registros[1] = curso.getNombre();
 				registros[2] = String.valueOf(curso.getDuracion());
-				registros[3] = curso.getEstado();
 
 				return registros;
 			}
@@ -500,8 +496,6 @@ public class CClase extends CGenerico {
 					return servicioCurso.filtroNombre(valor);
 				else if (combo.equals("Duración"))
 					return servicioCurso.filtroDuracion(valor);
-				else if (combo.equals("Estado"))
-					return servicioCurso.filtroEstado(valor);
 				else
 					return servicioCurso.buscarTodos();
 			}

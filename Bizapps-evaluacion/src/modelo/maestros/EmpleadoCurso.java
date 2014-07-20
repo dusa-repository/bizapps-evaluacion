@@ -24,11 +24,24 @@ public class EmpleadoCurso implements Serializable {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
 	private Empleado empleado;
+	
+	
+	@Column(name = "estado_curso")
+	private String estadoCurso;
 
 	public EmpleadoCurso() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public EmpleadoCurso(Curso curso, Empleado empleado, String estadoCurso) {
+		super();
+		this.curso = curso;
+		this.empleado = empleado;
+		this.estadoCurso = estadoCurso;
+	}
+
 
 	public Curso getCurso() {
 		return curso;
@@ -46,5 +59,15 @@ public class EmpleadoCurso implements Serializable {
 		this.empleado = empleado;
 	}
 
+
+	public String getEstadoCurso() {
+		return estadoCurso;
+	}
+
+
+	public void setEstadoCurso(String estadoCurso) {
+		this.estadoCurso = estadoCurso;
+	}
+	
 	
 }
