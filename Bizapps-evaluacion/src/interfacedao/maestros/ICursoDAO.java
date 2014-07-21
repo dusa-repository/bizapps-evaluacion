@@ -22,5 +22,7 @@ public interface ICursoDAO extends JpaRepository<Curso, Integer> {
 
 	public List<Curso> findByNombreAllIgnoreCase(String nombre);
 
+	public List<Curso> findByEstadoOrderByAreaAsc(String estado);
+
 
 }

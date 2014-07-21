@@ -246,8 +246,9 @@ public class CControlAsistencia extends CGenerico {
 								.buscar(codigoEmpleado);
 						Curso curso = servicioCurso.buscarCurso(idCurso);
 
-						EmpleadoCurso empleadosCurso = new EmpleadoCurso(curso,
-								empleado, estadoCurso);
+						EmpleadoCurso empleadosCurso = servicioEmpleadoCurso
+								.buscarPorempleadoYCurso(empleado, curso);
+						empleadosCurso.setEstadoCurso(estadoCurso);
 						servicioEmpleadoCurso.guardar(empleadosCurso);
 
 					}

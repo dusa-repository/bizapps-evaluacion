@@ -17,6 +17,8 @@ public class SCurso {
 
 	@Autowired
 	private ICursoDAO cursoDAO;
+	
+	private String[] estado = {"ACTIVO", "INACTIVO"};
 
 	/* Servicio que permite guardar los datos de un curso */
 	public void guardar(Curso curso) {
@@ -37,7 +39,9 @@ public class SCurso {
 
 	/* Servicio que permite buscar todos las cursos */
 	public List<Curso> buscarTodos() {
-		return cursoDAO.findAll();
+		List<Curso> cursos;
+		cursos = cursoDAO.findByEstadoOrderByAreaAsc(estado[0]);
+		return cursos;
 	}
 
 	/* Servicio que permite eliminar una curso */

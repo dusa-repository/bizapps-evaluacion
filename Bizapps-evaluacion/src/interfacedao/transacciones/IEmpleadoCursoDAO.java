@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Curso;
+import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.pk.EmpleadoCursoPK;
 import modelo.pk.NivelCompetenciaCargoPK;
@@ -15,5 +16,9 @@ import org.springframework.data.repository.query.Param;
 public interface IEmpleadoCursoDAO extends JpaRepository<EmpleadoCurso, EmpleadoCursoPK> {
 
 	public List<EmpleadoCurso> findByCurso(Curso curso);
+
+	public List<EmpleadoCurso> findByEmpleado(Empleado empleado);
+
+	public EmpleadoCurso findByEmpleadoAndCurso(Empleado empleado, Curso curso);
 	
 }
