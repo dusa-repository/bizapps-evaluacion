@@ -65,6 +65,7 @@ import servicio.transacciones.SEvaluacionConducta;
 import servicio.transacciones.SEvaluacionIndicador;
 import servicio.transacciones.SEvaluacionObjetivo;
 import servicio.transacciones.SNivelCompetenciaCargo;
+import servicio.transacciones.SUtilidad;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public abstract class CGenerico extends SelectorComposer<Component> {
@@ -141,6 +142,11 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SBitacora servicioBitacora;
 	@WireVariable("SReporte")
 	protected SReporte servicioReporte;
+	@WireVariable("SUtilidad")
+	protected SUtilidad servicioUtilidad;
+	
+	
+	
 	protected static SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
 	public static List<Tab> tabs = new ArrayList<Tab>();

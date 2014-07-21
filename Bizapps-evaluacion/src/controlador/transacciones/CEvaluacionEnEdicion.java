@@ -1090,6 +1090,7 @@ public class CEvaluacionEnEdicion extends CGenerico {
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
 					map.put("idEva", idEva);
+					evaluacionconductas = servicioEvaluacionConducta.buscarConductas(idEva);
 					map.put("conductas", evaluacionconductas);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions

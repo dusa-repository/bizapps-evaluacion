@@ -101,6 +101,7 @@ public class CListaPersonal extends CGenerico {
 		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion));
 		revision = servicioRevision.buscarPorEstado("ACTIVO");
 		idEva = servicioEvaluacion.buscarId() + 1;
+
 		lbxEvaluacion.renderAll();
 		for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
 			Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
@@ -108,9 +109,15 @@ public class CListaPersonal extends CGenerico {
 			Evaluacion eva = listItem2.get(j).getValue();
 			String fichaS = eva.getFichaEvaluador();
 			Empleado empleado = servicioEmpleado.buscarPorFicha(fichaS);
-			String nombre = empleado.getNombre();
+			Usuario usuario =servicioUsuario.buscarId(eva.getIdUsuario());
+			String fichaUsuario = usuario.getFicha();
+			String nombre = usuario.getNombre().concat(" ").concat(usuario.getApellido());
+			
+			((Label) ((listItem.getChildren().get(4))).getFirstChild())
+			.setValue(fichaUsuario);
+			
 			((Label) ((listItem.getChildren().get(5))).getFirstChild())
-					.setValue(nombre);
+			.setValue(nombre);
 		}
 	}
 
@@ -162,6 +169,7 @@ public class CListaPersonal extends CGenerico {
 		servicioEvaluacion.guardar(evaluacion);
 		servicioBitacora.guardar(bitacora);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("modo", "AGREGAR");
 		map.put("idEva", idEva);
 		System.out.println("va" + idEva);
 		Sessions.getCurrent().setAttribute("itemsCatalogo", map);
@@ -223,10 +231,10 @@ public class CListaPersonal extends CGenerico {
 										}
 									} else {
 										Messagebox
-												.show("No puede Eliminar la Evaluación",
-														"Alerta",
-														Messagebox.OK,
-														Messagebox.EXCLAMATION);
+										.show("No puede Eliminar la Evaluación",
+												"Alerta",
+												Messagebox.OK,
+												Messagebox.EXCLAMATION);
 									}
 
 								}
@@ -245,17 +253,36 @@ public class CListaPersonal extends CGenerico {
 
 			Listitem listItem = lbxEvaluacion.getSelectedItem();
 			if (listItem != null) {
-
+				
 				Evaluacion evaluacion = (Evaluacion) listItem.getValue();
-				final HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("id", evaluacion.getIdEvaluacion());
-				map.put("titulo", evaluacion.getFicha());
-				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-				winEvaluacionEmpleado = (Window) Executions.createComponents(
-						"/vistas/transacciones/VEvaluacionEnEdicion.zul", null,
-						map);
-				winEvaluacionEmpleado.doModal();
-				winListaPersonal.onClose();
+				
+				Usuario usuario =servicioUsuario.buscarId(evaluacion.getIdUsuario());
+				String fichaUsuario = usuario.getFicha();
+
+				if (fichaUsuario.compareTo("0")==0)
+				{
+					Messagebox
+					.show("La Evaluación no se puede visualizar ya que es solo un registro historico ( Valoracion Final )",
+							"Alerta",
+							Messagebox.OK,
+							Messagebox.EXCLAMATION);
+				}
+				else
+				{
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("modo", "EDITAR");
+					map.put("id", evaluacion.getIdEvaluacion());
+					map.put("titulo", evaluacion.getFicha());
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					winEvaluacionEmpleado = (Window) Executions.createComponents(
+							"/vistas/transacciones/VAgregarEvaluacion.zul", null,
+							map);
+					winEvaluacionEmpleado.doModal();
+					winListaPersonal.onClose();
+					
+				}
+				
+				
 			}
 
 		}

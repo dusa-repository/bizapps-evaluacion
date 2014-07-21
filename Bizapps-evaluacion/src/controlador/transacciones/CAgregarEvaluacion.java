@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -8,11 +9,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.SpinnerDateModel;
+
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Distribucion;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
+import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
@@ -32,6 +37,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -74,13 +80,13 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Spinner txtPeso1;
 	@Wire
-	private Spinner txtValorMeta;
+	private Doublespinner txtValorMeta;
 	@Wire
 	private Button btnCalcular;
 	@Wire
-	private Spinner txtValorResultado;
+	private Doublespinner txtValorResultado;
 	@Wire
-	private Spinner txtResFy;
+	private Doublespinner txtResFy;
 	@Wire
 	private Spinner txtResultadoPorc;
 	@Wire
@@ -201,6 +207,39 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Tab tbIndicadores;
 	@Wire
 	private Tab tbEvaluacionObjetivos;
+	@Wire
+	private Button btnEnEdicion;
+	@Wire
+	private Button btnPendiente;
+	@Wire
+	private Button btnRevisada;
+	@Wire
+	private Button btnAprobada;
+	@Wire
+	private Button btnCalibrada;
+	@Wire
+	private Button btnFinalizada;
+	@Wire
+	private Label lblResultado1;
+	@Wire
+	private Label lblResultado;
+	@Wire
+	private Label lblDistribucion;
+	@Wire
+	private Label lblDistribucion1;
+	@Wire
+	private Label lblResultadoPeso;
+	@Wire
+	private Label lblResultadoPeso1;
+	@Wire
+	private Label txtResultadoFinal;
+	@Wire
+	private Label txttotalCompetencia1;
+	@Wire
+	private Label txttotalCompetencia2;
+	@Wire
+	private Label txtValoracionFinal;
+
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -208,7 +247,11 @@ public class CAgregarEvaluacion extends CGenerico {
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 	List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = new ArrayList<EvaluacionObjetivo>();
+	List<EvaluacionConducta> evaluacionconductas = new ArrayList<EvaluacionConducta>();
+	List<NivelCompetenciaCargo> nivelCompetencia = new ArrayList<NivelCompetenciaCargo>();
+	List<NivelCompetenciaCargo> nivelCompetencia1 = new ArrayList<NivelCompetenciaCargo>();
 
+	private static int num;
 	private static Integer idEva;
 	private static boolean bool = false;
 	private static boolean bool1 = false;
@@ -232,143 +275,374 @@ public class CAgregarEvaluacion extends CGenerico {
 	private static int idObjetivoE;
 	private Empleado empleado;
 	private static double tind = 0.0;
+	public static Double totalCompetencia = 0.0;
+	public static Double totalConducta = 0.0;
+	public static Double calculo = 0.0;
+	public static Double porcentaje = 0.0;
+	public static Double totalCompetencia1 = 0.0;
+	public static Double totalConducta1 = 0.0;
+	public static Double calculo1 = 0.0;
+	public static Double porcentaje1 = 0.0;
+	public static Double resultadoCompetencia = 0.0;
+	public static Double resultadoPesoCompetencia = 0.0;
+	public static Double resultadoPesoObjetivo = 0.0;
 
 	@Override
 	public void inicializar() throws IOException {
-		revision = servicioRevision.buscarPorEstado("ACTIVO");
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		String ficha = u.getCedula();
+
+		// COMPARTIDO PARA AMBOS COMPORTAMIENTOS
+
+		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
+		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
+		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
+
+		List<Medicion> medicion = servicioMedicion.buscar();
+		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
+
+		List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
+		cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
+
 		if (map != null) {
-			if (map.get("idEva") != null) {
-				Integer idEvaluacion = (Integer) map.get("idEva");
-				idEva = idEvaluacion;
 
-				System.out.println("viene" + idEva);
-				List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
-				cmbPerspectiva.setModel(new ListModelList<Perspectiva>(
-						perspectiva));
-				cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
+			if (map.get("modo") != null) {
 
-				List<Medicion> medicion = servicioMedicion.buscar();
-				cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
+				if (map.get("modo").equals("AGREGAR")) {
 
-				List<UnidadMedida> unidad = servicioUnidadMedida.buscar();
-				cmbUnidad.setModel(new ListModelList<UnidadMedida>(unidad));
+					revision = servicioRevision.buscarPorEstado("ACTIVO");
+					Authentication auth = SecurityContextHolder.getContext()
+							.getAuthentication();
+					u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+					String ficha = u.getCedula();
+					/*
+					 * HashMap<String, Object> map = (HashMap<String, Object>)
+					 * Sessions .getCurrent().getAttribute("itemsCatalogo");
+					 */
 
-				fichaE = ficha;
-				Integer numeroEvaluacion = servicioEvaluacion
-						.buscarIdSecundario(ficha);
-				numero = numeroEvaluacion;
-				lblEvaluacion.setValue(numeroEvaluacion.toString());
-				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
-				lblRevision.setValue(revision.getDescripcion());
-				String nombreTrabajador = u.getNombre() + " " + u.getApellido();
-				empleado = servicioEmpleado.buscarPorFicha(ficha);
-				String cargo = empleado.getCargo().getDescripcion();
-				String unidadOrganizativa = empleado.getUnidadOrganizativa()
-						.getDescripcion();
-				String gerenciaReporte = empleado.getUnidadOrganizativa()
-						.getGerencia().getDescripcion();
-				lblFicha.setValue(ficha);
-				lblNombreTrabajador.setValue(nombreTrabajador);
-				lblCargo.setValue(cargo);
-				lblUnidadOrganizativa.setValue(unidadOrganizativa);
-				lblGerencia.setValue(gerenciaReporte);
-				lblFicha.setValue(ficha);
-				lblNombreTrabajador.setValue(nombreTrabajador);
-				lblCargo.setValue(cargo);
-				lblUnidadOrganizativa.setValue(unidadOrganizativa);
-				lblGerencia.setValue(gerenciaReporte);
-				lblEvaluacion.setValue(numeroEvaluacion.toString());
-				lblFechaCreacion.setValue(formatoFecha.format(fechaHora));
-			}
+					if (map != null) {
+						if (map.get("idEva") != null) {
+							Integer idEvaluacion = (Integer) map.get("idEva");
+							idEva = idEvaluacion;
 
-			else {
+							System.out.println("viene" + idEva);
 
-				HashMap<String, Object> map1 = (HashMap<String, Object>) Sessions
-						.getCurrent().getAttribute("itemsCatalogo");
-				if (map1 != null) {
-					if (map1.get("ficha") != null) {
-						String ficha1 = (String) map1.get("ficha");
-						Integer idEvaluacion1 = (Integer) map1.get("id");
-						fichaE = ficha1;
-						idEva = idEvaluacion1;
-						List<Medicion> medicion = servicioMedicion.buscar();
-						cmbMedicion.setModel(new ListModelList<Medicion>(
-								medicion));
+							fichaE = ficha;
+							Integer numeroEvaluacion = servicioEvaluacion
+									.buscarIdSecundario(ficha);
+							numero = numeroEvaluacion;
+							lblEvaluacion.setValue(numeroEvaluacion.toString());
+							lblFechaCreacion.setValue(formatoFecha
+									.format(fechaHora));
+							lblRevision.setValue(revision.getDescripcion());
+							String nombreTrabajador = u.getNombre() + " "
+									+ u.getApellido();
+							empleado = servicioEmpleado.buscarPorFicha(ficha);
+							String cargo = empleado.getCargo().getDescripcion();
+							String unidadOrganizativa = empleado
+									.getUnidadOrganizativa().getDescripcion();
+							String gerenciaReporte = empleado
+									.getUnidadOrganizativa().getGerencia()
+									.getDescripcion();
+							lblFicha.setValue(ficha);
+							lblNombreTrabajador.setValue(nombreTrabajador);
+							lblCargo.setValue(cargo);
+							lblUnidadOrganizativa.setValue(unidadOrganizativa);
+							lblGerencia.setValue(gerenciaReporte);
+							lblFicha.setValue(ficha);
+							lblNombreTrabajador.setValue(nombreTrabajador);
+							lblCargo.setValue(cargo);
+							lblUnidadOrganizativa.setValue(unidadOrganizativa);
+							lblGerencia.setValue(gerenciaReporte);
+							lblEvaluacion.setValue(numeroEvaluacion.toString());
+							lblFechaCreacion.setValue(formatoFecha
+									.format(fechaHora));
+						}
 
-						List<UnidadMedida> unidad = servicioUnidadMedida
-								.buscar();
-						cmbUnidad.setModel(new ListModelList<UnidadMedida>(
-								unidad));
-						empleado = servicioEmpleado.buscarPorFicha(ficha1);
-						String cargo = empleado.getCargo().getDescripcion();
-						String unidadOrganizativa = empleado
-								.getUnidadOrganizativa().getDescripcion();
-						String gerenciaReporte = empleado
-								.getUnidadOrganizativa().getGerencia()
-								.getDescripcion();
-						String nombreTrabajador = empleado.getNombre();
-						Integer numeroEvaluacion = servicioEvaluacion
-								.buscarIdSecundario(fichaE);
-						numero = numeroEvaluacion;
-						System.out.println(numeroEvaluacion);
-						lblFicha.setValue(ficha1);
-						lblNombreTrabajador.setValue(nombreTrabajador);
-						lblCargo.setValue(cargo);
-						lblUnidadOrganizativa.setValue(unidadOrganizativa);
-						lblGerencia.setValue(gerenciaReporte);
-						lblEvaluacion.setValue(numeroEvaluacion.toString());
-						lblFechaCreacion.setValue(formatoFecha
-								.format(fechaHora));
-						lblRevision.setValue(revision.getDescripcion());
+						else {
+
+							HashMap<String, Object> map1 = (HashMap<String, Object>) Sessions
+									.getCurrent().getAttribute("itemsCatalogo");
+							if (map1 != null) {
+								if (map1.get("ficha") != null) {
+									String ficha1 = (String) map1.get("ficha");
+									Integer idEvaluacion1 = (Integer) map1
+											.get("id");
+									fichaE = ficha1;
+									idEva = idEvaluacion1;
+									/*
+									 * List<Medicion> medicion =
+									 * servicioMedicion.buscar();
+									 * cmbMedicion.setModel(new
+									 * ListModelList<Medicion>( medicion));
+									 * 
+									 * List<UnidadMedida> unidad =
+									 * servicioUnidadMedida .buscar();
+									 * cmbUnidad.setModel(new
+									 * ListModelList<UnidadMedida>( unidad));
+									 */
+									empleado = servicioEmpleado
+											.buscarPorFicha(ficha1);
+									String cargo = empleado.getCargo()
+											.getDescripcion();
+									String unidadOrganizativa = empleado
+											.getUnidadOrganizativa()
+											.getDescripcion();
+									String gerenciaReporte = empleado
+											.getUnidadOrganizativa()
+											.getGerencia().getDescripcion();
+									String nombreTrabajador = empleado
+											.getNombre();
+									Integer numeroEvaluacion = servicioEvaluacion
+											.buscarIdSecundario(fichaE);
+									numero = numeroEvaluacion;
+									System.out.println(numeroEvaluacion);
+									lblFicha.setValue(ficha1);
+									lblNombreTrabajador
+											.setValue(nombreTrabajador);
+									lblCargo.setValue(cargo);
+									lblUnidadOrganizativa
+											.setValue(unidadOrganizativa);
+									lblGerencia.setValue(gerenciaReporte);
+									lblEvaluacion.setValue(numeroEvaluacion
+											.toString());
+									lblFechaCreacion.setValue(formatoFecha
+											.format(fechaHora));
+									lblRevision.setValue(revision
+											.getDescripcion());
+
+								}
+							}
+
+						}
+						List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
+						List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
+						List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
+						List<NivelCompetenciaCargo> nivel4 = new ArrayList<NivelCompetenciaCargo>();
+						NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo();
+						NivelCompetenciaCargo nivelEspecificas = new NivelCompetenciaCargo();
+
+						nivel = servicioNivelCompetenciaCargo.buscar(empleado
+								.getCargo());
+						for (int j = 0; j < nivel.size(); j++) {
+							if (nivel.get(j).getCompetencia().getNivel()
+									.equals("RECTORAS")) {
+								nivelRectoras = nivel.get(j);
+								nivel2.add(nivelRectoras);
+								nivelCompetencia = nivel2;
+							} else {
+								nivel.remove(j);
+							}
+							lbxCompetenciaRectora
+									.setModel(new ListModelList<NivelCompetenciaCargo>(
+											nivel2));
+						}
+						nivel4 = servicioNivelCompetenciaCargo.buscar(empleado
+								.getCargo());
+						for (int j = 0; j < nivel4.size(); j++) {
+							if (nivel4.get(j).getCompetencia().getNivel()
+									.equals("ESPECIFICAS")) {
+								nivelEspecificas = nivel4.get(j);
+								nivel3.add(nivelEspecificas);
+								nivelCompetencia1 = nivel3;
+							} else {
+								nivel4.remove(j);
+							}
+							lbxCompetenciaEspecifica
+									.setModel(new ListModelList<NivelCompetenciaCargo>(
+											nivel3));
+						}
+
+						gpxAgregar.setOpen(false);
+						gpxAgregarIndicador.setOpen(false);
+						// txttotalIndicador.setValue(String.valueOf(tind));
+
+						txttotalObjetivos.setValue("0.0");
+						txttotalPesoObjetivos.setValue("0.0");
 
 					}
-				}
 
-			}
-			List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
-			List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
-			List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
-			List<NivelCompetenciaCargo> nivel4 = new ArrayList<NivelCompetenciaCargo>();
-			NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo();
-			NivelCompetenciaCargo nivelEspecificas = new NivelCompetenciaCargo();
+					// TERMINA MODO AGREGAR
 
-			nivel = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
-			for (int j = 0; j < nivel.size(); j++) {
-				if (nivel.get(j).getCompetencia().getNivel().equals("RECTORAS")) {
-					nivelRectoras = nivel.get(j);
-					nivel2.add(nivelRectoras);
 				} else {
-					nivel.remove(j);
-				}
-				lbxCompetenciaRectora
-						.setModel(new ListModelList<NivelCompetenciaCargo>(
-								nivel2));
-			}
-			nivel4 = servicioNivelCompetenciaCargo.buscar(empleado.getCargo());
-			for (int j = 0; j < nivel4.size(); j++) {
-				if (nivel4.get(j).getCompetencia().getNivel()
-						.equals("ESPECIFICAS")) {
-					nivelEspecificas = nivel4.get(j);
-					nivel3.add(nivelEspecificas);
-				} else {
-					nivel4.remove(j);
-				}
-				lbxCompetenciaEspecifica
-						.setModel(new ListModelList<NivelCompetenciaCargo>(
-								nivel3));
-			}
+					// COMIENZA MODO EDITAR
 
-			gpxAgregar.setOpen(false);
-			gpxAgregarIndicador.setOpen(false);
-			// txttotalIndicador.setValue(String.valueOf(tind));
+					if (map != null) {
+						if (map.get("id") != null) {
+							Integer idEvaluacion = (Integer) map.get("id");
+							idEva = idEvaluacion;
+							String fichaMap = (String) map.get("titulo");
+							fichaE = fichaMap;
 
+							System.out.println(idEvaluacion);
+
+							Evaluacion evaluacion = servicioEvaluacion
+									.buscarEvaluacion(idEvaluacion);
+							if (evaluacion.getEstadoEvaluacion().equals(
+									"EN EDICION")) {
+								btnAgregar.setVisible(true);
+								btnEliminar.setVisible(true);
+								btnAgregarIndicador.setVisible(true);
+								btnEliminarIndicador.setVisible(true);
+
+							} else {
+								btnAgregar.setVisible(false);
+								btnEliminar.setVisible(false);
+								btnAgregarIndicador.setVisible(false);
+								btnEliminarIndicador.setVisible(false);
+								btnCambiarEstado.setVisible(false);
+								btnCancelar.setVisible(true);
+
+							}
+							txtCompromisos
+									.setValue(evaluacion.getCompromisos());
+							txtFortalezas.setValue(evaluacion.getFortalezas());
+							txtOportunidades.setValue(evaluacion
+									.getOportunidades());
+							txtResumen.setValue(evaluacion.getResumen());
+							Authentication auth = SecurityContextHolder
+									.getContext().getAuthentication();
+							u = servicioUsuario.buscarUsuarioPorNombre(auth
+									.getName());
+							String ficha = evaluacion.getFicha();
+							Integer numeroEvaluacion = evaluacion
+									.getIdEvaluacionSecundario();
+							num = numeroEvaluacion;
+							numero = numeroEvaluacion;
+							empleado = servicioEmpleado.buscarPorFicha(ficha);
+							//btnCambiarEstado
+							//String cargo = empleado.getCargo().getDescripcion();
+							String cargo = evaluacion.getCargo().getDescripcion();
+							String unidadOrganizativa = empleado
+									.getUnidadOrganizativa().getDescripcion();
+							String gerenciaReporte = empleado
+									.getUnidadOrganizativa().getGerencia()
+									.getDescripcion();
+							String nombreTrabajador = empleado.getNombre();
+							lblRevision.setValue(evaluacion.getRevision()
+									.getDescripcion());
+							// Combo de Objetivos
+							List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+									.buscarObjetivos(ficha, numeroEvaluacion);
+							cmbObjetivos
+									.setModel(new ListModelList<EvaluacionObjetivo>(
+											evaluacionObjetivo));
+
+							// Listbox que contiene los objetivos
+							objetivosG = servicioEvaluacionObjetivo
+									.buscarObjetivosEvaluar(idEvaluacion);
+							lbxObjetivosGuardados
+									.setModel(new ListModelList<EvaluacionObjetivo>(
+											objetivosG));
+
+							// Listbox que contine los indicadores
+							List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = servicioEvaluacionObjetivo
+									.buscarObjetivosEvaluar(idEvaluacion);
+							cmbObjetivos
+									.setModel(new ListModelList<EvaluacionObjetivo>(
+											evaluacionObjetivoIndicadores));
+
+							List<NivelCompetenciaCargo> nivel = new ArrayList<NivelCompetenciaCargo>();
+							List<NivelCompetenciaCargo> nivel2 = new ArrayList<NivelCompetenciaCargo>();
+							List<NivelCompetenciaCargo> nivel3 = new ArrayList<NivelCompetenciaCargo>();
+							List<NivelCompetenciaCargo> nivel4 = new ArrayList<NivelCompetenciaCargo>();
+							NivelCompetenciaCargo nivelRectoras = new NivelCompetenciaCargo();
+							NivelCompetenciaCargo nivelEspecificas = new NivelCompetenciaCargo();
+
+							nivel = servicioNivelCompetenciaCargo
+									.buscar(evaluacion.getCargo());
+							for (int j = 0; j < nivel.size(); j++) {
+								if (nivel.get(j).getCompetencia().getNivel()
+										.equals("RECTORAS")) {
+									nivelRectoras = nivel.get(j);
+									nivel2.add(nivelRectoras);
+									nivelCompetencia = nivel2;
+								} else {
+									nivel.remove(j);
+								}
+								lbxCompetenciaRectora
+										.setModel(new ListModelList<NivelCompetenciaCargo>(
+												nivel2));
+							}
+							nivel4 = servicioNivelCompetenciaCargo
+									.buscar(evaluacion.getCargo());
+							for (int j = 0; j < nivel4.size(); j++) {
+								if (nivel4.get(j).getCompetencia().getNivel()
+										.equals("ESPECIFICAS")) {
+									nivelEspecificas = nivel4.get(j);
+									nivel3.add(nivelEspecificas);
+									nivelCompetencia1 = nivel3;
+								} else {
+									nivel4.remove(j);
+								}
+								lbxCompetenciaEspecifica
+										.setModel(new ListModelList<NivelCompetenciaCargo>(
+												nivel3));
+							}
+
+							lblFicha.setValue(ficha);
+							lblNombreTrabajador.setValue(nombreTrabajador);
+							lblCargo.setValue(cargo);
+							lblUnidadOrganizativa.setValue(unidadOrganizativa);
+							lblGerencia.setValue(gerenciaReporte);
+							lblEvaluacion.setValue(numeroEvaluacion.toString());
+							lblFechaCreacion.setValue(formatoFecha
+									.format(fechaHora));
+
+							if (evaluacion.getEstadoEvaluacion().equals(
+									"EN EDICION")) {
+								btnPendiente.setVisible(false);
+								btnCambiarEstado.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"PENDIENTE")) {
+								btnEnEdicion.setVisible(true);
+								btnRevisada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"REVISADA")) {
+								btnPendiente.setVisible(true);
+								btnAprobada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"APROBADA")) {
+								btnRevisada.setVisible(true);
+								btnCalibrada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"CALIBRADA")) {
+								btnAprobada.setVisible(true);
+								btnFinalizada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"FINALIZADA")) {
+								btnAgregar.setVisible(false);
+								btnEliminar.setVisible(false);
+								//btnEliminar2.setVisible(false);
+								btnAgregarIndicador.setVisible(false);
+								btnCambiarEstado.setVisible(false);
+							}
+
+						}
+					}
+					gpxAgregar.setOpen(false);
+					gpxObjetivosAgregados.setOpen(true);
+					gpxAgregarIndicador.setOpen(false);
+					gpxAgregados.setOpen(false);
+					evaluacionconductas = servicioEvaluacionConducta
+							.buscarConductas(idEva);
+					System.out.println(evaluacionconductas);
+					/*
+					 * if (evaluacionconductas.size() != 0) { }
+					 */
+					mostrarDominioRectora();
+					mostrarDominioEspecifica();
+
+					// evaluarIndicadores();
+					txttotalIndicador.setValue(String.valueOf(tind));
+
+					refrescarCalculosEvaluacion();
+				}
+
+			}
 		}
+
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -439,8 +713,9 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		EvaluacionObjetivo eo = servicioEvaluacionObjetivo
 				.buscarObjetivosId(idObjetivo);
-				
-		txttotalIndicador.setValue(String.valueOf(calcularTotalPesoIndicadores(idObjetivo)));
+
+		txttotalIndicador.setValue(String
+				.valueOf(calcularTotalPesoIndicadores(idObjetivo)));
 	}
 
 	@Listen("onClick = #btnCancelar")
@@ -453,6 +728,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnAgregar")
 	public void AgregarObjetivo() {
 		limpiar();
+		idObjetivo = 0;
 		gpxAgregar.setOpen(true);
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
@@ -462,58 +738,57 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnOk")
 	public void AgregarObjetivo2() {
 		gpxAgregados.setOpen(true);
-		if (idObjetivo != 0) {
-			EvaluacionObjetivoActualizar();
+
+		boolean campoBlanco = false;
+
+		if (txtObjetivo.getValue().trim().equals("")
+				|| txtCorresponsables.getValue().trim().equals("")) {
+			campoBlanco = true;
+		}
+
+		if (campoBlanco == true) {
+			Messagebox.show("Debe llenar todos los campos de Objetivo",
+					"Error", Messagebox.OK, Messagebox.EXCLAMATION);
+
 		} else {
 
-			String perspectivaCombo = cmbPerspectiva.getSelectedItem()
-					.getContext();
-			System.out.println(perspectivaCombo);
-			Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
-					.parseInt(perspectivaCombo));
-			String objetivo = txtObjetivo.getValue();
-			String corresponsables = txtCorresponsables.getValue();
-			Double peso = Double.valueOf(txtPeso.getValue());
-			EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
-			Integer linea = objetivosG.size() + 1;
-			// idObjetivo = servicioEvaluacionObjetivo.buscarId() + 1;
-			System.out.println(servicioEvaluacionObjetivo.buscarId());
-			// objetivoLista.setIdObjetivo(idObjetivo);
-			System.out.println("idobjetivo" + idObjetivo);
-			objetivoLista.setIdEvaluacion(idEva);
-			objetivoLista.setDescripcionObjetivo(objetivo);
-			objetivoLista.setPerspectiva(perspectiva);
-			objetivoLista.setLinea(linea);
-			objetivoLista.setPeso(peso);
-			objetivoLista.setResultado(0);
-			objetivoLista.setTotalInd(0);
-			objetivoLista.setCorresponsables(corresponsables);
-			ev = objetivoLista;
-			//
-			// if (objetivosG.size() == 0) {
-			// servicioEvaluacionObjetivo.guardar(objetivoLista);
-			// objetivosG =
-			// servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
-			// lbxObjetivosGuardados
-			// .setModel(new ListModelList<EvaluacionObjetivo>(
-			// objetivosG));
-			//
-			// gpxAgregar.setOpen(false);
-			// Messagebox.show("Objetivos Guardados Exitosamente",
-			// "Información", Messagebox.OK, Messagebox.INFORMATION);
-			// limpiar();
-			// } else {
-			objetivosG.add(objetivoLista);
-			validarAgregarObjetivo();
-			objetivosG = servicioEvaluacionObjetivo
-					.buscarObjetivosEvaluar(idEva);
-			lbxObjetivosGuardados
-					.setModel(new ListModelList<EvaluacionObjetivo>(objetivosG));
+			if (idObjetivo != 0) {
+				EvaluacionObjetivoActualizar();
+			} else {
+
+				String perspectivaCombo = cmbPerspectiva.getSelectedItem()
+						.getContext();
+
+				Perspectiva perspectiva = servicioPerspectiva.buscarId(Integer
+						.parseInt(perspectivaCombo));
+				String objetivo = txtObjetivo.getValue();
+				String corresponsables = txtCorresponsables.getValue();
+				Double peso = Double.valueOf(txtPeso.getValue());
+				EvaluacionObjetivo objetivoLista = new EvaluacionObjetivo();
+				Integer linea = objetivosG.size() + 1;
+				objetivoLista.setIdEvaluacion(idEva);
+				objetivoLista.setDescripcionObjetivo(objetivo);
+				objetivoLista.setPerspectiva(perspectiva);
+				objetivoLista.setLinea(linea);
+				objetivoLista.setPeso(peso);
+				objetivoLista.setResultado(0);
+				objetivoLista.setTotalInd(0);
+				objetivoLista.setCorresponsables(corresponsables);
+				ev = objetivoLista;
+				objetivosG.add(objetivoLista);
+				validarAgregarObjetivo();
+				objetivosG = servicioEvaluacionObjetivo
+						.buscarObjetivosEvaluar(idEva);
+				lbxObjetivosGuardados
+						.setModel(new ListModelList<EvaluacionObjetivo>(
+								objetivosG));
+			}
+
+			refrescarCalculosEvaluacion();
+
+			idObjetivo = 0;
 
 		}
-		// }
-		
-		idObjetivo = 0;
 
 	}
 
@@ -528,28 +803,35 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void limpiarI() {
 		txtIndicador.setValue("");
 		txtPesoPorc.setValue(0);
-		txtResFy.setValue(0);
+		txtResFy.setValue(0.0);
 		txtResultadoPorc.setValue(0);
 		txtValorMeta.setValue(null);
 		txtValorResultado.setValue(null);
 		cmbMedicion.setValue(null);
 		cmbUnidad.setValue(null);
 		txtPeso1.setValue(null);
+		idIndicador = 0;
 	}
 
 	@Listen("onClick = #btnAgregarIndicador")
 	public void AgregarIndicador() {
 
-		idIndicador = 0;
-		limpiarI();
-		gpxAgregarIndicador.setOpen(true);
+		if (cmbObjetivos.getText().compareTo("") == 0) {
+			Messagebox.show(
+					"Debe seleccionar un objetivo para agregar un indicador",
+					"Advertencia", Messagebox.OK, Messagebox.EXCLAMATION);
+		} else {
+			idIndicador = 0;
+			limpiarI();
+			gpxAgregarIndicador.setOpen(true);
+		}
 
 	}
 
 	@Listen("onClick = #btnOk2")
 	public void AgregarIndicador1() {
-		String idObjetivo="0";
-		
+		String idObjetivo = "0";
+
 		idObjetivo = cmbObjetivos.getSelectedItem().getContext();
 
 		if (cmbObjetivos.getText().compareTo("") == 0
@@ -557,17 +839,16 @@ public class CAgregarEvaluacion extends CGenerico {
 				|| cmbMedicion.getText().compareTo("") == 0
 				|| txtPeso1.getText().compareTo("") == 0
 				// || txtValorMeta.getText().compareTo("") == 0
-				|| txtIndicador.getText().compareTo("") == 0
+				|| txtIndicador.getText().trim().compareTo("") == 0
 				// || txtResultadoPorc.getText().compareTo("") == 0
 				// || txtPesoPorc.getText().compareTo("") == 0
 				|| txtValorMeta.getText().compareTo("") == 0)
 
 		{
-			Messagebox.show("Debe llenar todos los campos", "Advertencia",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			Messagebox.show("Debe llenar todos los campos de Indicador",
+					"Advertencia", Messagebox.OK, Messagebox.EXCLAMATION);
 		} else {
 			if (idIndicador != 0) {
-				System.out.println("entoooooooooooo");
 				EvaluacionIndicadorActualizar();
 			} else {
 				gpxAgregados.setOpen(true);
@@ -611,18 +892,13 @@ public class CAgregarEvaluacion extends CGenerico {
 				indicadorLista.setValorResultado(valorResultado);
 				indicadorLista.setTotal(0);
 				evi = indicadorLista;
-				System.out.println("entroelseee");
 				indicadores.add(indicadorLista);
-				System.out.println("size" + indicadores.size());
-				// cambiarEstado1();
 				validarAgregarIndicador(Integer.parseInt(idObjetivo), peso);
 				indicadores.remove(indicadorLista);
 				indicadores = servicioEvaluacionIndicador
 						.buscarIndicadores(Integer.parseInt(idObjetivo));
 				for (int i = 0; i < indicadores.size(); i++) {
 					int id = indicadores.get(i).getIdObjetivo();
-					System.out.println("ido" + idO);
-					System.out.println("id" + id);
 
 					if (Integer.valueOf(idObjetivo) == id) {
 						lbxIndicadoresAgregados
@@ -632,18 +908,15 @@ public class CAgregarEvaluacion extends CGenerico {
 						indicadores.remove(indicadorLista);
 					}
 				}
-				// }
 			}
 
 			idIndicador = 0;
 
 		}
-		
-		
 		refrescarCalculosEvaluacion();
-		txttotalIndicador.setValue(String.valueOf(calcularTotalPesoIndicadores(Integer.parseInt(idObjetivo))));
-
-		
+		txttotalIndicador.setValue(String
+				.valueOf(calcularTotalPesoIndicadores(Integer
+						.parseInt(idObjetivo))));
 	}
 
 	// indicadores.add(indicadorLista);
@@ -665,10 +938,15 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onSelect = #cmbMedicion")
 	public void mostrarResAnterior() {
-		txtResFy.setDisabled(true);
+
 		if (cmbMedicion.getValue().equals("CONTINUA")) {
 			txtResFy.setDisabled(false);
+			txtResFy.setValue(null);
+		} else {
+			txtResFy.setDisabled(true);
+			txtResFy.setValue(0.0);
 		}
+
 	}
 
 	public void validar() {
@@ -801,6 +1079,9 @@ public class CAgregarEvaluacion extends CGenerico {
 							indicadores));
 		}
 		idObjetivo = 0;
+
+		refrescarCalculosEvaluacion();
+
 	}
 
 	@Listen("onDoubleClick = #lbxIndicadoresAgregados")
@@ -835,16 +1116,16 @@ public class CAgregarEvaluacion extends CGenerico {
 				cmbMedicion.setValue(medicion);
 				cmbUnidad.setValue(unidad);
 				int peso1 = peso.intValue();
-				int valor = valorMeta.intValue();
-				int valorR = valorResultado.intValue();
-				int fyAnt = fyAnterior.intValue();
+				// int valor = valorMeta.intValue();
+				// int valorR = valorResultado.intValue();
+				// int fyAnt = fyAnterior.intValue();
 				int resulPorc = resultadoPorc.intValue();
 				int resulP = resultadoPeso.intValue();
 				int tot = total.intValue();
 				txtPeso1.setValue(peso1);
-				txtResFy.setValue(fyAnt);
-				txtValorMeta.setValue(valor);
-				txtValorResultado.setValue(valorR);
+				txtResFy.setValue(fyAnterior);
+				txtValorMeta.setValue(valorMeta);
+				txtValorResultado.setValue(valorResultado);
 				txtResultadoPorc.setValue(resulPorc);
 				txtPesoPorc.setValue(resulP);
 				// cmbMedicion.setDisabled(true);
@@ -854,7 +1135,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	}
 
 	private void EvaluacionObjetivoActualizar() {
-		System.out.println("entroooooo");
+
 		Perspectiva perspectiva1 = servicioPerspectiva.buscarNombre(pers);
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
@@ -939,12 +1220,16 @@ public class CAgregarEvaluacion extends CGenerico {
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
+					evaluacionconductas = servicioEvaluacionConducta
+							.buscarConductas(idEva);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+
 					wdwConductasEspecificas = (Window) Executions
 							.createComponents(
 									"/vistas/transacciones/VEvaluacionConductas.zul",
 									null, map);
 					wdwConductasEspecificas.doModal();
+
 				}
 
 			}
@@ -974,6 +1259,11 @@ public class CAgregarEvaluacion extends CGenerico {
 					System.out.println("va" + idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
+					String titulo = "Competencias Rectoras";
+					map.put("titulo", titulo);
+					evaluacionconductas = servicioEvaluacionConducta
+							.buscarConductas(idEva);
+					map.put("conductas", evaluacionconductas);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					wdwConductasRectoras = (Window) Executions
 							.createComponents(
@@ -1001,11 +1291,16 @@ public class CAgregarEvaluacion extends CGenerico {
 		evaluacionEmpleado.setFortalezas(fortalezas);
 		evaluacionEmpleado.setOportunidades(oportunidades);
 		evaluacionEmpleado.setResumen(resumen);
-
 		servicioEvaluacion.guardar(evaluacionEmpleado);
-		Messagebox.show("Feedback y Compromisos Registrados Exitosamente",
+
+		guardarCompetenciasEspecificas();
+		guardarCompetenciasRectoras();
+
+		Messagebox.show("La Evaluacion ha sido guardada Exitosamente",
 				"Información", Messagebox.OK, Messagebox.INFORMATION);
-		limpiar();
+
+		refrescarCalculosEvaluacion();
+
 	}
 
 	private void eliminarIndicador() {
@@ -1034,8 +1329,7 @@ public class CAgregarEvaluacion extends CGenerico {
 													indicadores));
 
 								}
-							refrescarCalculosEvaluacion();
-								
+								refrescarCalculosEvaluacion();
 
 							}
 						});
@@ -1075,13 +1369,13 @@ public class CAgregarEvaluacion extends CGenerico {
 														.eliminarUno(idObjetivoE);
 												msj.mensajeInformacion(Mensaje.eliminado);
 												lbxObjetivosGuardados
-												.getItems().clear();
-										objetivosG = servicioEvaluacionObjetivo
-												.buscarObjetivosEvaluar(idEva);
-										lbxObjetivosGuardados
-												.setModel(new ListModelList<EvaluacionObjetivo>(
-														objetivosG));
-										
+														.getItems().clear();
+												objetivosG = servicioEvaluacionObjetivo
+														.buscarObjetivosEvaluar(idEva);
+												lbxObjetivosGuardados
+														.setModel(new ListModelList<EvaluacionObjetivo>(
+																objetivosG));
+
 												refrescarCalculosEvaluacion();
 											}
 
@@ -1211,7 +1505,7 @@ public class CAgregarEvaluacion extends CGenerico {
 			Double pesoAgregar) {
 		boolean valor = true;
 
-		if (obtenerPesoIndicadorObjetivo(idObjetivo, 0.0) > 100) {
+		if (obtenerPesoIndicadorObjetivo(idObjetivo, pesoAgregar) > 100) {
 			Messagebox
 					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
 							"Información", Messagebox.OK,
@@ -1325,17 +1619,33 @@ public class CAgregarEvaluacion extends CGenerico {
 
 					EvaluacionObjetivo evaluacion = servicioEvaluacionObjetivo
 							.buscarObjetivosId(idObjetivo);
-				
+
 					evaluacion.setTotalInd(0);
 					evaluacion.setResultado(0);
 					servicioEvaluacionObjetivo.guardar(evaluacion);
 
-					
 				}
 			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e.toString());
+		}
+
+	}
+
+	@Listen("onClick = #btnImprimir")
+	public void imprimirEvaluacion() {
+
+		try {
+
+			Executions.getCurrent().sendRedirect(
+					"http://www.dusanet.com:8029/evaluacion/Impresion?par1="
+							+ idEva + "&par2=", "_blank");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
 		}
 
 	}
@@ -1354,10 +1664,10 @@ public class CAgregarEvaluacion extends CGenerico {
 		Double acumulador = 0.0;
 
 		try {
-			
+
 			List<EvaluacionIndicador> lista = servicioEvaluacionIndicador
 					.buscarIndicadores(idObjetivo);
-			
+
 			for (int k = 0; k < lista.size(); k++) {
 				EvaluacionIndicador evaluacionIndicador = lista.get(k);
 				acumulador = acumulador
@@ -1366,6 +1676,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e.toString());
 		}
 		return acumulador;
 	}
@@ -1383,7 +1694,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCalcular")
 	public void prueba() {
-		//evaluarIndicadores();
+		// evaluarIndicadores();
 	}
 
 	@Listen("onClick = #btnGuardarIndicador")
@@ -1395,9 +1706,9 @@ public class CAgregarEvaluacion extends CGenerico {
 			List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 
 			Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);
-			if (((Spinner) ((listItem.getChildren().get(6))).getFirstChild())
-					.getValue().equals("")
-					&& ((Spinner) ((listItem.getChildren().get(7)))
+			if (((Doublespinner) ((listItem.getChildren().get(6)))
+					.getFirstChild()).getValue().equals("")
+					&& ((Doublespinner) ((listItem.getChildren().get(7)))
 							.getFirstChild()).getValue().equals("")
 					&& ((Textbox) ((listItem.getChildren().get(8)))
 							.getFirstChild()).getValue().equals("")
@@ -1408,7 +1719,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 
 		if (campoBlanco == true) {
-			Messagebox.show("Debe ingresar la Evaluacion de los Indicadores",
+			Messagebox.show("Debe llenar todos los campos de los Indicadores",
 					"Error", Messagebox.OK, Messagebox.ERROR);
 
 		} else {
@@ -1420,9 +1731,9 @@ public class CAgregarEvaluacion extends CGenerico {
 				Integer idIndicador = EvaluacionI.getIdIndicador();
 				Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);
 				EvaluacionIndicador indicadores = listItem2.get(i).getValue();
-				Integer valorResultado = ((Spinner) ((listItem.getChildren()
-						.get(6))).getFirstChild()).getValue();
-				Integer resultadoFyAnterior = ((Spinner) ((listItem
+				Double valorResultado = ((Doublespinner) ((listItem
+						.getChildren().get(6))).getFirstChild()).getValue();
+				Double resultadoFyAnterior = ((Doublespinner) ((listItem
 						.getChildren().get(7))).getFirstChild()).getValue();
 				String resultado = ((Textbox) ((listItem.getChildren().get(8)))
 						.getFirstChild()).getValue();
@@ -1431,7 +1742,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 				EvaluacionIndicador indicador = servicioEvaluacionIndicador
 						.buscarIndicadorId(idIndicador);
-				System.out.println(idIndicador);
+
 				indicador.setValorResultado(valorResultado);
 				indicador.setResultadoFyAnterior(resultadoFyAnterior);
 				indicador.setResultadoPorc(Double.parseDouble(resultado));
@@ -1447,53 +1758,59 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 
 	}
-	
-	public void refrescarCalculosEvaluacion()
-	{
+
+	public void refrescarCalculosEvaluacion() {
 		evaluarIndicadores();
 		evaluarObjetivos();
-		
-		
-		lbxObjetivosGuardados
-		.getItems().clear();
-objetivosG = servicioEvaluacionObjetivo
-		.buscarObjetivosEvaluar(idEva);
-lbxObjetivosGuardados
-		.setModel(new ListModelList<EvaluacionObjetivo>(
+
+		lbxObjetivosGuardados.getItems().clear();
+		objetivosG = servicioEvaluacionObjetivo.buscarObjetivosEvaluar(idEva);
+		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
 				objetivosG));
-		
-		
+
 		txttotalObjetivos.setValue(String
 				.valueOf(calcularTotalResultadoObjetivos()));
 		txttotalPesoObjetivos.setValue(String
 				.valueOf(calcularTotalPesoObjetivos()));
+		Evaluacion evalua = servicioEvaluacion.buscarEvaluacion(idEva);
+		calcularResultadoFinal(evalua);
 	}
 
 	public void evaluarObjetivos() {
 
-		for (int j = 0; j < lbxObjetivosGuardados.getItems().size(); j++) {
-			List<Listitem> listItem3 = lbxObjetivosGuardados.getItems();
-			EvaluacionObjetivo EvaluacionO = listItem3.get(j).getValue();
-			Double peso = EvaluacionO.getPeso();
+		try {
 
-			List<EvaluacionIndicador> lista = servicioEvaluacionIndicador
-					.buscarIndicadores(EvaluacionO.getIdObjetivo());
+			List<EvaluacionObjetivo> evaluacionObjetivo = servicioEvaluacionObjetivo
+					.buscarObjetivos(fichaE, numero);
 
-			Double acumulador = 0.0;
+			for (int j = 0; j < evaluacionObjetivo.size(); j++) {
 
-			for (int k = 0; k < lista.size(); k++) {
+				EvaluacionObjetivo EvaluacionO = evaluacionObjetivo.get(j);
+				Double peso = EvaluacionO.getPeso();
 
-				EvaluacionIndicador evaluacionIndicador = lista.get(k);
-				acumulador = acumulador
-						+ evaluacionIndicador.getResultadoPeso();
+				List<EvaluacionIndicador> lista = servicioEvaluacionIndicador
+						.buscarIndicadores(EvaluacionO.getIdObjetivo());
+
+				Double acumulador = 0.0;
+
+				for (int k = 0; k < lista.size(); k++) {
+
+					EvaluacionIndicador evaluacionIndicador = lista.get(k);
+					acumulador = acumulador
+							+ evaluacionIndicador.getResultadoPeso();
+
+				}
+
+				Double resultado = (acumulador * peso) / 100;
+				EvaluacionO.setTotalInd(acumulador);
+				EvaluacionO.setResultado(resultado);
+				servicioEvaluacionObjetivo.guardar(EvaluacionO);
 
 			}
 
-			Double resultado = (acumulador * peso) / 100;
-			EvaluacionO.setTotalInd(acumulador);
-			EvaluacionO.setResultado(resultado);
-			servicioEvaluacionObjetivo.guardar(EvaluacionO);
-
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
 		}
 
 	}
@@ -1508,9 +1825,9 @@ lbxObjetivosGuardados
 				List<Listitem> listItem2 = lbxIndicadoresAgregados.getItems();
 				EvaluacionIndicador EvaluacionI = listItem2.get(i).getValue();
 				Listitem listItem = lbxIndicadoresAgregados.getItemAtIndex(i);
-				Integer valorResultado = ((Spinner) ((listItem.getChildren()
-						.get(6))).getFirstChild()).getValue();
-				Integer resultadoFyAnterior = ((Spinner) ((listItem
+				Double valorResultado = ((Doublespinner) ((listItem
+						.getChildren().get(6))).getFirstChild()).getValue();
+				Double resultadoFyAnterior = ((Doublespinner) ((listItem
 						.getChildren().get(7))).getFirstChild()).getValue();
 				String resultado = ((Textbox) ((listItem.getChildren().get(8)))
 						.getFirstChild()).getValue();
@@ -1534,7 +1851,7 @@ lbxObjetivosGuardados
 						}
 					}
 				} else {
-					((Spinner) ((listItem.getChildren().get(7)))
+					((Doublespinner) ((listItem.getChildren().get(7)))
 							.getFirstChild()).setDisabled(true);
 					valor = ((valorResultado / EvaluacionI.getValorMeta()) * 100);
 					System.out.println("valor" + valor);
@@ -1555,6 +1872,7 @@ lbxObjetivosGuardados
 				((Textbox) ((listItem.getChildren().get(9))).getFirstChild())
 						.setValue((resultadoPeso));
 				total = total + Double.parseDouble(resultadoPeso);
+
 				for (int j = 0; j < lbxObjetivosGuardados.getItems().size(); j++) {
 					List<Listitem> listItem3 = lbxObjetivosGuardados.getItems();
 					EvaluacionObjetivo EvaluacionO = listItem3.get(j)
@@ -1572,51 +1890,15 @@ lbxObjetivosGuardados
 
 			}
 
-			/*
-			 * int item = lbxObjetivosGuardados.getItems().size();
-			 * System.out.println("k" + item); for (int k = 0; k <
-			 * lbxObjetivosGuardados.getItems().size(); k++) {
-			 * 
-			 * List<Listitem> listItem4 = lbxObjetivosGuardados.getItems();
-			 * EvaluacionObjetivo EvaluacionO = listItem4.get(k).getValue();
-			 * Double peso; try { peso = EvaluacionO.getPeso(); String
-			 * resultadoO = ((Textbox) ((listItem4.get(k)
-			 * .getChildren().get(5))).getFirstChild()).getValue();
-			 * 
-			 * String resultadoIndicadores = ((Textbox) ((listItem4.get(k)
-			 * .getChildren().get(5))).getFirstChild()).getValue();
-			 * 
-			 * Double resultadoObjetivos = peso
-			 * Double.parseDouble(resultadoIndicadores) / 100;
-			 * 
-			 * ((Textbox) ((listItem4.get(k).getChildren().get(6)))
-			 * .getFirstChild()).setValue(resultadoObjetivos .toString());
-			 * 
-			 * List<EvaluacionIndicador> lista
-			 * =servicioEvaluacionIndicador.buscarIndicadores
-			 * (EvaluacionO.getIdEvaluacion());
-			 * 
-			 * if (lista.size()==0) { ((Textbox)
-			 * ((listItem4.get(k).getChildren().get(5)))
-			 * .getFirstChild()).setValue("0");
-			 * 
-			 * }
-			 * 
-			 * 
-			 * } catch (Exception e) { // TODO: handle exception peso = 0.0; }
-			 * 
-			 * }
-			 */
-
 			guardarIndicadores();
 			totalObjetivo = 0.0;
 			tind = total;
 			totalInd = 0.0;
 			total = 0.0;
-			// txttotalIndicador.setValue(String.valueOf(tind));
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e.toString());
 		}
 
 	}
@@ -1668,6 +1950,268 @@ lbxObjetivosGuardados
 	@Listen("onClick = #btnCancelar,  #btnCancelarIndicador, #btnSalirCompetenciaR, #btnSalirCompetenciaE, #btnCancelarEvaluacion")
 	public void salir1() {
 		winEvaluacionEmpleado.onClose();
+	}
+
+	private void mostrarDominioRectora() {
+		lbxCompetenciaRectora.renderAll();
+		for (int i = 0; i < lbxCompetenciaRectora.getItemCount(); i++) {
+			Listitem listItem2 = lbxCompetenciaRectora.getItemAtIndex(i);
+			NivelCompetenciaCargo nivel = (NivelCompetenciaCargo) listItem2
+					.getValue();
+			List<Listitem> listItem5 = lbxCompetenciaRectora.getItems();
+			Integer idCompetencia = nivel.getCompetencia().getId();
+			Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+			Competencia competencia = servicioCompetencia
+					.buscarCompetencia(idCompetencia);
+			EvaluacionCompetencia evaluacion = servicioEvaluacionCompetencia
+					.buscar(eva, competencia);
+			System.out.println(evaluacion);
+			if (evaluacion != null) {
+				Integer dominio = evaluacion.getIdDominio();
+				Dominio dom = servicioDominio.buscarDominio(dominio);
+				String descripcionDominio = dom.getDescripcionDominio();
+				((Combobox) ((listItem5.get(i).getChildren().get(2)))
+						.getFirstChild()).setValue(descripcionDominio);
+			}
+
+		}
+
+	}
+
+	private void mostrarDominioEspecifica() {
+		lbxCompetenciaEspecifica.renderAll();
+		for (int i = 0; i < lbxCompetenciaEspecifica.getItemCount(); i++) {
+			Listitem listItem2 = lbxCompetenciaEspecifica.getItemAtIndex(i);
+			NivelCompetenciaCargo nivel = (NivelCompetenciaCargo) listItem2
+					.getValue();
+			List<Listitem> listItem5 = lbxCompetenciaEspecifica.getItems();
+			Integer idCompetencia = nivel.getCompetencia().getId();
+			Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+			Competencia competencia = servicioCompetencia
+					.buscarCompetencia(idCompetencia);
+			EvaluacionCompetencia evaluacion = servicioEvaluacionCompetencia
+					.buscar(eva, competencia);
+			if (evaluacion != null) {
+				Integer dominio = evaluacion.getIdDominio();
+				Dominio dom = servicioDominio.buscarDominio(dominio);
+				String descripcionDominio = dom.getDescripcionDominio();
+				((Combobox) ((listItem5.get(i).getChildren().get(2)))
+						.getFirstChild()).setValue(descripcionDominio);
+				System.out.println(descripcionDominio);
+			}
+
+		}
+
+	}
+
+	private void calcularResultadoFinal(Evaluacion evaluacionAux) {
+
+		double ndr = 0;
+		double nde = 0;
+
+		List<NivelCompetenciaCargo> listaNivelCompetenciaCargo = new ArrayList<NivelCompetenciaCargo>();
+		listaNivelCompetenciaCargo = servicioNivelCompetenciaCargo
+				.buscar(evaluacionAux.getCargo());
+		for (int i = 0; i < listaNivelCompetenciaCargo.size(); i++) {
+
+			Competencia competenciaRequerida = servicioCompetencia
+					.buscarCompetencia(listaNivelCompetenciaCargo.get(i)
+							.getCompetencia().getId());
+
+			Competencia competenciaEvidenciada = servicioCompetencia
+					.buscarCompetencia(servicioEvaluacionCompetencia
+							.buscar(evaluacionAux, competenciaRequerida)
+							.getCompetencia().getId());
+
+			Dominio dominioRequerido = servicioDominio
+					.buscarDominio(listaNivelCompetenciaCargo.get(i)
+							.getDominio().getIdDominioRelacionado());
+			Dominio dominioEvidenciado = servicioDominio
+					.buscarDominio((servicioEvaluacionCompetencia.buscar(
+							evaluacionAux, competenciaRequerida).getIdDominio()));
+
+			if (dominioRequerido != null) {
+
+				List<EvaluacionConducta> listaConductasEvidenciadas = new ArrayList<EvaluacionConducta>();
+				listaConductasEvidenciadas = servicioEvaluacionConducta.buscar(
+						evaluacionAux, competenciaEvidenciada);
+
+				double pesoConducta = 0;
+				try {
+					pesoConducta = 100 / listaConductasEvidenciadas.size();
+				} catch (Exception e) {
+					// TODO: handle exception
+					pesoConducta = 0;
+				}
+
+				double acumuladorPesoConducta = 0;
+
+				for (int j = 0; j < listaConductasEvidenciadas.size(); j++) {
+					EvaluacionConducta evaluacionConducta = listaConductasEvidenciadas
+							.get(j);
+					if (evaluacionConducta != null) {
+						if (evaluacionConducta.getValor()) {
+							acumuladorPesoConducta = acumuladorPesoConducta
+									+ pesoConducta;
+						}
+					}
+
+				}
+
+				nde = nde
+						+ (dominioEvidenciado.getPeso()
+								* acumuladorPesoConducta / 100);
+				ndr = ndr + dominioRequerido.getPeso();
+
+			}
+
+		}
+
+		// --------------------------------------------------------------
+
+		resultadoCompetencia = (nde / ndr) * 100;
+		DecimalFormat f = new DecimalFormat("##.0");
+
+		int id = 1;
+		int id2 = 2;
+		Distribucion dis = servicioDistribucion.buscarDistribucion(id);
+		Distribucion dist = servicioDistribucion.buscarDistribucion(id2);
+		int distO = dis.getPorcentaje();
+		int distC = dist.getPorcentaje();
+		String dO = String.valueOf(distO);
+		String dC = String.valueOf(distC);
+
+		String r = f.format(resultadoCompetencia);
+
+		txttotalCompetencia1.setValue(r);
+		txttotalCompetencia2.setValue(r);
+
+		String o = String.valueOf(calcularTotalResultadoObjetivos());
+		Double resul1 = Double.parseDouble(o);
+		lblResultado.setValue(o);
+		lblResultado1.setValue(r);
+		lblDistribucion.setValue(dO);
+		lblDistribucion1.setValue(dC);
+		resultadoPesoCompetencia = Math.rint(distC * resultadoCompetencia) / 100;
+		resultadoPesoObjetivo = Math.rint(distO * resul1) / 100;
+		lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
+		lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
+		double resultadoFinal = Math.rint(resultadoPesoObjetivo)
+				+ Math.rint(resultadoPesoCompetencia);
+		String rf = String.valueOf(resultadoFinal);
+		txtResultadoFinal.setValue(rf);
+		txtValoracionFinal.setValue(servicioUtilidad
+				.obtenerValoracionFinal((int) resultadoFinal));
+	}
+
+	private void guardarCompetenciasEspecificas() {
+
+		String idDominio = "0";
+		NivelCompetenciaCargo nivelCompetenciaCargo = new NivelCompetenciaCargo();
+		Competencia competencia = new Competencia();
+		Dominio dominio = new Dominio();
+
+		for (int i = 0; i < lbxCompetenciaEspecifica.getItems().size(); i++) {
+
+			Listitem listItem = lbxCompetenciaEspecifica.getItemAtIndex(i);
+
+			if (listItem != null) {
+
+				if (((Combobox) ((listItem.getChildren().get(2)))
+						.getFirstChild()).getValue() == "") {
+					Messagebox
+							.show("Debe Seleccionar un nivel de dominio para cada competencia",
+									"Error", Messagebox.OK, Messagebox.ERROR);
+				} else {
+
+					idDominio = ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getSelectedItem()
+							.getDescription();
+
+					nivelCompetenciaCargo = (NivelCompetenciaCargo) listItem
+							.getValue();
+
+					competencia = servicioCompetencia
+							.buscarCompetencia(nivelCompetenciaCargo
+									.getCompetencia().getId());
+
+					dominio = servicioDominio.buscarDominio(Integer
+							.parseInt(idDominio));
+
+					if (dominio.getDescripcionDominio().compareTo("No Posee") == 0) {
+						servicioUtilidad.eliminarConductaPorCompetencia(idEva,
+								competencia.getId());
+					}
+
+				}
+				EvaluacionCompetencia evaluacionCompetencia = new EvaluacionCompetencia();
+				Evaluacion evaluacion = servicioEvaluacion
+						.buscarEvaluacion(idEva);
+
+				evaluacionCompetencia.setCompetencia(competencia);
+				evaluacionCompetencia.setEvaluacion(evaluacion);
+				evaluacionCompetencia.setIdDominio(Integer.parseInt(idDominio));
+				servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
+
+			}
+
+		}
+
+	}
+
+	private void guardarCompetenciasRectoras() {
+
+		String idDominio = "0";
+		NivelCompetenciaCargo nivelCompetenciaCargo = new NivelCompetenciaCargo();
+		Competencia competencia = new Competencia();
+		Dominio dominio = new Dominio();
+
+		for (int i = 0; i < lbxCompetenciaRectora.getItems().size(); i++) {
+
+			Listitem listItem = lbxCompetenciaRectora.getItemAtIndex(i);
+
+			if (listItem != null) {
+
+				if (((Combobox) ((listItem.getChildren().get(2)))
+						.getFirstChild()).getValue() == "") {
+					Messagebox
+							.show("Debe Seleccionar un nivel de dominio para cada competencia",
+									"Error", Messagebox.OK, Messagebox.ERROR);
+				} else {
+
+					idDominio = ((Combobox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).getSelectedItem()
+							.getDescription();
+
+					nivelCompetenciaCargo = (NivelCompetenciaCargo) listItem
+							.getValue();
+
+					competencia = servicioCompetencia
+							.buscarCompetencia(nivelCompetenciaCargo
+									.getCompetencia().getId());
+
+					dominio = servicioDominio.buscarDominio(Integer
+							.parseInt(idDominio));
+
+					if (dominio.getDescripcionDominio().compareTo("No Posee") == 0) {
+						servicioUtilidad.eliminarConductaPorCompetencia(idEva,
+								competencia.getId());
+					}
+
+				}
+				EvaluacionCompetencia evaluacionCompetencia = new EvaluacionCompetencia();
+				Evaluacion evaluacion = servicioEvaluacion
+						.buscarEvaluacion(idEva);
+
+				evaluacionCompetencia.setCompetencia(competencia);
+				evaluacionCompetencia.setEvaluacion(evaluacion);
+				evaluacionCompetencia.setIdDominio(Integer.parseInt(idDominio));
+				servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
+
+			}
+
+		}
+
 	}
 
 }

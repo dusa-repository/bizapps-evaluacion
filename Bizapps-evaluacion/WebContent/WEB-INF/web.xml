@@ -30,4 +30,14 @@
 			org.springframework.web.context.request.RequestContextListener
 		</listener-class>
   </listener>
+  
+   <servlet>
+        <servlet-name>Impresion</servlet-name>
+        <servlet-class>controlador.reportes.evaluacion.Impresion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Impresion</servlet-name>
+        <url-pattern>/Impresion</url-pattern>
+    </servlet-mapping>
+  
 </web-app>

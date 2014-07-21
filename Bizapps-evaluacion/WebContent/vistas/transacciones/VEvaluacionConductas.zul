@@ -2,16 +2,16 @@
 	apply="controlador.transacciones.CEvaluacionConductas" width="950px"
 	border="normal" height="auto">
 	<groupbox>
-		<listbox id="lbxConductasRectoras" checkmark="true" 
+		<listbox id="lbxConductasRectoras" multiple="true" checkmark="true"
 			height="10%" emptyMessage="No hay conductas registradas" rows="5">
 			<listhead>
-				<listheader width="5%" />
+				<listheader id="lhCheck" width="5%" />
 				<listheader label="Conducta" width="60%" />
 				<listheader label="Observacion" width="35%" />
 			</listhead>
 			<template name="model">
 				<listitem>
-					<listcell></listcell>
+					<listcell/>
 					<listcell label="${each.descripcion}"></listcell>
 					<listcell>
 						<textbox width="75%" />
@@ -28,7 +28,7 @@
 				<div sclass="btn-group" align="center">
 
 					<button id="btnGuardar" tabindex="5" sclass="btn"
-						label="Guardar" image="/public/imagenes/botones/guardar.png">
+						label="Actualizar Conductas" image="/public/imagenes/botones/guardar.png">
 					</button>
 					<button id="btnCancelar" label="Cancelar"
 						sclass="btn" tabindex="5"

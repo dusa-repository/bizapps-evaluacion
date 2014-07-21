@@ -57,7 +57,7 @@
 						</listcell>
 						<listcell label="${each.estadoEvaluacion}">
 						</listcell>
-						<listcell label="${each.fichaEvaluador}"></listcell>
+						<listcell> <label></label> </listcell>
 						<listcell> <label></label> </listcell>
 					</listitem>
 				</template>

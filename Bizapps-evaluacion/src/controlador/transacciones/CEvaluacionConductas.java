@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -121,8 +122,16 @@ public class CEvaluacionConductas extends CGenerico {
 						ConductaCompetencia cc = listItem.getValue();
 						int id2 = cc.getId();
 						if (id == id2) {
-							listItem.setSelected(true);
+
 							EvaluacionConducta ec = servicioEvaluacionConducta.buscar(evaluacion, cc);
+							if (ec.getValor())
+							{
+								listItem.setSelected(true);
+							}
+							else
+							{
+								listItem.setSelected(false);
+							}
 							String observacion = ec.getObservacion();
 							System.out.println(observacion);
 							((Textbox) ((listItem.getChildren().get(2))).getFirstChild()).setValue((observacion));
@@ -159,42 +168,28 @@ public class CEvaluacionConductas extends CGenerico {
 		evaluacionCompetencia.setCompetencia(competencia);
 		evaluacionCompetencia.setEvaluacion(evaluacion);
 		evaluacionCompetencia.setIdDominio(idDominio);
+		servicioUtilidad.eliminarConductaPorCompetencia(evaluacion.getIdEvaluacion(), competencia.getId());
+		
 
-//		boolean campoBlanco = false;
-
-		for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
-			List<Listitem> listItem2 = lbxConductasRectoras.getItems();
-
-			if (listItem2.get(i).isSelected()) {
-				Listitem listItem = lbxConductasRectoras.getItemAtIndex(i);
-//				if (((Textbox) ((listItem.getChildren().get(2)))
-//						.getFirstChild()).getValue().equals("")) {
-//					campoBlanco = true;
-//				}
-			}
-		}
-//
-//		if (campoBlanco == true) {
-//			Messagebox.show(
-//					"Debe ingresar una observacion a los items seleccionados",
-//					"Error", Messagebox.OK, Messagebox.ERROR);
-//
-//		} else {
-			List<EvaluacionConducta> evaluacionesC = new ArrayList<EvaluacionConducta>();
-
+			boolean valor =false;
 			for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
 				List<Listitem> listItem2 = lbxConductasRectoras.getItems();
-				if (listItem2.get(i).isSelected()) {
+				
+			
 					Listitem listItem = lbxConductasRectoras.getItemAtIndex(i);
 					ConductaCompetencia conductaCompe = listItem2.get(i)
 							.getValue();
 					String observacion = ((Textbox) ((listItem.getChildren()
 							.get(2))).getFirstChild()).getValue();
+					
+					evaluacionConducta.setValor(listItem.isSelected());
+					evaluacionConducta.setCompetencia(competencia);
 					evaluacionConducta.setConductaCompetencia(conductaCompe);
 					evaluacionConducta.setEvaluacion(evaluacion);
 					evaluacionConducta.setObservacion(observacion);
 					servicioEvaluacionConducta.guardar(evaluacionConducta);
-				}
+					
+				
 			}
 
 			servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);

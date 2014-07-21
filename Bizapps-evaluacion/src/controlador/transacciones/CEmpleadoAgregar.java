@@ -268,6 +268,7 @@ public class CEmpleadoAgregar extends CGenerico {
 			servicioBitacora.guardar(bitacora);
 			
 			final HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("modo", "AGREGAR");
 			map.put("ficha", item);
 			map.put("id", idEva);
 			map.put("numero", numeroEvaluacion);
@@ -277,6 +278,7 @@ public class CEmpleadoAgregar extends CGenerico {
 				winEvaluacionEmpleadoAgregar = null;
 			}
 			else{
+				
 			winEvaluacionEmpleadoAgregar = (Window) Executions
 					.createComponents(
 							"/vistas/transacciones/VAgregarEvaluacion.zul",

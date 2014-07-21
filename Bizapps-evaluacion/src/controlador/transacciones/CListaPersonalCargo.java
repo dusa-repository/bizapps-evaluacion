@@ -100,9 +100,10 @@ public class CListaPersonalCargo extends CGenerico {
 						
 					Evaluacion evaluacion = (Evaluacion) listItem.getValue();
 					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("modo", "EDITAR");
 					map.put("id", evaluacion.getIdEvaluacion());
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VEvaluacionEmpleados.zul", null, map);				
+					winEvaluacionEmpleado = (Window) Executions.createComponents("/vistas/transacciones/VAgregarEvaluacion.zul", null, map);				
 					winEvaluacionEmpleado.doModal();
 					winListaPersonal.onClose();
 				}

@@ -1,0 +1,86 @@
+package interfacedao.transacciones.impl;
+
+
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import modelo.maestros.ConductaCompetencia;
+import modelo.maestros.Evaluacion;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.zkoss.chart.model.CategoryModel;
+import org.zkoss.chart.model.DefaultCategoryModel;
+
+import interfacedao.transacciones.IUtilidadDAO;
+
+@Repository
+public class UtilidadDAO implements IUtilidadDAO {
+	
+	protected EntityManager entityManager;
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	@PersistenceContext
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public UtilidadDAO() {
+		super();
+	}
+
+	@Transactional
+	public void eliminarConductaPorCompetencia(Integer eva, Integer com) {
+		// TODO Auto-generated method stub
+
+		String sentencia = "";
+		String restricciones = "";
+		String ordenamiento = "";
+		String agrupamiento = "";
+
+		
+
+		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +" and ec.competencia.id= "+ com +"";
+		ordenamiento = "  ";
+		agrupamiento = " ";
+
+	
+		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
+		
+	}
+	
+	
+	@Transactional
+	public String obtenerValoracionFinal(Integer resultado) {
+		// TODO Auto-generated method stub
+
+		String sentencia = "";
+		String aux="";
+		
+		sentencia = " SELECT     nombre , descripcion  FROM         valoracion WHERE     ("+ resultado +" BETWEEN rango_inferior AND rango_superior)";
+		
+		
+		Query qSentencia = getEntityManager().createNativeQuery(
+				sentencia );
+		
+		@SuppressWarnings("unchecked")
+		List<String[]> results = qSentencia.getResultList();
+
+		
+		for (Object[] obj : results) {
+			aux =((String) obj[0]).concat(" - ").concat((String) obj[1]) ; 
+		}
+
+	
+		return aux;
+		
+	}
+
+}

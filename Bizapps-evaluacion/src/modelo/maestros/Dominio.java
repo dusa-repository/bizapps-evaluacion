@@ -38,6 +38,12 @@ public class Dominio implements Serializable {
 	@Column(name="hora_auditoria")
 	private String horaAuditoria;
 	
+	@Column(name="peso")
+	private double peso;
+	
+	@Column(name="id_dominio_relacionado")
+	private int idDominioRelacionado;
+	
 	public void setHoraAuditoria(String horaAuditoria) {
 		this.horaAuditoria = horaAuditoria;
 	}
@@ -109,6 +115,24 @@ public class Dominio implements Serializable {
 	public String getHoraAuditoria() {
 		return horaAuditoria;
 	}
+
+	public double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(double peso) {
+		this.peso = peso;
+	}
+
+	public int getIdDominioRelacionado() {
+		return idDominioRelacionado;
+	}
+
+	public void setIdDominioRelacionado(int idDominioRelacionado) {
+		this.idDominioRelacionado = idDominioRelacionado;
+	}
+
+	
 	
 	
 
