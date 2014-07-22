@@ -669,6 +669,11 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnCancelarO")
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
+		
+		btnAgregar.setDisabled(false);
+		btnEliminar.setDisabled(false);
+		btnIr.setDisabled(false);
+		
 	}
 
 	@Listen("onClick = #btnCancelarI")
@@ -676,6 +681,8 @@ public class CAgregarEvaluacion extends CGenerico {
 		idIndicador = 0;
 		limpiarI();
 		gpxAgregarIndicador.setOpen(false);
+		btnAgregarIndicador.setDisabled(false);
+		btnEliminarIndicador.setDisabled(false);
 	}
 
 	@Listen("onClick = #btnEliminar")
@@ -743,6 +750,11 @@ public class CAgregarEvaluacion extends CGenerico {
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
+		
+		btnAgregar.setDisabled(true);
+		btnEliminar.setDisabled(true);
+		btnIr.setDisabled(true);
+		
 	}
 
 	@Listen("onClick = #btnOk")
@@ -797,8 +809,14 @@ public class CAgregarEvaluacion extends CGenerico {
 			refrescarCalculosEvaluacion();
 
 			idObjetivo = 0;
+			
+			btnAgregar.setDisabled(false);
+			btnEliminar.setDisabled(false);
+			btnIr.setDisabled(false);
 
 		}
+		
+		
 
 	}
 
@@ -834,7 +852,11 @@ public class CAgregarEvaluacion extends CGenerico {
 			idIndicador = 0;
 			limpiarI();
 			gpxAgregarIndicador.setOpen(true);
+			btnAgregarIndicador.setDisabled(true);
+			btnEliminarIndicador.setDisabled(true);
 		}
+		
+		
 
 	}
 
@@ -921,6 +943,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			}
 
 			idIndicador = 0;
+			btnAgregarIndicador.setDisabled(false);
+			btnEliminarIndicador.setDisabled(false);
 
 		}
 		refrescarCalculosEvaluacion();

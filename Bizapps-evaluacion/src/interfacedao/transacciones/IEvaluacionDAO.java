@@ -12,7 +12,8 @@ public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 	
 	public List<Evaluacion> findByFichaOrderByIdEvaluacionSecundarioDesc(String ficha);
 	
-	@Query("select e from Evaluacion e where e.estadoEvaluacion <> 'EN EDICION' and e.ficha = ?1")
+	//@Query("select e from Evaluacion e where e.estadoEvaluacion <> 'EN EDICION' and e.ficha = ?1")
+	@Query("select e from Evaluacion e where  e.ficha = ?1 order by e.idEvaluacion desc")
 	public List<Evaluacion> buscarEstado(String ficha);
 	
 	public List<Evaluacion> findByFichaAndEstadoEvaluacion (String ficha, String estado);
