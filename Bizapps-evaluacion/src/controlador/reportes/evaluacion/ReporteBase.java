@@ -57,7 +57,8 @@ public class ReporteBase {
 	            InputStream fis = null;
 	            Map parameters = new HashMap();
 
-	           parameters.put("Evaluacion", par1);
+	            parameters.put("evaluacion", par1);
+	            parameters.put("evaluador", par2);
 	        
 	            fis = (cl.getResourceAsStream("controlador/reportes/evaluacion/jasper/reporteEvaluacion.jasper"));
 

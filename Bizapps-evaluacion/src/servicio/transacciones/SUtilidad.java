@@ -29,6 +29,20 @@ public class SUtilidad {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public String obtenerValoracionFinalSimple(Integer resultado) {
+		return servicioUtilidadDAO.obtenerValoracionFinalSimple(resultado);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void eliminarConductaPorEvaluacion(Integer eva)  {
+		servicioUtilidadDAO.eliminarConductaPorEvaluacion(eva);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void eliminarCompetenciaPorEvaluacion(Integer eva)  {
+		servicioUtilidadDAO.eliminarCompetenciaPorEvaluacion(eva);
+	}
 	
 	
 	

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 	
 	
-	public List<Evaluacion> findByFicha(String ficha);
+	public List<Evaluacion> findByFichaOrderByIdEvaluacionSecundarioDesc(String ficha);
 	
 	@Query("select e from Evaluacion e where e.estadoEvaluacion <> 'EN EDICION' and e.ficha = ?1")
 	public List<Evaluacion> buscarEstado(String ficha);

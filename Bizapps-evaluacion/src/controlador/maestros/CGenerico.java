@@ -147,9 +147,9 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	
 	
 	
-	protected static SimpleDateFormat formatoFecha = new SimpleDateFormat(
+	protected  SimpleDateFormat formatoFecha = new SimpleDateFormat(
 			"dd-MM-yyyy");
-	public static List<Tab> tabs = new ArrayList<Tab>();
+	public  List<Tab> tabs = new ArrayList<Tab>();
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario

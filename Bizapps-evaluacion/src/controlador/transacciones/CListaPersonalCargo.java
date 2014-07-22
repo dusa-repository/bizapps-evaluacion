@@ -45,8 +45,8 @@ public class CListaPersonalCargo extends CGenerico {
 	private Listheader header;
 	@Wire
 	private Include contenido;
-	private static int numeroEvaluacion;
-	private static Empleado empleado;
+	private  int numeroEvaluacion;
+	private  Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
 
 	@Override

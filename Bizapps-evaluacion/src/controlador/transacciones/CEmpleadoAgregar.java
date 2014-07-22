@@ -78,11 +78,11 @@ public class CEmpleadoAgregar extends CGenerico {
 	private Listheader header;
 	@Wire
 	private Groupbox gpxListaPersonalCargo;
-	private static int numeroEvaluacion;
-	private static Empleado empleado;
+	private  int numeroEvaluacion;
+	private  Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
-	public static Revision revision;
-	private static int idEva;
+	public  Revision revision;
+	private  int idEva;
 
 	Mensaje msj = new Mensaje();
 

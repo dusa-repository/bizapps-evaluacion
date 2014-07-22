@@ -41,17 +41,7 @@ public class UtilidadDAO implements IUtilidadDAO {
 		// TODO Auto-generated method stub
 
 		String sentencia = "";
-		String restricciones = "";
-		String ordenamiento = "";
-		String agrupamiento = "";
-
-		
-
-		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +" and ec.competencia.id= "+ com +"";
-		ordenamiento = "  ";
-		agrupamiento = " ";
-
-	
+		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +" and ec.competencia.id= "+ com +"";	
 		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
 		
 	}
@@ -82,5 +72,48 @@ public class UtilidadDAO implements IUtilidadDAO {
 		return aux;
 		
 	}
+
+	@Transactional
+	public void eliminarConductaPorEvaluacion(Integer eva) {
+		// TODO Auto-generated method stub
+		String sentencia = "";
+		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +"";	
+		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
+	}
+	
+	
+	@Transactional
+	public void eliminarCompetenciaPorEvaluacion(Integer eva) {
+		// TODO Auto-generated method stub
+		String sentencia = "";
+		sentencia = " delete from EvaluacionCompetencia as ec where ec.evaluacion.idEvaluacion = "+ eva +"";	
+		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
+	}
+
+	@Transactional
+	public String obtenerValoracionFinalSimple(Integer resultado) {
+		// TODO Auto-generated method stub
+		String sentencia = "";
+		String aux="";
+		
+		sentencia = " SELECT     nombre , descripcion  FROM         valoracion WHERE     ("+ resultado +" BETWEEN rango_inferior AND rango_superior)";
+		
+		
+		Query qSentencia = getEntityManager().createNativeQuery(
+				sentencia );
+		
+		@SuppressWarnings("unchecked")
+		List<String[]> results = qSentencia.getResultList();
+
+		
+		for (Object[] obj : results) {
+			aux =((String) obj[0]) ; 
+		}
+
+	
+		return aux;
+		
+	}
+	
 
 }

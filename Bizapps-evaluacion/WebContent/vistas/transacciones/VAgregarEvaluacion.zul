@@ -525,6 +525,12 @@
 							</listitem>
 						</template>
 					</listbox>
+					<separator />
+					<div align="right" height="100%" width="95%">
+						<label value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia " style="font-size: 14px;font-weight:bold;" ></label>
+					</div>
+					<separator></separator>
+
 					<!-- 					<panel border="normal" width="95%" -->
 					<!-- 						style="margin-left:2%;margin-right:3%"> -->
 					<!-- 						<panelchildren> -->
@@ -581,6 +587,11 @@
 							</listitem>
 						</template>
 					</listbox>
+					<separator />
+					<div align="right" height="100%" width="95%">
+						<label value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia " style="font-size: 14px;font-weight:bold;" ></label>
+					</div>
+					<separator></separator>
 					<!-- 					<panel border="normal" width="95%" -->
 					<!-- 						style="margin-left:2%;margin-right:3%"> -->
 					<!-- 						<panelchildren> -->
@@ -640,6 +651,18 @@
 									</label>
 									<textbox width="100%" rows="4"
 										id="txtCompromisos">
+									</textbox>
+								</div>
+							</row>
+
+							<row>
+								<div
+									style="background-color:#E6E6E6;">
+									<label
+										value="Comentarios Y Experiencias Evidenciadas en la Actual Gestion del Desempeño">
+									</label>
+									<textbox width="100%" rows="4"
+										id="txtComentarios">
 									</textbox>
 								</div>
 							</row>

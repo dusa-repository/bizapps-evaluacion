@@ -80,10 +80,10 @@ public class CListaPersonal extends CGenerico {
 	private Window winEvaluacionEmpleado;
 	@Wire
 	private Groupbox gpxListaPersonal;
-	private static int idEva;
-	private static String fichaE;
-	private static Evaluacion eva;
-	public static Revision revision;
+	private  int idEva;
+	private  String fichaE;
+	private  Evaluacion eva;
+	public  Revision revision;
 	List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
 	List<Usuario> usuarios = new ArrayList<Usuario>();
 	Evaluacion evaluacionN;
@@ -180,6 +180,9 @@ public class CListaPersonal extends CGenerico {
 
 	@Listen("onClick = #btnEliminar")
 	public void eliminar() {
+		
+		
+		
 		if (lbxEvaluacion.getItemCount() != 0) {
 
 			Listitem listItem = lbxEvaluacion.getSelectedItem();
@@ -208,9 +211,13 @@ public class CListaPersonal extends CGenerico {
 											servicioEvaluacionIndicador
 													.eliminarVarios(evaluacionIndicador);
 										}
-										servicioEvaluacion.eliminarUno(idEva);
 										servicioEvaluacionObjetivo
-												.eliminarVarios(evaluacionObjetivo);
+										.eliminarVarios(evaluacionObjetivo);
+										
+										servicioUtilidad.eliminarConductaPorEvaluacion(idEva);
+										servicioUtilidad.eliminarCompetenciaPorEvaluacion(idEva);
+										servicioEvaluacion.eliminarUno(idEva);
+									
 										msj.mensajeInformacion(Mensaje.eliminado);
 										lbxEvaluacion.getItems().clear();
 										evaluacion = servicioEvaluacion
@@ -274,6 +281,8 @@ public class CListaPersonal extends CGenerico {
 					map.put("id", evaluacion.getIdEvaluacion());
 					map.put("titulo", evaluacion.getFicha());
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					
+					
 					winEvaluacionEmpleado = (Window) Executions.createComponents(
 							"/vistas/transacciones/VAgregarEvaluacion.zul", null,
 							map);

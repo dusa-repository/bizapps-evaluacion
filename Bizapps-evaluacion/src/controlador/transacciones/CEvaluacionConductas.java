@@ -54,10 +54,10 @@ public class CEvaluacionConductas extends CGenerico {
 	private Button btnCancelar;
 	@Wire
 	private Button btnGuardar;
-	private static int idCompetencia;
-	private static int idDominio;
-	private static int numeroEvaluacion;
-	private static Integer idEva;
+	private  int idCompetencia;
+	private  int idDominio;
+	private  int numeroEvaluacion;
+	private  Integer idEva;
 
 	EvaluacionCompetencia evaluacionCompetencia = new EvaluacionCompetencia();
 	EvaluacionConducta evaluacionConducta = new EvaluacionConducta();

@@ -11,6 +11,7 @@ import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionConducta;
+import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.TipoFormacion;
 
@@ -44,5 +45,9 @@ public class SEvaluacionConducta {
 		return evaluacionConductaDAO.findByEvaluacionAndCompetencia(eva, con);
 	}
 	
+	public List<EvaluacionConducta> buscar (Evaluacion eva){
+		return evaluacionConductaDAO.findByEvaluacion(eva);
+	}
+		
 
 }

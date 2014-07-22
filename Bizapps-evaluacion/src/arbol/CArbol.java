@@ -49,10 +49,10 @@ public class CArbol extends CGenerico {
 	@Wire
 	private West west;
 
-	private static boolean numeroSgt = false;
-	private  static Tabbox tabBox2;
-	private static Include contenido2;
-	private static Tab tab2;
+	private  boolean numeroSgt = false;
+	private   Tabbox tabBox2;
+	private  Include contenido2;
+	private  Tab tab2;
 	Mensaje msj = new Mensaje();
 	@Wire
 	private Label lblUsuario;
