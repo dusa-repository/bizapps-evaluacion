@@ -1,6 +1,5 @@
 package servicio.transacciones;
 
-
 import interfacedao.transacciones.IEmpleadoCursoDAO;
 import interfacedao.transacciones.IEmpleadoParametroDAO;
 import interfacedao.transacciones.IEvaluacionDAO;
@@ -8,6 +7,8 @@ import interfacedao.transacciones.INivelCompetenciaCargoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Curso;
+import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoParametro;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,22 @@ public class SEmpleadoParametro {
 	@Autowired
 	private IEmpleadoParametroDAO empleadoParametroDAO;
 
-	/* Servicio que permite guardar los datos de los empleados de acuerdo a un curso*/
+	/*
+	 * Servicio que permite guardar los datos de los parametros evaluados por un
+	 * empleado
+	 */
 	public void guardar(EmpleadoParametro empleado) {
 		empleadoParametroDAO.save(empleado);
 	}
-	
-	
+
+	/*
+	 * Servicio que permite guardar los datos de los parametros evaluados por un
+	 * empleado
+	 */
+	public List<EmpleadoParametro> buscarParametros(Empleado empleado, Curso curso) {
+		List<EmpleadoParametro> parametros;
+		parametros = empleadoParametroDAO.findByEmpleadoAndCurso(empleado, curso);
+		return parametros;
+	}
+
 }

@@ -59,6 +59,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 	@Wire
 	private Div divCatalogoCurso;
 	List<EmpleadoCurso> empleadosCurso = new ArrayList<EmpleadoCurso>();
+	List<EmpleadoParametro> empleadoParametros = new ArrayList<EmpleadoParametro>();
 	private int idCurso = 0;
 	private Empleado empleado;
 
@@ -209,6 +210,10 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 	public void llenarLista() {
 
+		Curso curso = servicioCurso.buscarCurso(idCurso);
+		empleadoParametros = servicioEmpleadoParametro
+				.buscarParametros(empleado, curso);
+
 		List<Parametro> parametrosTipo1 = new ArrayList<Parametro>();
 		parametrosTipo1 = servicioParametro
 				.buscarPorTipo("EVALUACION INFORMACION PREVIA");
@@ -238,6 +243,258 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 				parametrosTipo4));
 		lsbParametroResumen.setModel(new ListModelList<Parametro>(
 				parametrosTipo5));
+
+		lsbParametroInformacionPrevia.renderAll();
+		lsbParametroContenidoInformacion.renderAll();
+		lsbParametroFacilitadorActividad.renderAll();
+		lsbParametroEquipos.renderAll();
+		lsbParametroResumen.renderAll();
+
+		if (empleadoParametros.size() != 0) {
+
+			for (int i = 0; i < lsbParametroInformacionPrevia.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadoParametros.size(); j++) {
+
+					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo1
+							.get(i).getId()) {
+
+						Listitem listItem = lsbParametroInformacionPrevia
+								.getItemAtIndex(i);
+
+						if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("REGULAR")) {
+
+							((Checkbox) ((listItem.getChildren().get(4)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(5)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MUY MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(6)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < lsbParametroContenidoInformacion.getItems()
+					.size(); i++) {
+
+				for (int j = 0; j < empleadoParametros.size(); j++) {
+
+					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo2
+							.get(i).getId()) {
+
+						Listitem listItem = lsbParametroContenidoInformacion
+								.getItemAtIndex(i);
+
+						if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("REGULAR")) {
+
+							((Checkbox) ((listItem.getChildren().get(4)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(5)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MUY MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(6)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < lsbParametroFacilitadorActividad.getItems()
+					.size(); i++) {
+
+				for (int j = 0; j < empleadoParametros.size(); j++) {
+
+					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo3
+							.get(i).getId()) {
+
+						Listitem listItem = lsbParametroFacilitadorActividad
+								.getItemAtIndex(i);
+
+						if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("REGULAR")) {
+
+							((Checkbox) ((listItem.getChildren().get(4)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(5)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MUY MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(6)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < lsbParametroEquipos.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadoParametros.size(); j++) {
+
+					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo4
+							.get(i).getId()) {
+
+						Listitem listItem = lsbParametroEquipos
+								.getItemAtIndex(i);
+
+						if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("REGULAR")) {
+
+							((Checkbox) ((listItem.getChildren().get(4)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(5)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MUY MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(6)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+			
+			for (int i = 0; i < lsbParametroResumen.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadoParametros.size(); j++) {
+
+					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo5
+							.get(i).getId()) {
+
+						Listitem listItem = lsbParametroResumen
+								.getItemAtIndex(i);
+
+						if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("BUENO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("REGULAR")) {
+
+							((Checkbox) ((listItem.getChildren().get(4)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(5)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoParametros.get(j)
+								.getValorEvaluacion().equals("MUY MALO")) {
+
+							((Checkbox) ((listItem.getChildren().get(6)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
 
 	}
 

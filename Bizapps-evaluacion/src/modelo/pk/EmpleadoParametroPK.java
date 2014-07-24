@@ -3,6 +3,7 @@ package modelo.pk;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
 import modelo.maestros.Parametro;
 
@@ -18,7 +19,9 @@ public class EmpleadoParametroPK implements Serializable {
 	private Empleado empleado;
 
 	private Parametro parametro;
-
+	
+	private Curso curso;
+	
 	public EmpleadoParametroPK() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -39,6 +42,17 @@ public class EmpleadoParametroPK implements Serializable {
 	public void setParametro(Parametro parametro) {
 		this.parametro = parametro;
 	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+	
+	
+	
 
 
 }

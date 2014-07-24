@@ -25,9 +25,9 @@ public class EmpleadoParametro implements Serializable {
 	@JoinColumn(name = "id_parametro", referencedColumnName = "id_parametro")
 	private Parametro parametro;
 
-	// bi-directional many-to-one association to TipoFormacion
-	@ManyToOne
-	@JoinColumn(name = "id_curso")
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
 	private Curso curso;
 
 	@Column(name = "valor_evaluacion")
