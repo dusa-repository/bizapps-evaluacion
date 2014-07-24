@@ -1,0 +1,73 @@
+<window id="wdwVParametro" border="normal" height="auto"
+	apply="controlador.maestros.CParametro"
+	style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraParametro" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroParametro" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar un nuevo parametro" />
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="45%" />
+					<column label="" width="8%" />
+					<column label="" width="27%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtDescripcionParametro" rows="3"
+							cols="100" width="100%" maxlength="250" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion del parametro" />
+					</row>
+					<row>
+						<hbox>
+							<label value="Tipo:" class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<combobox id="cmbTipoParametro" readonly="true"
+							tooltiptext="Seleccione el tipo de evaluacion del parametro"
+							width="100%" tabindex="2">
+							<comboitem
+								label="EVALUACION INFORMACION PREVIA" />
+							<comboitem label="EVALUACION CONTENIDO" />
+							<comboitem label="EVALUACION FACILITADOR" />
+							<comboitem
+								label="EVALUACION EQUIPOS E INFRAESTRUCTURA" />
+							<comboitem label="EVALUACION RESUMEN" />
+						</combobox>
+					</row>
+
+
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosParametro" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar los parametros registrados" />
+			<div id="catalogoParametro"
+				tooltiptext="Seleccione el parametro para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>
