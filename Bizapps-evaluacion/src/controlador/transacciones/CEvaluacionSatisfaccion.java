@@ -151,9 +151,25 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 	public void seleccionCurso() {
 		Curso curso = catalogoCurso.objetoSeleccionadoDelCatalogo();
 		idCurso = curso.getId();
-		txtCursoEvaluacionSatisfaccion.setValue(curso.getNombre());
 		catalogoCurso.setParent(null);
-		llenarLista();
+
+		EmpleadoCurso cursoEmpleado = servicioEmpleadoCurso
+				.buscarPorempleadoYCurso(empleado, curso);
+
+		if (cursoEmpleado.getEstadoCurso().equals("APROBADO")
+				|| cursoEmpleado.getEstadoCurso().equals("REPROBADO")) {
+
+			txtCursoEvaluacionSatisfaccion.setValue(curso.getNombre());
+			llenarLista();
+
+		} else {
+
+			Messagebox
+					.show("El curso debe estar finalizado para poder realizar la evaluacion de satisfaccion",
+							"Advertencia", Messagebox.OK,
+							Messagebox.EXCLAMATION);
+		}
+
 	}
 
 	@Listen("onChange = #txtCursoEvaluacionSatisfaccion")
@@ -211,8 +227,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 	public void llenarLista() {
 
 		Curso curso = servicioCurso.buscarCurso(idCurso);
-		empleadoParametros = servicioEmpleadoParametro
-				.buscarParametros(empleado, curso);
+		empleadoParametros = servicioEmpleadoParametro.buscarParametros(
+				empleado, curso);
 
 		List<Parametro> parametrosTipo1 = new ArrayList<Parametro>();
 		parametrosTipo1 = servicioParametro
@@ -445,7 +461,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 				}
 
 			}
-			
+
 			for (int i = 0; i < lsbParametroResumen.getItems().size(); i++) {
 
 				for (int j = 0; j < empleadoParametros.size(); j++) {
@@ -859,6 +875,11 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 					limpiarCampos();
 
 				} else {
+
+					Messagebox
+							.show("Debe seleccionar la respuesta de su preferencia en cada uno de los parametros",
+									"Advertencia", Messagebox.OK,
+									Messagebox.EXCLAMATION);
 
 				}
 
