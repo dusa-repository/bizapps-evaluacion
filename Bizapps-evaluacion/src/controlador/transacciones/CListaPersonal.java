@@ -128,7 +128,7 @@ public class CListaPersonal extends CGenerico {
 
 	@Listen("onClick = #btnAgregar")
 	public void AgregarEvaluacion() {
-		winListaPersonal.onClose();
+		//winListaPersonal.onClose();
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
@@ -213,9 +213,9 @@ public class CListaPersonal extends CGenerico {
 										}
 										servicioEvaluacionObjetivo
 										.eliminarVarios(evaluacionObjetivo);
-										
 										servicioUtilidad.eliminarConductaPorEvaluacion(idEva);
 										servicioUtilidad.eliminarCompetenciaPorEvaluacion(idEva);
+										servicioUtilidad.eliminarCapacitacionPorEvaluacion(idEva);
 										servicioEvaluacion.eliminarUno(idEva);
 									
 										msj.mensajeInformacion(Mensaje.eliminado);
@@ -287,7 +287,7 @@ public class CListaPersonal extends CGenerico {
 							"/vistas/transacciones/VAgregarEvaluacion.zul", null,
 							map);
 					winEvaluacionEmpleado.doModal();
-					winListaPersonal.onClose();
+					//winListaPersonal.onClose();
 					
 				}
 				

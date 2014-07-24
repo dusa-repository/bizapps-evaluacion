@@ -44,6 +44,11 @@ public class SUtilidad {
 		servicioUtilidadDAO.eliminarCompetenciaPorEvaluacion(eva);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void eliminarCapacitacionPorEvaluacion(Integer eva)  {
+		servicioUtilidadDAO.eliminarCapacitacionPorEvaluacion(eva);
+	}
+	
 	
 	
 }

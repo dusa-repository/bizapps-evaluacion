@@ -3,20 +3,16 @@ package controlador.transacciones;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.SpinnerDateModel;
-
+import modelo.maestros.Area;
 import modelo.maestros.Competencia;
-import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Distribucion;
 import modelo.maestros.Dominio;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
+import modelo.maestros.EvaluacionCapacitacion;
 import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
@@ -25,12 +21,13 @@ import modelo.maestros.Medicion;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
 import modelo.maestros.Revision;
+import modelo.maestros.TipoFormacion;
 import modelo.maestros.UnidadMedida;
+import modelo.maestros.Urgencia;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.zkoss.bind.annotation.Default;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -51,11 +48,9 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import com.lowagie.text.pdf.AcroFields.Item;
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+import componentes.Mensaje;
 
 import controlador.maestros.CGenerico;
-import componentes.Mensaje;
 
 public class CAgregarEvaluacion extends CGenerico {
 
@@ -86,6 +81,12 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Doublespinner txtValorMeta;
 	@Wire
 	private Button btnCalcular;
+	@Wire
+	private Button btnAgregarCapacitacion;
+	@Wire
+	private Button btnAgregarAcciones;
+	@Wire
+	private Button btnEliminarAcciones;
 	@Wire
 	private Doublespinner txtValorResultado;
 	@Wire
@@ -125,6 +126,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Wire
 	private Listbox lbxAgregarIndicador;
 	@Wire
+	private Listbox lbxAccionesGuardadas;
+	@Wire
 	private Listbox lbxCompetenciaEspecifica;
 	@Wire
 	private Combobox cmbObjetivos;
@@ -134,6 +137,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Groupbox gpxAgregar;
 	@Wire
 	private Groupbox gpxAgregados;
+	@Wire
+	private Groupbox gpxAgregarCapacitacion;
 	@Wire
 	private Groupbox gpxObjetivosAgregados;
 	@Wire
@@ -152,6 +157,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Textbox txtTotal;
 	@Wire
 	private Textbox txtResultados;
+	@Wire
+	private Textbox txtDescFormacion;
 	@Wire
 	private Button btnAgregar;
 	@Wire
@@ -242,11 +249,18 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Label txttotalCompetencia2;
 	@Wire
 	private Label txtValoracionFinal;
+	@Wire
+	private Combobox cmbUrgencia;
+	@Wire
+	private Combobox cmbTipoFormacion;
+	@Wire
+	private Combobox cmbArea;
 
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
 	ListModelList<Perspectiva> perspectiva;
+	List<EvaluacionCapacitacion> listCapacitacion = new ArrayList<EvaluacionCapacitacion>();
 	List<EvaluacionObjetivo> objetivosG = new ArrayList<EvaluacionObjetivo>();
 	List<EvaluacionIndicador> indicadores = new ArrayList<EvaluacionIndicador>();
 	List<EvaluacionObjetivo> evaluacionObjetivoIndicadores = new ArrayList<EvaluacionObjetivo>();
@@ -254,45 +268,49 @@ public class CAgregarEvaluacion extends CGenerico {
 	List<NivelCompetenciaCargo> nivelCompetencia = new ArrayList<NivelCompetenciaCargo>();
 	List<NivelCompetenciaCargo> nivelCompetencia1 = new ArrayList<NivelCompetenciaCargo>();
 
-	private  int num;
-	private  Integer idEva;
-	private  boolean bool = false;
-	private  boolean bool1 = false;
-	private  int idObjetivo;
-	private  int idIndicador;
-	private  String pers;
-	private  String unid;
-	private  String medic;
-	public  Revision revision;
-	private  String fichaE;
-	public  Integer numero = 0;
-	public  Integer idO = 0;
-	public  EvaluacionObjetivo ev;
-	public  EvaluacionIndicador evi;
-	private  Double valor = 0.0;
-	private  Double total = 0.0;
-	private  Double totalObjetivo = 0.0;
-	private  Double totalInd = 0.0;
-	private Empleado evaluador= null;
+	private int num;
+	private Integer idEva;
+	private boolean bool = false;
+	private boolean bool1 = false;
+	private int idObjetivo;
+	private int idCapacitacion;
+	private int idIndicador;
+	private String pers;
+	private String unid;
+	private String medic;
+	public Revision revision;
+	private String fichaE;
+	public Integer numero = 0;
+	public Integer idO = 0;
+	public EvaluacionObjetivo ev;
+	public EvaluacionIndicador evi;
+	private Double valor = 0.0;
+	private Double total = 0.0;
+	private Double totalObjetivo = 0.0;
+	private Double totalInd = 0.0;
+	private Empleado evaluador = null;
 	Usuario u;
-	private  int idIndicadorE;
-	private  int idObjetivoE;
+	private int idIndicadorE;
+	private int idObjetivoE;
 	private Empleado empleado;
-	private  double tind = 0.0;
-	public  Double totalCompetencia = 0.0;
-	public  Double totalConducta = 0.0;
-	public  Double calculo = 0.0;
-	public  Double porcentaje = 0.0;
-	public  Double totalCompetencia1 = 0.0;
-	public  Double totalConducta1 = 0.0;
-	public  Double calculo1 = 0.0;
-	public  Double porcentaje1 = 0.0;
-	public  Double resultadoCompetencia = 0.0;
-	public  Integer resultadoPesoCompetencia = 0;
-	public  Integer resultadoPesoObjetivo = 0;
+	private double tind = 0.0;
+	public Double totalCompetencia = 0.0;
+	public Double totalConducta = 0.0;
+	public Double calculo = 0.0;
+	public Double porcentaje = 0.0;
+	public Double totalCompetencia1 = 0.0;
+	public Double totalConducta1 = 0.0;
+	public Double calculo1 = 0.0;
+	public Double porcentaje1 = 0.0;
+	public Double resultadoCompetencia = 0.0;
+	public Integer resultadoPesoCompetencia = 0;
+	public Integer resultadoPesoObjetivo = 0;
 
 	@Override
 	public void inicializar() throws IOException {
+
+		// ------------Codigo de Capacitacion------------
+		gpxAgregarCapacitacion.setOpen(false);
 
 		// COMPARTIDO PARA AMBOS COMPORTAMIENTOS
 
@@ -349,8 +367,10 @@ public class CAgregarEvaluacion extends CGenerico {
 							String gerenciaReporte = empleado
 									.getUnidadOrganizativa().getGerencia()
 									.getDescripcion();
-							
-							evaluador = servicioEmpleado.buscarPorFicha(empleado.getFichaSupervisor());
+
+							evaluador = servicioEmpleado
+									.buscarPorFicha(empleado
+											.getFichaSupervisor());
 							lblFicha.setValue(ficha);
 							lblNombreTrabajador.setValue(nombreTrabajador);
 							lblCargo.setValue(cargo);
@@ -364,6 +384,12 @@ public class CAgregarEvaluacion extends CGenerico {
 							lblEvaluacion.setValue(numeroEvaluacion.toString());
 							lblFechaCreacion.setValue(formatoFecha
 									.format(fechaHora));
+
+							listCapacitacion = servicioEvaluacionCapacitacion
+									.buscarPorEvaluacion(idEva);
+							lbxAccionesGuardadas
+									.setModel(new ListModelList<EvaluacionCapacitacion>(
+											listCapacitacion));
 						}
 
 						else {
@@ -390,7 +416,9 @@ public class CAgregarEvaluacion extends CGenerico {
 									 */
 									empleado = servicioEmpleado
 											.buscarPorFicha(ficha1);
-									evaluador = servicioEmpleado.buscarPorFicha(empleado.getFichaSupervisor());
+									evaluador = servicioEmpleado
+											.buscarPorFicha(empleado
+													.getFichaSupervisor());
 									String cargo = empleado.getCargo()
 											.getDescripcion();
 									String unidadOrganizativa = empleado
@@ -468,6 +496,12 @@ public class CAgregarEvaluacion extends CGenerico {
 						txttotalObjetivos.setValue("0.0");
 						txttotalPesoObjetivos.setValue("0.0");
 
+						listCapacitacion = servicioEvaluacionCapacitacion
+								.buscarPorEvaluacion(idEva);
+						lbxAccionesGuardadas
+								.setModel(new ListModelList<EvaluacionCapacitacion>(
+										listCapacitacion));
+
 					}
 
 					// TERMINA MODO AGREGAR
@@ -492,12 +526,16 @@ public class CAgregarEvaluacion extends CGenerico {
 								btnEliminar.setVisible(true);
 								btnAgregarIndicador.setVisible(true);
 								btnEliminarIndicador.setVisible(true);
+								btnAgregarAcciones.setVisible(true);
+								btnEliminarAcciones.setVisible(true);
 
 							} else {
 								btnAgregar.setVisible(false);
 								btnEliminar.setVisible(false);
 								btnAgregarIndicador.setVisible(false);
 								btnEliminarIndicador.setVisible(false);
+								btnAgregarAcciones.setVisible(false);
+								btnEliminarAcciones.setVisible(false);
 								btnCambiarEstado.setVisible(false);
 								btnCancelar.setVisible(true);
 
@@ -518,7 +556,9 @@ public class CAgregarEvaluacion extends CGenerico {
 							num = numeroEvaluacion;
 							numero = numeroEvaluacion;
 							empleado = servicioEmpleado.buscarPorFicha(ficha);
-							evaluador = servicioEmpleado.buscarPorFicha(empleado.getFichaSupervisor());
+							evaluador = servicioEmpleado
+									.buscarPorFicha(empleado
+											.getFichaSupervisor());
 							// btnCambiarEstado
 							// String cargo =
 							// empleado.getCargo().getDescripcion();
@@ -647,6 +687,12 @@ public class CAgregarEvaluacion extends CGenerico {
 					// evaluarIndicadores();
 					txttotalIndicador.setValue(String.valueOf(tind));
 
+					listCapacitacion = servicioEvaluacionCapacitacion
+							.buscarPorEvaluacion(idEva);
+					lbxAccionesGuardadas
+							.setModel(new ListModelList<EvaluacionCapacitacion>(
+									listCapacitacion));
+
 					refrescarCalculosEvaluacion();
 				}
 
@@ -669,11 +715,11 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnCancelarO")
 	public void cerrarPanel() {
 		gpxAgregar.setOpen(false);
-		
+
 		btnAgregar.setDisabled(false);
 		btnEliminar.setDisabled(false);
 		btnIr.setDisabled(false);
-		
+
 	}
 
 	@Listen("onClick = #btnCancelarI")
@@ -738,7 +784,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
-		winEvaluacionEmpleado.onClose();
+		// winEvaluacionEmpleado.onClose();
 
 	}
 
@@ -750,11 +796,11 @@ public class CAgregarEvaluacion extends CGenerico {
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
 		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
-		
+
 		btnAgregar.setDisabled(true);
 		btnEliminar.setDisabled(true);
 		btnIr.setDisabled(true);
-		
+
 	}
 
 	@Listen("onClick = #btnOk")
@@ -768,7 +814,7 @@ public class CAgregarEvaluacion extends CGenerico {
 			campoBlanco = true;
 		}
 
-		if (campoBlanco == true) {
+		if (campoBlanco) {
 			Messagebox.show("Debe llenar todos los campos de Objetivo",
 					"Error", Messagebox.OK, Messagebox.EXCLAMATION);
 
@@ -809,14 +855,12 @@ public class CAgregarEvaluacion extends CGenerico {
 			refrescarCalculosEvaluacion();
 
 			idObjetivo = 0;
-			
+
 			btnAgregar.setDisabled(false);
 			btnEliminar.setDisabled(false);
 			btnIr.setDisabled(false);
 
 		}
-		
-		
 
 	}
 
@@ -855,8 +899,6 @@ public class CAgregarEvaluacion extends CGenerico {
 			btnAgregarIndicador.setDisabled(true);
 			btnEliminarIndicador.setDisabled(true);
 		}
-		
-		
 
 	}
 
@@ -1257,6 +1299,7 @@ public class CAgregarEvaluacion extends CGenerico {
 					map.put("titulo", titulo);
 					evaluacionconductas = servicioEvaluacionConducta
 							.buscarConductas(idEva);
+					map.put("conductas", evaluacionconductas);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 
 					wdwConductasEspecificas = (Window) Executions
@@ -1314,59 +1357,61 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCambiarEstado")
 	public void eventoGuardarEvaluacion() {
-		
+
 		guardarEvaluacion(true);
 
 	}
-	
-	
-	private void guardarEvaluacion(boolean mostrarMensaje)
-	{
+
+	private void guardarEvaluacion(boolean mostrarMensaje) {
 		guardarCompetenciasEspecificas();
 		guardarCompetenciasRectoras();
 		refrescarCalculosEvaluacion();
-	
+
 		try {
-			
-		String fortalezas = txtFortalezas.getValue();
-		String oportunidades = txtOportunidades.getValue();
-		String resumen = txtResumen.getValue();
-		String compromisos = txtCompromisos.getValue();
-		String comentario= txtComentarios.getValue();
-		Integer idEvaluacion = Integer.parseInt(lblEvaluacion.getValue());
-		Evaluacion evaluacionEmpleado = new Evaluacion();
-		evaluacionEmpleado = servicioEvaluacion.buscarIdEvaluacion(
-				idEvaluacion, fichaE);
-		evaluacionEmpleado.setCompromisos(compromisos);
-		evaluacionEmpleado.setFortalezas(fortalezas);
-		evaluacionEmpleado.setOportunidades(oportunidades);
-		evaluacionEmpleado.setResumen(resumen);
-		evaluacionEmpleado.setComentario(comentario);
-		evaluacionEmpleado.setResultadoObjetivos(Integer.parseInt(lblResultadoPeso.getValue()));
-		evaluacionEmpleado.setResultadoCompetencias(Integer.parseInt(lblResultadoPeso1.getValue()));
-		evaluacionEmpleado.setResultadoGeneral(Integer.parseInt(txtResultadoFinal.getValue()));
-		evaluacionEmpleado.setResultadoFinal(Integer.parseInt(txtResultadoFinal.getValue()));
-		evaluacionEmpleado.setValoracion(servicioUtilidad.obtenerValoracionFinalSimple(Integer.parseInt(txtResultadoFinal.getValue())));
-		evaluacionEmpleado.setPeso(Double.parseDouble(txttotalPesoObjetivos.getValue()));
-		evaluacionEmpleado.setResultado(Double.parseDouble(txttotalObjetivos.getValue()));
-		
-		servicioEvaluacion.guardar(evaluacionEmpleado);
-		
-		if (mostrarMensaje)
-		{
-			Messagebox.show("La Evaluacion ha sido guardada Exitosamente",
-					"Información", Messagebox.OK, Messagebox.INFORMATION);
-		}
-		
-		
-		
+
+			String fortalezas = txtFortalezas.getValue();
+			String oportunidades = txtOportunidades.getValue();
+			String resumen = txtResumen.getValue();
+			String compromisos = txtCompromisos.getValue();
+			String comentario = txtComentarios.getValue();
+			Integer idEvaluacion = Integer.parseInt(lblEvaluacion.getValue());
+			Evaluacion evaluacionEmpleado = new Evaluacion();
+			evaluacionEmpleado = servicioEvaluacion.buscarIdEvaluacion(
+					idEvaluacion, fichaE);
+			evaluacionEmpleado.setCompromisos(compromisos);
+			evaluacionEmpleado.setFortalezas(fortalezas);
+			evaluacionEmpleado.setOportunidades(oportunidades);
+			evaluacionEmpleado.setResumen(resumen);
+			evaluacionEmpleado.setComentario(comentario);
+			evaluacionEmpleado.setResultadoObjetivos(Integer
+					.parseInt(lblResultadoPeso.getValue()));
+			evaluacionEmpleado.setResultadoCompetencias(Integer
+					.parseInt(lblResultadoPeso1.getValue()));
+			evaluacionEmpleado.setResultadoGeneral(Integer
+					.parseInt(txtResultadoFinal.getValue()));
+			evaluacionEmpleado.setResultadoFinal(Integer
+					.parseInt(txtResultadoFinal.getValue()));
+			evaluacionEmpleado.setValoracion(servicioUtilidad
+					.obtenerValoracionFinalSimple(Integer
+							.parseInt(txtResultadoFinal.getValue())));
+			evaluacionEmpleado.setPeso(Double.parseDouble(txttotalPesoObjetivos
+					.getValue()));
+			evaluacionEmpleado.setResultado(Double
+					.parseDouble(txttotalObjetivos.getValue()));
+
+			servicioEvaluacion.guardar(evaluacionEmpleado);
+
+			if (mostrarMensaje) {
+				Messagebox.show("La Evaluacion ha sido guardada Exitosamente",
+						"Información", Messagebox.OK, Messagebox.INFORMATION);
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.toString());
 		}
-		
+
 	}
-	
 
 	private void eliminarIndicador() {
 		if (lbxIndicadoresAgregados.getItemCount() != 0) {
@@ -1707,11 +1752,14 @@ public class CAgregarEvaluacion extends CGenerico {
 
 			Executions.getCurrent().sendRedirect(
 					"http://www.dusanet.com:8029/evaluacion/Impresion?par1="
-							+ idEva + "&par2="+ evaluador.getNombre() +"", "_blank");
-			
-			/*Executions.getCurrent().sendRedirect(
-					"http://localhost:8029/Bizapps-evaluacion/Impresion?par1="
-							+ idEva + "&par2="+ evaluador.getNombre() +"", "_blank");*/
+							+ idEva + "&par2=" + evaluador.getNombre() + "",
+					"_blank");
+
+			/*
+			 * Executions.getCurrent().sendRedirect(
+			 * "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
+			 * idEva + "&par2="+ evaluador.getNombre() +"", "_blank");
+			 */
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -2005,17 +2053,16 @@ public class CAgregarEvaluacion extends CGenerico {
 		return valor;
 	}
 
-	/*public void guardarEvaluacion() {
-		System.out.println("entrooo");
-		Evaluacion evalua = servicioEvaluacion.buscarEvaluacion(idEva);
-		System.out.println(evalua);
-		System.out.println(idEva);
-		evalua.setFechaRevision(fechaHora);
-		evalua.setFichaEvaluador(u.getCedula());
-		evalua.setIdUsuario(u.getIdUsuario());
-		evalua.setResultadoObjetivos(totalObjetivo.intValue());
-		servicioEvaluacion.guardar(evalua);
-	}*/
+	/*
+	 * public void guardarEvaluacion() { System.out.println("entrooo");
+	 * Evaluacion evalua = servicioEvaluacion.buscarEvaluacion(idEva);
+	 * System.out.println(evalua); System.out.println(idEva);
+	 * evalua.setFechaRevision(fechaHora);
+	 * evalua.setFichaEvaluador(u.getCedula());
+	 * evalua.setIdUsuario(u.getIdUsuario());
+	 * evalua.setResultadoObjetivos(totalObjetivo.intValue());
+	 * servicioEvaluacion.guardar(evalua); }
+	 */
 
 	@Listen("onClick = #btnCancelar,  #btnCancelarIndicador, #btnSalirCompetenciaR, #btnSalirCompetenciaE, #btnCancelarEvaluacion")
 	public void salir1() {
@@ -2093,42 +2140,37 @@ public class CAgregarEvaluacion extends CGenerico {
 								.getCompetencia().getId());
 
 				try {
-					
+
 					competenciaEvidenciada = servicioCompetencia
 							.buscarCompetencia(servicioEvaluacionCompetencia
 									.buscar(evaluacionAux, competenciaRequerida)
 									.getCompetencia().getId());
-					
+
 					dominioEvidenciado = servicioDominio
-							.buscarDominio((servicioEvaluacionCompetencia.buscar(
-									evaluacionAux, competenciaRequerida)
+							.buscarDominio((servicioEvaluacionCompetencia
+									.buscar(evaluacionAux, competenciaRequerida)
 									.getIdDominio()));
-					
+
 				} catch (Exception e) {
 					// TODO: handle exception
 					System.out.println(e.toString());
-					
-					competenciaEvidenciada=null;
-					dominioEvidenciado=null;
+
+					competenciaEvidenciada = null;
+					dominioEvidenciado = null;
 				}
-				
-			
 
 				Dominio dominioRequerido = servicioDominio
 						.buscarDominio(listaNivelCompetenciaCargo.get(i)
 								.getDominio().getIdDominioRelacionado());
-				
 
 				if (dominioRequerido != null) {
 
 					List<EvaluacionConducta> listaConductasEvidenciadas = new ArrayList<EvaluacionConducta>();
-					
-					if (competenciaEvidenciada!=null)
-					{
+
+					if (competenciaEvidenciada != null) {
 						listaConductasEvidenciadas = servicioEvaluacionConducta
 								.buscar(evaluacionAux, competenciaEvidenciada);
 					}
-					
 
 					double pesoConducta = 0;
 					try {
@@ -2151,14 +2193,13 @@ public class CAgregarEvaluacion extends CGenerico {
 						}
 
 					}
-					
-					if (dominioEvidenciado!=null)
-					{
+
+					if (dominioEvidenciado != null) {
 						nde = nde
 								+ (dominioEvidenciado.getPeso()
 										* acumuladorPesoConducta / 100);
 					}
-					
+
 					ndr = ndr + dominioRequerido.getPeso();
 
 				}
@@ -2198,7 +2239,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			lblResultado1.setValue(r);
 			lblDistribucion.setValue(dO);
 			lblDistribucion1.setValue(dC);
-			resultadoPesoCompetencia = (int)Math.round(((distC * resultadoCompetencia) / 100));
+			resultadoPesoCompetencia = (int) Math
+					.round(((distC * resultadoCompetencia) / 100));
 			resultadoPesoObjetivo = (int) Math.round(((distO * resul1) / 100));
 			lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
 			lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
@@ -2232,10 +2274,11 @@ public class CAgregarEvaluacion extends CGenerico {
 
 					if (((Combobox) ((listItem.getChildren().get(2)))
 							.getFirstChild()).getValue() == "") {
-						/*Messagebox
-								.show("Debe Seleccionar un nivel de dominio para cada competencia",
-										"Error", Messagebox.OK,
-										Messagebox.ERROR);*/
+						/*
+						 * Messagebox .show(
+						 * "Debe Seleccionar un nivel de dominio para cada competencia"
+						 * , "Error", Messagebox.OK, Messagebox.ERROR);
+						 */
 					} else {
 
 						idDominio = ((Combobox) ((listItem.getChildren().get(2)))
@@ -2298,10 +2341,11 @@ public class CAgregarEvaluacion extends CGenerico {
 
 					if (((Combobox) ((listItem.getChildren().get(2)))
 							.getFirstChild()).getValue() == "") {
-						/*Messagebox
-								.show("Debe Seleccionar un nivel de dominio para cada competencia",
-										"Error", Messagebox.OK,
-										Messagebox.ERROR);*/
+						/*
+						 * Messagebox .show(
+						 * "Debe Seleccionar un nivel de dominio para cada competencia"
+						 * , "Error", Messagebox.OK, Messagebox.ERROR);
+						 */
 					} else {
 
 						idDominio = ((Combobox) ((listItem.getChildren().get(2)))
@@ -2344,6 +2388,178 @@ public class CAgregarEvaluacion extends CGenerico {
 			System.out.println(e.toString());
 		}
 
+	}
+
+	public void llenarCombosPestanna5() {
+		List<TipoFormacion> formacion = servicioTipoFormacion.buscarTodos();
+		cmbTipoFormacion.setModel(new ListModelList<TipoFormacion>(formacion));
+
+		List<Urgencia> urgencia = servicioUrgencia.buscarTodas();
+		cmbUrgencia.setModel(new ListModelList<Urgencia>(urgencia));
+	}
+
+	@Listen("onSelect = #cmbTipoFormacion")
+	public void filtrarArea() {
+		cmbArea.setValue(null);
+		cmbArea.setPlaceholder("Area / Campo");
+	}
+
+	@Listen("onOpen = #cmbArea")
+	public void abrirArea() {
+		if (cmbTipoFormacion.getValue().trim().equals(""))
+			Messagebox.show("Debe Seleccionar un Tipo de Formacion", "Error",
+					Messagebox.OK, Messagebox.ERROR);
+		else
+		{
+			String idTipo = cmbTipoFormacion.getSelectedItem().getContext();
+			List<Area> area = servicioArea.buscarPorFormacion(Integer
+					.parseInt(idTipo));
+			cmbArea.setModel(new ListModelList<Area>(area));
+		}
+	}
+
+	@Listen("onClick = #btnAgregarAcciones")
+	public void AgregarAccion() {
+		// limpiar();
+		listCapacitacion = servicioEvaluacionCapacitacion
+				.buscarPorEvaluacion(idEva);
+		if (listCapacitacion.size() == 3)
+			Messagebox
+					.show("Ha Superado el limite de Acciones a Registrar, puede Eliminar o Modificar las Existentes",
+							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+		else {
+			gpxAgregarCapacitacion.setOpen(true);
+			llenarCombosPestanna5();
+			btnAgregarAcciones.setDisabled(true);
+			btnEliminarAcciones.setDisabled(true);
+		}
+	}
+
+	@Listen("onClick = #btnAgregarCapacitacion")
+	public void AgregarAcciones() {
+
+		if (txtDescFormacion.getValue().trim().equals("")
+				|| cmbArea.getValue().trim().equals("")
+				|| cmbUrgencia.getValue().trim().equals("")
+				|| cmbTipoFormacion.getValue().trim().equals("")) {
+			Messagebox.show("Debe llenar todos los campos", "Error",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		} else {
+			String idArea = cmbArea.getSelectedItem().getContext();
+			Area area = servicioArea.buscarArea(Integer.parseInt(idArea));
+			String idTipo = cmbTipoFormacion.getSelectedItem().getContext();
+			TipoFormacion tipo = servicioTipoFormacion
+					.buscarTipoFormacion(Integer.parseInt(idTipo));
+			String idUrgencia = cmbUrgencia.getSelectedItem().getContext();
+			Urgencia urgencia = servicioUrgencia.buscarUrgencia(Integer
+					.parseInt(idUrgencia));
+			String descripcion = txtDescFormacion.getValue();
+
+			EvaluacionCapacitacion capacitacion = new EvaluacionCapacitacion();
+
+			if (idCapacitacion != 0)
+				capacitacion.setIdCapacitacion(idCapacitacion);
+			else
+				capacitacion.setIdCapacitacion(0);
+			capacitacion.setIdEvaluacion(idEva);
+			capacitacion.setDescripcionFormacion(descripcion);
+			capacitacion.setArea(area);
+			capacitacion.setTipoFormacion(tipo);
+			capacitacion.setUrgencia(urgencia);
+			servicioEvaluacionCapacitacion.guardar(capacitacion);
+
+			listCapacitacion = servicioEvaluacionCapacitacion
+					.buscarPorEvaluacion(idEva);
+			lbxAccionesGuardadas
+					.setModel(new ListModelList<EvaluacionCapacitacion>(
+							listCapacitacion));
+			msj.mensajeInformacion(Mensaje.guardado);
+			idCapacitacion = 0;
+			btnAgregarAcciones.setDisabled(false);
+			btnEliminarAcciones.setDisabled(false);
+			gpxAgregarCapacitacion.setOpen(false);
+			limpiarPestanna5();
+		}
+
+	}
+
+	public void limpiarPestanna5() {
+		txtDescFormacion.setValue("");
+		cmbArea.setValue(null);
+		cmbArea.setPlaceholder("Area / Campo");
+		cmbTipoFormacion.setValue(null);
+		cmbTipoFormacion.setPlaceholder("Tipo de Formacion");
+		cmbUrgencia.setValue(null);
+		cmbUrgencia.setPlaceholder("Urgencia");
+
+	}
+
+	@Listen("onClick = #btnQuitarCapacitacion")
+	public void cerrarListaCapacitacion() {
+		gpxAgregarCapacitacion.setOpen(false);
+		btnAgregarAcciones.setDisabled(false);
+		btnEliminarAcciones.setDisabled(false);
+		limpiarPestanna5();
+		idCapacitacion = 0;
+	}
+
+	@Listen("onClick = #btnEliminarAcciones")
+	public void eliminarCapacitacion() {
+		if (lbxAccionesGuardadas.getItemCount() != 0) {
+			Listitem listItem = lbxAccionesGuardadas.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionCapacitacion evaluacionCapacitacion = (EvaluacionCapacitacion) listItem
+						.getValue();
+				evaluacionCapacitacion = listItem.getValue();
+				final int idCapacitacionEliminar = evaluacionCapacitacion
+						.getIdCapacitacion();
+				Messagebox.show("¿Esta Seguro de Eliminar la Accion?",
+						"Alerta", Messagebox.OK | Messagebox.CANCEL,
+						Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+
+									servicioEvaluacionCapacitacion
+											.eliminarUno(idCapacitacionEliminar);
+									msj.mensajeInformacion(Mensaje.eliminado);
+									lbxAccionesGuardadas.getItems().clear();
+									listCapacitacion = servicioEvaluacionCapacitacion
+											.buscarPorEvaluacion(idEva);
+									lbxAccionesGuardadas
+											.setModel(new ListModelList<EvaluacionCapacitacion>(
+													listCapacitacion));
+
+								}
+
+							}
+						});
+
+			}
+		} else
+			msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+	}
+
+	@Listen("onDoubleClick = #lbxAccionesGuardadas")
+	public void editarAccion() {
+		gpxAgregarCapacitacion.setOpen(true);
+		if (lbxAccionesGuardadas.getItemCount() != 0) {
+			Listitem listItem = lbxAccionesGuardadas.getSelectedItem();
+			if (listItem != null) {
+				EvaluacionCapacitacion evaluacionCapacitacion = (EvaluacionCapacitacion) listItem
+						.getValue();
+				idCapacitacion = evaluacionCapacitacion.getIdCapacitacion();
+				txtDescFormacion.setValue(evaluacionCapacitacion
+						.getDescripcionFormacion());
+				cmbArea.setValue(evaluacionCapacitacion.getArea()
+						.getDescripcion());
+				cmbTipoFormacion.setValue(evaluacionCapacitacion
+						.getTipoFormacion().getDescripcion());
+				cmbUrgencia.setValue(evaluacionCapacitacion.getUrgencia()
+						.getDescripcionUrgencia());
+			}
+		}
 	}
 
 }

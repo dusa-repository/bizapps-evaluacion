@@ -1,54 +1,42 @@
 <zk>
 	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;" id="winEvaluacionEmpleado"
-		apply="controlador.transacciones.CAgregarEvaluacion"
-		closable="true">
+		apply="controlador.transacciones.CAgregarEvaluacion" closable="true">
 		<separator></separator>
 		<div style="background-color:#F8E0E0;">
-			<label value="Evaluación de Desempeño"
-				style="font-weight:bold;" />
+			<label value="Evaluación de Desempeño" style="font-weight:bold;" />
 		</div>
 		<separator></separator>
 		<separator></separator>
-		<!-- 	Contenedor de datos del empleado -->
+		<!-- Contenedor de datos del empleado -->
 		<grid width="100%" align="center">
 			<columns visible="true">
-				<column label="#Evaluacion" width="13%"
-					style="font-size: 10px;" />
-				<column label="Fecha Creacion" width="18%"
-					style="font-size: 10px;" />
-				<column label="Revision" width="18%"
-					style="font-size: 10px;" />
-				<column label="Ficha" width="10%"
-					style="font-size: 10px;" />
+				<column label="#Evaluacion" width="13%" style="font-size: 10px;" />
+				<column label="Fecha Creacion" width="18%" style="font-size: 10px;" />
+				<column label="Revision" width="18%" style="font-size: 10px;" />
+				<column label="Ficha" width="10%" style="font-size: 10px;" />
 				<column label="Nombre del Trabajador" width="25%"
 					style="font-size: 10px;" />
-				<column label="Cargo" width="20%"
-					style="font-size: 10px;" />
-				<column label="Unidad Organizativa" width="27%"
-					style="font-size: 10px;" />
+				<column label="Cargo" width="20%" style="font-size: 10px;" />
+				<column label="Unidad Organizativa" width="27%" style="font-size: 10px;" />
 				<column label="Gerencia a la que Reporta" width="25%"
 					style="font-size: 10px;" />
 			</columns>
 			<rows>
 				<row>
-					<label id="lblEvaluacion"
-						style="font-size: 10px;">
+					<label id="lblEvaluacion" style="font-size: 10px;">
 					</label>
-					<label id="lblFechaCreacion"
-						style="font-size: 10px;">
+					<label id="lblFechaCreacion" style="font-size: 10px;">
 					</label>
 					<label id="lblRevision" style="font-size: 10px;">
 					</label>
 					<label id="lblFicha" style="font-size: 10px;">
 					</label>
-					<label id="lblNombreTrabajador"
-						style="font-size: 10px;">
+					<label id="lblNombreTrabajador" style="font-size: 10px;">
 					</label>
 					<label id="lblCargo" style="font-size: 10px;">
 					</label>
-					<label id="lblUnidadOrganizativa"
-						style="font-size: 10px;">
+					<label id="lblUnidadOrganizativa" style="font-size: 10px;">
 					</label>
 					<label id="lblGerencia" style="font-size: 10px;">
 					</label>
@@ -59,85 +47,68 @@
 		<separator></separator>
 		<tabbox id="tbEvaluacionEmpleado">
 			<tabs id="tabs">
-				<tab id="tbEvaluacionObjetivos"
-					label="Sección I - Evaluación Objetivos" />
-				<tab id="tbIndicadores"
-					label="Sección I - Evaluación Indicadores" />
-				<tab id="tbRectoras"
-					label="Sección II - Evaluación Competencias Rectoras" />
-				<tab id="tbEspecificas"
-					label="Sección II - Evaluación Competencias Especificas" />
+				<tab id="tbEvaluacionObjetivos" label="Sección I - Evaluación Objetivos" />
+				<tab id="tbIndicadores" label="Sección I - Evaluación Indicadores" />
+				<tab id="tbRectoras" label="Sección II - Evaluación Competencias Rectoras" />
+				<tab id="tbEspecificas" label="Sección II - Evaluación Competencias Especificas" />
 				<tab id="tbCompromisos"
 					label="Sección III - Registros de Feedback y Establecimientos de Compromisos" />
-				<tab id="tbResultados" label="Sección IV - Resultados" />
+				<tab id="tbCapacitacion" label="Sección IV - Acciones de Capacitacion" />
+						<tab id="tbResultados" label="Sección V - Resultados" />
 			</tabs>
 			<tabpanels>
-				<!-- 			Contenedor de Objetivos -->
+				<!-- Contenedor de Objetivos -->
 				<tabpanel>
 					<separator />
 					<separator />
 					<groupbox id="gpxAgregar">
-						<listbox height="auto" id="lbxObjetivos"
-							width="auto">
+						<listbox height="auto" id="lbxObjetivos" width="auto">
 							<listhead style="background: #F8E0E0">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Plan Estratégico"
-									width="22%" />
-								<listheader label="Objetivo"
-									width="46%" />
-								<listheader label="Corresponsables"
-									width="15%" />
-								<listheader label="Peso (%)"
-									width="10%" />
-								<listheader label="Resultados (%)"
-									width="0%" />
+								<listheader label="Plan Estratégico" width="22%" />
+								<listheader label="Objetivo" width="46%" />
+								<listheader label="Corresponsables" width="15%" />
+								<listheader label="Peso (%)" width="10%" />
+								<listheader label="Resultados (%)" width="0%" />
 								<listheader width="5%" />
 								<listheader width="5%" />
 							</listhead>
 							<listitem>
 								<listcell></listcell>
 								<listcell>
-									<combobox
-										placeholder="Plan Estratégico" mold="rounded" rows="1"
-										width="100%" style="background-color:white;border:none"
+									<combobox placeholder="Plan Estratégico" mold="rounded"
+										rows="1" width="100%" style="background-color:white;border:none"
 										readonly="true" id="cmbPerspectiva">
 										<template name="model">
-											<comboitem
-												context="${each.id}" label="${each.descripcion}" />
+											<comboitem context="${each.id}" label="${each.descripcion}" />
 										</template>
 									</combobox>
 								</listcell>
 								<listcell>
-									<textbox placeholder="Objetivos" 
-										mold="rounded" rows="4" width="100%" id="txtObjetivo">
+									<textbox placeholder="Objetivos" mold="rounded" rows="4"
+										width="100%" id="txtObjetivo">
 									</textbox>
 								</listcell>
 								<listcell>
-									<textbox
-										placeholder="Corresponsables" mold="rounded" rows="2"
-										width="100%" id="txtCorresponsables" />
+									<textbox placeholder="Corresponsables" mold="rounded"
+										rows="2" width="100%" id="txtCorresponsables" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso"
-										constraint="min 1; max 100" mold="rounded" width="100%"
-										id="txtPeso" maxlength="3" />
+									<spinner placeholder="Peso" constraint="min 1; max 100"
+										mold="rounded" width="100%" id="txtPeso" maxlength="3" />
 								</listcell>
 								<listcell>
-									<textbox value="0" visible = "false"
-										placeholder="Resultados" mold="rounded" rows="1" width="100%"
-										readonly="true" id="txtResultados" />
+									<textbox value="0" visible="false" placeholder="Resultados"
+										mold="rounded" rows="1" width="100%" readonly="true" id="txtResultados" />
 								</listcell>
 								<listcell>
-									<button id="btnOk" width="auto"
-										height="auto" mold="trendy"
-										image="/public/imagenes/botones/agregar.png"
-										style="background-color:#F8E0E0;">
+									<button id="btnOk" width="auto" height="auto" mold="trendy"
+										image="/public/imagenes/botones/seleccionar.png" style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
 								<listcell>
-									<button id="btnCancelarO"
-										width="auto" height="auto" mold="trendy"
-										image="/public/imagenes/botones/anular.png"
+									<button id="btnCancelarO" width="auto" height="auto"
+										mold="trendy" image="/public/imagenes/botones/cancelar.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
@@ -145,94 +116,83 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregar" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png"
+						<button id="btnAgregar" width="auto" height="auto" mold="trendy"
+							label="Agregar" image="/public/imagenes/botones/agregar.png"
 							style="background-color:#F8E0E0;">
 						</button>
-						<button id="btnEliminar" width="auto"
-							height="auto" mold="trendy" label="Eliminar"
-							image="/public/imagenes/botones/eliminar.png">
+						<button id="btnEliminar" width="auto" height="auto" mold="trendy"
+							label="Eliminar" image="/public/imagenes/botones/eliminar.png">
 						</button>
-						<button id="btnIr" width="auto" height="auto"
-							mold="trendy" label="Ir Indicador"
-							image="/public/imagenes/botones/adelante.png"
+						<button id="btnIr" width="auto" height="auto" mold="trendy"
+							label="Ir Indicador" image="/public/imagenes/botones/adelante.png"
 							style="background-color:#F8E0E0;">
 						</button>
 					</div>
 					<separator></separator>
 					<separator></separator>
 					<div align="right" height="100%" width="95%">
-						<label value="Total Peso(%) : " style="font-size: 14px;font-weight:bold;" ></label>
+						<label value="Total Peso(%) : " style="font-size: 14px;font-weight:bold;"></label>
 						<label id="txttotalPesoObjetivos" style="font-size: 14px;"></label>
 					</div>
 					<div align="right" height="100%" width="95%">
-						<label value="Total Resultado(%) : " style="font-size: 14px;font-weight:bold;" ></label>
+						<label value="Total Resultado(%) : " style="font-size: 14px;font-weight:bold;"></label>
 						<label id="txttotalObjetivos" style="font-size: 14px;"></label>
 					</div>
 					<separator></separator>
 					<groupbox id="gpxObjetivosAgregados">
-						<listbox height="auto"
-							id="lbxObjetivosGuardados" width="auto">
+						<listbox height="auto" id="lbxObjetivosGuardados" width="auto">
 							<listhead style="background: #F8E0E0">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Plan Estratégico"
-									width="25%" />
-								<listheader label="Objetivo"
-									width="33%" />
-								<listheader label="Corresponsables"
-									width="13%" />
+								<listheader label="Plan Estratégico" width="25%" />
+								<listheader label="Objetivo" width="33%" />
+								<listheader label="Corresponsables" width="13%" />
 								<listheader label="Peso (%)" width="8%" />
-								<listheader label="Resultados (%)"
-									width="10%" />
+								<listheader label="Resultados (%)" width="10%" />
 							</listhead>
 							<template name="model">
 								<listitem>
 									<listcell label="${each.linea}"></listcell>
-									<listcell
-										label="${each.perspectiva.descripcion}">
+									<listcell label="${each.perspectiva.descripcion}">
 									</listcell>
-									<listcell
-										label="${each.descripcionObjetivo}">
+									<listcell label="${each.descripcionObjetivo}">
 									</listcell>
-									<listcell
-										label="${each.corresponsables}">
+									<listcell label="${each.corresponsables}">
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
 									<listcell>
-										<textbox
-											value="${each.resultado}" disabled="true" inplace="true">
+										<textbox value="${each.resultado}" disabled="true"
+											inplace="true">
 										</textbox>
 									</listcell>
 
-									<!-- 									<listcell label="${each.peso}"></listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultado}"> -->
-									<!-- 									</listcell> -->
+									<!-- <listcell label="${each.peso}"></listcell> -->
+									<!-- <listcell -->
+									<!-- label="${each.resultado}"> -->
+									<!-- </listcell> -->
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
-					<!-- 					<panel border="normal" width="95%" -->
-					<!-- 						style="margin-left:2%;margin-right:3%"> -->
-					<!-- 						<panelchildren> -->
+					<!-- <panel border="normal" width="95%" -->
+					<!-- style="margin-left:2%;margin-right:3%"> -->
+					<!-- <panelchildren> -->
 
-					<!-- 							<separator /> -->
-					<!-- 							<div sclass="btn-group" align="center"> -->
-					<!-- 								<button id="btnGuardarObjetivo" -->
-					<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
-					<!-- 									image="/public/imagenes/botones/guardar.png"> -->
-					<!-- 								</button> -->
-					<!-- 								<button id="btnCancelar" -->
-					<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
-					<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
-					<!-- 								</button> -->
+					<!-- <separator /> -->
+					<!-- <div sclass="btn-group" align="center"> -->
+					<!-- <button id="btnGuardarObjetivo" -->
+					<!-- tabindex="2" sclass="btn" label="Guardar" -->
+					<!-- image="/public/imagenes/botones/guardar.png"> -->
+					<!-- </button> -->
+					<!-- <button id="btnCancelar" -->
+					<!-- label="Cancelar" sclass="btn" tabindex="2" -->
+					<!-- image="/public/imagenes/botones/cancelar.png"> -->
+					<!-- </button> -->
 
-					<!-- 								<separator /> -->
-					<!-- 							</div> -->
+					<!-- <separator /> -->
+					<!-- </div> -->
 
-					<!-- 						</panelchildren> -->
-					<!-- 					</panel> -->
+					<!-- </panelchildren> -->
+					<!-- </panel> -->
 					<separator />
 					<separator />
 				</tabpanel>
@@ -250,13 +210,11 @@
 								<row>
 									<label id="lblobjetivos"
 										value="Seleccione un Objetivo para agregar/ Ver sus Indicadores :" />
-									<combobox id="cmbObjetivos"
-										readonly="true" placeholder="Seleccione..." width="100%"
-										cols="45" tabindex="1" mold="rounded">
+									<combobox id="cmbObjetivos" readonly="true"
+										placeholder="Seleccione..." width="100%" cols="45" tabindex="1"
+										mold="rounded">
 										<template name="model">
-											<comboitem
-												context="${each.idObjetivo}"
-												label="${each.descripcionObjetivo}" />
+											<comboitem context="${each.idObjetivo}" label="${each.descripcionObjetivo}" />
 										</template>
 									</combobox>
 								</row>
@@ -265,100 +223,80 @@
 						</grid>
 					</groupbox>
 					<groupbox id="gpxAgregarIndicador">
-						<listbox height="auto" id="lbxAgregarIndicador"
-							mold="paging" pageSize="10" width="auto">
+						<listbox height="auto" id="lbxAgregarIndicador" mold="paging"
+							pageSize="10" width="auto">
 							<listhead style="background: #F8E0E0">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Indicador "
-									width="23%" />
-								<listheader label="Unid. Med."
-									width="9%" />
-								<listheader label="Medición"
-									width="14%" />
+								<listheader label="Indicador " width="23%" />
+								<listheader label="Unid. Med." width="9%" />
+								<listheader label="Medición" width="14%" />
 								<listheader label="Peso (%)" width="7%" />
-								<listheader label="Valor Meta"
-									width="9%" />
-								<listheader label="Valor Resultado"
-									width="12%" />
-								<listheader label="Res.Fy.Ant."
-									width="9%" />
-								<listheader label="Resultado (%)"
-									width="0%" />
-								<listheader label="Resul. Peso (%)"
-									width="0%" />
+								<listheader label="Valor Meta" width="9%" />
+								<listheader label="Valor Resultado" width="12%" />
+								<listheader label="Res.Fy.Ant." width="9%" />
+								<listheader label="Resultado (%)" width="0%" />
+								<listheader label="Resul. Peso (%)" width="0%" />
 								<listheader width="6%" />
 								<listheader width="6%" />
 							</listhead>
 							<listitem>
 								<listcell></listcell>
 								<listcell>
-									<textbox placeholder="Indicador"
-										mold="rounded" rows="2" width="100%" id="txtIndicador" />
+									<textbox placeholder="Indicador" mold="rounded" rows="2"
+										width="100%" id="txtIndicador" />
 								</listcell>
 								<listcell>
-									<combobox
-										placeholder="Seleccione..." mold="rounded" rows="1"
-										width="100%" style="background-color:white;border:none"
+									<combobox placeholder="Seleccione..." mold="rounded"
+										rows="1" width="100%" style="background-color:white;border:none"
 										readonly="true" id="cmbUnidad">
 										<template name="model">
-											<comboitem
-												context="${each.id}" label="${each.descripcion}" />
+											<comboitem context="${each.id}" label="${each.descripcion}" />
 										</template>
 									</combobox>
 								</listcell>
 								<listcell>
-									<combobox
-										placeholder="Seleccione..." mold="rounded" rows="1"
-										width="100%" style="background-color:white;border:none"
+									<combobox placeholder="Seleccione..." mold="rounded"
+										rows="1" width="100%" style="background-color:white;border:none"
 										readonly="true" id="cmbMedicion">
 										<template name="model">
-											<comboitem
-												context="${each.id}" label="${each.descripcionMedicion}" />
+											<comboitem context="${each.id}" label="${each.descripcionMedicion}" />
 										</template>
 									</combobox>
 								</listcell>
 								<listcell>
-									<spinner placeholder="Peso %"
-										constraint="min 1; max 100" mold="rounded" width="100%"
-										id="txtPeso1" maxlength="3" />
+									<spinner placeholder="Peso %" constraint="min 1; max 100"
+										mold="rounded" width="100%" id="txtPeso1" maxlength="3" />
 								</listcell>
 								<listcell>
 									<doublespinner step="0.5" placeholder="Valor Meta"
-										constraint="min 0" mold="rounded" width="100%"
-										id="txtValorMeta" />
+										constraint="min 0" mold="rounded" width="100%" id="txtValorMeta" />
 								</listcell>
 								<listcell>
-									<doublespinner step="0.5"
-										placeholder="Valor Resultado" mold="rounded" width="100%"
-										id="txtValorResultado"  />
+									<doublespinner step="0.5" placeholder="Valor Resultado"
+										mold="rounded" width="100%" id="txtValorResultado" />
 								</listcell>
 								<listcell>
-									<doublespinner step="0.5"  value="0" placeholder="Res.Fy.Ant"
-										 mold="rounded" width="100%" id="txtResFy"
-										disabled="true"/>
+									<doublespinner step="0.5" value="0" placeholder="Res.Fy.Ant"
+										mold="rounded" width="100%" id="txtResFy" disabled="true" />
 								</listcell>
 								<listcell>
-									<spinner placeholder="Resultado %"
-										value="0" constraint="min 0" mold="rounded" width="100%"
-										id="txtResultadoPorc" disabled="true" visible = "false"/>
+									<spinner placeholder="Resultado %" value="0"
+										constraint="min 0" mold="rounded" width="100%" id="txtResultadoPorc"
+										disabled="true" visible="false" />
 								</listcell>
 								<listcell>
-									<spinner
-										placeholder="Resultado peso %" mold="rounded" width="100%"
-										id="txtPesoPorc" value="0" constraint="min 0" disabled="true" 
-										visible = "false"/>
+									<spinner placeholder="Resultado peso %" mold="rounded"
+										width="100%" id="txtPesoPorc" value="0" constraint="min 0"
+										disabled="true" visible="false" />
 								</listcell>
 								<listcell>
-									<button id="btnOk2" width="auto"
-										height="auto" mold="trendy"
-										image="/public/imagenes/botones/agregar.png"
-										style="background-color:#F8E0E0;">
+									<button id="btnOk2" width="auto" height="auto" mold="trendy"
+										image="/public/imagenes/botones/seleccionar.png" style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
 								<listcell>
-									<button id="btnCancelarI"
-										width="auto" height="auto" mold="trendy"
-										image="/public/imagenes/botones/anular.png"
+									<button id="btnCancelarI" width="auto" height="auto"
+										mold="trendy" image="/public/imagenes/botones/cancelar.png"
 										style="background-color:#F8E0E0;">
 									</button>
 								</listcell>
@@ -366,159 +304,138 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregarIndicador" width="auto"
-							height="auto" mold="trendy" label="Agregar"
-							image="/public/imagenes/botones/agregar.png">
+						<button id="btnAgregarIndicador" width="auto" height="auto"
+							mold="trendy" label="Agregar" image="/public/imagenes/botones/agregar.png">
 						</button>
-						<button id="btnEliminarIndicador" width="auto"
-							height="auto" image="/public/imagenes/botones/eliminar.png"
-							mold="trendy" label="Eliminar" onClick="@command('cancelar')">
+						<button id="btnEliminarIndicador" width="auto" height="auto"
+							image="/public/imagenes/botones/eliminar.png" mold="trendy"
+							label="Eliminar" onClick="@command('cancelar')">
 						</button>
 					</div>
 					<separator></separator>
 					<separator></separator>
 					<div align="right" height="100%" width="95%">
-						<label value="Total Resul. Peso (%): " style="font-size: 14px;font-weight:bold;" ></label>
+						<label value="Total Resul. Peso (%): " style="font-size: 14px;font-weight:bold;"></label>
 						<label id="txttotalIndicador" style="font-size: 14px;"></label>
 					</div>
 					<separator></separator>
 					<groupbox id="gpxAgregados">
-						<listbox height="auto"
-							id="lbxIndicadoresAgregados" mold="paging" pageSize="10"
-							width="auto">
+						<listbox height="auto" id="lbxIndicadoresAgregados" mold="paging"
+							pageSize="10" width="auto">
 							<listhead style="background: #F8E0E0">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Indicador "
-									width="25%" />
-								<listheader label="Unid. Med."
-									width="9%" />
-								<listheader label="Medición"
-									width="11%" />
+								<listheader label="Indicador " width="25%" />
+								<listheader label="Unid. Med." width="9%" />
+								<listheader label="Medición" width="11%" />
 								<listheader label="Peso (%)" width="9%" />
-								<listheader label="Valor Meta"
-									width="9%" />
-								<listheader label="Valor Resultado"
-									width="12%" />
-								<listheader label="Res.Fy.Ant."
-									width="12%" />
-								<listheader label="Resultado (%)"
-									width="10%" />
-								<listheader label="Resul. Peso (%)"
-									width="12%" />
+								<listheader label="Valor Meta" width="9%" />
+								<listheader label="Valor Resultado" width="12%" />
+								<listheader label="Res.Fy.Ant." width="12%" />
+								<listheader label="Resultado (%)" width="10%" />
+								<listheader label="Resul. Peso (%)" width="12%" />
 							</listhead>
 							<template name="model">
 								<listitem>
 									<listcell label="${each.linea}"></listcell>
-									<listcell
-										label="${each.descripcionIndicador}">
+									<listcell label="${each.descripcionIndicador}">
 									</listcell>
-									<listcell
-										label="${each.unidadMedida.descripcion}">
+									<listcell label="${each.unidadMedida.descripcion}">
 									</listcell>
-									<listcell
-										label="${each.medicion.descripcionMedicion}">
+									<listcell label="${each.medicion.descripcionMedicion}">
 									</listcell>
 									<listcell label="${each.peso}"></listcell>
-									<listcell
-										label="${each.valorMeta}">
+									<listcell label="${each.valorMeta}">
 									</listcell>
 									<listcell>
-										<doublespinner
-											value="${each.valorResultado}" disabled="true"
-											inplace="true">
+										<doublespinner value="${each.valorResultado}"
+											disabled="true" inplace="true">
 										</doublespinner>
 									</listcell>
 									<listcell>
-										<doublespinner
-											value="${each.resultadoFyAnterior}" disabled="true"
-											inplace="true">
+										<doublespinner value="${each.resultadoFyAnterior}"
+											disabled="true" inplace="true">
 										</doublespinner>
 									</listcell>
 									<listcell>
-										<textbox disabled="true"
-											value="${each.resultadoPorc}" inplace="true" />
-										<!-- 										onChange= '$composer.cambio' -->
+										<textbox disabled="true" value="${each.resultadoPorc}"
+											inplace="true" />
+										<!-- onChange= '$composer.cambio' -->
 									</listcell>
 									<listcell>
-										<textbox disabled="true"
-											value="${each.resultadoPeso}" inplace="true" />
+										<textbox disabled="true" value="${each.resultadoPeso}"
+											inplace="true" />
 									</listcell>
-									<!-- 									<listcell -->
-									<!-- 										label="${each.valorResultado}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoFyAnterior}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoPeso}"> -->
-									<!-- 									</listcell> -->
-									<!-- 									<listcell -->
-									<!-- 										label="${each.resultadoPorc}"> -->
-									<!-- 									</listcell> -->
+									<!-- <listcell -->
+									<!-- label="${each.valorResultado}"> -->
+									<!-- </listcell> -->
+									<!-- <listcell -->
+									<!-- label="${each.resultadoFyAnterior}"> -->
+									<!-- </listcell> -->
+									<!-- <listcell -->
+									<!-- label="${each.resultadoPeso}"> -->
+									<!-- </listcell> -->
+									<!-- <listcell -->
+									<!-- label="${each.resultadoPorc}"> -->
+									<!-- </listcell> -->
 								</listitem>
 							</template>
 						</listbox>
 					</groupbox>
 					<separator></separator>
-					<!-- 								<panel border="normal" width="95%" -->
-					<!-- 						style="margin-left:2%;margin-right:3%"> -->
-					<!-- 						<panelchildren> -->
+					<!-- <panel border="normal" width="95%" -->
+					<!-- style="margin-left:2%;margin-right:3%"> -->
+					<!-- <panelchildren> -->
 
-					<!-- 							<separator /> -->
-					<!-- 							<div sclass="btn-group" align="center"> -->
+					<!-- <separator /> -->
+					<!-- <div sclass="btn-group" align="center"> -->
 
-					<!-- 								<button id="btnGuardarIndicador" -->
-					<!-- 									tabindex="2" sclass="btn" label="Guardar" -->
-					<!-- 									image="/public/imagenes/botones/guardar.png"> -->
-					<!-- 								</button> -->
-					<!-- 								<button id="btnCalcular" -->
-					<!-- 									 sclass="btn" label="Calcular" -->
-					<!-- 									image="/public/imagenes/botones/exportar.png"> -->
-					<!-- 								</button> -->
-					<!-- 								<button id="btnCancelarIndicador" -->
-					<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
-					<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
-					<!-- 								</button> -->
+					<!-- <button id="btnGuardarIndicador" -->
+					<!-- tabindex="2" sclass="btn" label="Guardar" -->
+					<!-- image="/public/imagenes/botones/guardar.png"> -->
+					<!-- </button> -->
+					<!-- <button id="btnCalcular" -->
+					<!-- sclass="btn" label="Calcular" -->
+					<!-- image="/public/imagenes/botones/exportar.png"> -->
+					<!-- </button> -->
+					<!-- <button id="btnCancelarIndicador" -->
+					<!-- label="Cancelar" sclass="btn" tabindex="2" -->
+					<!-- image="/public/imagenes/botones/cancelar.png"> -->
+					<!-- </button> -->
 
-					<!-- 								<separator /> -->
-					<!-- 							</div> -->
-					<!-- 						</panelchildren> -->
-					<!-- 					</panel> -->
+					<!-- <separator /> -->
+					<!-- </div> -->
+					<!-- </panelchildren> -->
+					<!-- </panel> -->
 				</tabpanel>
 				<tabpanel>
-					<!-- 				Contenedor de competencias rectoras  -->
+					<!-- Contenedor de competencias rectoras -->
 					<separator />
 					<separator />
 					<div align="right" height="100%" width="95%">
-						<label value="Total Competencias (Rectoras + Especificas) (%) : " style="font-size: 14px;font-weight:bold;" ></label>
+						<label value="Total Competencias (Rectoras + Especificas) (%) : "
+							style="font-size: 14px;font-weight:bold;"></label>
 						<label id="txttotalCompetencia1" style="font-size: 14px;"></label>
 					</div>
 					<separator></separator>
-					<listbox height="auto" id="lbxCompetenciaRectora"
-						mold="paging" pageSize="10" width="auto">
+					<listbox height="auto" id="lbxCompetenciaRectora" mold="paging"
+						pageSize="10" width="auto">
 						<listhead style="background: #F8E0E0">
 							<listheader label="Competencia" />
-							<listheader
-								label="Nivel de Dominio Requerido" />
-							<listheader
-								label="Nivel de Dominio Evidenciado" />
+							<listheader label="Nivel de Dominio Requerido" />
+							<listheader label="Nivel de Dominio Evidenciado" />
 						</listhead>
 						<template name="model">
 							<listitem>
-								<listcell
-									label="${each.competencia.descripcion}">
+								<listcell label="${each.competencia.descripcion}">
 								</listcell>
-								<listcell
-									label="${each.dominio.descripcionDominio}">
+								<listcell label="${each.dominio.descripcionDominio}">
 								</listcell>
 								<listcell>
-									<combobox readonly="true"
-										placeholder="Seleccione..." mold="rounded" rows="1"
-										width="100%" style="background-color:white;border:none"
-										model="${$composer.dominio}">
+									<combobox readonly="true" placeholder="Seleccione..."
+										mold="rounded" rows="1" width="100%"
+										style="background-color:white;border:none" model="${$composer.dominio}">
 										<template name="model">
-											<comboitem
-												description="${each.id}" label="${each.descripcionDominio}" />
+											<comboitem description="${each.id}" label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
 								</listcell>
@@ -527,60 +444,57 @@
 					</listbox>
 					<separator />
 					<div align="right" height="100%" width="95%">
-						<label value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia " style="font-size: 14px;font-weight:bold;" ></label>
+						<label
+							value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia "
+							style="font-size: 14px;font-weight:bold;"></label>
 					</div>
 					<separator></separator>
 
-					<!-- 					<panel border="normal" width="95%" -->
-					<!-- 						style="margin-left:2%;margin-right:3%"> -->
-					<!-- 						<panelchildren> -->
+					<!-- <panel border="normal" width="95%" -->
+					<!-- style="margin-left:2%;margin-right:3%"> -->
+					<!-- <panelchildren> -->
 
-					<!-- 							<separator /> -->
-					<!-- 							<div sclass="btn-group" align="center"> -->
-					<!-- 								<button id="btnSalirCompetenciaR" -->
-					<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
-					<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
-					<!-- 								</button> -->
+					<!-- <separator /> -->
+					<!-- <div sclass="btn-group" align="center"> -->
+					<!-- <button id="btnSalirCompetenciaR" -->
+					<!-- label="Cancelar" sclass="btn" tabindex="2" -->
+					<!-- image="/public/imagenes/botones/cancelar.png"> -->
+					<!-- </button> -->
 
-					<!-- 								<separator /> -->
-					<!-- 							</div> -->
-					<!-- 						</panelchildren> -->
-					<!-- 					</panel> -->
+					<!-- <separator /> -->
+					<!-- </div> -->
+					<!-- </panelchildren> -->
+					<!-- </panel> -->
 				</tabpanel>
 				<tabpanel>
-					<!-- 				contenedor de competencias especificas  -->
+					<!-- contenedor de competencias especificas -->
 					<separator />
 					<separator />
 					<div align="right" height="100%" width="95%">
-						<label value="Total Competencias (Rectoras + Especificas) (%) : " style="font-size: 14px;font-weight:bold;" ></label>
+						<label value="Total Competencias (Rectoras + Especificas) (%) : "
+							style="font-size: 14px;font-weight:bold;"></label>
 						<label id="txttotalCompetencia2" style="font-size: 14px;"></label>
 					</div>
 					<separator></separator>
-					<listbox height="auto" id="lbxCompetenciaEspecifica"
-						mold="paging" pageSize="10" width="auto">
+					<listbox height="auto" id="lbxCompetenciaEspecifica" mold="paging"
+						pageSize="10" width="auto">
 						<listhead style="background: #F8E0E0">
 							<listheader label="Competencia" />
-							<listheader
-								label="Nivel de Dominio Requerido" />
-							<listheader
-								label="Nivel de Dominio Evidenciado" />
+							<listheader label="Nivel de Dominio Requerido" />
+							<listheader label="Nivel de Dominio Evidenciado" />
 						</listhead>
 						<template name="model">
 							<listitem>
-								<listcell
-									label="${each.competencia.descripcion}">
+								<listcell label="${each.competencia.descripcion}">
 								</listcell>
-								<listcell
-									label="${each.dominio.descripcionDominio}">
+								<listcell label="${each.dominio.descripcionDominio}">
 								</listcell>
 								<listcell>
-									<combobox readonly="true"
-										placeholder="Seleccione..." mold="rounded" rows="1"
-										width="100%" style="background-color:white;border:none"
-										model="${$composer.dominio}">
+									<combobox readonly="true" placeholder="Seleccione..."
+										mold="rounded" rows="1" width="100%"
+										style="background-color:white;border:none" model="${$composer.dominio}">
 										<template name="model">
-											<comboitem
-												description="${each.id}" label="${each.descripcionDominio}" />
+											<comboitem description="${each.id}" label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
 								</listcell>
@@ -589,80 +503,71 @@
 					</listbox>
 					<separator />
 					<div align="right" height="100%" width="95%">
-						<label value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia " style="font-size: 14px;font-weight:bold;" ></label>
+						<label
+							value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia "
+							style="font-size: 14px;font-weight:bold;"></label>
 					</div>
 					<separator></separator>
-					<!-- 					<panel border="normal" width="95%" -->
-					<!-- 						style="margin-left:2%;margin-right:3%"> -->
-					<!-- 						<panelchildren> -->
+					<!-- <panel border="normal" width="95%" -->
+					<!-- style="margin-left:2%;margin-right:3%"> -->
+					<!-- <panelchildren> -->
 
-					<!-- 							<separator /> -->
-					<!-- 							<div sclass="btn-group" align="center"> -->
-					<!-- 								<button id="btnSalirCompetenciaE" -->
-					<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
-					<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
-					<!-- 								</button> -->
+					<!-- <separator /> -->
+					<!-- <div sclass="btn-group" align="center"> -->
+					<!-- <button id="btnSalirCompetenciaE" -->
+					<!-- label="Cancelar" sclass="btn" tabindex="2" -->
+					<!-- image="/public/imagenes/botones/cancelar.png"> -->
+					<!-- </button> -->
 
-					<!-- 								<separator /> -->
-					<!-- 							</div> -->
-					<!-- 						</panelchildren> -->
-					<!-- 					</panel> -->
+					<!-- <separator /> -->
+					<!-- </div> -->
+					<!-- </panelchildren> -->
+					<!-- </panel> -->
 				</tabpanel>
 				<tabpanel>
-					<!-- 				contenedor de feedback y compromiso -->
+					<!-- contenedor de feedback y compromiso -->
 					<separator></separator>
 					<separator></separator>
 					<grid width="100%" align="center">
 						<rows>
 							<row>
-								<div
-									style="background-color:#E6E6E6;">
+								<div style="background-color:#E6E6E6;">
 									<label
 										value="Fortalezas Evidenciadas en el Desempeño por Competencias">
 									</label>
-									<textbox width="100%" rows="4"
-										id="txtFortalezas">
+									<textbox width="100%" rows="4" id="txtFortalezas">
 									</textbox>
 								</div>
-								<div
-									style="background-color:#E6E6E6;">
+								<div style="background-color:#E6E6E6;">
 									<label
 										value="Oportunidades de Mejoras Evidenciadas en el Desempeño por Competencias">
 									</label>
-									<textbox width="100%" rows="4"
-										id="txtOportunidades">
+									<textbox width="100%" rows="4" id="txtOportunidades">
 									</textbox>
 								</div>
 							</row>
 							<row>
-								<div
-									style="background-color:#E6E6E6;">
-									<label
-										value="Resumen de Actuación">
+								<div style="background-color:#E6E6E6;">
+									<label value="Resumen de Actuación">
 									</label>
-									<textbox width="100%" rows="4"
-										id="txtResumen">
+									<textbox width="100%" rows="4" id="txtResumen">
 									</textbox>
 								</div>
-								<div
-									style="background-color:#E6E6E6;">
+								<div style="background-color:#E6E6E6;">
 									<label
 										value="Compromisos Acordados entre el Empleado y el Supervisor">
 									</label>
-									<textbox width="100%" rows="4"
-										id="txtCompromisos">
+									<textbox width="100%" rows="4" id="txtCompromisos">
 									</textbox>
 								</div>
 							</row>
 
 							<row>
-								<div
-									style="background-color:#E6E6E6;">
+								<div style="background-color:#E6E6E6;">
 									<label
 										value="Comentarios Y Experiencias Evidenciadas en la Actual Gestion del Desempeño">
 									</label>
-									<textbox width="100%" rows="4"
-										id="txtComentarios">
+									<textbox width="100%" rows="4" id="txtComentarios">
 									</textbox>
 								</div>
 							</row>
@@ -670,33 +575,129 @@
 					</grid>
 					<separator></separator>
 					<separator></separator>
-					<!-- 						<panel border="normal" width="95%" -->
-					<!-- 						style="margin-left:2%;margin-right:3%"> -->
-					<!-- 						<panelchildren> -->
+					<!-- <panel border="normal" width="95%" -->
+					<!-- style="margin-left:2%;margin-right:3%"> -->
+					<!-- <panelchildren> -->
 
-					<!-- 							<separator /> -->
-					<!-- 							<div sclass="btn-group" align="center"> -->
-					<!-- 								<button id="btnCancelarEvaluacion" -->
-					<!-- 									label="Cancelar" sclass="btn" tabindex="2" -->
-					<!-- 									image="/public/imagenes/botones/cancelar.png"> -->
-					<!-- 								</button> -->
+					<!-- <separator /> -->
+					<!-- <div sclass="btn-group" align="center"> -->
+					<!-- <button id="btnCancelarEvaluacion" -->
+					<!-- label="Cancelar" sclass="btn" tabindex="2" -->
+					<!-- image="/public/imagenes/botones/cancelar.png"> -->
+					<!-- </button> -->
 
-					<!-- 								<separator /> -->
-					<!-- 							</div> -->
-					<!-- 						</panelchildren> -->
-					<!-- 					</panel> -->
+					<!-- <separator /> -->
+					<!-- </div> -->
+					<!-- </panelchildren> -->
+					<!-- </panel> -->
 				</tabpanel>
-					<tabpanel>
+				<tabpanel>
+					<!-- .................................PROGRAMACION YSOL -->
+					<separator />
+					<separator />
+					<groupbox id="gpxAgregarCapacitacion">
+						<listbox height="auto" id="lbxAccionesCapacitacion" width="auto">
+							<listhead style="background: #F8E0E0">
+								<listheader label="Tipo Formacion" width="15%" />
+								<listheader label="Area/Campo" width="20%" />
+								<listheader label="Descripcion Especifica de la Formacion"
+									width="40%" />
+								<listheader label="Urgencia" width="15%" />
+								<listheader label="" width="5%" />
+								<listheader label="" width="5%" />
+							</listhead>
+							<listitem>
+								<listcell>
+									<combobox placeholder="Tipo Formacion" mold="rounded"
+										rows="1" width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbTipoFormacion">
+										<template name="model">
+											<comboitem context="${each.id}" label="${each.descripcion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<combobox placeholder="Area / Campo" mold="rounded"
+										rows="1" width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbArea">
+										<template name="model">
+											<comboitem context="${each.id}" label="${each.descripcion}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<textbox placeholder="Descripcion" mold="rounded" rows="2"
+										width="100%" id="txtDescFormacion" />
+								</listcell>
+								<listcell>
+									<combobox placeholder="Urgencia" mold="rounded" rows="1"
+										width="100%" style="background-color:white;border:none"
+										readonly="true" id="cmbUrgencia">
+										<template name="model">
+											<comboitem context="${each.id}" label="${each.descripcionUrgencia}" />
+										</template>
+									</combobox>
+								</listcell>
+								<listcell>
+									<button id="btnAgregarCapacitacion" width="auto" height="auto"
+										mold="trendy" image="/public/imagenes/botones/seleccionar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+								<listcell>
+									<button id="btnQuitarCapacitacion" width="auto" height="auto"
+										mold="trendy" image="/public/imagenes/botones/cancelar.png"
+										style="background-color:#F8E0E0;">
+									</button>
+								</listcell>
+							</listitem>
+						</listbox>
+					</groupbox>
+					<div align="right" height="100%">
+						<button id="btnAgregarAcciones" width="auto" height="auto" mold="trendy"
+							label="Agregar" image="/public/imagenes/botones/agregar.png"
+							style="background-color:#F8E0E0;">
+						</button>
+						<button id="btnEliminarAcciones" width="auto" height="auto" mold="trendy"
+							label="Eliminar" image="/public/imagenes/botones/eliminar.png">
+						</button>
+					</div>
 					<separator></separator>
 					<separator></separator>
-					<grid width="100%" align="center"   style="background: #F8E0E0">
+					<separator></separator>
+					<groupbox id="gpxAccionesAgregadas">
+						<listbox height="auto" id="lbxAccionesGuardadas" width="auto">
+							<listhead style="background: #F8E0E0">
+								<listheader label="Tipo Formacion" width="20%" />
+								<listheader label="Area/Campo" width="20%" />
+								<listheader label="Descripcion Especifica de la Formacion"
+									width="40%" />
+								<listheader label="Urgencia" width="20%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="${each.tipoFormacion.descripcion}"></listcell>
+									<listcell label="${each.area.descripcion}">
+									</listcell>
+									<listcell label="${each.descripcionFormacion}">
+									</listcell>
+									<listcell label="${each.urgencia.descripcionUrgencia}"></listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</groupbox>
+					<separator />
+					<separator />
+				</tabpanel>
+				<tabpanel>
+					<separator></separator>
+					<separator></separator>
+					<grid width="100%" align="center" style="background: #F8E0E0">
 						<columns visible="true">
 							<column label="Resultados" width="25%" />
-							<column label="Distribución (%)"
-								width="25%" />
+							<column label="Distribución (%)" width="25%" />
 							<column label="Resultado (%)" width="25%" />
-							<column label="Resultado según Peso (%)"
-								width="25%" />
+							<column label="Resultado según Peso (%)" width="25%" />
 						</columns>
 						<rows>
 							<row>
@@ -716,67 +717,55 @@
 					<separator></separator>
 					<separator></separator>
 					<div align="right" height="100%" width="80%">
-						<label value="Resultado Final ="
-							style="font-size: 14px;font-weight:bold;">
+						<label value="Resultado Final =" style="font-size: 14px;font-weight:bold;">
 						</label>
-						<label id="txtResultadoFinal"
-							style="font-size: 14px;">
+						<label id="txtResultadoFinal" style="font-size: 14px;">
 						</label>
 					</div>
 					<div align="right" height="100%" width="80%">
-						<label value="Valoracion Final ="
-							style="font-size: 14px;font-weight:bold;">
+						<label value="Valoracion Final =" style="font-size: 14px;font-weight:bold;">
 						</label>
-						<label id="txtValoracionFinal"
-							style="font-size: 14px;">
+						<label id="txtValoracionFinal" style="font-size: 14px;">
 						</label>
 					</div>
 				</tabpanel>
+				
 			</tabpanels>
 		</tabbox>
 		<separator></separator>
 		<separator></separator>
-		<panel border="normal" width="95%"
-			style="margin-left:2%;margin-right:3%" id="panBotones">
+		<panel border="normal" width="95%" style="margin-left:2%;margin-right:3%"
+			id="panBotones">
 			<panelchildren>
 				<separator />
 				<div sclass="btn-group" align="center">
 
-					<button id="btnCambiarEstado" tabindex="2"
-						sclass="btn" label="Guardar"
-						image="/public/imagenes/botones/guardar.png">
+					<button id="btnCambiarEstado" tabindex="2" sclass="btn"
+						label="Guardar" image="/public/imagenes/botones/guardar.png">
 					</button>
-					<button id="btnEnEdicion" label="En Edición"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/enedicion.png">
+					<button id="btnEnEdicion" label="En Edición" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/enedicion.png">
 					</button>
-					<button id="btnPendiente" label="A Pendiente"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/pendiente.png">
+					<button id="btnPendiente" label="A Pendiente" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/pendiente.png">
 					</button>
-					<button id="btnRevisada" label="Revisada"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/revisada.png">
+					<button id="btnRevisada" label="Revisada" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/revisada.png">
 					</button>
-					<button id="btnAprobada" label="Aprobada"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/aprobada.png">
+					<button id="btnAprobada" label="Aprobada" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/aprobada.png">
 					</button>
-					<button id="btnCalibrada" label="Calibarada"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/calibrada.png">
+					<button id="btnCalibrada" label="Calibarada" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/calibrada.png">
 					</button>
-					<button id="btnfinalizada" label="Finalizada"
-						visible="false" sclass="btn" tabindex="1"
-						image="/public/imagenes/botones/finalizada.png">
+					<button id="btnfinalizada" label="Finalizada" visible="false"
+						sclass="btn" tabindex="1" image="/public/imagenes/botones/finalizada.png">
 					</button>
-					<button id="btnCancelar" label="Salir"
-						sclass="btn" tabindex="2"
-						image="/public/imagenes/botones/cancelar.png">
+					<button id="btnCancelar" label="Salir" sclass="btn"
+						tabindex="2" image="/public/imagenes/botones/cancelar.png">
 					</button>
-					<button id="btnImprimir" label="Imprimir"
-						sclass="btn" tabindex="2"
-						image="/public/imagenes/botones/generar.png">
+					<button id="btnImprimir" label="Imprimir" sclass="btn"
+						tabindex="2" image="/public/imagenes/botones/generar.png">
 					</button>
 					<separator />
 				</div>

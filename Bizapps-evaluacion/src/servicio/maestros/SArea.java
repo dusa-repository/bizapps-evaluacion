@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.maestros.Area;
 import modelo.maestros.Empleado;
+import modelo.maestros.TipoFormacion;
 import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,11 @@ public class SArea {
 		area = areaDAO.findByDescripcionAllIgnoreCase(descripcion);
 		return area;
 	}
+
+	public List<Area> buscarPorFormacion(int tipo) {
+		// TODO Auto-generated method stub
+		return areaDAO.findByTipoFormacionId(tipo);
+	}
+
 
 }

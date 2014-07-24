@@ -114,6 +114,16 @@ public class UtilidadDAO implements IUtilidadDAO {
 		return aux;
 		
 	}
+
+	@Transactional
+	public void eliminarCapacitacionPorEvaluacion(Integer eva) {
+		// TODO Auto-generated method stub
+		
+		String sentencia = "";
+		sentencia = " delete from EvaluacionCapacitacion as ec where ec.idEvaluacion = "+ eva +"";	
+		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
+		
+	}
 	
 
 }

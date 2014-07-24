@@ -7,5 +7,6 @@ public interface IUtilidadDAO {
 	public String obtenerValoracionFinal(Integer resultado);
 	public String obtenerValoracionFinalSimple(Integer resultado);
 	public void eliminarCompetenciaPorEvaluacion(Integer eva);
+	public void eliminarCapacitacionPorEvaluacion(Integer eva);
 
 }

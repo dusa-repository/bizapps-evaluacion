@@ -62,6 +62,7 @@ import servicio.transacciones.SEmpleadoClase;
 import servicio.transacciones.SEmpleadoCurso;
 import servicio.transacciones.SEmpleadoParametro;
 import servicio.transacciones.SEvaluacion;
+import servicio.transacciones.SEvaluacionCapacitacion;
 import servicio.transacciones.SEvaluacionCompetencia;
 import servicio.transacciones.SEvaluacionConducta;
 import servicio.transacciones.SEvaluacionIndicador;
@@ -150,6 +151,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SReporte servicioReporte;
 	@WireVariable("SUtilidad")
 	protected SUtilidad servicioUtilidad;
+	@WireVariable("SEvaluacionCapacitacion")
+	protected SEvaluacionCapacitacion servicioEvaluacionCapacitacion;
 	
 	
 	
