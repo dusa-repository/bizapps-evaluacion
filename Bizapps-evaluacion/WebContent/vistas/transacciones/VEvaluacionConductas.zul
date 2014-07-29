@@ -28,7 +28,7 @@
 				<div sclass="btn-group" align="center">
 
 					<button id="btnGuardar" tabindex="5" sclass="btn"
-						label="Actualizar Conductas" image="/public/imagenes/botones/guardar.png">
+						label="Guardar" image="/public/imagenes/botones/guardar.png">
 					</button>
 					<button id="btnCancelar" label="Cancelar"
 						sclass="btn" tabindex="5"

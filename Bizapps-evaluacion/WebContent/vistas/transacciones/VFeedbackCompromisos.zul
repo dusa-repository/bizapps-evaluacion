@@ -3,7 +3,7 @@
 		style="background-color:#8A0808;" id="winCompromisos"
 		apply="controlador.transacciones.CFeedbackCompromisos">
 
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />
@@ -24,7 +24,7 @@
 		</panel>
 		<separator />
 
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
 		</div>
@@ -70,7 +70,7 @@
 			</rows>
 		</grid>
 		<separator></separator>
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label
 				value="Sección III - Registros de Feedback y Establecimientos de Objetivos"
 				style="font-weight:bold;" />

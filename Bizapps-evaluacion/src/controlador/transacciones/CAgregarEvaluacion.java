@@ -247,8 +247,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Label txttotalCompetencia1;
 	@Wire
 	private Label txttotalCompetencia2;
-	@Wire
-	private Label txtValoracionFinal;
+	/*@Wire
+	private Label txtValoracionFinal;*/
 	@Wire
 	private Combobox cmbUrgencia;
 	@Wire
@@ -316,7 +316,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
+		//cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 
 		List<Medicion> medicion = servicioMedicion.buscar();
 		cmbMedicion.setModel(new ListModelList<Medicion>(medicion));
@@ -795,7 +795,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		gpxAgregar.setOpen(true);
 		List<Perspectiva> perspectiva = servicioPerspectiva.buscar();
 		cmbPerspectiva.setModel(new ListModelList<Perspectiva>(perspectiva));
-		cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
+		//cmbPerspectiva.setValue(perspectiva.get(0).getDescripcion());
 
 		btnAgregar.setDisabled(true);
 		btnEliminar.setDisabled(true);
@@ -810,7 +810,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		boolean campoBlanco = false;
 
 		if (txtObjetivo.getValue().trim().equals("")
-				|| txtCorresponsables.getValue().trim().equals("")) {
+				|| txtCorresponsables.getValue().trim().equals("")  || cmbPerspectiva.getSelectedItem()==null   ) {
 			campoBlanco = true;
 		}
 
@@ -1212,7 +1212,22 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	private void EvaluacionObjetivoActualizar() {
 
-		Perspectiva perspectiva1 = servicioPerspectiva.buscarNombre(pers);
+		List<EvaluacionObjetivo> listaEvaluacionObjetivos = servicioEvaluacionObjetivo
+				.buscarObjetivosEvaluar(idEva);
+		
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < listaEvaluacionObjetivos.size(); j++) {
+			
+			Double peso = 0.0;
+			
+			if (listaEvaluacionObjetivos.get(j).getIdObjetivo()!=idObjetivo)
+			{
+				peso = listaEvaluacionObjetivos.get(j).getPeso();
+			}
+			
+			sumaPeso = sumaPeso + peso;
+		}
+		
 		String objetivo = txtObjetivo.getValue();
 		String corresponsables = txtCorresponsables.getValue();
 		Double peso = Double.valueOf(txtPeso.getValue());
@@ -1225,18 +1240,54 @@ public class CAgregarEvaluacion extends CGenerico {
 		objetivoLista.setPerspectiva(perspectiva);
 		objetivoLista.setPeso(peso);
 		objetivoLista.setCorresponsables(corresponsables);
-		servicioEvaluacionObjetivo.guardar(objetivoLista);
-		List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo
-				.buscarObjetivosEvaluar(idEva);
-		lbxObjetivosGuardados.getItems().clear();
-		lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
-				evaluacionObje));
-		gpxAgregar.setOpen(false);
-		limpiar();
-		idObjetivo = 0;
+		
+		sumaPeso= sumaPeso+peso;
+		
+		if (sumaPeso > 100) {
+			Messagebox
+					.show("La suma de los pesos de los objetivos no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+		}
+		else	
+		{
+			servicioEvaluacionObjetivo.guardar(objetivoLista);
+			List<EvaluacionObjetivo> evaluacionObje = servicioEvaluacionObjetivo
+					.buscarObjetivosEvaluar(idEva);
+			lbxObjetivosGuardados.getItems().clear();
+			lbxObjetivosGuardados.setModel(new ListModelList<EvaluacionObjetivo>(
+					evaluacionObje));
+			gpxAgregar.setOpen(false);
+			limpiar();
+			idObjetivo = 0;
+			
+		}
+
+		
+		
+		
 	}
 
 	private void EvaluacionIndicadorActualizar() {
+		
+		
+		List<EvaluacionIndicador> listaEvaluacionIndicadores = servicioEvaluacionIndicador
+				.buscarIndicadores(idObjetivo);
+		
+		Double sumaPeso = (double) 0;
+		for (int j = 0; j < listaEvaluacionIndicadores.size(); j++) {
+			
+			Double peso = 0.0;
+			
+			if (listaEvaluacionIndicadores.get(j).getIdIndicador()!=idIndicador)
+			{
+				peso = listaEvaluacionIndicadores.get(j).getPeso();
+			}
+			
+			sumaPeso = sumaPeso + peso;
+		}
+		
+		
 		String UnidadCombo = cmbUnidad.getSelectedItem().getContext();
 		UnidadMedida unidad = servicioUnidadMedida.buscarUnidad(Integer
 				.parseInt(UnidadCombo));
@@ -1247,6 +1298,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		EvaluacionIndicador indicador = servicioEvaluacionIndicador
 				.buscarIndicadorId(idIndicador);
 		indicador.setDescripcionIndicador(txtIndicador.getValue());
+		Integer peso= txtPeso1.getValue();
 		indicador.setPeso(txtPeso1.getValue());
 		indicador.setValorMeta(txtValorMeta.getValue());
 		indicador.setResultadoFyAnterior(txtResFy.getValue());
@@ -1254,13 +1306,28 @@ public class CAgregarEvaluacion extends CGenerico {
 		indicador.setValorResultado(valorResultado);
 		indicador.setUnidadMedida(unidad);
 		indicador.setMedicion(medicion);
-		servicioEvaluacionIndicador.guardar(indicador);
-		List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador
-				.buscarIndicadores(idObjetivo);
-		lbxIndicadoresAgregados.getItems().clear();
-		lbxIndicadoresAgregados
-				.setModel(new ListModelList<EvaluacionIndicador>(evaluacionInd));
-		gpxAgregarIndicador.setOpen(false);
+		
+		sumaPeso= sumaPeso+peso;
+		
+		if (sumaPeso > 100) {
+			Messagebox
+					.show("La suma de los pesos de los indicadores no debe ser mayor a 100",
+							"Información", Messagebox.OK,
+							Messagebox.INFORMATION);
+		}
+		else	
+		{
+			servicioEvaluacionIndicador.guardar(indicador);
+			List<EvaluacionIndicador> evaluacionInd = servicioEvaluacionIndicador
+					.buscarIndicadores(idObjetivo);
+			lbxIndicadoresAgregados.getItems().clear();
+			lbxIndicadoresAgregados
+					.setModel(new ListModelList<EvaluacionIndicador>(evaluacionInd));
+			gpxAgregarIndicador.setOpen(false);
+		}
+		
+		
+		
 	}
 
 	// @Listen("onSelect = #cmbMedicion")
@@ -1750,16 +1817,16 @@ public class CAgregarEvaluacion extends CGenerico {
 		try {
 			guardarEvaluacion(false);
 
-			Executions.getCurrent().sendRedirect(
+			/*Executions.getCurrent().sendRedirect(
 					"http://www.dusanet.com:8029/evaluacion/Impresion?par1="
 							+ idEva + "&par2=" + evaluador.getNombre() + "",
-					"_blank");
+					"_blank");*/
 
-			/*
-			 * Executions.getCurrent().sendRedirect(
-			 * "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
-			 * idEva + "&par2="+ evaluador.getNombre() +"", "_blank");
-			 */
+			
+			  Executions.getCurrent().sendRedirect(
+			  "http://localhost:8080/Bizapps-evaluacion/Impresion?par1=" +
+			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");
+			 
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -2248,8 +2315,8 @@ public class CAgregarEvaluacion extends CGenerico {
 					+ resultadoPesoCompetencia;
 			String rf = String.valueOf(resultadoFinal);
 			txtResultadoFinal.setValue(rf);
-			txtValoracionFinal.setValue(servicioUtilidad
-					.obtenerValoracionFinal((int) resultadoFinal));
+			/*txtValoracionFinal.setValue(servicioUtilidad
+					.obtenerValoracionFinal((int) resultadoFinal));*/
 
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -1,7 +1,7 @@
 <zk>
 	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
 	<style src="/public/Estilo.css" />
-		<div  style="background-color:#8F0000;" >
+		<div  style="background-color:#F8E0E0 ; ;" >
 		<label value= "Competencia Rectora: Control de Gestion" style= "color:write"/>
 		</div>
 		<separator />

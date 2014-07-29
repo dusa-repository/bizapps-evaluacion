@@ -3,7 +3,7 @@
 		style="background-color:#8A0808;"
 		apply="controlador.transacciones.CObjetivos" id="winObjetivo">
 
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />
@@ -25,7 +25,7 @@
 			</panelchildren>
 		</panel>
 		<separator />
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
 		</div>
@@ -73,7 +73,7 @@
 		</grid>
 		<div id="divObjetivos" class="z-groupbox-3d-hm;" width="auto">
 			<separator />
-			<div style="background-color:#F8E0E0;">
+			<div style="background-color:#F8E0E0 ; ;">
 				<label value="Sección I - Evaluación de Objetivos "
 					style="font-weight:bold;" />
 			</div>
@@ -131,7 +131,7 @@
 							<button id="btnOk" width="auto"
 								height="auto" mold="trendy"
 								image="/public/imagenes/botones/seleccionar.png"
-								style="background-color:#F8E0E0;">
+								style="background-color:#F8E0E0 ; ;">
 							</button>
 						</listcell>
 					</listitem>

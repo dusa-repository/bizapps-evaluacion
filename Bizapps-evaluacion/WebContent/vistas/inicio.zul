@@ -1,7 +1,7 @@
 <?page id="mainPage" title="GDE" contentType="text/html;charset=utf-8"?>
 <zk>
 	<window title="" border="0" height="100%" width="100%"
-		contentStyle="overflow:auto" style="border-top: 20px solid #8F0000; background-color:#F8E0E0; "
+		contentStyle="overflow:auto" style="border-top: 20px solid #F8E0E0 ; ; background-color:#8F0000 ; ; "
 		apply="arbol.CArbol">
 		<!-- 		<style src="/public/Estilo.css" /> -->
 		<script src="/public/progress.js" />
@@ -29,7 +29,7 @@
 						<space></space>
 						<div hflex="2" align="center">
 							<label
-								value="GESTIÓN DE DESEMPEÑO EMPRESARIAL V1.0" class="banner-head"
+								value="GESTIÓN DE DESEMPEÑO EMPRESARIAL V1.1" class="banner-head"
 								style=" font-size: 24px; font-family: Fantasy;" />
 						</div>
 						<space></space>
@@ -58,7 +58,7 @@
 										<label id="lblEditarCuenta"
 											value="Cambiar Contraseña"
 											style="color: blue; font-style: Arial; font-weight: bold;"
-											onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' />
+											 />
 									</a>
 								</vbox>
 							</hbox>
@@ -69,7 +69,7 @@
 			<west title="Inicio" id="west" size="15%" splittable="false"
 				collapsible="true" autoscroll="true" flex="true">
 				<tree id="arbolMenu" width="99%" zclass="z-tree">
-					<!-- 				"z-tree","z-dottree","z-filetree"  #8F0000-->
+					<!-- 				"z-tree","z-dottree","z-filetree"  #F8E0E0 ; -->
 					<template name="model">
 						<treeitem context="menupopup">
 							<treerow>
@@ -106,7 +106,7 @@
 				collapsible="false">
 				<div align="center" sclass="footer">
 					<div class="banner"
-						style="background-color:#8F0000; color: white;">
+						style="background-color:#8F0000 ; ">
 						<label style="padding-center:35%; "
 							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
 						</label>

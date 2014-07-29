@@ -66,6 +66,10 @@ public class Evaluacion implements Serializable {
 	@JoinColumn(name = "id_cargo")
 	private Cargo cargo;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_unidad_organizativa")
+	private UnidadOrganizativa unidadOrganizativa;
+	
 	@Column(name="id_usuario")
 	private int idUsuario;
 
@@ -319,6 +323,14 @@ public class Evaluacion implements Serializable {
 
 	public void setBitacoras(Set<Bitacora> bitacoras) {
 		this.bitacoras = bitacoras;
+	}
+
+	public UnidadOrganizativa getUnidadOrganizativa() {
+		return unidadOrganizativa;
+	}
+
+	public void setUnidadOrganizativa(UnidadOrganizativa unidadOrganizativa) {
+		this.unidadOrganizativa = unidadOrganizativa;
 	}
 
 	

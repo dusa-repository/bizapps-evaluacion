@@ -13,11 +13,15 @@ import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 import modelo.maestros.Empleado;
 import modelo.maestros.Evaluacion;
+import modelo.maestros.EvaluacionCapacitacion;
+import modelo.maestros.EvaluacionCompetencia;
+import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
 import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Perspectiva;
 import modelo.maestros.Revision;
+import modelo.maestros.UnidadOrganizativa;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
@@ -70,6 +74,8 @@ public class CListaPersonal extends CGenerico {
 	private Button btnAgregar;
 	@Wire
 	private Button btnEliminar;
+	@Wire
+	private Button btnCopiar;
 	@Wire
 	private Window winListaPersonal;
 	@Wire
@@ -139,6 +145,7 @@ public class CListaPersonal extends CGenerico {
 		Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
 		String fichaEvaluador = empleado.getFichaSupervisor();
 		Cargo cargo = empleado.getCargo();
+		UnidadOrganizativa unidadOrganizativa = empleado.getUnidadOrganizativa();
 		Evaluacion evaluacion = new Evaluacion();
 		evaluacion.setIdEvaluacion(idEva);
 		evaluacion.setEstadoEvaluacion("EN EDICION");
@@ -154,6 +161,7 @@ public class CListaPersonal extends CGenerico {
 		evaluacion.setResultadoObjetivos(0);
 		evaluacion.setResultadoGeneral(0);
 		evaluacion.setCargo(cargo);
+		evaluacion.setUnidadOrganizativa(unidadOrganizativa);
 		evaluacion.setHoraAuditoria(horaAuditoria);
 		Bitacora bitacora = new Bitacora();
 
@@ -180,8 +188,6 @@ public class CListaPersonal extends CGenerico {
 
 	@Listen("onClick = #btnEliminar")
 	public void eliminar() {
-		
-		
 		
 		if (lbxEvaluacion.getItemCount() != 0) {
 
@@ -252,6 +258,184 @@ public class CListaPersonal extends CGenerico {
 
 		}
 	}
+	
+	
+	
+	
+	@Listen("onClick = #btnCopiar")
+	public void copiar() {
+		
+		if (lbxEvaluacion.getItemCount() != 0) {
+
+			Listitem listItem = lbxEvaluacion.getSelectedItem();
+			if (listItem != null) {
+
+				Evaluacion evaluacionE = (Evaluacion) listItem.getValue();
+				eva = evaluacionE;
+				Integer id = evaluacionE.getIdEvaluacion();
+				idEva = id;
+				Messagebox.show(Mensaje.deseaCopiar, "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									
+									revision = servicioRevision.buscarPorEstado("ACTIVO");
+									Authentication auth = SecurityContextHolder.getContext()
+											.getAuthentication();
+									Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+									String ficha = u.getCedula();
+									Integer idUsuario = u.getIdUsuario();
+									Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(eva.getFicha()) + 1;
+									Integer numeroEvaluacionPrimaria = servicioEvaluacion.buscarId() + 1;
+									Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
+									String fichaEvaluador = empleado.getFichaSupervisor();
+									Cargo cargo = empleado.getCargo();
+									UnidadOrganizativa unidadOrganizativa = empleado.getUnidadOrganizativa();
+									
+									
+									eva.setIdEvaluacion(numeroEvaluacionPrimaria);
+									eva.setIdEvaluacionSecundario(numeroEvaluacion);
+									eva.setCargo(cargo);
+									eva.setUnidadOrganizativa(unidadOrganizativa);
+									eva.setEstadoEvaluacion("EN EDICION");
+									eva.setFechaCreacion(fechaHora);
+									eva.setFechaAuditoria(fechaHora);
+									eva.setRevision(revision);
+									eva.setIdUsuario(idUsuario);
+									eva.setFichaEvaluador(fichaEvaluador);
+									eva.setPeso(0);
+									eva.setResultado(0);
+									eva.setResultadoObjetivos(0);
+									eva.setResultadoGeneral(0);
+									eva.setHoraAuditoria(horaAuditoria);
+									
+									Bitacora bitacora = new Bitacora();
+
+									bitacora.setEvaluacion(eva);
+									bitacora.setIdUsuario(u);
+									bitacora.setFechaAuditoria(fechaHora);
+									bitacora.setHoraAuditoria(horaAuditoria);
+									bitacora.setEstadoEvaluacion("EN EDICION");
+									System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
+									System.out.println(evaluacion + " " + u + " " + fechaHora
+											+ horaAuditoria);
+
+									servicioEvaluacion.guardar(eva);
+									servicioBitacora.guardar(bitacora);
+									
+									Integer idEvaluacionObjetivoOriginal=0;
+									
+									List<EvaluacionObjetivo> listaEvaluacionObjetivo = servicioEvaluacionObjetivo
+											.buscarObjetivosEvaluar(idEva);
+									for (int i = 0; i < listaEvaluacionObjetivo
+											.size(); i++) {
+										
+										EvaluacionObjetivo evaluacionObjetivo=listaEvaluacionObjetivo
+												.get(i);
+										idEvaluacionObjetivoOriginal=evaluacionObjetivo.getIdObjetivo();
+										evaluacionObjetivo.setIdObjetivo(0);
+										evaluacionObjetivo.setIdEvaluacion(numeroEvaluacionPrimaria);
+										servicioEvaluacionObjetivo.guardar(evaluacionObjetivo);
+										
+										List<EvaluacionObjetivo> listaEvaluacionObjetivoGuardado = servicioEvaluacionObjetivo
+												.buscarObjetivosEvaluar(numeroEvaluacionPrimaria);
+										
+										Integer idObjetivoGuardado=0;
+										for (int x = 0; x < listaEvaluacionObjetivoGuardado
+												.size(); x++) {
+											
+											EvaluacionObjetivo evaluacionObjetivoGuardardo=listaEvaluacionObjetivoGuardado
+													.get(x);
+											idObjetivoGuardado= evaluacionObjetivoGuardardo.getIdObjetivo();
+											
+										}
+										
+										List<EvaluacionIndicador> listaEvaluacionIndicador = servicioEvaluacionIndicador
+												.buscarIndicadores(idEvaluacionObjetivoOriginal);
+										for (int x = 0; x < listaEvaluacionIndicador
+												.size(); x++) {
+											
+											EvaluacionIndicador evaluacionIndicador=listaEvaluacionIndicador
+													.get(x);
+											evaluacionIndicador.setIdIndicador(0);
+											evaluacionIndicador.setIdObjetivo(idObjetivoGuardado);
+											servicioEvaluacionIndicador.guardar(evaluacionIndicador);
+										}
+									
+									}
+									
+									
+									Evaluacion evaluacionAuxiliar = servicioEvaluacion.buscarEvaluacion(idEva);
+									List<EvaluacionCompetencia> listaEvaluacionCompetencias = servicioEvaluacionCompetencia.buscar(evaluacionAuxiliar);
+									
+									for (int i = 0; i < listaEvaluacionCompetencias
+											.size(); i++) {
+										
+										EvaluacionCompetencia evaluacionCompetencia=listaEvaluacionCompetencias
+												.get(i);
+										evaluacionCompetencia.setEvaluacion(eva);
+										servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
+
+									}
+											
+									
+									List<EvaluacionConducta> listaEvaluacionConductas = servicioEvaluacionConducta.buscar(evaluacionAuxiliar);
+									
+									for (int i = 0; i < listaEvaluacionConductas
+											.size(); i++) {
+										
+										EvaluacionConducta evaluacionConducta=listaEvaluacionConductas
+												.get(i);
+										evaluacionConducta.setEvaluacion(eva);
+										servicioEvaluacionConducta.guardar(evaluacionConducta);
+
+									}
+									
+									
+									List<EvaluacionCapacitacion> listaEvaluacionCapacitacion = servicioEvaluacionCapacitacion.buscarPorEvaluacion(idEva);
+									
+									for (int i = 0; i < listaEvaluacionCapacitacion
+											.size(); i++) {
+										
+										EvaluacionCapacitacion evaluacionCapacitacion=listaEvaluacionCapacitacion
+												.get(i);
+										evaluacionCapacitacion.setIdEvaluacion(numeroEvaluacionPrimaria);
+										servicioEvaluacionCapacitacion.guardar(evaluacionCapacitacion);
+
+									}
+									
+									
+									lbxEvaluacion.getItems().clear();
+									evaluacion = servicioEvaluacion
+											.buscar(fichaE);
+									lbxEvaluacion
+											.setModel(new ListModelList<Evaluacion>(
+													evaluacion));
+									lbxEvaluacion.renderAll();
+									for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
+										Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
+										List<Listitem> listItem2 = lbxEvaluacion.getItems();
+										Evaluacion eva = listItem2.get(j).getValue();
+										String fichaS = eva.getFichaEvaluador();
+										empleado = servicioEmpleado.buscarPorFicha(fichaS);
+										String nombre = empleado.getNombre();
+										((Label) ((listItem.getChildren().get(5))).getFirstChild())
+												.setValue(nombre);
+									}
+											
+
+
+								}
+							}
+						});
+			} else
+				msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+
+		}
+	}
+	
 
 	@Listen("onDoubleClick = #lbxEvaluacion")
 	public void mostrarEvaluacion() {

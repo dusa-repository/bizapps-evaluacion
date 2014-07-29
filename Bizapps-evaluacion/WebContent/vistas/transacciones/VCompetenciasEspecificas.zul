@@ -1,7 +1,7 @@
 <zk>
 	<window id= "wdwCompetenciasEspecificas" border = "normal" height="auto" width="auto" style="background-color:#8A0808;" apply="controlador.transacciones.CCompetenciasEspecificas">
 	<div  id="divEditarUsuario" class= "z-groupbox-3d-hm;" width="auto">
-				<div  style="background-color:#F8E0E0;" >
+				<div  style="background-color:#F8E0E0 ; ;" >
 			<label value= "Evaluación de Desempeño" style= "font-weight:bold;"/>
 		</div>
 				<grid width="100%" align = "center">
@@ -29,7 +29,7 @@
 					</rows>
 				</grid>
 		<separator />
-		<div style="background-color:#F8E0E0;" >
+		<div style="background-color:#F8E0E0 ; ;" >
 		<label value= "Sección II - Evaluación de Competencias Específicas" style= "font-weight:bold;"/>
 		</div>
 		<separator />

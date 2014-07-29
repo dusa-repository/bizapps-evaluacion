@@ -47,6 +47,8 @@ public class CRevision extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionRevision;
 	@Wire
+	private Textbox txtMensajeInicio;
+	@Wire
 	private Groupbox gpxDatosRevision;
 	@Wire
 	private Div catalogoRevision;
@@ -87,6 +89,7 @@ public class CRevision extends CGenerico {
 								.getNombre());
 						cmbEstadoRevision
 								.setValue(revision.getEstadoRevision());
+						txtMensajeInicio.setValue(revision.getMensajeInicio());
 						txtPeriodoRevision.setFocus(true);
 					} else
 						msj.mensajeAlerta(Mensaje.editarSoloUno);
@@ -111,13 +114,14 @@ public class CRevision extends CGenerico {
 									.getValue();
 							String estadoRevision = cmbEstadoRevision
 									.getValue();
+							String mensaje = txtMensajeInicio.getValue();
 							String usuario = nombreUsuarioSesion();
 							Timestamp fechaAuditoria = new Timestamp(
 									new Date().getTime());
 							Revision revision = new Revision(idRevision,
 									descripcion, estadoRevision,
 									fechaAuditoria, horaAuditoria, usuario,
-									periodo);
+									periodo,mensaje);
 							servicioRevision.guardar(revision);
 							msj.mensajeInformacion(Mensaje.guardado);
 							limpiar();
@@ -223,6 +227,7 @@ public class CRevision extends CGenerico {
 		txtDescripcionRevision.setValue("");
 		txtPeriodoRevision.setValue("");
 		cmbEstadoRevision.setValue("");
+		txtMensajeInicio.setValue("");
 		catalogo.limpiarSeleccion();
 		txtPeriodoRevision.setFocus(true);
 
@@ -311,8 +316,9 @@ public class CRevision extends CGenerico {
 
 		Revision revision = servicioRevision.buscarRevisionActiva();
 
+		//CAMBIAR ***----
 		if (cmbEstadoRevision.getValue().equals("ACTIVO") && revision != null) {
-			return true;
+			return false;
 		}
 
 		return false;

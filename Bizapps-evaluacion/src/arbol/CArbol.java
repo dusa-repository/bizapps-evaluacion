@@ -6,12 +6,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -82,6 +84,10 @@ public class CArbol extends CGenerico {
 						+ ".zul");
 			}
 		}
+		
+		Revision revision=servicioRevision.buscarRevisionActiva();
+		
+		Messagebox.show(revision.getMensajeInicio(), "Informacion", Messagebox.OK, Messagebox.INFORMATION);
 	}
 
 	/* Permite asignarle los nodos cargados con el metodo getFooRoot() al arbol */

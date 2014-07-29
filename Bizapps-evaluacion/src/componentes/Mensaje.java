@@ -13,6 +13,7 @@ public class Mensaje {
 	public static String editarSoloUno = "Solo puede Editar un Item a la vez, "
 			+ "Seleccione un (1) solo Item y Repita la Operacion";
 	public static String deseaEliminar = "¿Desea Eliminar el Registro?";
+	public static String deseaCopiar = "¿Desea Copiar el Registro?, esto creara una nueva evaluacion con la revision actual !";
 	public static String eliminado = "Registro Eliminado Exitosamente";
 	public static String estaEditando = "No ha culminado la Edicion, ¿Desea Continuar Editando?";
 	public static String noSeleccionoRegistro = "No ha seleccionado ningun Registro";

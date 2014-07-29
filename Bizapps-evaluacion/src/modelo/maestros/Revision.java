@@ -27,6 +27,9 @@ public class Revision implements Serializable {
 
 	@Column(name="estado_revision")
 	private String estadoRevision;
+	
+	@Column(name="mensaje_inicio",length = 1000)
+	private String mensajeInicio;
 
 	@Column(name="fecha_auditoria")
 	private Timestamp fechaAuditoria;
@@ -48,7 +51,7 @@ public class Revision implements Serializable {
 	
 	public Revision(int idRevision, String descripcion, String estadoRevision,
 			Timestamp fechaAuditoria, String horaAuditoria, String usuario,
-			Periodo periodo) {
+			Periodo periodo,String mensajeInicio) {
 		super();
 		this.id = idRevision;
 		this.descripcion = descripcion;
@@ -57,6 +60,7 @@ public class Revision implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuario = usuario;
 		this.periodo = periodo;
+		this.mensajeInicio= mensajeInicio;
 	}
 
 
@@ -115,6 +119,14 @@ public class Revision implements Serializable {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getMensajeInicio() {
+		return mensajeInicio;
+	}
+
+	public void setMensajeInicio(String mensajeInicio) {
+		this.mensajeInicio = mensajeInicio;
 	}
 	
 	

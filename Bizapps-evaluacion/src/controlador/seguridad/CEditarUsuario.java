@@ -80,8 +80,10 @@ public class CEditarUsuario extends CGenerico {
 				if (validar()) {
 					if (txtClaveUsuarioNueva.getValue().equals(
 							txtClaveUsuarioConfirmar.getValue())) {
+						
 						Usuario usuario = servicioUsuario
-								.buscarUsuarioPorId(id);
+								.buscarUsuarioPorNombre(nombreUsuarioSesion());
+						
 						String password = txtClaveUsuarioConfirmar.getValue();
 						usuario.setPassword(password);
 						servicioUsuario.guardar(usuario);
@@ -107,7 +109,8 @@ public class CEditarUsuario extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(1).setVisible(false);
+		botonera.getChildren().get(0).setVisible(false);
+		botonera.getChildren().get(2).setVisible(false);
 		botoneraEditarUsuario.appendChild(botonera);
 	}
 

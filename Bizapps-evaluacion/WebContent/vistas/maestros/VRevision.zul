@@ -12,10 +12,11 @@
 			<separator />
 			<grid width="100%">
 				<columns visible="false">
-					<column label="" width="20%" />
-					<column label="" width="45%" />
+					<column label="" width="15%" />
+					<column label="" width="40%" />
 					<column label="" width="8%" />
-					<column label="" width="27%" />
+					<column label="" width="17%" />
+					<column label="" width="20%" />
 				</columns>
 				<rows>
 					<row>
@@ -56,6 +57,17 @@
 							<comboitem label="ACTIVO" />
 							<comboitem label="INACTIVO" />
 						</combobox>
+					</row>
+					<row>
+						<hbox>
+						<label value="Mensaje Inicio:" class="etiqueta" />
+						</hbox>
+						
+						<textbox id="txtMensajeInicio"
+							width="100%" maxlength="255" tabindex="2"
+							tooltiptext="Ingrese aqui el mensaje de inicio de la revision" />
+
+						
 					</row>
 
 

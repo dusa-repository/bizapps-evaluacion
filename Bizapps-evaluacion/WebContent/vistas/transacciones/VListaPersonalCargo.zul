@@ -3,7 +3,7 @@
 		width="auto" style="background-color:#8A0808;"
 		apply="controlador.transacciones.CListaPersonalCargo">
 		<separator />
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Acción a Realizar" style="font-weight:bold;" />
 		</div>
 		<separator />

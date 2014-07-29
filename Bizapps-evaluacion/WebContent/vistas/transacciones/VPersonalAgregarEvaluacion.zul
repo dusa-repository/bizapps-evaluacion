@@ -6,7 +6,7 @@
 		<separator />
 
 
-		<div style="background-color:#F8E0E0;">
+		<div style="background-color:#F8E0E0 ; ;">
 			<label value="Evaluación de Desempeño"
 				style="font-weight:bold;" />
 		</div>
@@ -131,14 +131,14 @@
 									<button id="btnOk" width="auto"
 										height="auto" mold="trendy"
 										image="/public/imagenes/botones/seleccionar.png"
-										style="background-color:#F8E0E0;">
+										style="background-color:#F8E0E0 ; ;">
 									</button>
 								</listcell>
 								<listcell>
 									<button id="btnCancelarO"
 										width="auto" height="auto" mold="trendy"
 										image="/public/imagenes/botones/anular.png"
-										style="background-color:#F8E0E0;">
+										style="background-color:#F8E0E0 ; ;">
 									</button>
 								</listcell>
 							</listitem>
@@ -345,14 +345,14 @@
 									<button id="btnOk2" width="auto"
 										height="auto" mold="trendy"
 										image="/public/imagenes/botones/seleccionar.png"
-										style="background-color:#F8E0E0;">
+										style="background-color:#F8E0E0 ; ;">
 									</button>
 								</listcell>
 								<listcell>
 									<button id="btnCancelarI"
 										width="auto" height="auto" mold="trendy"
 										image="/public/imagenes/botones/anular.png"
-										style="background-color:#F8E0E0;">
+										style="background-color:#F8E0E0 ; ;">
 									</button>
 								</listcell>
 							</listitem>

@@ -31,5 +31,9 @@ public class SEvaluacionCompetencia {
 	public EvaluacionCompetencia buscar (Evaluacion evaluacion, Competencia competencia){
 		return evaluacionCompetenciaDAO.findByEvaluacionAndCompetencia(evaluacion, competencia);
 	}
+	
+	public List<EvaluacionCompetencia> buscar (Evaluacion evaluacion){
+		return  evaluacionCompetenciaDAO.findByEvaluacion(evaluacion);
+	}
 
 }

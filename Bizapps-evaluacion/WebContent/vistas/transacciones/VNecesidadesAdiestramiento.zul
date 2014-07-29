@@ -72,7 +72,7 @@
 			</grid>
 			<separator />
 			<separator />
-			<div align="center" style="background-color:#F8E0E0;">
+			<div align="center" style="background-color:#F8E0E0 ; ;">
 				<label value="DATOS DEL EMPLEADO A EVALUAR"
 					style="font-weight:bold" />
 			</div>
@@ -106,7 +106,7 @@
 			</listbox>
 			<separator />
 			<separator />
-			<div align="center" style="background-color:#F8E0E0;">
+			<div align="center" style="background-color:#F8E0E0 ; ;">
 				<label
 					value="DATOS DE LA FORMACIÓN ACADÉMICA DEL EMPLEADO"
 					style="font-weight:bold" />
@@ -134,7 +134,7 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<div align="center" style="background-color:#F8E0E0;">
+		<div align="center" style="background-color:#F8E0E0 ; ;">
 			<label value="PERFIL REQUERIDO DEL CARGO"
 				style="font-weight:bold" />
 		</div>
@@ -164,7 +164,7 @@
 		</listbox>
 		<separator />
 		<separator />
-		<div align="center" style="background-color:#F8E0E0;">
+		<div align="center" style="background-color:#F8E0E0 ; ;">
 			<label
 				value="DIAGNOSTICO DEL TRABAJADOR EN MATERIA DE FORMACIÓN Y CONOCIMIENTOS"
 				style="font-weight:bold" />
