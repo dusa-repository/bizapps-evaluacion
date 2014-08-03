@@ -172,6 +172,11 @@
 								</listitem>
 							</template>
 						</listbox>
+						<div align="right" height="100%" width="95%">
+						<label
+							value="* Para ver/modificar los objetivos debe hacer doble click sobre ellos ! "
+							style="font-size: 14px;font-weight:bold;"></label>
+					</div>
 					</groupbox>
 					<!-- <panel border="normal" width="95%" -->
 					<!-- style="margin-left:2%;margin-right:3%"> -->
@@ -380,6 +385,11 @@
 								</listitem>
 							</template>
 						</listbox>
+						<div align="right" height="100%" width="95%">
+						<label
+							value="* Para ver/modificar los indicadores debe hacer doble click sobre ellos ! "
+							style="font-size: 14px;font-weight:bold;"></label>
+					</div>
 					</groupbox>
 					<separator></separator>
 					<!-- <panel border="normal" width="95%" -->

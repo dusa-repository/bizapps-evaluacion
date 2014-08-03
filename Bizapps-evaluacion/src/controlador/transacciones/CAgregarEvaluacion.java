@@ -1817,15 +1817,14 @@ public class CAgregarEvaluacion extends CGenerico {
 		try {
 			guardarEvaluacion(false);
 
-			/*Executions.getCurrent().sendRedirect(
+			Executions.getCurrent().sendRedirect(
 					"http://www.dusanet.com:8029/evaluacion/Impresion?par1="
 							+ idEva + "&par2=" + evaluador.getNombre() + "",
-					"_blank");*/
+					"_blank");
 
-			
-			  Executions.getCurrent().sendRedirect(
-			  "http://localhost:8080/Bizapps-evaluacion/Impresion?par1=" +
-			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");
+			  /*Executions.getCurrent().sendRedirect(
+			  "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
+			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");*/
 			 
 
 		} catch (Exception e) {
@@ -2187,8 +2186,8 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 
 	}
-
-	private void calcularResultadoFinal(Evaluacion evaluacionAux) {
+	
+	private void calcularResultadoFinalVieja(Evaluacion evaluacionAux) {
 
 		double ndr = 0;
 		double nde = 0;
@@ -2200,6 +2199,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			List<NivelCompetenciaCargo> listaNivelCompetenciaCargo = new ArrayList<NivelCompetenciaCargo>();
 			listaNivelCompetenciaCargo = servicioNivelCompetenciaCargo
 					.buscar(evaluacionAux.getCargo());
+			
+			
 			for (int i = 0; i < listaNivelCompetenciaCargo.size(); i++) {
 
 				Competencia competenciaRequerida = servicioCompetencia
@@ -2273,7 +2274,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 			}
 
-			// --------------------------------------------------------------
+			// -------------------------------------------------------------------------------------------
 
 			resultadoCompetencia = (nde / ndr) * 100;
 
@@ -2314,7 +2315,246 @@ public class CAgregarEvaluacion extends CGenerico {
 			int resultadoFinal = resultadoPesoObjetivo
 					+ resultadoPesoCompetencia;
 			String rf = String.valueOf(resultadoFinal);
-			txtResultadoFinal.setValue(rf);
+			txtResultadoFinal.setValue(rf.concat("%"));
+			/*txtValoracionFinal.setValue(servicioUtilidad
+					.obtenerValoracionFinal((int) resultadoFinal));*/
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
+		}
+	}
+	
+	
+	
+
+	private void calcularResultadoFinal(Evaluacion evaluacionAux) {
+
+		double acumuladorPesoCompetencia=0.0;
+		double ndr = 0;
+		double nde = 0;
+		Competencia competenciaEvidenciada;
+		Dominio dominioEvidenciado;
+		
+		
+
+		try {
+
+			List<NivelCompetenciaCargo> listaNivelCompetenciaCargo = new ArrayList<NivelCompetenciaCargo>();
+			listaNivelCompetenciaCargo = servicioNivelCompetenciaCargo
+					.buscar(evaluacionAux.getCargo());
+			
+			Integer contadorCompetencias =0;
+			
+			for (int i = 0; i < listaNivelCompetenciaCargo.size(); i++) {
+				
+				try {
+				
+				Dominio dominioRequerido = servicioDominio
+						.buscarDominio(listaNivelCompetenciaCargo.get(i)
+								.getDominio().getIdDominioRelacionado());
+				
+				if (dominioRequerido.getDescripcionDominio().compareTo("No Aplica")==0)
+				{
+					
+				}
+				else
+				{
+					contadorCompetencias++;
+				}
+				
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.toString());
+
+				}
+				
+			}
+			
+			double pesoCompetencia = 0.0;
+			try {
+				pesoCompetencia =(double) 100 / contadorCompetencias;
+			} catch (Exception e) {
+				// TODO: handle exception
+				pesoCompetencia = 0;
+			}
+			
+			
+			acumuladorPesoCompetencia=0.0;
+			
+			for (int i = 0; i < listaNivelCompetenciaCargo.size(); i++) {
+
+				Competencia competenciaRequerida = servicioCompetencia
+						.buscarCompetencia(listaNivelCompetenciaCargo.get(i)
+								.getCompetencia().getId());
+
+				try {
+
+					competenciaEvidenciada = servicioCompetencia
+							.buscarCompetencia(servicioEvaluacionCompetencia
+									.buscar(evaluacionAux, competenciaRequerida)
+									.getCompetencia().getId());
+
+					dominioEvidenciado = servicioDominio
+							.buscarDominio((servicioEvaluacionCompetencia
+									.buscar(evaluacionAux, competenciaRequerida)
+									.getIdDominio()));
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.toString());
+
+					competenciaEvidenciada = null;
+					dominioEvidenciado = null;
+				}
+
+				Dominio dominioRequerido = servicioDominio
+						.buscarDominio(listaNivelCompetenciaCargo.get(i)
+								.getDominio().getIdDominioRelacionado());
+
+				if (dominioRequerido != null) {
+				
+					Integer pesoDominioRequerido=0;
+					
+					switch (dominioRequerido.getDescripcionDominio()) {
+					case "Basico":
+						  pesoDominioRequerido=1;
+						break;
+					case "Intermedio":
+						  pesoDominioRequerido=2;
+						break;
+					case "Avanzado":
+						  pesoDominioRequerido=3;
+						break;
+					case "Especializado":
+						  pesoDominioRequerido=4;
+						break;
+					default:
+						break;
+					}
+					
+					
+					
+					
+					Integer pesoDominioEvidenciado=0;
+					
+					if (dominioEvidenciado != null) {
+					
+					switch (dominioEvidenciado.getDescripcionDominio()) {
+					case "Basico":
+						pesoDominioEvidenciado=1;
+						break;
+					case "Intermedio":
+						pesoDominioEvidenciado=2;
+						break;
+					case "Avanzado":
+						pesoDominioEvidenciado=3;
+						break;
+					case "Especializado":
+						pesoDominioEvidenciado=4;
+						break;
+					default:
+						break;
+					}
+					
+				
+					}
+				
+				
+					List<EvaluacionConducta> listaConductasEvidenciadas = new ArrayList<EvaluacionConducta>();
+
+					if (competenciaEvidenciada != null) {
+						listaConductasEvidenciadas = servicioEvaluacionConducta
+								.buscar(evaluacionAux, competenciaEvidenciada);
+					}
+
+					
+					double acumuladorPesoConducta = 0;
+					Integer contadorConductas=0;
+					for (int j = 0; j < listaConductasEvidenciadas.size(); j++) {
+						EvaluacionConducta evaluacionConducta = listaConductasEvidenciadas
+								.get(j);
+						contadorConductas++;
+						
+						if (evaluacionConducta != null) {
+							if (evaluacionConducta.getValor()) {
+								acumuladorPesoConducta = acumuladorPesoConducta
+										+ pesoDominioEvidenciado;
+							}
+						}
+
+					}
+					
+					Integer pesoTotalDominioRequerido=0;
+					try
+					{
+						pesoTotalDominioRequerido=pesoDominioRequerido*contadorConductas;
+					}
+					catch (Exception ex)
+					{
+						pesoTotalDominioRequerido=0;
+					}
+					
+
+					if ((dominioEvidenciado != null) &&  (pesoTotalDominioRequerido!=0)) {
+						
+						acumuladorPesoCompetencia= acumuladorPesoCompetencia+((acumuladorPesoConducta /  pesoTotalDominioRequerido ) * pesoCompetencia);
+						
+						
+						
+					}
+
+					
+
+				}
+
+			}
+
+			// -------------------------------------------------------------------------------------------
+
+			resultadoCompetencia =   acumuladorPesoCompetencia; //(nde / ndr) * 100;
+			
+			if (resultadoCompetencia >115)
+			{ resultadoCompetencia=115.0;}
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			resultadoCompetencia = 0.0;
+		}
+
+		try {
+
+			DecimalFormat f = new DecimalFormat("##.0");
+
+			int id = 1;
+			int id2 = 2;
+			Distribucion dis = servicioDistribucion.buscarDistribucion(id);
+			Distribucion dist = servicioDistribucion.buscarDistribucion(id2);
+			int distO = dis.getPorcentaje();
+			int distC = dist.getPorcentaje();
+			String dO = String.valueOf(distO);
+			String dC = String.valueOf(distC);
+
+			String r = f.format(resultadoCompetencia);
+
+			txttotalCompetencia1.setValue(r);
+			txttotalCompetencia2.setValue(r);
+
+			String o = String.valueOf(calcularTotalResultadoObjetivos());
+			Double resul1 = Double.parseDouble(o);
+			lblResultado.setValue(o);
+			lblResultado1.setValue(r);
+			lblDistribucion.setValue(dO);
+			lblDistribucion1.setValue(dC);
+			resultadoPesoCompetencia = (int) Math
+					.round(((distC * resultadoCompetencia) / 100));
+			resultadoPesoObjetivo = (int) Math.round(((distO * resul1) / 100));
+			lblResultadoPeso.setValue(resultadoPesoObjetivo.toString());
+			lblResultadoPeso1.setValue(resultadoPesoCompetencia.toString());
+			int resultadoFinal = resultadoPesoObjetivo
+					+ resultadoPesoCompetencia;
+			String rf = String.valueOf(resultadoFinal);
+			txtResultadoFinal.setValue(rf.concat("%"));
 			/*txtValoracionFinal.setValue(servicioUtilidad
 					.obtenerValoracionFinal((int) resultadoFinal));*/
 
