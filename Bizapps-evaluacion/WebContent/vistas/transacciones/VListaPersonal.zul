@@ -66,6 +66,11 @@
 					</listitem>
 				</template>
 			</listbox>
+			<div align="right" height="100%" width="95%">
+						<label
+							value="* Para ver/modificar las evaluaciones debe hacer doble click sobre ellas ! "
+							style="color: black;font-size: 14px;font-weight:bold;"></label>
+					</div>
 		</groupbox>
 	</window>
 	<include id="contenido"></include>

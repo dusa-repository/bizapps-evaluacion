@@ -56,8 +56,7 @@ public class ReporteBase {
 	            ClassLoader cl = this.getClass().getClassLoader();
 	            InputStream fis = null;
 	            
-	            String path_banner = getClass().getResource(
-						"/controlador/reportes/evaluacion/imagenes/banner.jpg").getPath();
+	            String path_banner =""; //getClass().getResource("/controlador/reportes/evaluacion/imagenes/banner.jpg").getPath();
 	            
 	            Map parameters = new HashMap();
 
@@ -68,7 +67,7 @@ public class ReporteBase {
 	            fis = (cl.getResourceAsStream("controlador/reportes/evaluacion/jasper/reporteEvaluacion.jasper"));
 
 	            String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	            String url = "jdbc:sqlserver://localhost:1433;databaseName=dusa_evaluacion";
+	            String url = "jdbc:sqlserver://172.23.20.72:1433;databaseName=dusa_evaluacion";
 	            String user = "client";
 	            String password = "123";
 

@@ -1354,7 +1354,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				} else {
 					String nivel = ((Combobox) ((listItem.getChildren().get(2)))
 							.getFirstChild()).getSelectedItem()
-							.getDescription();
+							.getContext();
 
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
 							.getValue();
@@ -1395,7 +1395,7 @@ public class CAgregarEvaluacion extends CGenerico {
 				} else {
 					String nivel = ((Combobox) ((listItem.getChildren().get(2)))
 							.getFirstChild()).getSelectedItem()
-							.getDescription();
+							.getContext();
 
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
 							.getValue();
@@ -1467,6 +1467,7 @@ public class CAgregarEvaluacion extends CGenerico {
 					.parseDouble(txttotalObjetivos.getValue()));
 
 			servicioEvaluacion.guardar(evaluacionEmpleado);
+			
 
 			if (mostrarMensaje) {
 				Messagebox.show("La Evaluacion ha sido guardada Exitosamente",
@@ -1822,7 +1823,7 @@ public class CAgregarEvaluacion extends CGenerico {
 							+ idEva + "&par2=" + evaluador.getNombre() + "",
 					"_blank");
 
-			  /*Executions.getCurrent().sendRedirect(
+			 /* Executions.getCurrent().sendRedirect(
 			  "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
 			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");*/
 			 
@@ -2315,7 +2316,7 @@ public class CAgregarEvaluacion extends CGenerico {
 			int resultadoFinal = resultadoPesoObjetivo
 					+ resultadoPesoCompetencia;
 			String rf = String.valueOf(resultadoFinal);
-			txtResultadoFinal.setValue(rf.concat("%"));
+			txtResultadoFinal.setValue(rf);
 			/*txtValoracionFinal.setValue(servicioUtilidad
 					.obtenerValoracionFinal((int) resultadoFinal));*/
 
@@ -2554,7 +2555,7 @@ public class CAgregarEvaluacion extends CGenerico {
 			int resultadoFinal = resultadoPesoObjetivo
 					+ resultadoPesoCompetencia;
 			String rf = String.valueOf(resultadoFinal);
-			txtResultadoFinal.setValue(rf.concat("%"));
+			txtResultadoFinal.setValue(rf);
 			/*txtValoracionFinal.setValue(servicioUtilidad
 					.obtenerValoracionFinal((int) resultadoFinal));*/
 

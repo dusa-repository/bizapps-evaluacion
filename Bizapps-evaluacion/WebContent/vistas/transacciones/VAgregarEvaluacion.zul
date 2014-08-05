@@ -65,7 +65,7 @@
 						<listbox height="auto" id="lbxObjetivos" width="auto">
 							<listhead style="background: #F8E0E0 ; ">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Plan Estratégico" width="22%" />
+								<listheader label="Pilar Estratégico" width="22%" />
 								<listheader label="Objetivo" width="46%" />
 								<listheader label="Corresponsables" width="15%" />
 								<listheader label="Peso (%)" width="10%" />
@@ -76,7 +76,7 @@
 							<listitem>
 								<listcell></listcell>
 								<listcell>
-									<combobox placeholder="Plan Estratégico" mold="rounded"
+									<combobox placeholder="Pilar Estratégico" mold="rounded"
 										rows="1" width="100%" style="background-color:white;border:none"
 										readonly="true" id="cmbPerspectiva">
 										<template name="model">
@@ -143,7 +143,7 @@
 						<listbox height="auto" id="lbxObjetivosGuardados" width="auto">
 							<listhead style="background: #F8E0E0 ; ">
 								<listheader label="Línea" width="5%" />
-								<listheader label="Plan Estratégico" width="25%" />
+								<listheader label="Pilar Estratégico" width="25%" />
 								<listheader label="Objetivo" width="33%" />
 								<listheader label="Corresponsables" width="13%" />
 								<listheader label="Peso (%)" width="8%" />
@@ -445,7 +445,7 @@
 										mold="rounded" rows="1" width="100%"
 										style="background-color:white;border:none" model="${$composer.dominio}">
 										<template name="model">
-											<comboitem description="${each.id}" label="${each.descripcionDominio}" />
+											<comboitem context="${each.id}" label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
 								</listcell>
@@ -504,7 +504,7 @@
 										mold="rounded" rows="1" width="100%"
 										style="background-color:white;border:none" model="${$composer.dominio}">
 										<template name="model">
-											<comboitem description="${each.id}" label="${each.descripcionDominio}" />
+											<comboitem context="${each.id}" label="${each.descripcionDominio}" />
 										</template>
 									</combobox>
 								</listcell>
@@ -730,6 +730,8 @@
 						<label value="Resultado Final =" style="font-size: 14px;font-weight:bold;">
 						</label>
 						<label id="txtResultadoFinal" style="font-size: 14px;">
+						</label>
+						<label id="txtPorcentaje" style="font-size: 14px;">%
 						</label>
 					</div>
 					<!-- <div align="right" height="100%" width="80%">

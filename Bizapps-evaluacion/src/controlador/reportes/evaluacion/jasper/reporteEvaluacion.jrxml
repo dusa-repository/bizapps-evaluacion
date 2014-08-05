@@ -736,10 +736,6 @@ SUPERVISOR
 				</textElement>
 				<text><![CDATA[EVALUACIÓN DE DESEMPEÑO]]></text>
 			</staticText>
-			<image>
-				<reportElement x="4" y="3" width="201" height="35" uuid="09191733-58e1-4529-81d1-8372a54c09b8"/>
-				<imageExpression><![CDATA[$P{path_banner}]]></imageExpression>
-			</image>
 			<line>
 				<reportElement x="1" y="39" width="551" height="1" uuid="9ce79267-d8ee-4565-aad5-7153f74dc214"/>
 			</line>
