@@ -396,10 +396,9 @@ public class CEmpleado extends CGenerico {
 								if (evt.getName().equals("onOK")) {
 									
 									revision = servicioRevision.buscarPorEstado("ACTIVO");
-									Authentication auth = SecurityContextHolder.getContext()
-											.getAuthentication();
-									Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-									String ficha = u.getCedula();
+									
+									Usuario u = servicioUsuario.buscarPorCedula(eva.getFicha());
+									String ficha = eva.getFicha();
 									Integer idUsuario = u.getIdUsuario();
 									Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(eva.getFicha()) + 1;
 									Integer numeroEvaluacionPrimaria = servicioEvaluacion.buscarId() + 1;

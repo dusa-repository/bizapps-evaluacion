@@ -54,10 +54,10 @@ public class CEvaluacionConductas extends CGenerico {
 	private Button btnCancelar;
 	@Wire
 	private Button btnGuardar;
-	private  int idCompetencia;
-	private  int idDominio;
-	private  int numeroEvaluacion;
-	private  Integer idEva;
+	private int idCompetencia;
+	private int idDominio;
+	private int numeroEvaluacion;
+	private Integer idEva;
 
 	EvaluacionCompetencia evaluacionCompetencia = new EvaluacionCompetencia();
 	EvaluacionConducta evaluacionConducta = new EvaluacionConducta();
@@ -76,7 +76,7 @@ public class CEvaluacionConductas extends CGenerico {
 			if (map.get("id") != null) {
 				String dominio1 = (String) (map.get("idnivel"));
 				idEva = (Integer) map.get("idEva");
-				System.out.println("vi"+idEva);
+				System.out.println("vi" + idEva);
 				idDominio = Integer.parseInt(dominio1);
 				idCompetencia = (Integer) map.get("id");
 				conductasE = (List<EvaluacionConducta>) map.get("conductas");
@@ -99,48 +99,60 @@ public class CEvaluacionConductas extends CGenerico {
 				Dominio dominio = servicioDominio.buscarDominio(idDominio);
 				List<ConductaCompetencia> conductas = new ArrayList<ConductaCompetencia>();
 				conductas = servicioConductaCompetencia
-						.buscarConductaCompetenciasDominio(competencia,dominio);
-				
+						.buscarConductaCompetenciasDominio(competencia, dominio);
+
 				lbxConductasRectoras
 						.setModel(new ListModelList<ConductaCompetencia>(
 								conductas));
-			
-				
-				multiple();
-			
-				if (conductasE != null){
-					lbxConductasEn.setModel(new ListModelList<EvaluacionConducta>(
-							conductasE));
-				lbxConductasRectoras.renderAll();
-				for (int i = 0; i < conductasE.size(); i++) {
-					Integer id = conductasE.get(i).getConductaCompetencia()
-							.getId();
-					Evaluacion evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
-					for (int j = 0; j < lbxConductasRectoras.getItemCount(); j++) {
-						Listitem listItem = lbxConductasRectoras
-								.getItemAtIndex(j);
-						ConductaCompetencia cc = listItem.getValue();
-						int id2 = cc.getId();
-						if (id == id2) {
 
-							EvaluacionConducta ec = servicioEvaluacionConducta.buscar(evaluacion, cc);
-							if (ec.getValor())
-							{
-								listItem.setSelected(true);
+				multiple();
+
+				if (conductasE != null) {
+					lbxConductasEn
+							.setModel(new ListModelList<EvaluacionConducta>(
+									conductasE));
+					lbxConductasRectoras.renderAll();
+					for (int i = 0; i < conductasE.size(); i++) {
+						Integer id = conductasE.get(i).getConductaCompetencia()
+								.getId();
+						Evaluacion evaluacion = servicioEvaluacion
+								.buscarEvaluacion(idEva);
+						for (int j = 0; j < lbxConductasRectoras.getItemCount(); j++) {
+							Listitem listItem = lbxConductasRectoras
+									.getItemAtIndex(j);
+							ConductaCompetencia cc = listItem.getValue();
+							int id2 = cc.getId();
+							if (id == id2) {
+
+								EvaluacionConducta ec = servicioEvaluacionConducta
+										.buscar(evaluacion, cc);
+								if (ec.getValor()) {
+									listItem.setSelected(true);
+								} else {
+									listItem.setSelected(false);
+								}
+								String observacion = ec.getObservacion();
+								System.out.println(observacion);
+								((Textbox) ((listItem.getChildren().get(2)))
+										.getFirstChild())
+										.setValue((observacion));
 							}
-							else
-							{
-								listItem.setSelected(false);
-							}
-							String observacion = ec.getObservacion();
-							System.out.println(observacion);
-							((Textbox) ((listItem.getChildren().get(2))).getFirstChild()).setValue((observacion));
+
 						}
 
 					}
 					
-
-				}
+					if (((String) map.get("periodoActivo")).compareTo("SI")==0)
+					{
+						btnGuardar.setVisible(true);
+					}
+					else
+					{
+						btnGuardar.setVisible(false);
+					}
+						
+					
+					
 				}
 			}
 		}
@@ -162,40 +174,38 @@ public class CEvaluacionConductas extends CGenerico {
 
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
-		System.out.println("domimio" +idDominio);
+		System.out.println("domimio" + idDominio);
 		evaluacion = servicioEvaluacion.buscarEvaluacion(idEva);
-		Competencia competencia = servicioCompetencia.buscarCompetencia(idCompetencia); 
+		Competencia competencia = servicioCompetencia
+				.buscarCompetencia(idCompetencia);
 		evaluacionCompetencia.setCompetencia(competencia);
 		evaluacionCompetencia.setEvaluacion(evaluacion);
 		evaluacionCompetencia.setIdDominio(idDominio);
-		servicioUtilidad.eliminarConductaPorCompetencia(evaluacion.getIdEvaluacion(), competencia.getId());
-		
+		servicioUtilidad.eliminarConductaPorCompetencia(
+				evaluacion.getIdEvaluacion(), competencia.getId());
 
-			boolean valor =false;
-			for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
-				List<Listitem> listItem2 = lbxConductasRectoras.getItems();
-				
-			
-					Listitem listItem = lbxConductasRectoras.getItemAtIndex(i);
-					ConductaCompetencia conductaCompe = listItem2.get(i)
-							.getValue();
-					String observacion = ((Textbox) ((listItem.getChildren()
-							.get(2))).getFirstChild()).getValue();
-					
-					evaluacionConducta.setValor(listItem.isSelected());
-					evaluacionConducta.setCompetencia(competencia);
-					evaluacionConducta.setConductaCompetencia(conductaCompe);
-					evaluacionConducta.setEvaluacion(evaluacion);
-					evaluacionConducta.setObservacion(observacion);
-					servicioEvaluacionConducta.guardar(evaluacionConducta);
-					
-				
-			}
+		boolean valor = false;
+		for (int i = 0; i < lbxConductasRectoras.getItems().size(); i++) {
+			List<Listitem> listItem2 = lbxConductasRectoras.getItems();
 
-			servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
-			Messagebox.show("Datos guardados exitosamente", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
-			wdwConductasRectoras.onClose();
+			Listitem listItem = lbxConductasRectoras.getItemAtIndex(i);
+			ConductaCompetencia conductaCompe = listItem2.get(i).getValue();
+			String observacion = ((Textbox) ((listItem.getChildren().get(2)))
+					.getFirstChild()).getValue();
+
+			evaluacionConducta.setValor(listItem.isSelected());
+			evaluacionConducta.setCompetencia(competencia);
+			evaluacionConducta.setConductaCompetencia(conductaCompe);
+			evaluacionConducta.setEvaluacion(evaluacion);
+			evaluacionConducta.setObservacion(observacion);
+			servicioEvaluacionConducta.guardar(evaluacionConducta);
+
 		}
+
+		servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
+		Messagebox.show("Datos guardados exitosamente", "Información",
+				Messagebox.OK, Messagebox.INFORMATION);
+		wdwConductasRectoras.onClose();
+	}
 
 }

@@ -83,12 +83,13 @@ public class CEmpleadoAgregar extends CGenerico {
 	Evaluacion evaluacion = new Evaluacion();
 	public  Revision revision;
 	private  int idEva;
+	private boolean singleton=false;
 
 	Mensaje msj = new Mensaje();
 
 	@Override
 	public void inicializar() throws IOException {
-
+		singleton=true;
 		arbolPersonalAgregar.setModel(getModel());
 		revision = servicioRevision.buscarPorEstado("ACTIVO");
 
@@ -216,9 +217,30 @@ public class CEmpleadoAgregar extends CGenerico {
 		}
 		return root;
 	}
+	
+	
+	@Listen("onDoubleClick = #arbolPersonalAgregar")
+	public void selectedNodeDoubleClik()
+	{
+		//selectedNode();
+	}
+
 
 	@Listen("onClick = #arbolPersonalAgregar")
-	public void selectedNode() {
+	public void selectedNodeClik() 
+	{
+		if (singleton) 
+		{
+			singleton=false;
+			selectedNode();	
+		}
+		
+		
+	}
+	
+	
+	public void selectedNode()
+	{
 		if (arbolPersonalAgregar.getSelectedItem() != null) {
 			String item = String.valueOf(arbolPersonalAgregar.getSelectedItem()
 					.getContext());
@@ -278,7 +300,6 @@ public class CEmpleadoAgregar extends CGenerico {
 				winEvaluacionEmpleadoAgregar = null;
 			}
 			else{
-				
 			winEvaluacionEmpleadoAgregar = (Window) Executions
 					.createComponents(
 							"/vistas/transacciones/VAgregarEvaluacion.zul",
@@ -288,5 +309,7 @@ public class CEmpleadoAgregar extends CGenerico {
 
 		}
 	}
+
 	}
+	
 }

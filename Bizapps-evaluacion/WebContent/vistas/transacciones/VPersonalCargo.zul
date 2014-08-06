@@ -9,6 +9,7 @@
 		<panel border="normal" width="100%">
 			<panelchildren>
 				<separator />
+
 				<div align="left">
 					<button id="btnAgregar" tabindex="3"
 						style="margin-left:5px; height:27px" label="Agregar"
@@ -22,6 +23,16 @@
 					</button>
 					<separator />
 				</div>
+				<div align="left" height="100%" width="95%">
+						<label
+							value="* Presione el boton agregar para crear una nueva evaluacion del personal a su cargo  "
+							style="color: black;font-size: 14px;font-weight:bold;"></label>
+					</div>
+					<div align="left" height="100%" width="95%">
+						<label
+							value="** Presione el boton buscar para revisar/editar una evaluacion existente del personal a su cargo  "
+							style="color: black;font-size: 14px;font-weight:bold;"></label>
+					</div>
 			</panelchildren>
 		</panel>
 		<separator></separator>

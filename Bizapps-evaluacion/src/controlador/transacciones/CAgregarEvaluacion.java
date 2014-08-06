@@ -516,30 +516,63 @@ public class CAgregarEvaluacion extends CGenerico {
 							String fichaMap = (String) map.get("titulo");
 							fichaE = fichaMap;
 
-							System.out.println(idEvaluacion);
-
 							Evaluacion evaluacion = servicioEvaluacion
 									.buscarEvaluacion(idEvaluacion);
-							if (evaluacion.getEstadoEvaluacion().equals(
-									"EN EDICION")) {
-								btnAgregar.setVisible(true);
-								btnEliminar.setVisible(true);
-								btnAgregarIndicador.setVisible(true);
-								btnEliminarIndicador.setVisible(true);
-								btnAgregarAcciones.setVisible(true);
-								btnEliminarAcciones.setVisible(true);
-
-							} else {
+							
+							if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
+							{
+								if (evaluacion.getEstadoEvaluacion().equals(
+										"EN EDICION")) {
+									btnAgregar.setVisible(true);
+									btnEliminar.setVisible(true);
+									btnAgregarIndicador.setVisible(true);
+									btnEliminarIndicador.setVisible(true);
+									btnAgregarAcciones.setVisible(true);
+									btnEliminarAcciones.setVisible(true);
+									btnAgregarCapacitacion.setVisible(true);
+									btnOk.setVisible(true);
+									btnOk2.setVisible(true);
+								} else {
+									btnAgregar.setVisible(false);
+									btnEliminar.setVisible(false);
+									btnOk.setVisible(false);
+									btnOk2.setVisible(false);
+									btnAgregarIndicador.setVisible(false);
+									btnEliminarIndicador.setVisible(false);
+									btnAgregarAcciones.setVisible(false);
+									btnEliminarAcciones.setVisible(false);
+									btnCambiarEstado.setVisible(false);
+									btnCancelar.setVisible(true);
+									btnAgregarCapacitacion.setVisible(false);
+									
+									/*Messagebox
+									.show("Esta evaluacion se encuentra en un estado distinto a 'EN EDICION' !, por tal razon no podra guardar ningun cambio !",
+											"Información", Messagebox.OK,
+											Messagebox.INFORMATION); */
+								}
+							}
+							else
+							{
 								btnAgregar.setVisible(false);
 								btnEliminar.setVisible(false);
+								btnOk.setVisible(false);
+								btnOk2.setVisible(false);
 								btnAgregarIndicador.setVisible(false);
 								btnEliminarIndicador.setVisible(false);
 								btnAgregarAcciones.setVisible(false);
 								btnEliminarAcciones.setVisible(false);
 								btnCambiarEstado.setVisible(false);
 								btnCancelar.setVisible(true);
-
+								btnAgregarCapacitacion.setVisible(false);
+								
+								/*Messagebox
+								.show("Esta evaluacion pertenece a una revision inactiva !, por tal razon no podra guardar ningun cambio !",
+										"Información", Messagebox.OK,
+										Messagebox.INFORMATION);*/
+								
 							}
+							
+							
 							txtCompromisos
 									.setValue(evaluacion.getCompromisos());
 							txtFortalezas.setValue(evaluacion.getFortalezas());
@@ -640,7 +673,7 @@ public class CAgregarEvaluacion extends CGenerico {
 							lblFechaCreacion.setValue(formatoFecha
 									.format(fechaHora));
 
-							if (evaluacion.getEstadoEvaluacion().equals(
+							/*if (evaluacion.getEstadoEvaluacion().equals(
 									"EN EDICION")) {
 								btnPendiente.setVisible(false);
 								btnCambiarEstado.setVisible(true);
@@ -668,6 +701,8 @@ public class CAgregarEvaluacion extends CGenerico {
 								btnAgregarIndicador.setVisible(false);
 								btnCambiarEstado.setVisible(false);
 							}
+							
+							*/
 
 						}
 					}
@@ -1065,9 +1100,9 @@ public class CAgregarEvaluacion extends CGenerico {
 		}
 		if (sumaPeso != 100) {
 			Messagebox
-					.show("La suma de los pesos de los objetivos debe ser igual a 100",
-							"Información", Messagebox.OK,
-							Messagebox.INFORMATION);
+			.show("La suma de los pesos de los objetivos debe ser igual a 100",
+					"Información", Messagebox.OK,
+					Messagebox.INFORMATION);
 
 		}
 
@@ -1341,6 +1376,8 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
 	public void mostrarDatosCatalogo() {
+		
+		String periodoActivo="NO";
 
 		if (lbxCompetenciaEspecifica.getItemCount() != 0) {
 
@@ -1358,12 +1395,23 @@ public class CAgregarEvaluacion extends CGenerico {
 
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
 							.getValue();
+					
+					Evaluacion evaluacion = servicioEvaluacion
+							.buscarEvaluacion(idEva);
+					
+					if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
+					{
+						periodoActivo="SI";
+					}
+					
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					String titulo = "Competencias Especificas";
 					map.put("idEva", idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
 					map.put("titulo", titulo);
+					map.put("periodoActivo", periodoActivo);
+					
 					evaluacionconductas = servicioEvaluacionConducta
 							.buscarConductas(idEva);
 					map.put("conductas", evaluacionconductas);
@@ -1383,6 +1431,8 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onDoubleClick = #lbxCompetenciaRectora")
 	public void mostrarDatosCatalogo1() {
+		
+		String periodoActivo="NO";
 
 		if (lbxCompetenciaRectora.getItemCount() != 0) {
 
@@ -1399,11 +1449,21 @@ public class CAgregarEvaluacion extends CGenerico {
 
 					NivelCompetenciaCargo competencia = (NivelCompetenciaCargo) listItem
 							.getValue();
+					
+					Evaluacion evaluacion = servicioEvaluacion
+							.buscarEvaluacion(idEva);
+					
+					if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
+					{
+						periodoActivo="SI";
+					}
+					
+					
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("idEva", idEva);
-					System.out.println("va" + idEva);
 					map.put("id", competencia.getCompetencia().getId());
 					map.put("idnivel", nivel);
+					map.put("periodoActivo", periodoActivo);
 					String titulo = "Competencias Rectoras";
 					map.put("titulo", titulo);
 					evaluacionconductas = servicioEvaluacionConducta
@@ -1816,14 +1876,21 @@ public class CAgregarEvaluacion extends CGenerico {
 	public void imprimirEvaluacion() {
 
 		try {
-			guardarEvaluacion(false);
-
+			
+			Evaluacion evaluacion = servicioEvaluacion
+					.buscarEvaluacion(idEva);
+			
+			if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
+			{
+				guardarEvaluacion(false);
+			}
+			
 			Executions.getCurrent().sendRedirect(
 					"http://www.dusanet.com:8029/evaluacion/Impresion?par1="
 							+ idEva + "&par2=" + evaluador.getNombre() + "",
 					"_blank");
 
-			 /* Executions.getCurrent().sendRedirect(
+			  /*Executions.getCurrent().sendRedirect(
 			  "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
 			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");*/
 			 

@@ -5,7 +5,7 @@
 		<separator></separator>
 			<groupbox mold="3d" width="40%"
 				title="Evaluación de Desempeño">
-				<label value="ARBOL DE PERSONAL "
+				<label value="ARBOL DE PERSONAL A EVALUAR "
 					style="font-style: Arial; font-weight: bold; color: black;">
 				</label>
 				<separator />
