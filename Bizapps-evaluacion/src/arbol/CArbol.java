@@ -206,7 +206,7 @@ public class CArbol extends CGenerico {
 		String item = String.valueOf(arbolMenu.getSelectedItem().getValue());
 		boolean abrir = true;
 		Tab taba = new Tab();
-		if (arbolMenu.getSelectedItem().getLevel() > 0) {
+//		if (arbolMenu.getSelectedItem().getLevel() > 0) {
 			final Arbol arbolItem = servicioArbol.buscarPorNombreArbol(item);
 				
 			if (!arbolItem.getUrl().equals("inicio")) {
@@ -290,8 +290,13 @@ public class CArbol extends CGenerico {
 				 else {
 					taba.setSelected(true);
 				}
+			} else {
+				if (!arbolMenu.getSelectedItem().isOpen())
+					arbolMenu.getSelectedItem().setOpen(true);
+				else
+					arbolMenu.getSelectedItem().setOpen(false);
 			}
-		}
+//		}
 		
 		}
 		tabBox2 = tabBox;
