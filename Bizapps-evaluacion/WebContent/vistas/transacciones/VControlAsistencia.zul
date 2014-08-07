@@ -73,11 +73,11 @@
 				<listhead>
 					<listheader label="Código Empleado" width="15%"
 						visible="false" />
-					<listheader label="Ficha" width="15%" />
+					<listheader label="Ficha" width="10%" />
 					<listheader label="Nombre" />
 					<listheader label="Cargo" />
 					<listheader label="Gerencia" />
-					<listheader label="Asistencia" />
+					<listheader label="Asistencia" width="10%" />
 				</listhead>
 				<template name="model">
 					<listitem>

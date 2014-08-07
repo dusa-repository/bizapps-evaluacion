@@ -1,0 +1,70 @@
+<window id="wdwVItemEvaluacion" border="normal" height="auto"
+	apply="controlador.maestros.CItemEvaluacion"
+	style="background-color:#8A0808;">
+	<groupbox width="auto">
+		<separator />
+		<div id="botoneraItemEvaluacion" />
+		<separator />
+		<separator />
+		<groupbox id="gpxRegistroItemEvaluacion" width="auto" title=""
+			open="false">
+			<caption label="Nuevo" style="font-weight:bold"
+				tooltiptext="Presione para registrar un nuevo parametro" />
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="45%" />
+					<column label="" width="8%" />
+					<column label="" width="27%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label value="Descripción:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<textbox id="txtDescripcionItemEvaluacion"
+							rows="3" cols="100" width="100%" maxlength="250" tabindex="1"
+							tooltiptext="Ingrese aqui la descripcion del item" />
+					</row>
+					<row>
+						<hbox>
+							<label value="Tipo de Ponderación:"
+								class="etiqueta" />
+							<space />
+							<label value="*"
+								style="font-weight:bold;color:red">
+							</label>
+						</hbox>
+
+						<combobox id="cmbPonderacionItemEvaluacion"
+							readonly="true"
+							tooltiptext="Seleccione la ponderacion del item de evaluacion"
+							width="100%" tabindex="2">
+							<comboitem label="CUALITATIVA" />
+							<comboitem label="CUANTITATIVA" />
+						</combobox>
+					</row>
+
+
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<separator />
+		<groupbox id="gpxDatosItemEvaluacion" width="auto" title="">
+			<caption label="Registros" style="font-weight:bold"
+				tooltiptext="Presione para visualizar los items de evaluacion registrados" />
+			<div id="catalogoItemEvaluacion"
+				tooltiptext="Seleccione el item para realizar una accion" />
+		</groupbox>
+		<separator />
+		<separator />
+	</groupbox>
+</window>

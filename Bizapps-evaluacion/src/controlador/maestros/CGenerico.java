@@ -40,6 +40,7 @@ import servicio.maestros.SDominio;
 import servicio.maestros.SEmpleado;
 import servicio.maestros.SEmpresa;
 import servicio.maestros.SGerencia;
+import servicio.maestros.SItemEvaluacion;
 import servicio.maestros.SMedicion;
 import servicio.maestros.SParametro;
 import servicio.maestros.SPerfilCargo;
@@ -106,6 +107,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SPerfilCargo servicioPerfilCargo;
 	@WireVariable("SNivelCompetenciaCargo")
 	protected SNivelCompetenciaCargo servicioNivelCompetenciaCargo;
+	@WireVariable("SItemEvaluacion")
+	protected SItemEvaluacion servicioItemEvaluacion;
 	@WireVariable("SCargo")
 	protected SCargo servicioCargo;
 	@WireVariable("SCurso")
@@ -156,12 +159,9 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SUtilidad servicioUtilidad;
 	@WireVariable("SEvaluacionCapacitacion")
 	protected SEvaluacionCapacitacion servicioEvaluacionCapacitacion;
-	
-	
-	
-	protected  SimpleDateFormat formatoFecha = new SimpleDateFormat(
-			"dd-MM-yyyy");
-	public  List<Tab> tabs = new ArrayList<Tab>();
+
+	protected SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+	public List<Tab> tabs = new ArrayList<Tab>();
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario
