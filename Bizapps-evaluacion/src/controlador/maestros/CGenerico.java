@@ -56,6 +56,7 @@ import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 
+import servicio.transacciones.SActividadCurso;
 import servicio.transacciones.SBitacora;
 import servicio.transacciones.SConductaCompetencia;
 import servicio.transacciones.SEmpleadoClase;
@@ -109,6 +110,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SCargo servicioCargo;
 	@WireVariable("SCurso")
 	protected SCurso servicioCurso;
+	@WireVariable("SActividadCurso")
+	protected SActividadCurso servicioActividadCurso;
 	@WireVariable("SEmpresa")
 	protected SEmpresa servicioEmpresa;
 	@WireVariable("SGerencia")
