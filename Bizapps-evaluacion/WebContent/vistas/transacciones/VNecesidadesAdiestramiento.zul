@@ -72,7 +72,7 @@
 			</grid>
 			<separator />
 			<separator />
-			<div align="center" style="background-color:#F8E0E0 ; ;">
+			<div align="center" style="background-color:#F8E0E0">
 				<label value="DATOS DEL EMPLEADO A EVALUAR"
 					style="font-weight:bold" />
 			</div>
