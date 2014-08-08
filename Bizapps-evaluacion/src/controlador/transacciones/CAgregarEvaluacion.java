@@ -579,6 +579,7 @@ public class CAgregarEvaluacion extends CGenerico {
 							txtOportunidades.setValue(evaluacion
 									.getOportunidades());
 							txtResumen.setValue(evaluacion.getResumen());
+							txtComentarios.setValue(evaluacion.getComentario());
 							Authentication auth = SecurityContextHolder
 									.getContext().getAuthentication();
 							u = servicioUsuario.buscarUsuarioPorNombre(auth
