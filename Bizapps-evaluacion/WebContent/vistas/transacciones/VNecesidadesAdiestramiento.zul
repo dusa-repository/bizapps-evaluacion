@@ -83,7 +83,6 @@
 				emptyMessage="No ha seleccionado un empleado">
 				<listhead>
 					<listheader label="Ficha" width="8%" />
-					<listheader label="Cédula" width="10%" />
 					<listheader label="Nombre" width="15%" />
 					<listheader label="Cargo" />
 					<listheader label="Unidad Organizativa" />
@@ -92,7 +91,6 @@
 				<template name="model">
 					<listitem>
 						<listcell label="${each.ficha}"></listcell>
-						<listcell label="${each.cedula}"></listcell>
 						<listcell label="${each.nombre}"></listcell>
 						<listcell label="${each.cargo.descripcion}"></listcell>
 						<listcell

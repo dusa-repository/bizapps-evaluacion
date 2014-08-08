@@ -42,8 +42,6 @@ public class CEmpleado extends CGenerico {
 	@Wire
 	private Groupbox gpxRegistroEmpleado;
 	@Wire
-	private Textbox txtCedulaEmpleado;
-	@Wire
 	private Textbox txtNombreEmpleado;
 	@Wire
 	private Combobox cmbNivelAcademicoEmpleado;
@@ -128,7 +126,6 @@ public class CEmpleado extends CGenerico {
 								.getDescripcion());
 						txtUnidadEmpleado.setValue(empleado
 								.getUnidadOrganizativa().getDescripcion());
-						txtCedulaEmpleado.setValue(empleado.getCedula());
 						txtNombreEmpleado.setValue(empleado.getNombre());
 						cmbNivelAcademicoEmpleado.setValue(empleado
 								.getNivelAcademico());
@@ -174,7 +171,6 @@ public class CEmpleado extends CGenerico {
 							&& unidadOrganizativa != null
 							&& fichaSupervisorEmpleado != null) {
 						String nombre = txtNombreEmpleado.getValue();
-						String cedula = txtCedulaEmpleado.getValue();
 						String nivelAcademico = cmbNivelAcademicoEmpleado
 								.getValue();
 						String especialidad = txtEspecialidadEmpleado
@@ -191,7 +187,7 @@ public class CEmpleado extends CGenerico {
 						Empleado empleado = new Empleado(idEmpleado,
 								fechaAuditoria, ficha, fichaSupervisor,
 								gradoAuxiliar, nivelAcademico, especialidad,
-								especializacion, horaAuditoria, nombre, cedula,
+								especializacion, horaAuditoria, nombre,
 								usuario, cargo, empresa, unidadOrganizativa);
 						servicioEmpleado.guardar(empleado);
 						msj.mensajeInformacion(Mensaje.guardado);
@@ -304,7 +300,6 @@ public class CEmpleado extends CGenerico {
 		idUnidad = 0;
 		idFichaSupervisor = 0;
 		txtNombreEmpleado.setValue("");
-		txtCedulaEmpleado.setValue("");
 		cmbNivelAcademicoEmpleado.setValue("");
 		txtEspecialidadEmpleado.setValue("");
 		txtEspecializacionEmpleado.setValue("");
@@ -325,7 +320,6 @@ public class CEmpleado extends CGenerico {
 				|| txtCargoEmpleado.getText().compareTo("") != 0
 				|| txtUnidadEmpleado.getText().compareTo("") != 0
 				|| txtNombreEmpleado.getText().compareTo("") != 0
-				|| txtCedulaEmpleado.getText().compareTo("") != 0
 				|| cmbNivelAcademicoEmpleado.getText().compareTo("") != 0
 				|| txtEspecialidadEmpleado.getText().compareTo("") != 0
 				|| txtEspecializacionEmpleado.getText().compareTo("") != 0

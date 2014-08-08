@@ -181,8 +181,7 @@
 						<listcell label="${each.descripcion}"></listcell>
 						<listcell>
 
-							<textbox  width="auto"
-								style="border:none" />
+							<textbox  width="90%" />
 
 						</listcell>
 						<listcell>

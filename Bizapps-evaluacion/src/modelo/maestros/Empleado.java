@@ -48,9 +48,6 @@ public class Empleado implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 
-	@Column(name = "cedula")
-	private String cedula;
-
 	@Column(name = "usuario")
 	private String usuario;
 
@@ -75,7 +72,7 @@ public class Empleado implements Serializable {
 	public Empleado(int id, Timestamp fechaAuditoria, String ficha,
 			String fichaSupervisor, int gradoAuxiliar, String nivelAcademico,
 			String especialidad, String especializacion, String horaAuditoria,
-			String nombre, String cedula, String usuario, Cargo cargo,
+			String nombre, String usuario, Cargo cargo,
 			Empresa empresa, UnidadOrganizativa unidadOrganizativa) {
 		super();
 		this.id = id;
@@ -88,7 +85,6 @@ public class Empleado implements Serializable {
 		this.especializacion = especializacion;
 		this.horaAuditoria = horaAuditoria;
 		this.nombre = nombre;
-		this.cedula = cedula;
 		this.usuario = usuario;
 		this.cargo = cargo;
 		this.empresa = empresa;
@@ -210,13 +206,5 @@ public class Empleado implements Serializable {
 		this.especializacion = especializacion;
 	}
 
-	public String getCedula() {
-		return cedula;
-	}
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
-	
 	
 }

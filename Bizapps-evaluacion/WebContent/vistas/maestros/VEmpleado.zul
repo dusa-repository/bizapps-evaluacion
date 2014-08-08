@@ -66,13 +66,6 @@
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
-						<label value="Cédula:" class="etiqueta" />
-
-						<textbox id="txtCedulaEmpleado" width="100%"
-							maxlength="8" tabindex="4"
-							tooltiptext="Ingrese aqui la cedula del empleado" />
-					</row>
-					<row>
 						<label value="Nombre:" class="etiqueta" />
 
 						<textbox id="txtNombreEmpleado" width="100%"
