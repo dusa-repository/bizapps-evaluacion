@@ -351,7 +351,7 @@ public class CPerfilCargo extends CGenerico {
 		final List<PerfilCargo> listPerfilCargo = servicioPerfilCargo
 				.buscarTodos();
 		catalogo = new Catalogo<PerfilCargo>(catalogoPerfilCargo,
-				"Catalogo de PerfilCargoes", listPerfilCargo, "Cargo",
+				"Catalogo de Perfil de Cargos", listPerfilCargo, "Cargo",
 				"Descripción", "Nivel Académico", "Especialidad",
 				"Especialización", "Experiencia Previa", "Idioma",
 				"Observaciones") {

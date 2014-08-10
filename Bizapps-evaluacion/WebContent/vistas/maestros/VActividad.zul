@@ -29,7 +29,7 @@
 						</hbox>
 
 						<textbox id="txtDescripcionActividad"
-							width="90%" maxlength="100" tabindex="1"
+							width="90%" maxlength="250" tabindex="1"
 							tooltiptext="Ingrese aqui la descripcion de la actividad" />
 					</row>
 				</rows>

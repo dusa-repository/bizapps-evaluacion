@@ -21,6 +21,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -59,6 +60,7 @@ public class CEvaluacionEficacia extends CGenerico {
 	@Wire
 	private Div divCatalogoCurso;
 	List<Empleado> empleadoDatos = new ArrayList<Empleado>();
+	List<EmpleadoCurso> empleadosCurso = new ArrayList<EmpleadoCurso>();
 	List<ItemEvaluacion> itemPonderacionCualitativa = new ArrayList<ItemEvaluacion>();
 	List<ItemEvaluacion> itemPonderacionCuantitativa = new ArrayList<ItemEvaluacion>();
 	private int idCurso = 0;
@@ -76,86 +78,131 @@ public class CEvaluacionEficacia extends CGenerico {
 
 	}
 
+	public List<Curso> cursosEmpleado() {
+
+		List<Curso> cursos = new ArrayList<Curso>();
+		empleadosCurso = servicioEmpleadoCurso.buscarCursos(empleadoDatos
+				.get(0));
+
+		for (int i = 0; i < empleadosCurso.size(); i++) {
+
+			cursos.add(empleadosCurso.get(i).getCurso());
+		}
+
+		return cursos;
+	}
+
 	@Listen("onClick = #btnBuscarCurso")
 	public void mostrarCatalogoCurso() {
-		final List<Curso> listCurso = servicioCurso.buscarTodos();
-		catalogoCurso = new Catalogo<Curso>(divCatalogoCurso,
-				"Catalogo de Cursos", listCurso, "Área", "Nombre", "Duración") {
 
-			@Override
-			protected List<Curso> buscarCampos(List<String> valores) {
-				List<Curso> lista = new ArrayList<Curso>();
+		if (empleadoDatos.size() != 0) {
 
-				for (Curso curso : listCurso) {
-					if (curso.getArea().getDescripcion().toLowerCase()
-							.startsWith(valores.get(0))
-							&& curso.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
+			final List<Curso> listCurso = cursosEmpleado();
+			catalogoCurso = new Catalogo<Curso>(divCatalogoCurso,
+					"Catalogo de Cursos", listCurso, "Área", "Nombre",
+					"Duración") {
 
-							&& String.valueOf(curso.getDuracion())
-									.toLowerCase().startsWith(valores.get(2))) {
-						lista.add(curso);
+				@Override
+				protected List<Curso> buscarCampos(List<String> valores) {
+					List<Curso> lista = new ArrayList<Curso>();
+
+					for (Curso curso : listCurso) {
+						if (curso.getArea().getDescripcion().toLowerCase()
+								.startsWith(valores.get(0))
+								&& curso.getNombre().toLowerCase()
+										.startsWith(valores.get(1))
+
+								&& String.valueOf(curso.getDuracion())
+										.toLowerCase()
+										.startsWith(valores.get(2))) {
+							lista.add(curso);
+						}
 					}
+					return lista;
+
 				}
-				return lista;
 
-			}
+				@Override
+				protected String[] crearRegistros(Curso curso) {
+					String[] registros = new String[3];
+					registros[0] = curso.getArea().getDescripcion();
+					registros[1] = curso.getNombre();
+					registros[2] = String.valueOf(mostrarDuracion(curso)) + " "
+							+ curso.getMedidaDuracion();
 
-			@Override
-			protected String[] crearRegistros(Curso curso) {
-				String[] registros = new String[3];
-				registros[0] = curso.getArea().getDescripcion();
-				registros[1] = curso.getNombre();
-				registros[2] = String.valueOf(mostrarDuracion(curso)) + " "
-						+ curso.getMedidaDuracion();
+					return registros;
+				}
 
-				return registros;
-			}
+				@Override
+				protected List<Curso> buscar(String valor, String combo) {
+					// TODO Auto-generated method stub
+					if (combo.equals("Área"))
+						return servicioCurso.filtroArea(valor);
+					else if (combo.equals("Nombre"))
+						return servicioCurso.filtroNombre(valor);
+					else if (combo.equals("Duración"))
+						return servicioCurso.filtroDuracion(valor);
+					else
+						return servicioCurso.buscarTodos();
+				}
 
-			@Override
-			protected List<Curso> buscar(String valor, String combo) {
-				// TODO Auto-generated method stub
-				if (combo.equals("Área"))
-					return servicioCurso.filtroArea(valor);
-				else if (combo.equals("Nombre"))
-					return servicioCurso.filtroNombre(valor);
-				else if (combo.equals("Duración"))
-					return servicioCurso.filtroDuracion(valor);
-				else
-					return servicioCurso.buscarTodos();
-			}
+			};
 
-		};
+			catalogoCurso.setClosable(true);
+			catalogoCurso.setWidth("80%");
+			catalogoCurso.setParent(divCatalogoCurso);
+			catalogoCurso.doModal();
+		} else {
 
-		catalogoCurso.setClosable(true);
-		catalogoCurso.setWidth("80%");
-		catalogoCurso.setParent(divCatalogoCurso);
-		catalogoCurso.doModal();
+			Messagebox.show("Debe seleccionar un empleado", "Advertencia",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+
+		}
+
 	}
 
 	@Listen("onSeleccion = #divCatalogoCurso")
 	public void seleccionCurso() {
 		Curso curso = catalogoCurso.objetoSeleccionadoDelCatalogo();
 		idCurso = curso.getId();
-		txtCursoEvaluacionEficacia.setValue(curso.getNombre());
 		catalogoCurso.setParent(null);
-		// llenarLista();
-	}
 
+		EmpleadoCurso cursoEmpleado = servicioEmpleadoCurso
+				.buscarPorempleadoYCurso(empleadoDatos.get(0), curso);
+
+		if (cursoEmpleado.getEstadoCurso().equals("APROBADO")
+				|| cursoEmpleado.getEstadoCurso().equals("REPROBADO")) {
+
+			txtCursoEvaluacionEficacia.setValue(curso.getNombre());
+			llenarLista();
+
+		} else {
+
+			Messagebox
+					.show("El curso debe estar finalizado para poder realizar la evaluacion de eficacia",
+							"Advertencia", Messagebox.OK,
+							Messagebox.EXCLAMATION);
+		}
+
+	}
+	
+	
+	
 	@Listen("onChange = #txtCursoEvaluacionEficacia")
 	public void buscarCurso() {
-		List<Curso> cursos = servicioCurso
-				.buscarPorNombres(txtCursoEvaluacionEficacia.getValue());
+		List<EmpleadoCurso> cursos = servicioEmpleadoCurso.buscar(servicioCurso
+				.buscarPorNombre(txtCursoEvaluacionEficacia.getValue()));
 
 		if (cursos.size() == 0) {
 			msj.mensajeAlerta(Mensaje.codigoCurso);
 			txtCursoEvaluacionEficacia.setFocus(true);
 		} else {
-			idCurso = cursos.get(0).getId();
+			idCurso = cursos.get(0).getCurso().getId();
+			llenarLista();
 		}
 
 	}
-
+	
 	@Listen("onClick = #btnBuscar")
 	public void mostrarCatalogoEmpleado() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
@@ -240,7 +287,10 @@ public class CEvaluacionEficacia extends CGenerico {
 		Empleado empleado = catalogoEmpleado.objetoSeleccionadoDelCatalogo();
 		idEmpleado = empleado.getId();
 		catalogoEmpleado.setParent(null);
-		llenarLista();
+		empleadoDatos.add(empleado);
+		lsbEmpleadoEvaluacionEficacia.setModel(new ListModelList<Empleado>(
+				empleadoDatos));
+
 	}
 
 	@Listen("onClick = #btnLimpiar")
@@ -248,6 +298,7 @@ public class CEvaluacionEficacia extends CGenerico {
 
 		idEmpleado = 0;
 		idCurso = 0;
+		empleadoDatos = new ArrayList<Empleado>();
 		txtCursoEvaluacionEficacia.setValue("");
 		lsbEmpleadoEvaluacionEficacia.setModel(new ListModelList<Empleado>());
 		lsbItemEvaluacionCualitativa
@@ -301,11 +352,6 @@ public class CEvaluacionEficacia extends CGenerico {
 	}
 
 	public void llenarLista() {
-
-		Empleado empleado = servicioEmpleado.buscar(idEmpleado);
-		empleadoDatos.add(empleado);
-		lsbEmpleadoEvaluacionEficacia.setModel(new ListModelList<Empleado>(
-				empleadoDatos));
 
 		itemPonderacionCualitativa = servicioItemEvaluacion
 				.buscarPorTipoPonderacion("CUALITATIVA");
