@@ -1,14 +1,19 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Actividad;
+import modelo.maestros.ActividadCurso;
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
+import modelo.maestros.EmpleadoItem;
 import modelo.maestros.ItemEvaluacion;
+import modelo.maestros.Parametro;
 import modelo.maestros.PerfilCargo;
 import modelo.maestros.Periodo;
 
@@ -18,6 +23,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -44,7 +50,11 @@ public class CEvaluacionEficacia extends CGenerico {
 	@Wire
 	private Datebox dbfecha;
 	@Wire
+	private Button btnCalcularPorcentaje;
+	@Wire
 	private Textbox txtCursoEvaluacionEficacia;
+	@Wire
+	private Textbox txtPorcentajeItem;
 	@Wire
 	private Button btnBuscarCurso;
 	@Wire
@@ -61,6 +71,7 @@ public class CEvaluacionEficacia extends CGenerico {
 	private Div divCatalogoCurso;
 	List<Empleado> empleadoDatos = new ArrayList<Empleado>();
 	List<EmpleadoCurso> empleadosCurso = new ArrayList<EmpleadoCurso>();
+	List<EmpleadoItem> empleadoItems = new ArrayList<EmpleadoItem>();
 	List<ItemEvaluacion> itemPonderacionCualitativa = new ArrayList<ItemEvaluacion>();
 	List<ItemEvaluacion> itemPonderacionCuantitativa = new ArrayList<ItemEvaluacion>();
 	private int idCurso = 0;
@@ -185,9 +196,7 @@ public class CEvaluacionEficacia extends CGenerico {
 		}
 
 	}
-	
-	
-	
+
 	@Listen("onChange = #txtCursoEvaluacionEficacia")
 	public void buscarCurso() {
 		List<EmpleadoCurso> cursos = servicioEmpleadoCurso.buscar(servicioCurso
@@ -202,7 +211,7 @@ public class CEvaluacionEficacia extends CGenerico {
 		}
 
 	}
-	
+
 	@Listen("onClick = #btnBuscar")
 	public void mostrarCatalogoEmpleado() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
@@ -309,6 +318,59 @@ public class CEvaluacionEficacia extends CGenerico {
 		txtCursoEvaluacionEficacia.setFocus(true);
 	}
 
+	@Listen("onClick = #btnCalcularPorcentaje")
+	public void calcularPorcentaje() {
+
+		Curso curso = servicioCurso.buscarCurso(idCurso);
+		int porcentaje = 0;
+
+		if (empleadoDatos.size() != 0) {
+
+			if (curso != null) {
+
+				for (int i = 0; i < lsbItemEvaluacionCuantitativa.getItems()
+						.size(); i++) {
+
+					Listitem listItem = lsbItemEvaluacionCuantitativa
+							.getItemAtIndex(i);
+
+					if (((Textbox) ((listItem.getChildren().get(2)))
+							.getFirstChild()).equals("")) {
+
+						porcentaje = porcentaje + 0;
+
+					} else {
+
+						porcentaje = porcentaje
+								+ Integer
+										.parseInt(((Textbox) ((listItem
+												.getChildren().get(2)))
+												.getFirstChild()).getValue());
+					}
+
+				}
+
+				porcentaje = porcentaje
+						/ lsbItemEvaluacionCuantitativa.getItems().size();
+
+				txtPorcentajeEvaluacionEficacia.setValue(String
+						.valueOf(porcentaje));
+
+			} else {
+
+				Messagebox.show("Debe seleccionar un curso", "Advertencia",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+
+			}
+
+		} else {
+
+			Messagebox.show("Debe seleccionar un empleado", "Advertencia",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+
+	}
+
 	public boolean camposLLenos() {
 		if (txtCursoEvaluacionEficacia.getText().compareTo("") == 0) {
 			return false;
@@ -353,6 +415,8 @@ public class CEvaluacionEficacia extends CGenerico {
 
 	public void llenarLista() {
 
+		Curso curso = servicioCurso.buscarCurso(idCurso);
+
 		itemPonderacionCualitativa = servicioItemEvaluacion
 				.buscarPorTipoPonderacion("CUALITATIVA");
 		lsbItemEvaluacionCualitativa
@@ -364,6 +428,202 @@ public class CEvaluacionEficacia extends CGenerico {
 		lsbItemEvaluacionCuantitativa
 				.setModel(new ListModelList<ItemEvaluacion>(
 						itemPonderacionCuantitativa));
+
+		empleadoItems = servicioEmpleadoItem.buscarItems(empleadoDatos.get(0),
+				curso);
+
+		lsbItemEvaluacionCualitativa.renderAll();
+		lsbItemEvaluacionCuantitativa.renderAll();
+
+		if (empleadoItems.size() != 0) {
+
+			for (int i = 0; i < lsbItemEvaluacionCualitativa.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadoItems.size(); j++) {
+
+					if (empleadoItems.get(j).getItem().getId() == itemPonderacionCualitativa
+							.get(i).getId()) {
+
+						Listitem listItem = lsbItemEvaluacionCualitativa
+								.getItemAtIndex(i);
+
+						if (empleadoItems.get(j).getValorEvaluacion()
+								.equals("SI")) {
+
+							((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).setChecked(true);
+
+						} else if (empleadoItems.get(j).getValorEvaluacion()
+								.equals("NO")) {
+
+							((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).setChecked(true);
+
+						}
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < lsbItemEvaluacionCuantitativa.getItems().size(); i++) {
+
+				for (int j = 0; j < empleadoItems.size(); j++) {
+
+					if (empleadoItems.get(j).getItem().getId() == itemPonderacionCuantitativa
+							.get(i).getId()) {
+
+						Listitem listItem = lsbItemEvaluacionCuantitativa
+								.getItemAtIndex(i);
+
+						String valor = empleadoItems.get(j)
+								.getValorEvaluacion();
+
+						((Textbox) ((listItem.getChildren().get(2)))
+								.getFirstChild()).setValue(valor);
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@Listen("onClick = #btnGuardar")
+	public void guardar() {
+
+		boolean guardar = true;
+		boolean error = false;
+		boolean datosGuardados = false;
+		guardar = validar();
+		if (guardar) {
+
+			Curso curso = servicioCurso.buscarCurso(idCurso);
+			Timestamp fecha = new Timestamp(new Date().getTime());
+
+			if (curso != null) {
+
+				if (lsbItemEvaluacionCualitativa.getItemCount() != 0) {
+
+					for (int i = 0; i < lsbItemEvaluacionCualitativa
+							.getItemCount(); i++) {
+
+						Listitem listItem = lsbItemEvaluacionCualitativa
+								.getItemAtIndex(i);
+
+						int codigoItem = ((Intbox) ((listItem.getChildren()
+								.get(0))).getFirstChild()).getValue();
+
+						String valorEvaluacion = null;
+
+						if (((Checkbox) ((listItem.getChildren().get(2)))
+								.getFirstChild()).isChecked()
+								&& ((Checkbox) ((listItem.getChildren().get(3)))
+										.getFirstChild()).isChecked()) {
+							error = true;
+							Messagebox
+									.show("Debe seleccionar una sola respuesta por cada item de evaluacion",
+											"Advertencia", Messagebox.OK,
+											Messagebox.EXCLAMATION);
+
+						} else {
+
+							if (((Checkbox) ((listItem.getChildren().get(2)))
+									.getFirstChild()).isChecked()) {
+								valorEvaluacion = "SI";
+
+							}
+
+							if (((Checkbox) ((listItem.getChildren().get(3)))
+									.getFirstChild()).isChecked()) {
+								valorEvaluacion = "NO";
+
+							}
+
+						}
+
+						if (!error) {
+
+							ItemEvaluacion item = servicioItemEvaluacion
+									.buscarItem(codigoItem);
+							EmpleadoItem empleadoItem = new EmpleadoItem(
+									empleadoDatos.get(0), item, curso, fecha,
+									valorEvaluacion);
+							servicioEmpleadoItem.guardar(empleadoItem);
+							datosGuardados = true;
+
+						}
+
+					}
+
+				} else {
+
+					Messagebox
+							.show("Actualmente no existen items de evaluacion registrados",
+									"Advertencia", Messagebox.OK,
+									Messagebox.EXCLAMATION);
+
+				}
+
+				if (!error) {
+
+					if (lsbItemEvaluacionCuantitativa.getItemCount() != 0) {
+
+						for (int i = 0; i < lsbItemEvaluacionCuantitativa
+								.getItemCount(); i++) {
+
+							Listitem listItem = lsbItemEvaluacionCuantitativa
+									.getItemAtIndex(i);
+
+							int codigoItem = ((Intbox) ((listItem.getChildren()
+									.get(0))).getFirstChild()).getValue();
+
+							String valorEvaluacion = null;
+
+							valorEvaluacion = ((Textbox) ((listItem
+									.getChildren().get(2))).getFirstChild())
+									.getValue();
+
+							ItemEvaluacion item = servicioItemEvaluacion
+									.buscarItem(codigoItem);
+							EmpleadoItem empleadoItem = new EmpleadoItem(
+									empleadoDatos.get(0), item, curso, fecha,
+									valorEvaluacion);
+							servicioEmpleadoItem.guardar(empleadoItem);
+							datosGuardados = true;
+
+						}
+
+						if (datosGuardados) {
+
+							msj.mensajeInformacion(Mensaje.guardado);
+							limpiarCampos();
+
+						}
+
+					} else {
+
+						Messagebox
+								.show("Actualmente no existen items de evaluacion registrados",
+										"Advertencia", Messagebox.OK,
+										Messagebox.EXCLAMATION);
+
+					}
+
+				}
+
+			} else {
+
+				msj.mensajeAlerta(Mensaje.codigoCurso);
+				txtCursoEvaluacionEficacia.setFocus(true);
+
+			}
+
+		}
 
 	}
 

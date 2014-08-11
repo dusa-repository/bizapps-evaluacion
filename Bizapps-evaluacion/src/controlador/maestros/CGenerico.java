@@ -62,6 +62,7 @@ import servicio.transacciones.SBitacora;
 import servicio.transacciones.SConductaCompetencia;
 import servicio.transacciones.SEmpleadoClase;
 import servicio.transacciones.SEmpleadoCurso;
+import servicio.transacciones.SEmpleadoItem;
 import servicio.transacciones.SEmpleadoParametro;
 import servicio.transacciones.SEvaluacion;
 import servicio.transacciones.SEvaluacionCapacitacion;
@@ -91,6 +92,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SClase servicioClase;
 	@WireVariable("SEvaluacion")
 	protected SEvaluacion servicioEvaluacion;
+	@WireVariable("SEmpleadoItem")
+	protected SEmpleadoItem servicioEmpleadoItem;
 	@WireVariable("SEmpleadoParametro")
 	protected SEmpleadoParametro servicioEmpleadoParametro;
 	@WireVariable("SParametro")

@@ -116,12 +116,17 @@
 				mold="paging" pageSize="7" oddRowSclass="non-odd"
 				emptyMessage="No ha seleccionado un empleado">
 				<listhead>
+					<listheader label="Código Item" visible="false" />
 					<listheader label="Item de Evaluación" />
 					<listheader label="Si" width="10%" />
 					<listheader label="No" width="10%" />
 				</listhead>
 				<template name="model">
 					<listitem>
+						<listcell>
+							<intbox value="${each.id}" width="auto"
+								style="border:none" readonly="true" />
+						</listcell>
 						<listcell label="${each.descripcion}"></listcell>
 						<listcell>
 							<checkbox />
@@ -146,6 +151,9 @@
 
 
 
+
+
+
 				
 				<![CDATA[ <table id="tabla" align="center"
 				style="width:220px"> <tr> <td id="tabla"
@@ -165,6 +173,9 @@
 				
 				
 				
+				
+				
+				
 			</html>
 			<separator />
 			<separator />
@@ -173,15 +184,20 @@
 				mold="paging" pageSize="7" oddRowSclass="non-odd"
 				emptyMessage="No ha seleccionado un empleado">
 				<listhead>
+					<listheader label="Código Item" visible="false" />
 					<listheader label="Item de Evaluación" width="80%" />
 					<listheader label="Porcentaje" />
 				</listhead>
 				<template name="model">
 					<listitem>
+						<listcell>
+							<intbox value="${each.id}" width="auto"
+								style="border:none" readonly="true" />
+						</listcell>
 						<listcell label="${each.descripcion}"></listcell>
 						<listcell>
 
-							<textbox  width="90%" />
+							<textbox width="90%" />
 
 						</listcell>
 						<listcell>
@@ -199,7 +215,12 @@
 					<label value="PORCENTAJE DE EFICACIA INDIVIDUAL: "
 						style="font-style:italic; margin-left:10px; font-weight:bold" />
 					<textbox id="txtPorcentajeEvaluacionEficacia"
-						tabindex="2" width="100%" maxlength="100" disabled="true" />
+						style="color:black !important;" tabindex="2" width="90%"
+						maxlength="100" disabled="true" />
+					<button id="btnCalcularPorcentaje" label=""
+						tooltiptext="Calcular porcentaje de eficacia"
+						image="/public/imagenes/botones/calcular.png" />
+
 				</hbox>
 			</div>
 		</groupbox>
