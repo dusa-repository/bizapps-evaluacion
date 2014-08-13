@@ -705,21 +705,21 @@
 					<grid width="100%" align="center" style="background: #F8E0E0 ; ">
 						<columns visible="true">
 							<column label="Resultados" width="25%" />
-							<column label="Distribución (%)" width="25%" />
 							<column label="Resultado (%)" width="25%" />
+							<column label="Distribución (%)" width="25%" />
 							<column label="Resultado según Peso (%)" width="25%" />
 						</columns>
 						<rows>
 							<row>
 								<label value="Objetivos"></label>
-								<label id="lblDistribucion"></label>
 								<label id="lblResultado"></label>
+								<label id="lblDistribucion"></label>
 								<label id="lblResultadoPeso"></label>
 							</row>
 							<row>
 								<label value="Competencias"></label>
-								<label id="lblDistribucion1"></label>
 								<label id="lblResultado1"></label>
+								<label id="lblDistribucion1"></label>
 								<label id="lblResultadoPeso1"></label>
 							</row>
 						</rows>

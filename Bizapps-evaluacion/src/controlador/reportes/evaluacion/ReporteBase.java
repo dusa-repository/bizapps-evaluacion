@@ -56,7 +56,15 @@ public class ReporteBase {
 	            ClassLoader cl = this.getClass().getClassLoader();
 	            InputStream fis = null;
 	            
-	            String path_banner =""; //getClass().getResource("/controlador/reportes/evaluacion/imagenes/banner.jpg").getPath();
+	            String path_banner="";
+	            try {
+	            	//path_banner=getClass().getResource("/imagenes/banner.jpg").getPath();	
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.toString());
+				}
+	            
+	            
 	            
 	            Map parameters = new HashMap();
 
@@ -95,7 +103,7 @@ public class ReporteBase {
 
 	            } catch (JRException ex) {
 	            	ex.printStackTrace();
-	                System.out.println(ex.toString());
+	            	System.out.println(ex.toString());
 	            }
 
 	            if (conexion != null) {

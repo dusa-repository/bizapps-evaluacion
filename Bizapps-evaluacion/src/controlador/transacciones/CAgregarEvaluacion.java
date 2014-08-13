@@ -1891,8 +1891,8 @@ public class CAgregarEvaluacion extends CGenerico {
 							+ idEva + "&par2=" + evaluador.getNombre() + "",
 					"_blank");
 
-			  /*Executions.getCurrent().sendRedirect(
-			  "http://localhost:8029/Bizapps-evaluacion/Impresion?par1=" +
+			 /* Executions.getCurrent().sendRedirect(
+			  "http://localhost:8080/Bizapps-evaluacion/Impresion?par1=" +
 			  idEva + "&par2="+ evaluador.getNombre() +"", "_blank");*/
 			 
 
@@ -2088,21 +2088,30 @@ public class CAgregarEvaluacion extends CGenerico {
 						.get(9))).getFirstChild()).getValue();
 				if (EvaluacionI.getMedicion().getDescripcionMedicion()
 						.equals("CONTINUA")) {
-					if ((valorResultado) < EvaluacionI.getValorMeta()) {
-						if ((valorResultado) >= (resultadoFyAnterior)) {
-							resultado = "85";
+					if ((valorResultado==0) && (resultadoFyAnterior==0))
+					{
+						resultado = "0";
+					}
+					else
+					{
+						if ((valorResultado) < EvaluacionI.getValorMeta()) {
+							if ((valorResultado) >= (resultadoFyAnterior)) {
+								resultado = "85";
+							} else {
+								resultado = "0";
+							}
 						} else {
-							resultado = "0";
-						}
-					} else {
-						if ((valorResultado) > EvaluacionI.getValorMeta()) {
-							resultado = "115";
-						} else {
-							if ((valorResultado) == EvaluacionI.getValorMeta()) {
-								resultado = "100";
+							if ((valorResultado) > EvaluacionI.getValorMeta()) {
+								resultado = "115";
+							} else {
+								if ((valorResultado) == EvaluacionI.getValorMeta()) {
+									resultado = "100";
+								}
 							}
 						}
+						
 					}
+					
 				} else {
 					((Doublespinner) ((listItem.getChildren().get(7)))
 							.getFirstChild()).setDisabled(true);
