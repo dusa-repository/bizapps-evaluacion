@@ -1242,6 +1242,13 @@ public class CAgregarEvaluacion extends CGenerico {
 				txtPesoPorc.setValue(resulP);
 				// cmbMedicion.setDisabled(true);
 				// cmbUnidad.setDisabled(true);
+				
+				if (cmbMedicion.getValue().equals("CONTINUA")) {
+					txtResFy.setDisabled(false);
+				} else {
+					txtResFy.setDisabled(true);
+				}
+				
 			}
 		}
 	}
@@ -1365,15 +1372,6 @@ public class CAgregarEvaluacion extends CGenerico {
 		
 		
 	}
-
-	// @Listen("onSelect = #cmbMedicion")
-	// public void mostrarResAnterior() {
-	// txtResFy.setDisabled(true);
-	// if (cmbMedicion.getValue().equals("CONTINUA")) {
-	// System.out.println("entroooooooooooo");
-	// txtResFy.setDisabled(false);
-	// }
-	// }
 
 	@Listen("onDoubleClick = #lbxCompetenciaEspecifica")
 	public void mostrarDatosCatalogo() {
