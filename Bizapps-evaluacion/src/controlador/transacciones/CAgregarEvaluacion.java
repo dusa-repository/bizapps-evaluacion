@@ -518,61 +518,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 							Evaluacion evaluacion = servicioEvaluacion
 									.buscarEvaluacion(idEvaluacion);
-							
-							if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
-							{
-								if (evaluacion.getEstadoEvaluacion().equals(
-										"EN EDICION")) {
-									btnAgregar.setVisible(true);
-									btnEliminar.setVisible(true);
-									btnAgregarIndicador.setVisible(true);
-									btnEliminarIndicador.setVisible(true);
-									btnAgregarAcciones.setVisible(true);
-									btnEliminarAcciones.setVisible(true);
-									btnAgregarCapacitacion.setVisible(true);
-									btnOk.setVisible(true);
-									btnOk2.setVisible(true);
-								} else {
-									btnAgregar.setVisible(false);
-									btnEliminar.setVisible(false);
-									btnOk.setVisible(false);
-									btnOk2.setVisible(false);
-									btnAgregarIndicador.setVisible(false);
-									btnEliminarIndicador.setVisible(false);
-									btnAgregarAcciones.setVisible(false);
-									btnEliminarAcciones.setVisible(false);
-									btnCambiarEstado.setVisible(false);
-									btnCancelar.setVisible(true);
-									btnAgregarCapacitacion.setVisible(false);
-									
-									/*Messagebox
-									.show("Esta evaluacion se encuentra en un estado distinto a 'EN EDICION' !, por tal razon no podra guardar ningun cambio !",
-											"Información", Messagebox.OK,
-											Messagebox.INFORMATION); */
-								}
-							}
-							else
-							{
-								btnAgregar.setVisible(false);
-								btnEliminar.setVisible(false);
-								btnOk.setVisible(false);
-								btnOk2.setVisible(false);
-								btnAgregarIndicador.setVisible(false);
-								btnEliminarIndicador.setVisible(false);
-								btnAgregarAcciones.setVisible(false);
-								btnEliminarAcciones.setVisible(false);
-								btnCambiarEstado.setVisible(false);
-								btnCancelar.setVisible(true);
-								btnAgregarCapacitacion.setVisible(false);
-								
-								/*Messagebox
-								.show("Esta evaluacion pertenece a una revision inactiva !, por tal razon no podra guardar ningun cambio !",
-										"Información", Messagebox.OK,
-										Messagebox.INFORMATION);*/
-								
-							}
-							
-							
+						
 							txtCompromisos
 									.setValue(evaluacion.getCompromisos());
 							txtFortalezas.setValue(evaluacion.getFortalezas());
@@ -596,6 +542,11 @@ public class CAgregarEvaluacion extends CGenerico {
 							// btnCambiarEstado
 							// String cargo =
 							// empleado.getCargo().getDescripcion();
+							
+							// Permite saber el grado de la persona que se esta logueando
+							Empleado empleadoGrado = servicioEmpleado.buscarPorFicha(u.getFicha());
+							Integer grado= empleadoGrado.getGradoAuxiliar();
+							
 							String cargo = evaluacion.getCargo()
 									.getDescripcion();
 							String unidadOrganizativa = empleado
@@ -673,6 +624,100 @@ public class CAgregarEvaluacion extends CGenerico {
 							lblEvaluacion.setValue(numeroEvaluacion.toString());
 							lblFechaCreacion.setValue(formatoFecha
 									.format(fechaHora));
+							
+							
+							if (evaluacion.getRevision().getEstadoRevision().compareTo("ACTIVO")==0)
+							{
+								if (evaluacion.getEstadoEvaluacion().equals(
+										"EN EDICION")) {
+									btnAgregar.setVisible(true);
+									btnEliminar.setVisible(true);
+									btnAgregarIndicador.setVisible(true);
+									btnEliminarIndicador.setVisible(true);
+									btnAgregarAcciones.setVisible(true);
+									btnEliminarAcciones.setVisible(true);
+									btnAgregarCapacitacion.setVisible(true);
+									btnOk.setVisible(true);
+									btnOk2.setVisible(true);
+								} else {
+									
+									if (evaluacion.getEstadoEvaluacion().equals(
+											"PENDIENTE")) {
+										
+										if (grado>=19)
+										{
+											btnAgregar.setVisible(true);
+											btnEliminar.setVisible(true);
+											btnAgregarIndicador.setVisible(true);
+											btnEliminarIndicador.setVisible(true);
+											btnAgregarAcciones.setVisible(true);
+											btnEliminarAcciones.setVisible(true);
+											btnAgregarCapacitacion.setVisible(true);
+											btnOk.setVisible(true);
+											btnOk2.setVisible(true);
+										}
+										else
+										{
+											btnAgregar.setVisible(false);
+											btnEliminar.setVisible(false);
+											btnOk.setVisible(false);
+											btnOk2.setVisible(false);
+											btnAgregarIndicador.setVisible(false);
+											btnEliminarIndicador.setVisible(false);
+											btnAgregarAcciones.setVisible(false);
+											btnEliminarAcciones.setVisible(false);
+											btnCambiarEstado.setVisible(false);
+											btnCancelar.setVisible(true);
+											btnAgregarCapacitacion.setVisible(false);
+											
+										}
+										
+									}
+									else
+									{
+										btnAgregar.setVisible(false);
+										btnEliminar.setVisible(false);
+										btnOk.setVisible(false);
+										btnOk2.setVisible(false);
+										btnAgregarIndicador.setVisible(false);
+										btnEliminarIndicador.setVisible(false);
+										btnAgregarAcciones.setVisible(false);
+										btnEliminarAcciones.setVisible(false);
+										btnCambiarEstado.setVisible(false);
+										btnCancelar.setVisible(true);
+										btnAgregarCapacitacion.setVisible(false);
+									}
+									
+									
+									
+									/*Messagebox
+									.show("Esta evaluacion se encuentra en un estado distinto a 'EN EDICION' !, por tal razon no podra guardar ningun cambio !",
+											"Información", Messagebox.OK,
+											Messagebox.INFORMATION); */
+								}
+							}
+							else
+							{
+								btnAgregar.setVisible(false);
+								btnEliminar.setVisible(false);
+								btnOk.setVisible(false);
+								btnOk2.setVisible(false);
+								btnAgregarIndicador.setVisible(false);
+								btnEliminarIndicador.setVisible(false);
+								btnAgregarAcciones.setVisible(false);
+								btnEliminarAcciones.setVisible(false);
+								btnCambiarEstado.setVisible(false);
+								btnCancelar.setVisible(true);
+								btnAgregarCapacitacion.setVisible(false);
+								
+								/*Messagebox
+								.show("Esta evaluacion pertenece a una revision inactiva !, por tal razon no podra guardar ningun cambio !",
+										"Información", Messagebox.OK,
+										Messagebox.INFORMATION);*/
+								
+							}
+							
+							
 
 							/*if (evaluacion.getEstadoEvaluacion().equals(
 									"EN EDICION")) {
