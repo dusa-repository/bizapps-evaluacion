@@ -432,8 +432,8 @@ public class CCalibracionEvaluacion extends CGenerico {
 			String nombreEv = txtEvaluador.getValue();
 			String gerencia = txtGerencia.getValue();
 			String valoracion = txtValoracion.getValue();
-			if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-					&& gerencia.equals("")) {
+			if (empresa.equals("") || nombreE.equals("") || nombreEv.equals("")
+					|| gerencia.equals("") || valoracion.equals("")) {
 				evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
 			} else {
 				Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
@@ -561,7 +561,6 @@ public class CCalibracionEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnGuardar")
 	public void guardarValoracion() {
-		System.out.println(catalogoEvaluacion.obtenertext());
 		String valoracion = "";
 		if (catalogoEvaluacion.obtenerSeleccionados().size() == 1) {
 			Evaluacion eva = catalogoEvaluacion
@@ -588,7 +587,15 @@ public class CCalibracionEvaluacion extends CGenerico {
 			Messagebox.show("Calibración Guardada exitosamente", "Información",
 					Messagebox.OK, Messagebox.INFORMATION);
 		}
-		mostrarCatalogo();
+		
+		else {
+			Messagebox
+			.show("Debe seleccionar una evaluación",
+					"Alerta",
+					Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+		
 	}
 
 	@Listen("onClick = #btnLimpiar")

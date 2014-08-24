@@ -433,7 +433,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		String nombreEv = txtEvaluador.getValue();
 		String gerencia = txtGerencia.getValue();
 		String valoracion = txtValoracion.getValue();
-		if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("") && gerencia.equals("")){
+		if (empresa.equals("") || nombreE.equals("") || nombreEv.equals("") || gerencia.equals("") || valoracion.equals("")){
 			evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
 			System.out.println("entoroo");
 		}
