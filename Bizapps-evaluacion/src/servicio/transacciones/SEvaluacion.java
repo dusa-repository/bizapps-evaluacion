@@ -58,7 +58,15 @@ public class SEvaluacion {
 		return evaluacionDAO.findByIdEvaluacion(idEvaluacion);
 	}
 	
+	public List<Evaluacion> buscarEvaluacionCalibracion (String empresa, String nombreE, String fichaE, String gerencia, String valoracion) {
+		return evaluacionDAO.buscarEvaluacionCalibracion(empresa, nombreE, fichaE, gerencia, valoracion);
+	}
+	
 	public void eliminarUno(Integer id) {
 		evaluacionDAO.delete(id);
+	}
+
+	public List<Evaluacion> buscarEvaluacionesRevision() {
+		return evaluacionDAO.buscarEvaluacionesRevision();
 	}
 }

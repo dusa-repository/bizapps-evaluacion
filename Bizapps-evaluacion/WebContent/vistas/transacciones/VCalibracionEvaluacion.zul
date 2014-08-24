@@ -1,0 +1,103 @@
+<zk>
+	<div apply="controlador.transacciones.CCalibracionEvaluacion" />
+	<separator />
+	<div id="botoneraUnidadOrganizativa" />
+	<separator />
+	<grid width="100%">
+		<columns visible="false">
+			<column label="" width="10%" />
+			<column label="" width="20%" />
+			<column label="" width="20%" />
+			<column label="" width="20%" />
+			<column label="" width="30%" />
+		</columns>
+		<rows>
+
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Empresa:" />
+					<space />
+				</hbox>
+				<textbox id="txtEmpresa" tabindex="1" width="100%"
+					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+				<button id="btnBuscarEmpresa"
+					tooltiptext="Catalogo de Empresas" image="/public/imagenes/botones/buscar.png" />
+				<hbox />
+				<hbox />
+			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Gerencia:" />
+					<space />
+				</hbox>
+				<textbox id="txtGerencia" tabindex="1" width="100%"
+					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+				<button id="btnBuscarGerencia" image="/public/imagenes/botones/buscar.png"
+					tooltiptext="Catalogo de gerencias" />
+				<hbox />
+				<hbox />
+			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Trabajador:" />
+					<space />
+				</hbox>
+				<textbox id="txtTrabajador" tabindex="1" width="100%"
+					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+				<button id="btnBuscarTrabajador" image="/public/imagenes/botones/buscar.png"
+					tooltiptext="Catalogo de Trabajador" />
+				<hbox />
+				<hbox />
+			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Evaluador:" />
+					<space />
+				</hbox>
+				<textbox id="txtEvaluador" tabindex="1" width="100%"
+					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+				<button id="btnBuscarEvaluador"  image="/public/imagenes/botones/buscar.png"
+					tooltiptext="Catalogo de Evaluador" />
+				<hbox />
+				<hbox />
+			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Valoración:" />
+					<space />
+				</hbox>
+				<textbox id="txtValoracion" tabindex="1" width="100%"
+					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+				<button id="btnBuscarValoracion" image="/public/imagenes/botones/buscar.png"
+					tooltiptext="Catalogo de Evaluador" />
+				<hbox />
+				<hbox />
+			</row>
+		</rows>
+	</grid>
+	<separator />
+
+	<separator />
+	<div width="100%" align="right">
+		<button id="btnGuardar" label="Guardar" />
+		<button id="btnLimpiar" label="Limpiar" />
+		<button id="btnBuscar" label="Refrescar" />
+	</div>
+	<separator />
+	<div id="divCatalogoEmpresa"
+		tooltiptext="Click para Seleccionar una Empresa" />
+	<div id="divCatalogoGerencia"
+		tooltiptext="Click para Seleccionar una gerencia" />
+	<div id="divCatalogoTrabajador"
+		tooltiptext="Click para Seleccionar una gerencia" />
+	<div id="divCatalogoEvaluador"
+		tooltiptext="Click para Seleccionar una gerencia" />
+	<div id="divCatalogoValoracion"
+		tooltiptext="Click para Seleccionar una Valoración" />
+	<groupbox id="gpxDatos" width="auto" title="">
+		<caption label="Registros" style="font-weight:bold"
+			tooltiptext="Presione para Visualizar las Evaluaciones" />
+		<div id="catalogoEvaluaciones"
+			tooltiptext="Seleccione la Evaluación para Realizar una Accion" />
+	</groupbox>
+</zk>
