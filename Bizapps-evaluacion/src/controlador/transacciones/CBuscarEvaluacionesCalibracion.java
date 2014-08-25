@@ -104,6 +104,8 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
+		
+		mostrarCatalogo();
 
 		botonera = new Botonera(){
 			@Override
@@ -432,56 +434,12 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		catalogoValoracion.setParent(null);
 	}
 	
-	@Listen("onClick = #btnBuscar")
+	
+	
 	public void mostrarCatalogo() {
-		String empresa = txtEmpresa.getValue();
-		String nombreE = txtTrabajador.getValue();
-		String nombreEv = txtEvaluador.getValue();
-		String gerencia = txtGerencia.getValue();
-		String valoracion = txtValoracion.getValue();
-		Integer grado = txtGrado.getValue();
-		System.out.println(empresa);
-		System.out.println(nombreE+ nombreEv+gerencia+valoracion);
-		if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-				&& gerencia.equals("") && valoracion.equals("")) {
-			System.out.println("entrooooooo");
-			evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
-		} 
-		else if (nombreE.equals("") && nombreEv.equals("")
-				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEmpresa(empresa);
-		}
-		else if (empresa.equals("") && nombreEv.equals("")
-				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionTrabajador(nombreE);
-		}
-		else if (empresa.equals("") && nombreE.equals("")
-				&& gerencia.equals("") && valoracion.equals("") && grado  == 0) {
-			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
-			System.out.println(nombreEv);
-			
-			String ficha = eva.getFicha();
-			System.out.println(ficha);
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEvaluador(ficha);
-		}
-		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-				 && valoracion.equals("") && grado  == 0) {
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGerencia(gerencia);
-		} 
-		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-				&& gerencia.equals("")  && grado  == 0) {
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionValoracion(valoracion);
-		} 
-		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-				&& gerencia.equals("") && valoracion.equals("") && grado != 0) {
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGrado(grado);
-		} 
-		else {
-			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
-			String ficha = eva.getFicha();
-			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracion(
-					empresa, nombreE, ficha, gerencia, valoracion);
-		}
+		
+		evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
+		
 		catalogoEvaluacion = new CatalagoN <Evaluacion> (catalogoEvaluaciones, "Catalogo", evaluaciones,
 				false, false, true,"Ficha", "Nombre Empleado", "Fecha Revisión","Estado Evaluacion","Ficha Evaluador", 
 				"Nombre Evaluador","Resultado Objetivos", "Resultado Competencias", "Resultado General", "Valoración", "Resultado Final") {
@@ -544,8 +502,68 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 			}
 
 		};
+		
+		
 		catalogoEvaluacion.setParent(catalogoEvaluaciones);
 		// catalogo.doModal();
+}
+	
+	
+	
+	@Listen("onClick = #btnBuscar")
+	public void actualizarCatalogo() {
+		String empresa = txtEmpresa.getValue();
+		String nombreE = txtTrabajador.getValue();
+		String nombreEv = txtEvaluador.getValue();
+		String gerencia = txtGerencia.getValue();
+		String valoracion = txtValoracion.getValue();
+		Integer grado = txtGrado.getValue();
+		System.out.println(empresa);
+		System.out.println(nombreE+ nombreEv+gerencia+valoracion);
+		if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("")) {
+			System.out.println("entrooooooo");
+			evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
+		} 
+		else if (nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEmpresa(empresa);
+		}
+		else if (empresa.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionTrabajador(nombreE);
+		}
+		else if (empresa.equals("") && nombreE.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado  == 0) {
+			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
+			System.out.println(nombreEv);
+			
+			String ficha = eva.getFicha();
+			System.out.println(ficha);
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEvaluador(ficha);
+		}
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				 && valoracion.equals("") && grado  == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGerencia(gerencia);
+		} 
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("")  && grado  == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionValoracion(valoracion);
+		} 
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado != 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGrado(grado);
+		} 
+		else {
+			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
+			String ficha = eva.getFicha();
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracion(
+					empresa, nombreE, ficha, gerencia, valoracion);
+		}
+		
+		catalogoEvaluacion.actualizarLista(evaluaciones);
+		
+		
 	}
 	
 	

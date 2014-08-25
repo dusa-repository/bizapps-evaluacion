@@ -9,6 +9,8 @@ public class BeanDataGeneralCsv {
 	private String nombre;
 	private String cargo;
 	private String unidad;
+	private String gerencia;
+	private Integer grado;
 	private Integer resultadoObjetivo;
 	private Integer resultadoCompetencia;
 	private Integer resultadoTotal;
@@ -80,6 +82,23 @@ public class BeanDataGeneralCsv {
 	public void setResultadoTotal(Integer resultadoTotal) {
 		this.resultadoTotal = resultadoTotal;
 	}
+
+	public String getGerencia() {
+		return gerencia;
+	}
+
+	public void setGerencia(String gerencia) {
+		this.gerencia = gerencia;
+	}
+
+	public Integer getGrado() {
+		return grado;
+	}
+
+	public void setGrado(Integer grado) {
+		this.grado = grado;
+	}
+
 	
 	
 	

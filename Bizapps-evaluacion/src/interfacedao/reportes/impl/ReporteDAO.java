@@ -727,7 +727,7 @@ public class ReporteDAO implements IReporteDAO {
 			}
 		}
 
-		sentencia = " SELECT rev.descripcion as desc_rev,emp.ficha,emp.nombre,car.descripcion as desc_car,uni.descripcion as desc_uni,resultado_objetivos,resultado_competencias,resultado_final,valoracion FROM  evaluacion as eva INNER JOIN revision as rev ON eva.id_revision = rev.id_revision INNER JOIN periodo as per ON per.id_periodo = rev.id_periodo INNER JOIN valoracion as valo ON valo.nombre = eva.valoracion INNER JOIN empleado as emp ON eva.ficha = emp.ficha INNER JOIN unidad_organizativa as uni ON uni.id_unidad_organizativa = emp.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = uni.id_gerencia INNER JOIN empresa as empr ON empr.id_empresa=emp.id_empresa INNER JOIN cargo as car ON car.id_cargo=emp.id_cargo ";
+		sentencia = " SELECT rev.descripcion as desc_rev,emp.ficha,emp.nombre,car.descripcion as desc_car,uni.descripcion as desc_uni,resultado_objetivos,resultado_competencias,resultado_final,valoracion,grado_auxiliar,ge.descripcion as desc_ger FROM  evaluacion as eva INNER JOIN revision as rev ON eva.id_revision = rev.id_revision INNER JOIN periodo as per ON per.id_periodo = rev.id_periodo INNER JOIN valoracion as valo ON valo.nombre = eva.valoracion INNER JOIN empleado as emp ON eva.ficha = emp.ficha INNER JOIN unidad_organizativa as uni ON uni.id_unidad_organizativa = emp.id_unidad_organizativa INNER JOIN gerencia as ge ON ge.id_gerencia = uni.id_gerencia INNER JOIN empresa as empr ON empr.id_empresa=emp.id_empresa INNER JOIN cargo as car ON car.id_cargo=emp.id_cargo ";
 		ordenamiento = "   ";
 		agrupamiento = "  ";
 
@@ -751,6 +751,9 @@ public class ReporteDAO implements IReporteDAO {
 			beanData.setResultadoCompetencia((Integer) obj[6]);
 			beanData.setResultadoTotal((Integer) obj[7]);
 			beanData.setValoracion((String) obj[8]);
+			beanData.setGrado((Integer) obj[9]);
+			beanData.setGerencia((String) obj[10]);
+			
 			listaDataGenericaCsv.add(beanData);
 			
 		}

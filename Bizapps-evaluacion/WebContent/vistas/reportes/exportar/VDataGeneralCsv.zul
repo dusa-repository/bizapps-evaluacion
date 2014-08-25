@@ -71,6 +71,8 @@
 					<listheader label="Nombre" />
 					<listheader label="Cargo" />
 					<listheader label="Unidad" />
+					<listheader label="Gerencia" />
+					<listheader label="Grado" />
 					<listheader label="Resultado Objetivo" />
 					<listheader label="Resultado Competencia" />
 					<listheader label="Resultado Total" />
@@ -83,6 +85,8 @@
 						<listcell label="${each.nombre}" />
 						<listcell label="${each.cargo}" />
 						<listcell label="${each.unidad}" />
+						<listcell label="${each.gerencia}" />
+						<listcell label="${each.grado}" />
 						<listcell label="${each.resultadoObjetivo}" />
 						<listcell label="${each.resultadoCompetencia}" />
 						<listcell label="${each.resultadoTotal}" />

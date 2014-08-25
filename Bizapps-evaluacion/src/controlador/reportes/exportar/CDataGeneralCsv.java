@@ -1,5 +1,6 @@
 package controlador.reportes.exportar;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import modelo.maestros.Revision;
 import modelo.maestros.UnidadOrganizativa;
 import modelo.reportes.BeanDataGeneralCsv;
 
+import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
@@ -101,7 +103,7 @@ public class CDataGeneralCsv extends CGenerico {
 									cmbUnidadOrganizativa.getSelectedItem().getId()
 											.length() - 1));
 
-			parametros.put("estado_evaluacion", "FINALIZADA");
+			//parametros.put("estado_evaluacion", "FINALIZADA");
 			
 			listaData.getItems().clear();
 
@@ -212,7 +214,7 @@ public class CDataGeneralCsv extends CGenerico {
 	}
 
 	public void export_to_csv(Listbox listbox) {
-		String s = ";";
+		/*String s = ";";
 		StringBuffer sb = new StringBuffer();
 
 		for (Object head : listbox.getHeads()) {
@@ -229,7 +231,10 @@ public class CDataGeneralCsv extends CGenerico {
 			}
 			sb.append(i + "\n");
 		}
-		Filedownload.save(sb.toString().getBytes(), "text/plain", "datos.csv");
+		Filedownload.save(sb.toString().getBytes(), "text/plain", "datos.csv");*/
+		
+		
+		
 	}
 	
 	
