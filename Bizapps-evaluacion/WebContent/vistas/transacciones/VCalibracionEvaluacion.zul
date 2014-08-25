@@ -3,6 +3,10 @@
 	<separator />
 	<div id="botoneraUnidadOrganizativa" />
 	<separator />
+	
+	<groupbox id="gpxFiltros" width="auto" title="">
+		<caption label="Filtros" style="font-weight:bold"
+			tooltiptext="Presione para Visualizar los filtros" />
 	<grid width="100%">
 		<columns visible="false">
 			<column label="" width="10%" />
@@ -85,6 +89,8 @@
 			</row>
 		</rows>
 	</grid>
+	
+	</groupbox>
 	<separator />
 
 	<separator />

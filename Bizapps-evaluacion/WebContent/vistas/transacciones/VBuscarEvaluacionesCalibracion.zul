@@ -3,7 +3,12 @@
 	<separator />
 	<div id="botoneraUnidadOrganizativa" />
 	<separator />
-	<grid width="100%">
+	
+	<groupbox id="gpxFiltros" width="auto" title="">
+		<caption label="Filtros" style="font-weight:bold"
+			tooltiptext="Presione para Visualizar los filtros" />
+			
+			<grid width="100%">
 		<columns visible="false">
 			<column label="" width="10%" />
 			<column label="" width="20%" />
@@ -80,11 +85,15 @@
 			</row>
 		</rows>
 	</grid>
+		
+	</groupbox>
+	
+	
 	<separator />
 
 	<separator />
 	<div width="100%" align="right">
-		<button id="btnGuardar" label="Buscar" image="/public/imagenes/botones/buscar.png"/> 
+		<button id="btnGuardar" label="Ver Evaluación" image="/public/imagenes/botones/buscar.png"/> 
 		<button id="btnLimpiar" label="Limpiar" image="/public/imagenes/botones/limpiar.png" />
 		<button id="btnBuscar" label="Refrescar" image="/public/imagenes/botones/generar.png" />
 	</div>

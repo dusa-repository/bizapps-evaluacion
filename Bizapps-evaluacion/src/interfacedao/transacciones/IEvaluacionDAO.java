@@ -43,6 +43,7 @@ public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 
 	@Query("select  distinct(ev) from Empleado em, Evaluacion ev, Empresa e, Revision r , UnidadOrganizativa uo, Gerencia g " +
 			"where " +
+			"em.empresa.id = e.id and " +
 			"em.ficha = ev.ficha and " +
 			"r.id = ev.revision.id " +
 			"and r.estadoRevision = 'ACTIVO' AND " +

@@ -14,6 +14,7 @@ import modelo.maestros.UnidadOrganizativa;
 import modelo.reportes.BeanDataGeneralCsv;
 
 import org.zkoss.util.media.AMedia;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
@@ -212,8 +213,45 @@ public class CDataGeneralCsv extends CGenerico {
 		cmbUnidadOrganizativa.setModel(new ListModelList<UnidadOrganizativa>(
 				unidades));
 	}
+	
+	
+	protected void export_to_csv(Listbox listbox) {
+		if (listbox.getItemCount() != 0) {
+			String s = ";";
+			final StringBuffer sb = new StringBuffer();
 
-	public void export_to_csv(Listbox listbox) {
+			for (Object head : listbox.getHeads()) {
+				String h = "";
+				if (head instanceof Listhead) {
+					for (Object header : ((Listhead) head).getChildren()) {
+						h += ((Listheader) header).getLabel() + s;
+					}
+					sb.append(h + "\n");
+				}
+			}
+			for (Object item : listbox.getItems()) {
+				String i = "";
+				for (Object cell : ((Listitem) item).getChildren()) {
+					i += ((Listcell) cell).getLabel() + s;
+				}
+				sb.append(i + "\n");
+			}
+			Messagebox.show(Mensaje.exportar, "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								Filedownload.save(sb.toString().getBytes(),
+										"text/plain", "datos.csv");
+							}
+						}
+					});
+		}
+			
+	}
+
+	public void export_to_csv1() {
 		/*String s = ";";
 		StringBuffer sb = new StringBuffer();
 

@@ -115,6 +115,8 @@ public class CCalibracionEvaluacion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
+		
+		mostrarCatalogo();
 
 		botonera = new Botonera() {
 			@Override
@@ -159,6 +161,121 @@ public class CCalibracionEvaluacion extends CGenerico {
 		botonera.getChildren().get(3).setVisible(!bol);
 
 	}
+	
+public void mostrarCatalogo() {
+	
+	
+	evaluaciones= new ArrayList<Evaluacion>();
+		
+	catalogoEvaluacion = new CatalagoN<Evaluacion>(
+			catalogoEvaluaciones, "Catalogo", evaluaciones, false,
+			false, true, "Ficha", "Nombre Empleado", "Fecha Revisión",
+			"Estado Evaluacion", "Ficha Evaluador", "Nombre Evaluador",
+			"Resultado Objetivos", "Resultado Competencias",
+			"Resultado General", "Valoración", "Resultado Final") {
+
+		@Override
+		protected List<Evaluacion> buscar(List<String> valores) {
+
+			List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
+
+			for (Evaluacion evaluacionCampos : evaluaciones) {
+				Empleado empleado = servicioEmpleado
+						.buscarPorFicha(evaluacionCampos.getFicha());
+				Empleado empleado1 = servicioEmpleado
+						.buscarPorFicha(evaluacionCampos
+								.getFichaEvaluador());
+
+				if (evaluacionCampos.getFicha().toLowerCase()
+						.startsWith(valores.get(0))
+						&& String.valueOf(empleado.getNombre())
+								.toLowerCase()
+								.startsWith(valores.get(1))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getFechaRevision())
+								.toLowerCase()
+								.startsWith(valores.get(2))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getEstadoEvaluacion())
+								.toLowerCase()
+								.startsWith(valores.get(3))
+						&& evaluacionCampos.getFichaEvaluador()
+								.toLowerCase()
+								.startsWith(valores.get(4))
+						&& String.valueOf(empleado1.getNombre())
+								.toLowerCase()
+								.startsWith(valores.get(5))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getResultadoObjetivos())
+								.toLowerCase()
+								.startsWith(valores.get(6))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getResultadoCompetencias())
+								.toLowerCase()
+								.startsWith(valores.get(7))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getResultadoGeneral())
+								.toLowerCase()
+								.startsWith(valores.get(8))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getValoracion())
+								.toLowerCase()
+								.startsWith(valores.get(9))
+						&& String
+								.valueOf(
+										evaluacionCampos
+												.getResultadoFinal())
+								.toLowerCase()
+								.startsWith(valores.get(10))) {
+					evaluacion.add(evaluacionCampos);
+				}
+			}
+			return evaluacion;
+		}
+
+		@Override
+		protected String[] crearRegistros(Evaluacion evaluacionE) {
+			Empleado empleado = servicioEmpleado
+					.buscarPorFicha(evaluacionE.getFicha());
+			Empleado empleado1 = servicioEmpleado
+					.buscarPorFicha(evaluacionE.getFichaEvaluador());
+			String[] registros = new String[11];
+			registros[0] = evaluacionE.getFicha();
+			registros[1] = empleado.getNombre();
+			registros[2] = String.valueOf(evaluacionE
+					.getFechaRevision());
+			registros[3] = String.valueOf(evaluacionE
+					.getEstadoEvaluacion());
+			registros[4] = evaluacionE.getFichaEvaluador();
+			registros[5] = empleado1.getNombre();
+			registros[6] = String.valueOf(evaluacionE
+					.getResultadoObjetivos());
+			registros[7] = String.valueOf(evaluacionE
+					.getResultadoCompetencias());
+			registros[8] = String.valueOf(evaluacionE
+					.getResultadoGeneral());
+			registros[9] = String.valueOf(evaluacionE.getValoracion());
+			registros[10] = (String.valueOf(evaluacionE
+					.getResultadoFinal()));
+			return registros;
+
+		}
+
+	};
+	
+}
 
 	@Listen("onClick = #btnBuscarEmpresa")
 	public void mostrarCatalogoEmpresa() {
@@ -443,7 +560,7 @@ public class CCalibracionEvaluacion extends CGenerico {
 	
 
 	@Listen("onClick = #btnBuscar")
-	public void mostrarCatalogo() {
+	public void actualizarCatalogo() {
 			String empresa = txtEmpresa.getValue();
 			String nombreE = txtTrabajador.getValue();
 			String nombreEv = txtEvaluador.getValue();
@@ -453,7 +570,7 @@ public class CCalibracionEvaluacion extends CGenerico {
 			System.out.println(empresa);
 			System.out.println(nombreE+ nombreEv+gerencia+valoracion);
 			if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-					&& gerencia.equals("") && valoracion.equals("")) {
+					&& gerencia.equals("") && valoracion.equals("")  && grado == 0) {
 				System.out.println("entrooooooo");
 				evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
 			} 
@@ -493,114 +610,19 @@ public class CCalibracionEvaluacion extends CGenerico {
 						empresa, nombreE, ficha, gerencia, valoracion);
 			}
 			
-			catalogoEvaluacion = new CatalagoN<Evaluacion>(
-					catalogoEvaluaciones, "Catalogo", evaluaciones, false,
-					false, true, "Ficha", "Nombre Empleado", "Fecha Revisión",
-					"Estado Evaluacion", "Ficha Evaluador", "Nombre Evaluador",
-					"Resultado Objetivos", "Resultado Competencias",
-					"Resultado General", "Valoración", "Resultado Final") {
-
-				@Override
-				protected List<Evaluacion> buscar(List<String> valores) {
-
-					List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-
-					for (Evaluacion evaluacionCampos : evaluaciones) {
-						Empleado empleado = servicioEmpleado
-								.buscarPorFicha(evaluacionCampos.getFicha());
-						Empleado empleado1 = servicioEmpleado
-								.buscarPorFicha(evaluacionCampos
-										.getFichaEvaluador());
-
-						if (evaluacionCampos.getFicha().toLowerCase()
-								.startsWith(valores.get(0))
-								&& String.valueOf(empleado.getNombre())
-										.toLowerCase()
-										.startsWith(valores.get(1))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getFechaRevision())
-										.toLowerCase()
-										.startsWith(valores.get(2))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getEstadoEvaluacion())
-										.toLowerCase()
-										.startsWith(valores.get(3))
-								&& evaluacionCampos.getFichaEvaluador()
-										.toLowerCase()
-										.startsWith(valores.get(4))
-								&& String.valueOf(empleado1.getNombre())
-										.toLowerCase()
-										.startsWith(valores.get(5))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getResultadoObjetivos())
-										.toLowerCase()
-										.startsWith(valores.get(6))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getResultadoCompetencias())
-										.toLowerCase()
-										.startsWith(valores.get(7))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getResultadoGeneral())
-										.toLowerCase()
-										.startsWith(valores.get(8))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getValoracion())
-										.toLowerCase()
-										.startsWith(valores.get(9))
-								&& String
-										.valueOf(
-												evaluacionCampos
-														.getResultadoFinal())
-										.toLowerCase()
-										.startsWith(valores.get(10))) {
-							evaluacion.add(evaluacionCampos);
-						}
-					}
-					return evaluacion;
-				}
-
-				@Override
-				protected String[] crearRegistros(Evaluacion evaluacionE) {
-					Empleado empleado = servicioEmpleado
-							.buscarPorFicha(evaluacionE.getFicha());
-					Empleado empleado1 = servicioEmpleado
-							.buscarPorFicha(evaluacionE.getFichaEvaluador());
-					String[] registros = new String[11];
-					registros[0] = evaluacionE.getFicha();
-					registros[1] = empleado.getNombre();
-					registros[2] = String.valueOf(evaluacionE
-							.getFechaRevision());
-					registros[3] = String.valueOf(evaluacionE
-							.getEstadoEvaluacion());
-					registros[4] = evaluacionE.getFichaEvaluador();
-					registros[5] = empleado1.getNombre();
-					registros[6] = String.valueOf(evaluacionE
-							.getResultadoObjetivos());
-					registros[7] = String.valueOf(evaluacionE
-							.getResultadoCompetencias());
-					registros[8] = String.valueOf(evaluacionE
-							.getResultadoGeneral());
-					registros[9] = String.valueOf(evaluacionE.getValoracion());
-					registros[10] = (String.valueOf(evaluacionE
-							.getResultadoFinal()));
-					return registros;
-
-				}
-
-			};
-			catalogoEvaluacion.setParent(catalogoEvaluaciones);
+			
+			
+			try {
+				catalogoEvaluacion.setParent(catalogoEvaluaciones);
+				catalogoEvaluacion.actualizarLista(evaluaciones);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				catalogoEvaluacion.actualizarLista(evaluaciones);	
+			}
+			
+			
+		
 			// catalogo.doModal();
 		}
 
@@ -657,6 +679,8 @@ public class CCalibracionEvaluacion extends CGenerico {
 		txtGerencia.setValue("");
 		txtTrabajador.setValue("");
 		txtValoracion.setValue("");
+		catalogoEvaluacion.actualizarLista(new ArrayList<Evaluacion>());
+		txtGrado.setText("0");
 	}
 	
 	@Listen("onClick = #btnVer")

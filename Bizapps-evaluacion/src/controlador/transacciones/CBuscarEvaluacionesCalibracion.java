@@ -106,7 +106,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		// TODO Auto-generated method stub
 		
 		mostrarCatalogo();
-
+	
 		botonera = new Botonera(){
 			@Override
 			public void guardar() {
@@ -141,6 +141,8 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 //		botonera.getChildren().get(1).setVisible(true);
 //		botonera.getChildren().get(3).setVisible(true);
 //		botoneraCalibracion.appendChild(botonera);
+		
+		
 		
 	}
 
@@ -439,7 +441,6 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	public void mostrarCatalogo() {
 		
 		evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
-		
 		catalogoEvaluacion = new CatalagoN <Evaluacion> (catalogoEvaluaciones, "Catalogo", evaluaciones,
 				false, false, true,"Ficha", "Nombre Empleado", "Fecha Revisión","Estado Evaluacion","Ficha Evaluador", 
 				"Nombre Evaluador","Resultado Objetivos", "Resultado Competencias", "Resultado General", "Valoración", "Resultado Final") {
@@ -504,7 +505,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		};
 		
 		
-		catalogoEvaluacion.setParent(catalogoEvaluaciones);
+		//catalogoEvaluacion.setParent(catalogoEvaluaciones);
 		// catalogo.doModal();
 }
 	
@@ -521,7 +522,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		System.out.println(empresa);
 		System.out.println(nombreE+ nombreEv+gerencia+valoracion);
 		if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
-				&& gerencia.equals("") && valoracion.equals("")) {
+				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
 			System.out.println("entrooooooo");
 			evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
 		} 
@@ -561,7 +562,19 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 					empresa, nombreE, ficha, gerencia, valoracion);
 		}
 		
-		catalogoEvaluacion.actualizarLista(evaluaciones);
+		try {
+			catalogoEvaluacion.setParent(catalogoEvaluaciones);
+			catalogoEvaluacion.actualizarLista(evaluaciones);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			catalogoEvaluacion.actualizarLista(evaluaciones);	
+		}
+		
+		
+	
+		
+	//catalogoEvaluacion.actualizarLista(evaluaciones);
 		
 		
 	}
@@ -622,6 +635,8 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		txtGerencia.setValue("");
 		txtTrabajador.setValue("");
 		txtValoracion.setValue("");
+		catalogoEvaluacion.actualizarLista(new ArrayList<Evaluacion>());
+		txtGrado.setText("0");
 	}
 
 	}
