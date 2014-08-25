@@ -105,7 +105,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
 		
-		mostrarCatalogo();
+//		mostrarCatalogo();
 	
 		botonera = new Botonera(){
 			@Override
@@ -297,10 +297,10 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 			@Override
 			protected List<Empleado> buscar(String valor, String combo) {
 				// TODO Auto-generated method stub
-				if (combo.equals("Descripción"))
+				if (combo.equals("Nombre"))
 					return servicioEmpleado.filtroNombre(valor);
 				else
-					return servicioEmpleado.buscarTodos();
+					return servicioEmpleado.filtroFicha(valor);
 			}
 
 		};
@@ -357,7 +357,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 				if (combo.equals("Nombre"))
 					return servicioEmpleado.filtroNombre(valor);
 				else
-					return servicioEmpleado.buscarTodos();
+					return servicioEmpleado.filtroFicha(valor);
 			}
 
 		};
@@ -505,7 +505,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		};
 		
 		
-		//catalogoEvaluacion.setParent(catalogoEvaluaciones);
+		catalogoEvaluacion.setParent(catalogoEvaluaciones);
 		// catalogo.doModal();
 }
 	
@@ -513,6 +513,8 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	
 	@Listen("onClick = #btnBuscar")
 	public void actualizarCatalogo() {
+		if (catalogoEvaluaciones.getChildren().isEmpty())
+			mostrarCatalogo();
 		String empresa = txtEmpresa.getValue();
 		String nombreE = txtTrabajador.getValue();
 		String nombreEv = txtEvaluador.getValue();
@@ -562,14 +564,14 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 					empresa, nombreE, ficha, gerencia, valoracion);
 		}
 		
-		try {
-			catalogoEvaluacion.setParent(catalogoEvaluaciones);
+//		try {
+//			catalogoEvaluacion.setParent(catalogoEvaluaciones);
 			catalogoEvaluacion.actualizarLista(evaluaciones);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			catalogoEvaluacion.actualizarLista(evaluaciones);	
-		}
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			catalogoEvaluacion.actualizarLista(evaluaciones);	
+//		}
 		
 		
 	
