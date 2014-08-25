@@ -68,15 +68,25 @@
 				<hbox />
 				<hbox />
 			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Grado:" />
+					<space />
+				</hbox>
+				<spinner value = "0" constraint="min 0; max 25"
+				mold="rounded" width="100%" id="txtGrado" maxlength="3" />
+				<hbox />
+				<hbox />
+			</row>
 		</rows>
 	</grid>
 	<separator />
 
 	<separator />
 	<div width="100%" align="right">
-		<button id="btnGuardar" label="Buscar" />
-		<button id="btnLimpiar" label="Limpiar" />
-		<button id="btnBuscar" label="Refrescar" />
+		<button id="btnGuardar" label="Buscar" image="/public/imagenes/botones/buscar.png"/> 
+		<button id="btnLimpiar" label="Limpiar" image="/public/imagenes/botones/limpiar.png" />
+		<button id="btnBuscar" label="Refrescar" image="/public/imagenes/botones/generar.png" />
 	</div>
 	<separator />
 	<div id="divCatalogoEmpresa"

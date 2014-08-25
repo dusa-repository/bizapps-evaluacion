@@ -55,6 +55,10 @@ public class CCalibracionEvaluacion extends CGenerico {
 	@Wire
 	private Textbox txtValoracio;
 	@Wire
+	private Spinner txtGrado;
+	@Wire
+	private Button btnBuscarGrado;
+	@Wire
 	private Button btnBuscarGerencia;
 	@Wire
 	private Button btnBuscarEmpresa;
@@ -82,7 +86,13 @@ public class CCalibracionEvaluacion extends CGenerico {
 	private Div catalogoEvaluaciones;
 	@Wire
 	private Div divCatalogoValoracion;
-
+	@Wire
+	private Div divCatalogoGrado;
+	@Wire
+	private Window winEvaluacionEmpleado;
+	@Wire
+	private Button btnVer;
+	
 	private int idGerencia = 0;
 	private int idEmpresa = 0;
 	private String ficha = "";
@@ -97,6 +107,8 @@ public class CCalibracionEvaluacion extends CGenerico {
 	Catalogo<Empleado> catalogoEvaluador;
 	Catalogo<Empleado> catalogoTrabajador;
 	Catalogo<Valoracion> catalogoValoracion;
+	Integer[] list = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+	Catalogo<Integer> catalogoGrado;
 
 	List<Evaluacion> evaluaciones;
 
@@ -260,15 +272,17 @@ public class CCalibracionEvaluacion extends CGenerico {
 	public void mostrarCatalogoTrabajador() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogoTrabajador = new Catalogo<Empleado>(divCatalogoTrabajador,
-				"Catalogo de Empleados", listEmpleado, "Nombre") {
+				"Catalogo de Empleados", listEmpleado, "Ficha","Nombre") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
 				List<Empleado> lista = new ArrayList<Empleado>();
 
 				for (Empleado empleado : listEmpleado) {
-					if (empleado.getNombre().toLowerCase()
-							.startsWith(valores.get(0))) {
+					if (empleado.getFicha().toLowerCase()
+							.startsWith(valores.get(0))
+							&& empleado.getNombre().toLowerCase()
+							.startsWith(valores.get(1))) {
 						lista.add(empleado);
 					}
 				}
@@ -278,8 +292,9 @@ public class CCalibracionEvaluacion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Empleado empleado) {
-				String[] registros = new String[1];
-				registros[0] = empleado.getNombre();
+				String[] registros = new String[2];
+				registros[0] = empleado.getFicha();
+				registros[1] = empleado.getNombre();
 
 				return registros;
 			}
@@ -314,15 +329,17 @@ public class CCalibracionEvaluacion extends CGenerico {
 	public void mostrarCatalogoEvaluador() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogoEvaluador = new Catalogo<Empleado>(divCatalogoEvaluador,
-				"Catalogo de Empleados", listEmpleado, "Nombre") {
+				"Catalogo de Empleados", listEmpleado, "Ficha" , "Nombre") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
 				List<Empleado> lista = new ArrayList<Empleado>();
 
 				for (Empleado empleado : listEmpleado) {
-					if (empleado.getNombre().toLowerCase()
-							.startsWith(valores.get(0))) {
+					if (empleado.getFicha().toLowerCase()
+							.startsWith(valores.get(0))
+							&& empleado.getNombre().toLowerCase()
+							.startsWith(valores.get(1))) {
 						lista.add(empleado);
 					}
 				}
@@ -332,8 +349,9 @@ public class CCalibracionEvaluacion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Empleado empleado) {
-				String[] registros = new String[1];
-				registros[0] = empleado.getNombre();
+				String[] registros = new String[2];
+				registros[0] = empleado.getFicha();
+				registros[1] = empleado.getNombre();
 
 				return registros;
 			}
@@ -422,25 +440,59 @@ public class CCalibracionEvaluacion extends CGenerico {
 		txtValoracion.setFocus(true);
 		catalogoValoracion.setParent(null);
 	}
+	
 
 	@Listen("onClick = #btnBuscar")
 	public void mostrarCatalogo() {
-
-		if (catalogoEvaluacion == null) {
 			String empresa = txtEmpresa.getValue();
 			String nombreE = txtTrabajador.getValue();
 			String nombreEv = txtEvaluador.getValue();
 			String gerencia = txtGerencia.getValue();
 			String valoracion = txtValoracion.getValue();
-			if (empresa.equals("") || nombreE.equals("") || nombreEv.equals("")
-					|| gerencia.equals("") || valoracion.equals("")) {
+			Integer grado = txtGrado.getValue();
+			System.out.println(empresa);
+			System.out.println(nombreE+ nombreEv+gerencia+valoracion);
+			if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+					&& gerencia.equals("") && valoracion.equals("")) {
+				System.out.println("entrooooooo");
 				evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
-			} else {
+			} 
+			else if (nombreE.equals("") && nombreEv.equals("")
+					&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEmpresa(empresa);
+			}
+			else if (empresa.equals("") && nombreEv.equals("")
+					&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionTrabajador(nombreE);
+			}
+			else if (empresa.equals("") && nombreE.equals("")
+					&& gerencia.equals("") && valoracion.equals("") && grado  == 0) {
+				Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
+				System.out.println(nombreEv);
+				
+				String ficha = eva.getFicha();
+				System.out.println(ficha);
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEvaluador(ficha);
+			}
+			else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+					 && valoracion.equals("") && grado  == 0) {
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGerencia(gerencia);
+			} 
+			else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+					&& gerencia.equals("")  && grado  == 0) {
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionValoracion(valoracion);
+			} 
+			else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+					&& gerencia.equals("") && valoracion.equals("") && grado != 0) {
+				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGrado(grado);
+			} 
+			else {
 				Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
 				String ficha = eva.getFicha();
 				evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracion(
 						empresa, nombreE, ficha, gerencia, valoracion);
 			}
+			
 			catalogoEvaluacion = new CatalagoN<Evaluacion>(
 					catalogoEvaluaciones, "Catalogo", evaluaciones, false,
 					false, true, "Ficha", "Nombre Empleado", "Fecha Revisión",
@@ -551,13 +603,12 @@ public class CCalibracionEvaluacion extends CGenerico {
 			catalogoEvaluacion.setParent(catalogoEvaluaciones);
 			// catalogo.doModal();
 		}
-	}
 
-	@Listen("onSeleccion = #catalogoEvaluaciones")
-	public void seleccionEValoracion() {
-		Evaluacion e = catalogoEvaluacion.objetoSeleccionadoDelCatalagoN();
-		System.out.println(catalogoEvaluacion.obtenertext());
-	}
+//	@Listen("onSeleccion = #catalogoEvaluaciones")
+//	public void seleccionEValoracion() {
+//		Evaluacion e = catalogoEvaluacion.objetoSeleccionadoDelCatalagoN();
+//		System.out.println(catalogoEvaluacion.obtenertext());
+//	}
 
 	@Listen("onClick = #btnGuardar")
 	public void guardarValoracion() {
@@ -600,10 +651,59 @@ public class CCalibracionEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnLimpiar")
 	public void limpiar() {
+		catalogoEvaluaciones.detach();
 		txtEmpresa.setValue("");
 		txtEvaluador.setValue("");
 		txtGerencia.setValue("");
 		txtTrabajador.setValue("");
 		txtValoracion.setValue("");
 	}
+	
+	@Listen("onClick = #btnVer")
+	public void mostrarEvaluacion() {
+
+		if (catalogoEvaluacion.obtenerSeleccionados().size() == 1){
+			
+			Evaluacion eva = catalogoEvaluacion.objetoSeleccionadoDelCatalagoN();
+			
+				Usuario usuario =servicioUsuario.buscarId(eva.getIdUsuario());
+				String fichaUsuario = usuario.getFicha();
+
+				if (fichaUsuario.compareTo("0")==0)
+				{
+					Messagebox
+					.show("La Evaluación no se puede visualizar ya que es solo un registro historico ( Valoracion Final )",
+							"Alerta",
+							Messagebox.OK,
+							Messagebox.EXCLAMATION);
+				}
+				else
+				{
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("modo", "EDITAR");
+					map.put("id", eva.getIdEvaluacion());
+					map.put("titulo", eva.getFicha());
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					
+					
+					winEvaluacionEmpleado = (Window) Executions.createComponents(
+							"/vistas/transacciones/VAgregarEvaluacion.zul", null,
+							map);
+					winEvaluacionEmpleado.doModal();
+					//winListaPersonal.onClose();
+					
+				}
+				
+				
+			}
+		else {
+			Messagebox
+			.show("Debe seleccionar una evaluación",
+					"Alerta",
+					Messagebox.OK,
+					Messagebox.EXCLAMATION);
+		}
+
+		}
+
 }

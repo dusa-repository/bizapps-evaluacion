@@ -67,9 +67,19 @@
 					<space />
 				</hbox>
 				<textbox id="txtValoracion" tabindex="1" width="100%"
-					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
+					maxlength="100" tooltiptext="Ingrese aqui la Valoración" />
 				<button id="btnBuscarValoracion" image="/public/imagenes/botones/buscar.png"
-					tooltiptext="Catalogo de Evaluador" />
+					tooltiptext="Catalogo de Valoración" />
+				<hbox />
+				<hbox />
+			</row>
+			<row>
+				<hbox>
+					<label class="etiqueta" value="Grado:" />
+					<space />
+				</hbox>
+				<spinner value = "0" constraint="min 0; max 25"
+				mold="rounded" width="100%" id="txtGrado" maxlength="3" />
 				<hbox />
 				<hbox />
 			</row>
@@ -79,9 +89,10 @@
 
 	<separator />
 	<div width="100%" align="right">
-		<button id="btnGuardar" label="Guardar" />
-		<button id="btnLimpiar" label="Limpiar" />
-		<button id="btnBuscar" label="Refrescar" />
+		<button id="btnVer" label="Ver Evaluación"  image="/public/imagenes/botones/buscar.png"/>
+		<button id="btnGuardar" label="Guardar"  image="/public/imagenes/botones/guardar.png"/>
+		<button id="btnLimpiar" label="Limpiar"  image="/public/imagenes/botones/limpiar.png"/>
+		<button id="btnBuscar" label="Refrescar"  image="/public/imagenes/botones/generar.png"/>
 	</div>
 	<separator />
 	<div id="divCatalogoEmpresa"
@@ -89,11 +100,13 @@
 	<div id="divCatalogoGerencia"
 		tooltiptext="Click para Seleccionar una gerencia" />
 	<div id="divCatalogoTrabajador"
-		tooltiptext="Click para Seleccionar una gerencia" />
+		tooltiptext="Click para Seleccionar un trabajador" />
 	<div id="divCatalogoEvaluador"
-		tooltiptext="Click para Seleccionar una gerencia" />
+		tooltiptext="Click para Seleccionar un evaluador" />
 	<div id="divCatalogoValoracion"
 		tooltiptext="Click para Seleccionar una Valoración" />
+	<div id="divCatalogoGrado"
+		tooltiptext="Click para Seleccionar un grado" />
 	<groupbox id="gpxDatos" width="auto" title="">
 		<caption label="Registros" style="font-weight:bold"
 			tooltiptext="Presione para Visualizar las Evaluaciones" />

@@ -62,6 +62,30 @@ public class SEvaluacion {
 		return evaluacionDAO.buscarEvaluacionCalibracion(empresa, nombreE, fichaE, gerencia, valoracion);
 	}
 	
+	public List<Evaluacion> buscarEvaluacionCalibracionEmpresa (String empresa) {
+		return evaluacionDAO.buscarEvaluacionCalibracionEmpresa(empresa);
+	}
+	
+	public List<Evaluacion> buscarEvaluacionCalibracionTrabajador (String nombreE) {
+		return evaluacionDAO.buscarEvaluacionCalibracionTrabajador(nombreE);
+	}
+	
+	public List<Evaluacion> buscarEvaluacionCalibracionEvaluador (String fichaE) {
+		return evaluacionDAO.buscarEvaluacionCalibracionEvaluador(fichaE);
+	}
+	
+	public List<Evaluacion> buscarEvaluacionCalibracionGerencia (String gerencia) {
+		return evaluacionDAO.buscarEvaluacionCalibracionGerencia(gerencia);
+	}
+	
+	public List<Evaluacion> buscarEvaluacionCalibracionValoracion (String valoracion) {
+		return evaluacionDAO.buscarEvaluacionCalibracionValoracion(valoracion);
+	}
+	
+	public List<Evaluacion> buscarEvaluacionCalibracionGrado (Integer grado) {
+		return evaluacionDAO.buscarEvaluacionCalibracionGrado(grado);
+	}
+	
 	public void eliminarUno(Integer id) {
 		evaluacionDAO.delete(id);
 	}

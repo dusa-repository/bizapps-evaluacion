@@ -29,6 +29,7 @@ import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Space;
+import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
@@ -154,13 +155,13 @@ public abstract class CatalagoN<Clase> extends Window {
             public void render(Listitem fila, Clase objeto, int arg2)
                             throws Exception {
                     fila.setValue(objeto);
-                    Textbox textbox = new Textbox();
+                    Spinner textbox = new Spinner();
                     String[] registros = crearRegistros(objeto);
                     for (int i = 0; i < registros.length; i++) {
                             Listcell celda = new Listcell();
                             if(i==registros.length-1){
                             	System.out.println("aqui");
-                            	textbox.setValue(registros[i]);
+                            	textbox.setValue(Integer.valueOf(registros[i]));
                             }
                             else 
                                 celda.setLabel(registros[i]);
@@ -350,9 +351,9 @@ public abstract class CatalagoN<Clase> extends Window {
 		lsbCatalagoN.setCheckmark(true);
 	}
 
-	public String obtenertext(){
+	public Integer obtenertext(){
 		Listitem listItem = lsbCatalagoN.getSelectedItem();
-		String aprobado = ((Textbox) ((listItem.getChildren().get(listItem.getChildren().size()-1)))
+		Integer aprobado = ((Spinner) ((listItem.getChildren().get(listItem.getChildren().size()-1)))
 				.getFirstChild()).getValue();
 		return aprobado;
 	}

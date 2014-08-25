@@ -47,6 +47,8 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	@Wire
 	private Textbox txtValoracion;
 	@Wire
+	private Spinner txtGrado;
+	@Wire
 	private Textbox txtEmpresa;
 	@Wire
 	private Textbox txtGerencia;
@@ -261,15 +263,17 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	public void mostrarCatalogoTrabajador() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogoTrabajador = new Catalogo<Empleado>(divCatalogoTrabajador,
-				"Catalogo de Empleados", listEmpleado, "Nombre") {
+				"Catalogo de Empleados", listEmpleado, "Ficha", "Nombre") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
 				List<Empleado> lista = new ArrayList<Empleado>();
 
 				for (Empleado empleado : listEmpleado) {
-					if (empleado.getNombre().toLowerCase()
-							.startsWith(valores.get(0))) {
+					if (empleado.getFicha().toLowerCase()
+							.startsWith(valores.get(0))
+							&& empleado.getNombre().toLowerCase()
+									.startsWith(valores.get(1))) {
 						lista.add(empleado);
 					}
 				}
@@ -279,8 +283,9 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Empleado empleado) {
-				String[] registros = new String[1];
-				registros[0] = empleado.getNombre();
+				String[] registros = new String[2];
+				registros[0] = empleado.getFicha();
+				registros[1] = empleado.getNombre();
 
 				return registros;
 			}
@@ -315,15 +320,17 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	public void mostrarCatalogoEvaluador() {
 		final List<Empleado> listEmpleado = servicioEmpleado.buscarTodos();
 		catalogoEvaluador = new Catalogo<Empleado>(divCatalogoEvaluador,
-				"Catalogo de Empleados", listEmpleado, "Nombre") {
+				"Catalogo de Empleados", listEmpleado, "Ficha","Nombre") {
 
 			@Override
 			protected List<Empleado> buscarCampos(List<String> valores) {
 				List<Empleado> lista = new ArrayList<Empleado>();
 
 				for (Empleado empleado : listEmpleado) {
-					if (empleado.getNombre().toLowerCase()
-							.startsWith(valores.get(0))) {
+					if (empleado.getFicha().toLowerCase()
+							.startsWith(valores.get(0))
+							&& empleado.getNombre().toLowerCase()
+							.startsWith(valores.get(1))) {
 						lista.add(empleado);
 					}
 				}
@@ -333,8 +340,9 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Empleado empleado) {
-				String[] registros = new String[1];
-				registros[0] = empleado.getNombre();
+				String[] registros = new String[2];
+				registros[0] = empleado.getFicha();
+				registros[1] = empleado.getNombre();
 
 				return registros;
 			}
@@ -426,23 +434,54 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 	
 	@Listen("onClick = #btnBuscar")
 	public void mostrarCatalogo() {
-		
-		if (catalogoEvaluacion == null){
 		String empresa = txtEmpresa.getValue();
 		String nombreE = txtTrabajador.getValue();
 		String nombreEv = txtEvaluador.getValue();
 		String gerencia = txtGerencia.getValue();
 		String valoracion = txtValoracion.getValue();
-		if (empresa.equals("") || nombreE.equals("") || nombreEv.equals("") || gerencia.equals("") || valoracion.equals("")){
+		Integer grado = txtGrado.getValue();
+		System.out.println(empresa);
+		System.out.println(nombreE+ nombreEv+gerencia+valoracion);
+		if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("")) {
+			System.out.println("entrooooooo");
 			evaluaciones = servicioEvaluacion.buscarEvaluacionesRevision();
-			System.out.println("entoroo");
+		} 
+		else if (nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEmpresa(empresa);
 		}
+		else if (empresa.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionTrabajador(nombreE);
+		}
+		else if (empresa.equals("") && nombreE.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado  == 0) {
+			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
+			System.out.println(nombreEv);
+			
+			String ficha = eva.getFicha();
+			System.out.println(ficha);
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionEvaluador(ficha);
+		}
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				 && valoracion.equals("") && grado  == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGerencia(gerencia);
+		} 
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("")  && grado  == 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionValoracion(valoracion);
+		} 
+		else if (empresa.equals("") && nombreE.equals("") && nombreEv.equals("")
+				&& gerencia.equals("") && valoracion.equals("") && grado != 0) {
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracionGrado(grado);
+		} 
 		else {
 			Empleado eva = servicioEmpleado.buscarPorNombre(nombreEv);
 			String ficha = eva.getFicha();
-		evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracion(empresa, nombreE, ficha, gerencia, valoracion);
+			evaluaciones = servicioEvaluacion.buscarEvaluacionCalibracion(
+					empresa, nombreE, ficha, gerencia, valoracion);
 		}
-
 		catalogoEvaluacion = new CatalagoN <Evaluacion> (catalogoEvaluaciones, "Catalogo", evaluaciones,
 				false, false, true,"Ficha", "Nombre Empleado", "Fecha Revisión","Estado Evaluacion","Ficha Evaluador", 
 				"Nombre Evaluador","Resultado Objetivos", "Resultado Competencias", "Resultado General", "Valoración", "Resultado Final") {
@@ -508,7 +547,7 @@ public class CBuscarEvaluacionesCalibracion extends CGenerico {
 		catalogoEvaluacion.setParent(catalogoEvaluaciones);
 		// catalogo.doModal();
 	}
-	}
+	
 	
 	
 	@Listen("onClick = #btnGuardar")
