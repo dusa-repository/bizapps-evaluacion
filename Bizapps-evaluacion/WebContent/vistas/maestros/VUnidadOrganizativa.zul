@@ -1,22 +1,24 @@
+<zk>
+	<style src="/public/Estilo.css" />
 <window id="wdwVUnidadOrganizativa"
 	apply="controlador.maestros.CUnidadOrganizativa" border="normal"
-	height="auto" style="background-color:#8A0808;">
-	<groupbox width="auto">
+	height="auto" style="background-color:#8A0808;" width="70%">
+	<groupbox width="auto" mold="3d" title="Unidad Organizativa">
 		<separator />
 		<div id="botoneraUnidadOrganizativa" />
 		<separator />
 		<separator />
 		<groupbox id="gpxRegistroUnidadOrganizativa" width="auto"
 			title="" open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="color:black; font-size: 12px; font-weight:bold"
 				tooltiptext="Presione para registrar una nueva unidad organizativa" />
 			<separator />
 			<grid width="100%">
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="8%" />
-					<column label="" width="27%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
 				</columns>
 				<rows>
 					<row>
@@ -31,7 +33,7 @@
 							tabindex="1" width="100%" maxlength="100"
 							tooltiptext="Ingrese aqui la gerencia" />
 						<button id="btnBuscarGerencia" label=""
-							tooltiptext="Catalogo de gerencias"
+							tooltiptext="Catalogo de gerencias" class="btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -81,7 +83,7 @@
 		<separator />
 		<groupbox id="gpxDatosUnidadOrganizativa" width="auto"
 			title="">
-			<caption label="Registros" style="font-weight:bold"
+			<caption label="Registros" style="color:black; font-size: 12px; font-weight:bold"
 				tooltiptext="Presione para visualizar las unidades organizativas registradas" />
 			<div id="catalogoUnidadOrganizativa"
 				tooltiptext="Seleccione la unidad organizativa para realizar una accion" />
@@ -92,3 +94,5 @@
 	<div id="divCatalogoGerencia"
 		tooltiptext="Click para Seleccionar una gerencia" />
 </window>
+
+</zk>

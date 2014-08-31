@@ -1,6 +1,6 @@
 <window id="wdwVDominio" apply="controlador.maestros.CDominio"
-	border="normal" height="auto" style="background-color:#8A0808;">
-	<groupbox width="auto">
+	border="normal" height="auto" style="background-color:#8A0808;" width="70%">
+	<groupbox width="auto" mold="3d" title="Dominio">
 		<separator />
 		<div id="botoneraDominio" />
 		<separator />

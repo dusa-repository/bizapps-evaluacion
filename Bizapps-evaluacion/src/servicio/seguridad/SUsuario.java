@@ -19,6 +19,11 @@ public class SUsuario {
 	public Usuario buscarUsuarioPorId(long codigo) {
 		return usuarioDAO.findOne(codigo);
 	}
+	
+	@Transactional
+	public Usuario buscarUsuarioPorId(String id) {
+		return usuarioDAO.findByCedula(id);
+	}
 
 	public void guardar(Usuario usuario) {
 		usuarioDAO.save(usuario);

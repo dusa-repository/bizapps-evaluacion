@@ -47,6 +47,9 @@ public class Mensaje {
 	public static String seleccionarUnidadOrganizativa = "Debe seleccionar una Unidad Organizativa";
 	public static String seleccionarGerencia = "Debe seleccionar una Gerencia";
 	public static String seleccionarCompetencia = "Debe seleccionar una Competencia";
+	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
+	public static String tamanioMuyGrande = "El archivo que ha seleccionado excede el tamaño maximo establecido (100 KB)";
+	public static String formatoImagenNoValido = "Formato de Imagen no Valido";
 
 	public void mensajeInformacion(String msj) {
 		Messagebox.show(msj, "Informacion", Messagebox.OK,

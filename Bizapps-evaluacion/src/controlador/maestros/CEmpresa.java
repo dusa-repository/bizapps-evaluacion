@@ -126,7 +126,7 @@ public class CEmpresa extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana1(wdwVEmpresa, "Empresa");
+				cerrarVentana(wdwVEmpresa, "Empresa", tabs);
 			}
 
 			@Override

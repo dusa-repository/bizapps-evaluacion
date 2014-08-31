@@ -1,6 +1,6 @@
 <window id="wdwVUnidadMedida" apply="controlador.maestros.CUnidadMedida"
-	border="normal" height="auto" style="background-color:#8A0808;">
-	<groupbox width="auto">
+	border="normal" height="auto" style="background-color:#8A0808;" width="70%">
+	<groupbox width="auto" mold="3d" title="Unidad de Medida">
 		<separator />
 		<div id="botoneraUnidadMedida" />
 		<separator />

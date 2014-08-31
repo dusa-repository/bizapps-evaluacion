@@ -41,11 +41,11 @@
 				<separator />
 				<div align="left">
 					<button id="btnCopiar"
-						tooltiptext="Copiar" style= "height:30px; width:100px"
+						tooltiptext="Copiar" class = "btn"
 						label="Copiar" image="/public/imagenes/botones/copiar.png">
 					</button>
 					<button id="btnEliminar" label="Eliminar"
-						tooltiptext="Eliminar" style=" height:30px; width:100px"
+						tooltiptext="Eliminar" class = "btn"
 						image="/public/imagenes/botones/eliminar.png">
 					</button>
 					<!-- <button id="btnSalir" label="Salir"

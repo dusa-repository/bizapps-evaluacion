@@ -2,9 +2,8 @@
 	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;">
 		<separator />
-		<div style="background-color:#F8E0E0 ; ;">
-			<label value="Acción a Realizar" style="font-weight:bold;" />
-		</div>
+	<groupbox  width="auto" mold="3d" title="Evaluación de personal a cargo">
+	
 		<separator />
 		<panel border="normal" width="100%">
 			<panelchildren>
@@ -12,12 +11,12 @@
 
 				<div align="left">
 					<button id="btnAgregar" tabindex="3"
-						style="margin-left:5px; height:27px" label="Agregar"
+						class = "btn" label="Agregar"
 						image="/public/imagenes/botones/annadir.png"
 						onClick='contenido.src="../vistas/transacciones/VArbolPersonalAgregar.zul"'>
 					</button>
 					<button id="btnBuscar" label="Buscar"
-						style="height:27px" tabindex="3"
+						class = "btn" tabindex="3"
 						image="/public/imagenes/botones/buscar.png"
 						onClick='contenido.src="../vistas/transacciones/VArbolPersonal.zul"'>
 					</button>
@@ -37,5 +36,6 @@
 		</panel>
 		<separator></separator>
 		<include id="contenido"></include>
+		</groupbox>
 	</window>
 </zk>

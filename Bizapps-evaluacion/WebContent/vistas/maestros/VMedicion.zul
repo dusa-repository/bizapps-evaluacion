@@ -1,7 +1,7 @@
 <window id="wdwVMedicion" apply="controlador.maestros.CMedicion"
-	border="normal" height="auto" style="background-color:#8A0808;">
+	border="normal" height="auto" style="background-color:#8A0808;" width="70%">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Medición">
 		<separator />
 		<div id="botoneraMedicion" />
 		<separator />

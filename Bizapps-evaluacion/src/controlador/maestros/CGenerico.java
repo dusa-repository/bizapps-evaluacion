@@ -27,6 +27,8 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Window;
 
+import componentes.Mensaje;
+
 import arbol.CArbol;
 
 import servicio.maestros.SActividad;
@@ -164,6 +166,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SEvaluacionCapacitacion servicioEvaluacionCapacitacion;
 
 	protected SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+	public Mensaje msj = new Mensaje();
 	public List<Tab> tabs = new ArrayList<Tab>();
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
@@ -227,6 +230,35 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		}
 	}
 
+	public void cerrarVentana(Div div, String id, List<Tab> tabs2) {
+		div.setVisible(false);
+		tabs = tabs2;
+		System.out.println(tabs.size());
+		for (int i = 0; i < tabs.size(); i++) {
+			if (tabs.get(i).getLabel().equals(id)) {
+				if (i == (tabs.size() - 1) && tabs.size() > 1) {
+					tabs.get(i - 1).setSelected(true);
+				}
+				tabs.get(i).onClose();
+				tabs.remove(i);
+			}
+		}
+	}
+	
+	public void cerrarVentana(Window div, String id, List<Tab> tabs2) {
+		div.setVisible(false);
+		tabs = tabs2;
+		System.out.println(tabs.size());
+		for (int i = 0; i < tabs.size(); i++) {
+			if (tabs.get(i).getLabel().equals(id)) {
+				if (i == (tabs.size() - 1) && tabs.size() > 1) {
+					tabs.get(i - 1).setSelected(true);
+				}
+				tabs.get(i).onClose();
+				tabs.remove(i);
+			}
+		}
+	}
 	public String nombreUsuarioSesion() {
 		Authentication sesion = SecurityContextHolder.getContext()
 				.getAuthentication();

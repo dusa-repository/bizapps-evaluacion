@@ -1,6 +1,6 @@
 <window id="wdwVCompetencia" apply="controlador.maestros.CCompetencia"
-	border="normal" height="auto" style="background-color:#8A0808;">
-	<groupbox width="auto">
+	border="normal" height="auto" style="background-color:#8A0808;" width="100%">
+	<groupbox width="auto" mold="3d" title="Competencia">
 		<separator />
 		<div id="botoneraCompetencia" />
 		<separator />

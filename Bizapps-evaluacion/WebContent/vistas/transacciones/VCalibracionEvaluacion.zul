@@ -86,6 +86,7 @@
 				mold="rounded" width="100%" id="txtGrado" maxlength="3" />
 				<hbox />
 				<hbox />
+				<hbox />
 			</row>
 		</rows>
 	</grid>

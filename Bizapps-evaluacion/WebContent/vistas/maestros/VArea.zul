@@ -1,7 +1,7 @@
 <window id="wdwVArea" apply="controlador.maestros.CArea" border="normal"
-	height="auto" style="background-color:#8A0808;">
+	height="auto" style="background-color:#8A0808;" width="70%">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Area">
 		<separator />
 		<div id="botoneraArea" />
 		<separator />
@@ -31,7 +31,7 @@
 							width="100%" maxlength="100"
 							tooltiptext="Ingrese aqui el tipo de formacion" />
 						<button id="btnBuscarTipoFormacion" label=""
-							tooltiptext="Catalogo de tipos de formacion"
+							tooltiptext="Catalogo de tipos de formacion" class="btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>

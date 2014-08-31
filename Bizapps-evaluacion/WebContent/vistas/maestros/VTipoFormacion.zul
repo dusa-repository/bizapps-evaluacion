@@ -1,8 +1,8 @@
 <window id="wdwVTipoFormacion"
 	apply="controlador.maestros.CTipoFormacion" border="normal"
-	height="auto" style="background-color:#8A0808;">
+	height="auto" style="background-color:#8A0808;" width="70%">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Tipo de Formación">
 		<separator />
 		<div id="botoneraTipoFormacion" />
 		<separator />

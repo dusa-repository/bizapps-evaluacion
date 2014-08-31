@@ -3,9 +3,7 @@
 		style="background-color:#8A0808;" id="winEvaluacionEmpleado"
 		apply="controlador.transacciones.CAgregarEvaluacion" closable="true">
 		<separator></separator>
-		<div style="background-color:#F8E0E0 ; ;">
-			<label value="Evaluación de Desempeño" style="font-weight:bold;" />
-		</div>
+		<groupbox  width="auto" mold="3d" title="Evaluación de desempeño">
 		<separator></separator>
 		<separator></separator>
 		<!-- Contenedor de datos del empleado -->
@@ -63,7 +61,7 @@
 					<separator />
 					<groupbox id="gpxAgregar">
 						<listbox height="auto" id="lbxObjetivos" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead>
 								<listheader label="Línea" width="5%" />
 								<listheader label="Pilar Estratégico" width="22%" />
 								<listheader label="Objetivo" width="46%" />
@@ -116,16 +114,14 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregar" width="auto" height="auto" mold="trendy"
-							label="Agregar" image="/public/imagenes/botones/agregar.png"
-							style="background-color:#F8E0E0 ; ;">
+						<button id="btnAgregar" class = "btn" 
+							label="Agregar" image="/public/imagenes/botones/annadir.png">
 						</button>
-						<button id="btnEliminar" width="auto" height="auto" mold="trendy"
+						<button id="btnEliminar" class = "btn" 
 							label="Eliminar" image="/public/imagenes/botones/eliminar.png">
 						</button>
-						<button id="btnIr" width="auto" height="auto" mold="trendy"
-							label="Ir Indicador" image="/public/imagenes/botones/adelante.png"
-							style="background-color:#F8E0E0 ; ;">
+						<button id="btnIr" class = "btn" 
+							label="Ir Indicador" image="/public/imagenes/botones/adelante.png">
 						</button>
 					</div>
 					<separator></separator>
@@ -141,7 +137,7 @@
 					<separator></separator>
 					<groupbox id="gpxObjetivosAgregados">
 						<listbox height="auto" id="lbxObjetivosGuardados" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead>
 								<listheader label="Línea" width="5%" />
 								<listheader label="Pilar Estratégico" width="25%" />
 								<listheader label="Objetivo" width="33%" />
@@ -230,7 +226,7 @@
 					<groupbox id="gpxAgregarIndicador">
 						<listbox height="auto" id="lbxAgregarIndicador" mold="paging"
 							pageSize="10" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead >
 								<listheader label="Línea" width="5%" />
 								<listheader label="Indicador " width="23%" />
 								<listheader label="Unid. Med." width="9%" />
@@ -309,11 +305,11 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregarIndicador" width="auto" height="auto"
-							mold="trendy" label="Agregar" image="/public/imagenes/botones/agregar.png">
+						<button id="btnAgregarIndicador" class = "btn"
+							 label="Agregar" image="/public/imagenes/botones/annadir.png">
 						</button>
-						<button id="btnEliminarIndicador" width="auto" height="auto"
-							image="/public/imagenes/botones/eliminar.png" mold="trendy"
+						<button id="btnEliminarIndicador" class = "btn"
+							image="/public/imagenes/botones/eliminar.png" 
 							label="Eliminar" onClick="@command('cancelar')">
 						</button>
 					</div>
@@ -327,7 +323,7 @@
 					<groupbox id="gpxAgregados">
 						<listbox height="auto" id="lbxIndicadoresAgregados" mold="paging"
 							pageSize="10" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead>
 								<listheader label="Línea" width="5%" />
 								<listheader label="Indicador " width="25%" />
 								<listheader label="Unid. Med." width="9%" />
@@ -429,7 +425,7 @@
 					<separator></separator>
 					<listbox height="auto" id="lbxCompetenciaRectora" mold="paging"
 						pageSize="10" width="auto">
-						<listhead style="background: #F8E0E0 ; ">
+						<listhead>
 							<listheader label="Competencia" />
 							<listheader label="Nivel de Dominio Requerido" />
 							<listheader label="Nivel de Dominio Evidenciado" />
@@ -488,7 +484,7 @@
 					<separator></separator>
 					<listbox height="auto" id="lbxCompetenciaEspecifica" mold="paging"
 						pageSize="10" width="auto">
-						<listhead style="background: #F8E0E0 ; ">
+						<listhead>
 							<listheader label="Competencia" />
 							<listheader label="Nivel de Dominio Requerido" />
 							<listheader label="Nivel de Dominio Evidenciado" />
@@ -607,7 +603,7 @@
 					<separator />
 					<groupbox id="gpxAgregarCapacitacion">
 						<listbox height="auto" id="lbxAccionesCapacitacion" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead>
 								<listheader label="Tipo Formacion" width="15%" />
 								<listheader label="Area/Campo" width="20%" />
 								<listheader label="Descripcion Especifica de la Formacion"
@@ -655,8 +651,8 @@
 									</button>
 								</listcell>
 								<listcell>
-									<button id="btnQuitarCapacitacion" width="auto" height="auto"
-										mold="trendy" image="/public/imagenes/botones/cancelar.png"
+									<button id="btnQuitarCapacitacion" class= "btn"
+										 image="/public/imagenes/botones/cancelar.png"
 										style="background-color:#F8E0E0 ; ;">
 									</button>
 								</listcell>
@@ -664,11 +660,10 @@
 						</listbox>
 					</groupbox>
 					<div align="right" height="100%">
-						<button id="btnAgregarAcciones" width="auto" height="auto" mold="trendy"
-							label="Agregar" image="/public/imagenes/botones/agregar.png"
-							style="background-color:#F8E0E0 ; ;">
+						<button id="btnAgregarAcciones"  class= "btn"
+							label="Agregar" image="/public/imagenes/botones/agregar.png">
 						</button>
-						<button id="btnEliminarAcciones" width="auto" height="auto" mold="trendy"
+						<button id="btnEliminarAcciones" class= "btn"
 							label="Eliminar" image="/public/imagenes/botones/eliminar.png">
 						</button>
 					</div>
@@ -677,7 +672,7 @@
 					<separator></separator>
 					<groupbox id="gpxAccionesAgregadas">
 						<listbox height="auto" id="lbxAccionesGuardadas" width="auto">
-							<listhead style="background: #F8E0E0 ; ">
+							<listhead>
 								<listheader label="Tipo Formacion" width="20%" />
 								<listheader label="Area/Campo" width="20%" />
 								<listheader label="Descripcion Especifica de la Formacion"
@@ -774,7 +769,7 @@
 						sclass="btn" tabindex="1" image="/public/imagenes/botones/finalizada.png">
 					</button>
 					<button id="btnCancelar" label="Salir" sclass="btn"
-						tabindex="2" image="/public/imagenes/botones/cancelar.png">
+						tabindex="2" image="/public/imagenes/botones/salir.png">
 					</button>
 					<button id="btnImprimir" label="Imprimir" sclass="btn"
 						tabindex="2" image="/public/imagenes/botones/generar.png">
@@ -783,5 +778,6 @@
 				</div>
 			</panelchildren>
 		</panel>
+		</groupbox>
 	</window>
 </zk>

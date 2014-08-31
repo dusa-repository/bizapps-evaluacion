@@ -1,7 +1,7 @@
 <window id="wdwVEmpleado" apply="controlador.maestros.CEmpleado"
-	border="normal" height="auto" style="background-color:#8A0808;">
+	border="normal" height="auto" style="background-color:#8A0808;" width="80%">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Empleado">
 		<separator />
 		<div id="botoneraEmpleado" />
 		<separator />
@@ -31,7 +31,7 @@
 							width="100%" maxlength="100"
 							tooltiptext="Ingrese aqui la empresa" />
 						<button id="btnBuscarEmpresa" label=""
-							tooltiptext="Catalogo de empresas"
+							tooltiptext="Catalogo de empresas" class="btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -46,7 +46,7 @@
 							tabindex="2" maxlength="100"
 							tooltiptext="Ingrese aqui el cargo" />
 						<button id="btnBuscarCargo" label=""
-							tooltiptext="Catalogo de cargos"
+							tooltiptext="Catalogo de cargos" class="btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
@@ -61,7 +61,7 @@
 						<textbox id="txtUnidadEmpleado" width="100%"
 							tabindex="3" maxlength="100"
 							tooltiptext="Ingrese aqui la unidad organizativa" />
-						<button id="btnBuscarUnidad" label=""
+						<button id="btnBuscarUnidad" label="" class="btn"
 							tooltiptext="Catalogo de unidades organizativas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
@@ -124,7 +124,7 @@
 							tabindex="10" width="100%" maxlength="100"
 							tooltiptext="Ingrese aqui la ficha del supervisor del empleado" />
 						<button id="btnBuscarSupervisor" label=""
-							tooltiptext="Catalogo de empleados"
+							tooltiptext="Catalogo de empleados" class="btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>

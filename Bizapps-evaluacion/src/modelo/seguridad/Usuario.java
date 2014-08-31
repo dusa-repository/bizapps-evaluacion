@@ -84,6 +84,9 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<UnidadOrganizativa> unidadOrganizativas;
 
+	@Lob
+	private byte[] imagen;
+	
 	@ManyToMany
 	@JoinTable(
 		name="grupo_usuario"
@@ -356,5 +359,15 @@ public class Usuario implements Serializable {
 
 		return unidadOrganizativa;
 	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 
 }

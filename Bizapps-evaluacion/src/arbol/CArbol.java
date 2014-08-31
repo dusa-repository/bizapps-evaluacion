@@ -1,18 +1,25 @@
 package arbol;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import modelo.maestros.Revision;
 import modelo.seguridad.Arbol;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.image.AImage;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -20,8 +27,11 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -50,7 +60,11 @@ public class CArbol extends CGenerico {
 	private Tabbox tabBox;
 	@Wire
 	private West west;
-
+	@Wire
+	private Image imagenes;
+	URL url = getClass().getResource("/controlador/maestros/usuario.png");
+	@Wire
+	private Listbox ltbRoles;
 	private  boolean numeroSgt = false;
 	private   Tabbox tabBox2;
 	private  Include contenido2;
@@ -58,12 +72,27 @@ public class CArbol extends CGenerico {
 	Mensaje msj = new Mensaje();
 	@Wire
 	private Label lblUsuario;
+	HashMap<String, Object> mapGeneral = new HashMap<String, Object>();
 	@Override
 	public void inicializar() throws IOException {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
+		if (u.getImagen() == null) {
+			imagenes.setContent(new AImage(url));
+		} else {
+			try {
+				BufferedImage imag;
+				imag = ImageIO.read(new ByteArrayInputStream(u.getImagen()));
+				imagenes.setContent(imag);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		String nombre = u.getNombre();
 		String apellido = u.getApellido();
 		String cedula = u.getCedula();
@@ -351,12 +380,33 @@ public class CArbol extends CGenerico {
 			contenido.setSrc(null);
 			contenido.setSrc(ruta);
 			Tab newTab = new Tab("Editar Usuario");
+			newTab.setClosable(true);
+			newTab.addEventListener(Events.ON_CLOSE,
+					new EventListener<Event>() {
+						@Override
+						public void onEvent(Event arg0) throws Exception {
+							for (int i = 0; i < tabs.size(); i++) {
+								if (tabs.get(i).getLabel()
+										.equals("Editar Usuario")) {
+									if (i == (tabs.size() - 1)
+											&& tabs.size() > 1) {
+										tabs.get(i - 1).setSelected(true);
+									}
+
+									tabs.get(i).close();
+									tabs.remove(i);
+								}
+							}
+						}
+					});
 			newTab.setSelected(true);
 			Tabpanel newTabpanel = new Tabpanel();
 			newTabpanel.appendChild(contenido);
 			tabBox.getTabs().insertBefore(newTab, tab);
 			newTabpanel.setParent(tabBox.getTabpanels());
 			tabs.add(newTab);
+			mapGeneral.put("tabsGenerales", tabs);
+			Sessions.getCurrent().setAttribute("mapaGeneral", mapGeneral);
 		} else
 			taba.setSelected(true);
 	}

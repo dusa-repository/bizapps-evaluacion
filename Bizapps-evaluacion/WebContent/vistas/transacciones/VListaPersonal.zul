@@ -11,40 +11,34 @@
 	</zscript>
 		<!-- Fin de Formato de fecha día-Mes-Año, sin hora -->
 		<separator />
-		<div style="background-color:#F8E0E0;">
-			<label value="Acción a Realizar" style="font-weight:bold;" />
-		</div>
+		<groupbox  width="auto" mold="3d" title="Evaluación Personal">
 		<separator />
-		<panel border="normal" width="100%">
-			<panelchildren>
 				<separator />
 				<div align="left">
 					<button id="btnAgregar"
-						tooltiptext="Agregar" style= "height:30px; width:100px"
+						tooltiptext="Agregar"  class="btn"
 						label="Agregar" image="/public/imagenes/botones/annadir.png">
 					</button>
-					<button id="btnEliminar" label="Eliminar"
-						tooltiptext="Eliminar" style=" height:30px; width:100px"
+					<button id="btnEliminar" label="Eliminar" class="btn"
+						tooltiptext="Eliminar" 
 						image="/public/imagenes/botones/eliminar.png">
 					</button>
 					<!-- <button id="btnSalir" label="Salir"
 						style=" height:27px; width:90px " tooltiptext="Salir"
 						image="/public/imagenes/botones/salir.png">
 					</button> -->
-					<button id="btnCopiar"
-						tooltiptext="Copiar" style= "height:30px; width:100px"
+					<button id="btnCopiar" class="btn"
+						tooltiptext="Copiar"
 						label="Copiar" image="/public/imagenes/botones/copiar.png">
 					</button>
 					<separator />
 				</div>
-			</panelchildren>
-		</panel>
 		<separator></separator>
 		<groupbox id="gpxListaPersonal"
 			style="color: blue; color: red; font-style: Arial; font-weight: bold; font-size: 15px;">
 			<listbox height="auto" id="lbxEvaluacion" mold="paging"
 				pageSize="10" width="auto">
-				<listhead style="background: #F8E0E0">
+				<listhead >
 					<listheader label="#Evaluación" width="15%" />
 					<listheader label="Revisión" width="20%" />
 					<listheader label="Fecha" width="20%" />
@@ -71,6 +65,7 @@
 							value="* Para ver/modificar las evaluaciones debe hacer doble click sobre ellas ! "
 							style="color: black;font-size: 14px;font-weight:bold;"></label>
 					</div>
+		</groupbox>
 		</groupbox>
 	</window>
 	<include id="contenido"></include>

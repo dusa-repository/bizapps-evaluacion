@@ -1,7 +1,7 @@
 <window id="wdwVGerencia" apply="controlador.maestros.CGerencia"
-	border="normal" height="auto" style="background-color:#8A0808;">
+	border="normal" height="auto" style="background-color:#8A0808;" width="70%">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Gerencia">
 		<separator />
 		<div id="botoneraGerencia" />
 		<separator />

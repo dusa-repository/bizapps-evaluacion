@@ -32,11 +32,11 @@ public abstract class Botonera extends Hbox {
 		btnSeleccionar.setSrc("/public/imagenes/botones/seleccionar.png");
 		
 		
-		btnEliminar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnGuardar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnLimpiar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnSalir.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnSeleccionar.setStyle("font-size: 11px ;width: 105px; height: 25px");
+//		btnEliminar.setStyle("font-size: 11px ;width: 87px; height: 25px");
+//		btnGuardar.setStyle("font-size: 11px ;width: 87px; height: 25px");
+//		btnLimpiar.setStyle("font-size: 11px ;width: 87px; height: 25px");
+//		btnSalir.setStyle("font-size: 11px ;width: 87px; height: 25px");
+//		btnSeleccionar.setStyle("font-size: 11px ;width: 105px; height: 25px");
 		
 		btnGuardar.setLabel("Guardar");
 		btnEliminar.setLabel("Eliminar");

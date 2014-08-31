@@ -18,4 +18,6 @@ public interface IGrupoDAO extends JpaRepository<Grupo, Long> {
 	public Grupo findByNombre(String nombreGrupo);
 
 	public List<Grupo> findByNombreStartingWithAllIgnoreCase(String valor);
+	
+	public List<Grupo> findByUsuariosOrderByNombreAsc(Usuario u);
 }

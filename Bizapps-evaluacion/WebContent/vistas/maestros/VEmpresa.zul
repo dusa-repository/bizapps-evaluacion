@@ -1,7 +1,8 @@
 <window id="wdwVEmpresa" apply="controlador.maestros.CEmpresa"
-	border="normal" height="auto" style="background-color:#8A0808;">
-
-	<groupbox width="auto">
+	border="normal" height="auto" style="background-color:#8A0808;"
+	width="70%">
+<style src="/public/Estilo.css" />
+	<groupbox width="auto" mold="3d" title="Empresa">
 		<separator />
 		<div id="botoneraEmpresa" />
 		<separator />
@@ -14,8 +15,8 @@
 			<grid width="100%">
 				<columns visible="false">
 					<column label="" width="20%" />
-					<column label="" width="55%" />
-					<column label="" width="25%" />
+					<column label="" width="60%" />
+					<column label="" width="20%" />
 				</columns>
 				<rows>
 					<row>
@@ -26,10 +27,11 @@
 								style="font-weight:bold;color:red">
 							</label>
 						</hbox>
-
 						<textbox id="txtNombreEmpresa" width="50%"
 							maxlength="100" tabindex="1"
 							tooltiptext="Ingrese aqui el nombre de la empresa" />
+						<hbox />
+						<hbox />
 					</row>
 					<row>
 						<label value="Dirección:" class="etiqueta" />
@@ -37,6 +39,8 @@
 						<textbox id="txtDireccionEmpresa" width="50%"
 							maxlength="200" tabindex="2" rows="3" cols="100"
 							tooltiptext="Ingrese aqui la direccion de la empresa" />
+						<hbox />
+						<hbox />
 					</row>
 					<row>
 						<label value="Teléfono 1:" class="etiqueta" />
@@ -44,6 +48,8 @@
 						<textbox id="txtTelefono1Empresa" width="50%"
 							maxlength="20" tabindex="3"
 							tooltiptext="Ingrese aqui el telefono de la empresa" />
+						<hbox />
+						<hbox />
 					</row>
 					<row>
 						<label value="Teléfono 2:" class="etiqueta" />
@@ -51,6 +57,8 @@
 						<textbox id="txtTelefono2Empresa" width="50%"
 							maxlength="20" tabindex="4"
 							tooltiptext="Ingrese aqui el telefono de la empresa" />
+						<hbox />
+						<hbox />
 					</row>
 					<row>
 						<label value="Empresa Auxiliar:"
@@ -59,6 +67,8 @@
 						<textbox id="txtEmpresaAuxiliarEmpresa"
 							width="50%" maxlength="50" tabindex="5"
 							tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
+						<hbox />
+						<hbox />
 					</row>
 				</rows>
 			</grid>
