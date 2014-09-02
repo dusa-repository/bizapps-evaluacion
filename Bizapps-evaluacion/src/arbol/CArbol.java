@@ -294,13 +294,19 @@ public class CArbol extends CGenerico {
 					newTab.setClosable(true);
 					newTab.addEventListener(Events.ON_CLOSE,
 							new EventListener<Event>() {
-								@Override
-								public void onEvent(Event arg0) throws Exception {
-									for (int i = 0; i < tabs.size(); i++) {
-										if (tabs.get(i).getLabel().equals(arbolItem.getNombre())) {
-											if (i == (tabs.size() - 1) && tabs.size() > 1) {
-												tabs.get(i - 1).setSelected(true);
-											}
+						@Override
+						public void onEvent(Event arg0)
+								throws Exception {
+							if(arbolItem.getNombre().equals("Consulta"))
+								west.setOpen(true);
+							for (int i = 0; i < tabs.size(); i++) {
+								if (tabs.get(i).getLabel()
+										.equals(arbolItem.getNombre())) {
+									if (i == (tabs.size() - 1)
+											&& tabs.size() > 1) {
+										tabs.get(i - 1).setSelected(
+												true);
+									}
 											
 											tabs.get(i).close();
 											tabs.remove(i);
@@ -314,6 +320,10 @@ public class CArbol extends CGenerico {
 					tabBox.getTabs().insertBefore(newTab, tab);
 					newTabpanel.setParent(tabBox.getTabpanels());
 					tabs.add(newTab);
+					mapGeneral.put("tabsGenerales", tabs);
+					mapGeneral.put("west", west);
+					Sessions.getCurrent().setAttribute("mapaGeneral",
+							mapGeneral);
 					}
 				}
 				 else {
@@ -333,8 +343,13 @@ public class CArbol extends CGenerico {
 		tab2 = tab;
 	}
 	
-	public void abrirVentanas(Arbol arbolItem) {
+	public void abrirVentanas(final Arbol arbolItem, Tabbox tabBox3,
+			Include contenido3, Tab tab3, List<Tab> tabss) {
 		boolean abrir = true;
+		contenido2 = contenido3;
+		tabBox2 = tabBox3;
+		tab2 = tab3;
+		tabs = tabss;
 		Tab taba = new Tab();
 		
 			if (!arbolItem.getUrl().equals("inicio")) {
@@ -351,12 +366,34 @@ public class CArbol extends CGenerico {
 					contenido2.setSrc(ruta);
 
 					Tab newTab = new Tab(arbolItem.getNombre());
+					newTab.setClosable(true);
+					newTab.addEventListener(Events.ON_CLOSE,
+							new EventListener<Event>() {
+								@Override
+								public void onEvent(Event arg0) throws Exception {
+									for (int i = 0; i < tabs.size(); i++) {
+										if (tabs.get(i).getLabel()
+												.equals(arbolItem.getNombre())) {
+											if (i == (tabs.size() - 1)
+													&& tabs.size() > 1) {
+												tabs.get(i - 1).setSelected(true);
+											}
+
+											tabs.get(i).close();
+											tabs.remove(i);
+										}
+									}
+								}
+							});
 					newTab.setSelected(true);
 					Tabpanel newTabpanel = new Tabpanel();
 					newTabpanel.appendChild(contenido2);
 					tabBox2.getTabs().insertBefore(newTab,tab2);
 					newTabpanel.setParent(tabBox2.getTabpanels());
 					tabs.add(newTab);
+					mapGeneral.put("tabsGenerales", tabs);
+					Sessions.getCurrent().setAttribute("mapaGeneral", mapGeneral);
+			
 				} else {
 					taba.setSelected(true);
 				}

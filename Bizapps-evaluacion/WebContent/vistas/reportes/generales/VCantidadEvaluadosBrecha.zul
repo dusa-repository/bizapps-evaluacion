@@ -56,16 +56,17 @@
 					</row>
 				</rows>
 			</grid>
-			<div align="right" style="float: right;">
-				<button id="btnGenerar" tooltiptext="Generar"
-					image="/public/iconos/generar.png" style="background:#FFFFFF; border:solid #FF7925"
-					class="btnCatalogo" />
-				<button id="btnLimpiar" tooltiptext="Limpiar"
-					image="/public/iconos/limpiar.png" style="background:#FFFFFF; border:solid #FF7925"
-					class="btnCatalogo" />
-				<button id="btnSalir" tooltiptext="Salir"
-					image="/public/iconos/salir.png" style="background:#FFFFFF; border:solid #FF7925"
-					class="btnCatalogo" />
+			<space></space>
+			<div align="right" >
+				<button id="btnGenerar" tooltiptext="Generar" label = "Generar"
+					image="/public/imagenes/botones/generar.png" class= "btn"
+					 />
+				<button id="btnLimpiar" tooltiptext="Limpiar" label = "Limpiar"
+					image="/public/imagenes/botones/limpiar.png" class= "btn"
+					/>
+				<button id="btnSalir" tooltiptext="Salir" label = "Salir"
+					image="/public/imagenes/botones/salir.png" class= "btn"
+					/>
 			</div>
 		</groupbox>
 		<groupbox height="100%" width="100%">

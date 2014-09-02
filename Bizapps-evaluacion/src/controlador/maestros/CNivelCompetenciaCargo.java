@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import modelo.maestros.Area;
@@ -14,6 +15,7 @@ import modelo.maestros.Competencia;
 import modelo.maestros.Dominio;
 import modelo.maestros.NivelCompetenciaCargo;
 
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -29,6 +31,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -71,7 +74,15 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
-
+		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("mapaGeneral");
+		if (mapa != null) {
+			if (mapa.get("tabsGenerales") != null) {
+				tabs = (List<Tab>) mapa.get("tabsGenerales");
+				mapa.clear();
+				mapa = null;
+			}
+		}
 		txtCargoNivelCompetenciaCargo.setFocus(true);
 
 	}
@@ -191,7 +202,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Listen("onClick = #btnSalir")
 	public void salir() {
 
-		cerrarVentana1(wdwVNivelCompetenciaCargo, "Nivel Competencia Cargo");
+		cerrarVentana(wdwVNivelCompetenciaCargo, "Nivel Competencia Cargo",tabs);
 	}
 
 	public void llenarLista() {

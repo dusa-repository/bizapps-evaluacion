@@ -179,6 +179,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
 
+	
+	public Tab tab;
 	/* Titulos de Mensaje */
 	public String informacion = "INFORMACION";
 	public String alerta = "ALERTA";
