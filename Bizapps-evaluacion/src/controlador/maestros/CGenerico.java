@@ -278,7 +278,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			props.setProperty("mail.smtp.auth", "true");
 
 			Session session = Session.getDefaultInstance(props);
-			String asunto = "Notificacion de SITEG";
+			String asunto = "Notificacion de Bizapps Evaluación";
 			String remitente = "siteg.ucla@gmail.com";
 			String contrasena = "Equipo.2";
 			String destino = correo;
@@ -316,4 +316,5 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			return false;
 		}
 	}
+	
 }

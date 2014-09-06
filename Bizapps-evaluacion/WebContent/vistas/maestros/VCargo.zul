@@ -5,9 +5,9 @@
 		<div id="botoneraCargo" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroCargo" width="auto" title=""
+		<groupbox id="gpxRegistroCargo" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar un nuevo cargo" />
 			<separator />
 			<grid width="100%">
@@ -58,8 +58,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosCargo" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosCargo" width="auto" title="" class ="azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar los cargos registrados" />
 			<div id="catalogoCargo"
 				tooltiptext="Seleccione el cargo para realizar una accion" />

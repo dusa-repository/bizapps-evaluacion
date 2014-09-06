@@ -256,13 +256,13 @@ public class CListaPersonal extends CGenerico {
 				eva = evaluacionE;
 				Integer id = evaluacionE.getIdEvaluacion();
 				idEva = id;
-				Messagebox.show(Mensaje.deseaCopiar, "Alerta", Messagebox.OK
-						| Messagebox.CANCEL, Messagebox.QUESTION,
+				Messagebox.show(Mensaje.deseaCopiar, "Alerta", Messagebox.YES
+						| Messagebox.NO, Messagebox.QUESTION,
 						new org.zkoss.zk.ui.event.EventListener<Event>() {
 							public void onEvent(Event evt)
 									throws InterruptedException {
-								if (evt.getName().equals("onOK")) {
-									
+
+								if (evt.getName().equals("onYes")) {					
 									revision = servicioRevision.buscarPorEstado("ACTIVO");
 									Authentication auth = SecurityContextHolder.getContext()
 											.getAuthentication();

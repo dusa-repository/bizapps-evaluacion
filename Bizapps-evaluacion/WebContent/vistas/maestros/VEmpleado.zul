@@ -6,9 +6,9 @@
 		<div id="botoneraEmpleado" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroEmpleado" width="auto" title=""
+		<groupbox id="gpxRegistroEmpleado" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar un nuevo empleado" />
 			<separator />
 			<grid width="100%">
@@ -140,8 +140,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosEmpleado" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosEmpleado" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar los empleados registrados" />
 			<div id="catalogoEmpleado"
 				tooltiptext="Seleccione el empleado para realizar una accion" />

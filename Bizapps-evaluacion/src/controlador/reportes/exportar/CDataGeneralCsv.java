@@ -14,6 +14,7 @@ import modelo.maestros.UnidadOrganizativa;
 import modelo.reportes.BeanDataGeneralCsv;
 
 import org.zkoss.util.media.AMedia;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -28,6 +29,7 @@ import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Window;
 
 import componentes.Mensaje;
@@ -57,6 +59,8 @@ public class CDataGeneralCsv extends CGenerico {
 	@Wire
 	private Div divDataGeneralCsv;
 
+	
+	
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 	}
@@ -136,7 +140,7 @@ public class CDataGeneralCsv extends CGenerico {
 
 	@Listen("onClick = #btnSalir")
 	public void salir() {
-		cerrarVentana(divDataGeneralCsv, "Resumen Macro");
+		cerrarVentana(divDataGeneralCsv, "Exportar Datos",tabs);
 	}
 
 	public boolean validar() {
@@ -170,6 +174,15 @@ public class CDataGeneralCsv extends CGenerico {
 		comboGerencia();
 		comboPeriodo();
 		comboUnidadOrganizativa();
+		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("mapaGeneral");
+		if (mapa != null) {
+			if (mapa.get("tabsGenerales") != null) {
+				tabs = (List<Tab>) mapa.get("tabsGenerales");
+				mapa.clear();
+				mapa = null;
+			}
+		}
 		// comboCompetencia();
 	}
 

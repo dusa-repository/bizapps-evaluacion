@@ -7,9 +7,9 @@
 		<div id="botoneraCurso" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroCurso" width="auto" title=""
+		<groupbox id="gpxRegistroCurso" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nuevo curso" />
 			<separator />
 			<grid width="100%" style="border:0px">
@@ -88,8 +88,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosCurso" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosCurso" width="auto" title="" class ="azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar los cursos registrados" />
 			<div id="catalogoCurso"
 				tooltiptext="Seleccione el curso para realizar una accion" />

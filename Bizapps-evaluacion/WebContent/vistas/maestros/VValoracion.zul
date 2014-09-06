@@ -6,9 +6,9 @@
 		<div id="botoneraValoracion" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroValoracion" width="auto" title=""
+		<groupbox id="gpxRegistroValoracion" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva gerencia" />
 			<separator />
 			<grid width="100%">
@@ -71,8 +71,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosValoracion" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosValoracion" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las valoraciones registradas" />
 			<div id="catalogoValoracion"
 				tooltiptext="Seleccione la valoracion para realizar una accion" />

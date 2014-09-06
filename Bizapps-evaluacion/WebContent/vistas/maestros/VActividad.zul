@@ -6,9 +6,9 @@
 		<div id="botoneraActividad" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroActividad" width="auto" title=""
+		<groupbox id="gpxRegistroActividad" width="auto" title="" class= "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva actividad" />
 			<separator />
 			<grid width="100%">
@@ -37,8 +37,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosActividad" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosActividad" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las actividades registradas" />
 			<div id="catalogoActividad"
 				tooltiptext="Seleccione la actividad para realizar una accion" />

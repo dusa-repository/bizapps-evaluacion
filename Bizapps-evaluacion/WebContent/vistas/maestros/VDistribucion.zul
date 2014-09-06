@@ -7,9 +7,9 @@
 		<div id="botoneraDistribucion" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroDistribucion" width="auto" title=""
+		<groupbox id="gpxRegistroDistribucion" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva distribucion" />
 			<separator />
 			<grid width="100%">
@@ -52,8 +52,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosDistribucion" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosDistribucion" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las distribuciones registradas" />
 			<div id="catalogoDistribucion"
 				tooltiptext="Seleccione la distribucion para realizar una accion" />

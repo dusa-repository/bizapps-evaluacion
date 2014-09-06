@@ -6,8 +6,8 @@
 		<div id="botoneraArea" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroArea" width="auto" open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+		<groupbox id="gpxRegistroArea" width="auto" open="false" class= "azul">
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva area" />
 			<separator />
 			<grid width="100%">
@@ -46,8 +46,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosArea" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosArea" width="auto" title="" class= "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las areas registradas" />
 			<div id="catalogoArea"
 				tooltiptext="Seleccione el area para realizar una accion" />

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +23,10 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
+
 
 import componentes.Botonera;
 import componentes.Mensaje;
@@ -47,6 +50,8 @@ public class CEditarUsuario extends CGenerico {
 	private Div botoneraEditarUsuario;
 	@Wire
 	private Div divEditarUsuario;
+	ArrayList<Boolean> valorCorreo = new ArrayList<Boolean>();
+	private String mensaje = "Su solicitud ha sido exitosamente procesada, le enviamos su usuario y contraseña,";
 	private String id = "";
 	private Media media;
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -128,7 +133,14 @@ public class CEditarUsuario extends CGenerico {
 						usuario.setPassword(password);
 						usuario.setImagen(imagenUsuario);
 						servicioUsuario.guardar(usuario);
-						msj.mensajeInformacion(Mensaje.guardado);
+						String correo = usuario.getEmail();
+						String nombreUsuario = usuario.getLogin();
+						if (!correo.equals("")|| !correo.equals(null)){
+						valorCorreo.add(enviarEmailNotificacion(correo, mensaje
+								+ " Usuario: " + nombreUsuario + "  " + "Contraseña: "
+								+ password));
+						confirmacion(valorCorreo);
+						}
 						limpiar();
 					} else {
 						msj.mensajeError(Mensaje.contrasennasNoCoinciden);
@@ -179,5 +191,29 @@ public class CEditarUsuario extends CGenerico {
 			imgUsuario.setContent(new AImage(url));
 		}
 	}
+
+	/**
+	 * Metodo que permite confirmar que se logro enviar efectivamente el correo
+	 * electronico
+	 * 
+	 * @param valor2
+	 *            arreglo de valores booleanos
+	 */
+	private int confirmacion(ArrayList<Boolean> valor2) {
+		// TODO Auto-generated method stub
+		for (int w = 0; w < valor2.size(); w++) {
+			if (valor2.get(w).equals(false)) {
+				return Messagebox.show("Correo electronico no enviado",
+						"Error", Messagebox.OK, Messagebox.ERROR);
+			}
+		}
+		return Messagebox.show("Su contraseña ha sido cambiada exitosamente, " +
+				"hemos enviado a su correo electronico la información de su cuenta", "Informacion",
+				Messagebox.OK, Messagebox.INFORMATION);
+	}
+
+
+
+
 
 }

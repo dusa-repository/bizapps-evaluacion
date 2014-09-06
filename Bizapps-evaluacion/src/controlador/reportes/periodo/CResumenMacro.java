@@ -14,12 +14,14 @@ import modelo.maestros.UnidadOrganizativa;
 
 import org.zkoss.chart.Charts;
 import org.zkoss.chart.Tooltip;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Window;
 
 import componentes.Mensaje;
@@ -156,7 +158,7 @@ public class CResumenMacro extends CGenerico {
 
 	@Listen("onClick = #btnSalir")
 	public void salir() {
-		cerrarWindow(winResumenMacro, "Resumen Macro");
+		cerrarVentana(winResumenMacro, "Resumen Macro",tabs);
 	}
 
 	public boolean validar() {
@@ -195,6 +197,15 @@ public class CResumenMacro extends CGenerico {
 		comboGerencia();
 		comboPeriodo();
 		comboUnidadOrganizativa();
+		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("mapaGeneral");
+		if (mapa != null) {
+			if (mapa.get("tabsGenerales") != null) {
+				tabs = (List<Tab>) mapa.get("tabsGenerales");
+				mapa.clear();
+				mapa = null;
+			}
+		}
 		// comboCompetencia();
 	}
 

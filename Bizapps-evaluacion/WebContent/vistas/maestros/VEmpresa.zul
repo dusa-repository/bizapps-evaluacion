@@ -7,9 +7,9 @@
 		<div id="botoneraEmpresa" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroEmpresa" width="auto" title=""
+		<groupbox id="gpxRegistroEmpresa" width="auto" title="" class="azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva empresa" />
 			<separator />
 			<grid width="100%">
@@ -75,8 +75,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosEmpresa" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosEmpresa" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las empresas registradas" />
 			<div id="catalogoEmpresa"
 				tooltiptext="Seleccione la empresa para realizar una accion" />

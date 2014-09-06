@@ -8,9 +8,9 @@
 		<div id="botoneraUnidadOrganizativa" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroUnidadOrganizativa" width="auto"
+		<groupbox id="gpxRegistroUnidadOrganizativa" width="auto" class = "azul"
 			title="" open="false">
-			<caption label="Nuevo" style="color:black; font-size: 12px; font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva unidad organizativa" />
 			<separator />
 			<grid width="100%">
@@ -81,9 +81,9 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosUnidadOrganizativa" width="auto"
+		<groupbox id="gpxDatosUnidadOrganizativa" width="auto" class = "azul"
 			title="">
-			<caption label="Registros" style="color:black; font-size: 12px; font-weight:bold"
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las unidades organizativas registradas" />
 			<div id="catalogoUnidadOrganizativa"
 				tooltiptext="Seleccione la unidad organizativa para realizar una accion" />

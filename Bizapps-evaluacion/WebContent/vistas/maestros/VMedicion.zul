@@ -6,9 +6,9 @@
 		<div id="botoneraMedicion" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroMedicion" width="auto" title=""
+		<groupbox id="gpxRegistroMedicion" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva medicion" />
 			<separator />
 			<grid width="100%">
@@ -37,8 +37,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosMedicion" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosMedicion" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las mediciones registradas" />
 			<div id="catalogoMedicion"
 				tooltiptext="Seleccione la medicion para realizar una accion" />

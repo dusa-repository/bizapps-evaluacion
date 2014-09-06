@@ -48,7 +48,7 @@
 	font-size: 13px;
 	color: white;
 	cursor: pointer;
-	width: 110px;
+	width: 120px;
 	height: 33px;
 	-webkit-border-radius: 0.7em;
 	-moz-border-radius: 0.7em;
@@ -95,4 +95,8 @@
 	font-size: 26px;
 	color: #661313;
 	font-weight: bold;
+}
+
+.azul .z-groupbox-hr {
+	background: #EBE8E8;
 }

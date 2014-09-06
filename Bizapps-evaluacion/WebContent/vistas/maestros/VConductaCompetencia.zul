@@ -7,9 +7,9 @@
 		<div id="botoneraConductaCompetencia" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroConductaCompetencia" width="auto"
+		<groupbox id="gpxRegistroConductaCompetencia" width="auto" class = "azul"
 			title="" open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva gerencia" />
 			<separator />
 			<grid width="100%">
@@ -71,9 +71,9 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosConductaCompetencia" width="auto"
+		<groupbox id="gpxDatosConductaCompetencia" width="auto" class = "azul"
 			title="">
-			<caption label="Registros" style="font-weight:bold"
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visua+lizar las conductas registradas" />
 			<div id="catalogoConductaCompetencia"
 				tooltiptext="Seleccione la conducta para realizar una accion" />

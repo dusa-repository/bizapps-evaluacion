@@ -155,8 +155,8 @@ public class CEmpleado extends CGenerico {
 			Nodos oneLevelNode = new Nodos(null, 0, "", "");
 			Nodos two = new Nodos(null, 0, "", "");
 			if (arboles.get(z).getFicha().equals(cedula)) {
-				oneLevelNode = new Nodos(roote, z, "("
-						+ arboles.get(z).getGradoAuxiliar() + ")" + " "
+				oneLevelNode = new Nodos(roote, z,
+						+ arboles.get(z).getGradoAuxiliar()  + " " + "(" + arboles.get(z).getFicha() + ")" + " "  
 						+ arboles.get(z).getNombre(), arboles.get(z).getFicha());
 				roote.appendChild(oneLevelNode);
 				idsPadre.add(arboles.get(z).getFicha());
@@ -166,8 +166,8 @@ public class CEmpleado extends CGenerico {
 					if (idsPadre.get(j).equals(
 							arboles.get(z).getFichaSupervisor())) {
 						oneLevelNode = nodos.get(j);
-						two = new Nodos(oneLevelNode, z, "("
-								+ arboles.get(z).getGradoAuxiliar() + ")" + " "
+						two = new Nodos(oneLevelNode, z, 
+								+ arboles.get(z).getGradoAuxiliar() + " " + "(" + arboles.get(z).getFicha() + ")" + " "  
 								+ arboles.get(z).getNombre(), arboles.get(z)
 								.getFicha());
 						oneLevelNode.appendChild(two);
@@ -340,12 +340,12 @@ public class CEmpleado extends CGenerico {
 				eva = evaluacionE;
 				Integer id = evaluacionE.getIdEvaluacion();
 				idEva = id;
-				Messagebox.show(Mensaje.deseaCopiar, "Alerta", Messagebox.OK
-						| Messagebox.CANCEL, Messagebox.QUESTION,
+				Messagebox.show(Mensaje.deseaCopiar, "Alerta", Messagebox.YES
+						| Messagebox.NO, Messagebox.QUESTION,
 						new org.zkoss.zk.ui.event.EventListener<Event>() {
 							public void onEvent(Event evt)
 									throws InterruptedException {
-								if (evt.getName().equals("onOK")) {
+								if (evt.getName().equals("onYes")) {
 									
 									revision = servicioRevision.buscarPorEstado("ACTIVO");
 									

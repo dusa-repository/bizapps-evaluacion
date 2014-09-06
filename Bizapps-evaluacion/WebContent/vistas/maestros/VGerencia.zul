@@ -6,9 +6,9 @@
 		<div id="botoneraGerencia" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroGerencia" width="auto" title=""
+		<groupbox id="gpxRegistroGerencia" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva gerencia" />
 			<separator />
 			<grid width="100%">
@@ -37,8 +37,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosGerencia" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosGerencia" width="auto" title=""  class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visua+lizar las gerencias registradas" />
 			<div id="catalogoGerencia"
 				tooltiptext="Seleccione la gerencia para realizar una accion" />

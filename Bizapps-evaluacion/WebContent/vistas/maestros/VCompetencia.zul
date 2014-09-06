@@ -5,9 +5,9 @@
 		<div id="botoneraCompetencia" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroCompetencia" width="auto" title=""
+		<groupbox id="gpxRegistroCompetencia" width="auto" title="" class = "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar un nueva competencia" />
 			<separator />
 			<grid width="100%">
@@ -63,8 +63,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosCompetencia" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosCompetencia" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las competencias registradas" />
 			<div id="catalogoCompetencia"
 				tooltiptext="Seleccione la competencia para realizar una accion" />

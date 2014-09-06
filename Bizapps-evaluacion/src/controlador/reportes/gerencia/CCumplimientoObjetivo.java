@@ -18,12 +18,14 @@ import org.zkoss.chart.Charts;
 import org.zkoss.chart.Legend;
 import org.zkoss.chart.Tooltip;
 
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Window;
 
 import controlador.maestros.CGenerico;
@@ -156,6 +158,11 @@ public class CCumplimientoObjetivo extends CGenerico {
 		cmbUnidadOrganizativa.setText("Seleccione una Unidad Organizativa");
 	}
 
+    @Listen("onClick = #btnSalir")
+	public void salir() {
+		cerrarVentana(winCumplimientoObjetivo, "Cumplimiento Objetivos Gerencia",tabs);
+	}
+
 
 	@Override
 	public void inicializar() throws IOException {
@@ -165,6 +172,15 @@ public class CCumplimientoObjetivo extends CGenerico {
 		comboGerencia();
 		comboPeriodo();
 		comboUnidadOrganizativa();
+		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("mapaGeneral");
+		if (mapa != null) {
+			if (mapa.get("tabsGenerales") != null) {
+				tabs = (List<Tab>) mapa.get("tabsGenerales");
+				mapa.clear();
+				mapa = null;
+			}
+		}
 		
 	}
 	

@@ -5,9 +5,9 @@
 		<div id="botoneraUnidadMedida" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroUnidadMedida" width="auto" title=""
+		<groupbox id="gpxRegistroUnidadMedida" width="auto" title="" class= "azul"
 			open="false">
-			<caption label="Nuevo" style="font-weight:bold"
+			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar una nueva unidad de medida" />
 			<separator />
 			<grid width="100%">
@@ -36,8 +36,8 @@
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosUnidadMedida" width="auto" title="">
-			<caption label="Registros" style="font-weight:bold"
+		<groupbox id="gpxDatosUnidadMedida" width="auto" title="" class = "azul">
+			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar las unidades de medida registradas" />
 			<div id="catalogoUnidadMedida"
 				tooltiptext="Seleccione la unidad de medida para realizar una accion" />
