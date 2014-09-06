@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.maestros.Area;
+import modelo.maestros.Bitacora;
 import modelo.maestros.Competencia;
 import modelo.maestros.Distribucion;
 import modelo.maestros.Dominio;
@@ -28,6 +29,10 @@ import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.bind.Binder;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -256,7 +261,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	private Combobox cmbTipoFormacion;
 	@Wire
 	private Combobox cmbArea;
-
+	
 	String tipo = "EVIDENCIADO";
 
 	ListModelList<Dominio> dominio;
@@ -272,6 +277,7 @@ public class CAgregarEvaluacion extends CGenerico {
 	private int num;
 	private Integer idEva;
 	private boolean bool = false;
+	private boolean validar = false;
 	private boolean bool1 = false;
 	private int idObjetivo;
 	private int idCapacitacion;
@@ -310,6 +316,8 @@ public class CAgregarEvaluacion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 
+		
+		
 		// ------------Codigo de Capacitacion------------
 		gpxAgregarCapacitacion.setOpen(false);
 
@@ -519,7 +527,35 @@ public class CAgregarEvaluacion extends CGenerico {
 
 							Evaluacion evaluacion = servicioEvaluacion
 									.buscarEvaluacion(idEvaluacion);
+							
 
+							if (evaluacion.getEstadoEvaluacion().equals(
+									"EN EDICION")) {
+								btnPendiente.setVisible(true);
+								btnCambiarEstado.setVisible(false);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"PENDIENTE")) {
+								btnEnEdicion.setVisible(true);
+								btnRevisada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"REVISADA")) {
+								btnPendiente.setVisible(true);
+								btnAprobada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"APROBADA")) {
+								btnRevisada.setVisible(true);
+								btnCalibrada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"CALIBRADA")) {
+								btnAprobada.setVisible(true);
+								btnFinalizada.setVisible(true);
+							} else if (evaluacion.getEstadoEvaluacion().equals(
+									"FINALIZADA")) {
+								btnAgregar.setVisible(false);
+								btnEliminar.setVisible(false);
+								btnAgregarIndicador.setVisible(false);
+								btnCambiarEstado.setVisible(false);
+							}
 							txtCompromisos
 									.setValue(evaluacion.getCompromisos());
 							txtFortalezas.setValue(evaluacion.getFortalezas());
@@ -724,29 +760,6 @@ public class CAgregarEvaluacion extends CGenerico {
 
 							}
 
-							/*
-							 * if (evaluacion.getEstadoEvaluacion().equals(
-							 * "EN EDICION")) { btnPendiente.setVisible(false);
-							 * btnCambiarEstado.setVisible(true); } else if
-							 * (evaluacion.getEstadoEvaluacion().equals(
-							 * "PENDIENTE")) { btnEnEdicion.setVisible(true);
-							 * btnRevisada.setVisible(true); } else if
-							 * (evaluacion.getEstadoEvaluacion().equals(
-							 * "REVISADA")) { btnPendiente.setVisible(true);
-							 * btnAprobada.setVisible(true); } else if
-							 * (evaluacion.getEstadoEvaluacion().equals(
-							 * "APROBADA")) { btnRevisada.setVisible(true);
-							 * btnCalibrada.setVisible(true); } else if
-							 * (evaluacion.getEstadoEvaluacion().equals(
-							 * "CALIBRADA")) { btnAprobada.setVisible(true);
-							 * btnFinalizada.setVisible(true); } else if
-							 * (evaluacion.getEstadoEvaluacion().equals(
-							 * "FINALIZADA")) { btnAgregar.setVisible(false);
-							 * btnEliminar.setVisible(false); //
-							 * btnEliminar2.setVisible(false);
-							 * btnAgregarIndicador.setVisible(false);
-							 * btnCambiarEstado.setVisible(false); }
-							 */
 
 						}
 					}
@@ -778,6 +791,150 @@ public class CAgregarEvaluacion extends CGenerico {
 			}
 		}
 
+	}
+
+	@Listen("onClick = #btnPendiente")
+	public void pasarPendiente() {
+		cambiarEstado();
+		if (validar == false){
+			String estado = "PENDIENTE";
+			revision = servicioRevision.buscarPorEstado("ACTIVO");
+			List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
+			evaluacion = servicioEvaluacion.buscarRevision(fichaE, revision.getId(), estado);
+			if (evaluacion.size() == 0){
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("PENDIENTE");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("PENDIENTE");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.pendiente);
+		btnEnEdicion.setVisible(true);
+		btnRevisada.setVisible(true);
+		btnPendiente.setVisible(false);
+		btnCalibrada.setVisible(false);
+		btnFinalizada.setVisible(false);
+		btnAprobada.setVisible(false);
+		}
+			else {
+				msj.mensajeError(Mensaje.yaExistenPendiente);
+			}
+		}
+		
+	}
+	
+	@Listen("onClick = #btnEnEdicion")
+	public void pasarEnEdicion() {
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("EN EDICION");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("EN EDICION");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.edicion);
+		btnEnEdicion.setVisible(false);
+		btnPendiente.setVisible(true);
+		btnRevisada.setVisible(false);
+		btnCalibrada.setVisible(false);
+		btnFinalizada.setVisible(false);
+		btnAprobada.setVisible(false);
+	}
+	
+	
+	@Listen("onClick = #btnRevisada")
+	public void pasarRevisada() {
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("REVISADA");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("REVISADA");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.revisada);
+		btnPendiente.setVisible(true);
+		btnRevisada.setVisible(false);
+		btnAprobada.setVisible(true);
+		btnEnEdicion.setVisible(false);
+		btnCalibrada.setVisible(false);
+		btnFinalizada.setVisible(false);
+	
+	}
+	
+	@Listen("onClick = #btnAprobada")
+	public void PasarAprobada() {
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("APROBADA");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("APROBADA");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.aprobada);
+		btnAprobada.setVisible(false);
+		btnCalibrada.setVisible(true);
+		btnRevisada.setVisible(true);
+		btnEnEdicion.setVisible(false);
+		btnPendiente.setVisible(false);
+		btnFinalizada.setVisible(false);
+		
+	}
+	
+	@Listen("onClick = #btnCalibrada")
+	public void pasarCalibrada() {
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("CALIBRADA");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("CALIBRADA");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.calibrada);
+		btnCalibrada.setVisible(false);
+		btnFinalizada.setVisible(true);
+		btnAprobada.setVisible(true);
+		btnEnEdicion.setVisible(false);
+		btnPendiente.setVisible(false);
+		btnRevisada.setVisible(false);
+		
+	}
+	
+	@Listen("onClick = #btnFinalizada")
+	public void pasarFinalizada() {
+		Evaluacion eva = servicioEvaluacion.buscarEvaluacion(idEva);
+		eva.setEstadoEvaluacion("FINALIZADA");
+		servicioEvaluacion.guardar(eva);
+		Bitacora bitacora = new Bitacora();
+		bitacora.setEstadoEvaluacion("FINALIZADA");
+		bitacora.setEvaluacion(eva);
+		bitacora.setFechaAuditoria(fechaHora);
+		bitacora.setHoraAuditoria(horaAuditoria);
+		bitacora.setIdUsuario(u);
+		servicioBitacora.guardar(bitacora);
+		msj.mensajeInformacion(Mensaje.finalizada);
+		btnFinalizada.setVisible(false);
+		btnCalibrada.setVisible(true);
+		btnEnEdicion.setVisible(false);
+		btnPendiente.setVisible(false);
+		btnRevisada.setVisible(false);
+		btnAprobada.setVisible(false);
+		
 	}
 
 	public ListModelList<Dominio> getDominio() {
@@ -1148,6 +1305,7 @@ public class CAgregarEvaluacion extends CGenerico {
 					.show("La suma de los pesos de los objetivos debe ser igual a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
+			validar = true;
 
 		}
 
@@ -1156,14 +1314,16 @@ public class CAgregarEvaluacion extends CGenerico {
 					.show("La suma de los pesos de los indicadores debe ser igual a 100",
 							"Información", Messagebox.OK,
 							Messagebox.INFORMATION);
+			validar = true;
 
 		} else {
 
 			// String estado = "PENDIENTE";
 			// evaluacion.setEstadoEvaluacion(estado);
 			// servicioEvaluacion.guardar(evaluacion);
-			Messagebox.show("Evaluación guardada con exito", "Información",
-					Messagebox.OK, Messagebox.INFORMATION);
+	
+//			Messagebox.show("Evaluación guardada con exito", "Información",
+//					Messagebox.OK, Messagebox.INFORMATION);
 		}
 
 	}
@@ -2577,15 +2737,14 @@ public class CAgregarEvaluacion extends CGenerico {
 				}
 
 				Integer pesoTotalDominioRequerido = 0;
-				
 
 				try {
 					pesoTotalDominioRequerido = pesoDominioRequerido
 							* contadorConductas;
-					
+
 				} catch (Exception ex) {
 					pesoTotalDominioRequerido = 0;
-					
+
 				}
 
 				Integer pesoTotalDominioEvidenciado = 0;

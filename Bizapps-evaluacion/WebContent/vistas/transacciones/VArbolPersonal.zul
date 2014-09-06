@@ -1,6 +1,12 @@
 <zk>
 	<window apply="controlador.transacciones.CEmpleado" height="auto"
-		width="auto">
+		width="auto" id="winArbolPersonal">
+		<separator />
+	<groupbox  width="auto" mold="3d" title="Evaluación de personal a cargo">
+		<separator />
+		<panel border="normal" width="100%">
+			<panelchildren>
+				<separator />
 		<!-- Formato de fecha día-Mes-Año, sin hora -->
 		<zscript>
 	<![CDATA[
@@ -40,6 +46,10 @@
 			<panelchildren>
 				<separator />
 				<div align="left">
+				<button id="btnAgregar"
+						tooltiptext="Agregar" class = "btn"
+						label="Agregar" image="/public/imagenes/botones/annadir.png">
+					</button>
 					<button id="btnCopiar"
 						tooltiptext="Copiar" class = "btn"
 						label="Copiar" image="/public/imagenes/botones/copiar.png">
@@ -89,5 +99,9 @@
 		</hbox>
 
 		<include id="contenido"></include>
+		</panelchildren>
+		</panel>
+		<separator></separator>
+		</groupbox>
 	</window>
 </zk>

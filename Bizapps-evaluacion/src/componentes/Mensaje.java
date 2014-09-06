@@ -50,6 +50,14 @@ public class Mensaje {
 	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
 	public static String tamanioMuyGrande = "El archivo que ha seleccionado excede el tamaño maximo establecido (100 KB)";
 	public static String formatoImagenNoValido = "Formato de Imagen no Valido";
+	public static String pendiente = "Su evaluación ahora esta en estado Pendiente";
+	public static String edicion = "Su evaluación ahora esta en estado En Edición";
+	public static String revisada = "Su evaluación ahora esta en estado revisada";
+	public static String aprobada = "Su evaluación ahora esta en estado aprobada";
+	public static String calibrada = "Su evaluación ahora esta en estado calibrada";
+	public static String finalizada = "Su evaluación ahora esta en estado finalizada";
+	public static String personalCargo = "No tiene Personal a Cargo";
+	public static String yaExistenPendiente = "Ya tiene una evaluación pendiente";
 
 	public void mensajeInformacion(String msj) {
 		Messagebox.show(msj, "Informacion", Messagebox.OK,

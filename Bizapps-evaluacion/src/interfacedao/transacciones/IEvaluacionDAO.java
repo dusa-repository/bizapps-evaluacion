@@ -16,6 +16,10 @@ public interface IEvaluacionDAO extends JpaRepository<Evaluacion, Integer> {
 	@Query("select e from Evaluacion e where  e.ficha = ?1 order by e.idEvaluacion desc")
 	public List<Evaluacion> buscarEstado(String ficha);
 	
+	@Query("select e from Evaluacion e where  e.ficha = ?1 and e.revision.id = ?2 " +
+			"and e.estadoEvaluacion = ?3 ")
+	public List<Evaluacion> buscarRevision(String ficha, Integer revision, String estado);
+	
 	public List<Evaluacion> findByFichaAndEstadoEvaluacion (String ficha, String estado);
 	
 	@Query("select max(idEvaluacion) from Evaluacion")

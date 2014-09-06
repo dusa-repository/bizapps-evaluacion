@@ -30,6 +30,10 @@ public class SEvaluacion {
 		return evaluacionDAO.buscarEstado(ficha);
 	}
 	
+	public List<Evaluacion> buscarRevision(String ficha, Integer revision, String estado) {
+		return evaluacionDAO.buscarRevision(ficha, revision, estado);
+	}
+	
 	public List<Evaluacion> buscarPorEstado(String ficha, String estado) {
 		return evaluacionDAO.findByFichaAndEstadoEvaluacion(ficha, estado);
 	}

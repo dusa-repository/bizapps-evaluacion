@@ -1,7 +1,7 @@
 <zk>
 	<window border="normal" height="auto" width="auto"
 		style="background-color:#8A0808;" id="winEvaluacionEmpleado"
-		apply="controlador.transacciones.CAgregarEvaluacion" closable="true">
+		apply="controlador.transacciones.CAgregarEvaluacion" closable="true" >
 		<separator></separator>
 		<groupbox  width="auto" mold="3d" title="Evaluación de desempeño">
 		<separator></separator>
@@ -140,7 +140,7 @@
 							<listhead>
 								<listheader label="Línea" width="5%" />
 								<listheader label="Pilar Estratégico" width="25%" />
-								<listheader label="Objetivo" width="33%" />
+								<listheader label="Objetivo" width="39%" />
 								<listheader label="Corresponsables" width="13%" />
 								<listheader label="Peso (%)" width="8%" />
 								<listheader label="Resultados (%)" width="10%" />
@@ -765,7 +765,7 @@
 					<button id="btnCalibrada" label="Calibarada" visible="false"
 						sclass="btn" tabindex="1" image="/public/imagenes/botones/calibrada.png">
 					</button>
-					<button id="btnfinalizada" label="Finalizada" visible="false"
+					<button id="btnFinalizada" label="Finalizada" visible="false"
 						sclass="btn" tabindex="1" image="/public/imagenes/botones/finalizada.png">
 					</button>
 					<button id="btnCancelar" label="Salir" sclass="btn"

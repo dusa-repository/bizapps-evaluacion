@@ -25,6 +25,9 @@ import modelo.seguridad.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.bind.Binder;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -60,6 +63,8 @@ public class CEmpleado extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
 	@Wire
+	private Window winEvaluacionEmpleadoAgregar;
+	@Wire
 	private Tree arbolPersonal;
 	@Wire
 	private Include contenido;
@@ -67,6 +72,7 @@ public class CEmpleado extends CGenerico {
 	private Label etiqueta;
 	private  int idEva;
 	private  Evaluacion eva;
+	public  Revision revision;
 	TreeModel _model;
 	List<String> listmenu1 = new ArrayList<String>();
 	@Wire
@@ -77,6 +83,9 @@ public class CEmpleado extends CGenerico {
 	private West west;
 	@Wire
 	private Window winListaPersonal;
+	@Wire
+	private Window winArbolPersonal;
+
 	@Wire
 	private Window winEvaluacionEmpleado;
 	@Wire
@@ -90,18 +99,35 @@ public class CEmpleado extends CGenerico {
 	@Wire
 	private Button btnCopiar;
 	@Wire
+	private Button btnAgregar;
+	@Wire
 	private Button btnEliminar;
 	private static int numeroEvaluacion;
 	private static Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
-	public  Revision revision;
+	public Revision revisionActiva;
+	
 
 	Mensaje msj = new Mensaje();
 
 	@Override
 	public void inicializar() throws IOException {
-
+		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("mapaGeneral");
+		if (mapa != null) {
+			if (mapa.get("tabsGenerales") != null) {
+				tabs = (List<Tab>) mapa.get("tabsGenerales");
+				mapa.clear();
+				mapa = null;
+			}
+		}
 		arbolPersonal.setModel(getModel());
+		revisionActiva = servicioRevision.buscarPorEstado("ACTIVO");
+		System.out.println("arbol"+arbolPersonal.getChildren().size());
+		if (arbolPersonal.getChildren().size() == 0){
+			msj.mensajeAlerta(Mensaje.personalCargo);
+			cerrarVentana(winArbolPersonal, "De Personal a Cargo", tabs);
+		}
 
 	}
 
@@ -201,9 +227,7 @@ public class CEmpleado extends CGenerico {
 										"Error", Messagebox.OK,
 										Messagebox.ERROR);
 					} else {
-						gpxListaPersonalCargo.setTitle("(" + "  " + item + ")"
-								+ "   "
-								+ arbolPersonal.getSelectedItem().getLabel());
+						gpxListaPersonalCargo.setTitle(arbolPersonal.getSelectedItem().getLabel());
 						lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
 								evaluacion));
 						lbxEvaluacion.renderAll();
@@ -525,6 +549,8 @@ public class CEmpleado extends CGenerico {
 	
 	
 
+	
+
 	@Listen("onDoubleClick = #lbxEvaluacion")
 	public void mostrarEvaluacion() {
 
@@ -563,6 +589,80 @@ public class CEmpleado extends CGenerico {
 			}
 
 		}
+
+	}
+	
+	@Listen("onClick = #btnAgregar")
+	public void selectedNodeA()
+	{
+		if (arbolPersonal.getSelectedItem() != null) {
+			String item = String.valueOf(arbolPersonal.getSelectedItem()
+					.getContext());
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+			Integer idUsuario = u.getIdUsuario();
+			Integer numeroEvaluacion;
+			if (servicioEvaluacion.buscarIdSecundario(item) != null){
+			numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
+			}
+			else {
+				numeroEvaluacion = 1;
+			}
+			idEva = servicioEvaluacion.buscarId() + 1;
+			Empleado empleado = servicioEmpleado.buscarPorFicha(item);
+			String fichaEvaluador = empleado.getFichaSupervisor();
+			Cargo cargo = empleado.getCargo();
+			Evaluacion evaluacion = new Evaluacion();
+			evaluacion.setIdEvaluacion(idEva);
+			evaluacion.setEstadoEvaluacion("EN EDICION");
+			evaluacion.setFechaCreacion(fechaHora);
+			evaluacion.setFechaAuditoria(fechaHora);
+			evaluacion.setFicha(item);
+			evaluacion.setRevision(revisionActiva);
+			evaluacion.setIdEvaluacionSecundario(numeroEvaluacion);
+			evaluacion.setIdUsuario(idUsuario);
+			evaluacion.setFichaEvaluador(fichaEvaluador);
+			evaluacion.setPeso(0);
+			evaluacion.setResultado(0);
+			evaluacion.setResultadoObjetivos(0);
+			evaluacion.setResultadoGeneral(0);
+			evaluacion.setCargo(cargo);
+			evaluacion.setHoraAuditoria(horaAuditoria);
+			
+			Bitacora bitacora = new Bitacora();
+
+			bitacora.setEvaluacion(evaluacion);
+			bitacora.setIdUsuario(u);
+			bitacora.setFechaAuditoria(fechaHora);
+			bitacora.setHoraAuditoria(horaAuditoria);
+			bitacora.setEstadoEvaluacion("EN EDICION");
+			System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
+			System.out.println(evaluacion + " " + u + " " + fechaHora
+					+ horaAuditoria);
+			servicioEvaluacion.guardar(evaluacion);
+			servicioBitacora.guardar(bitacora);
+			
+			final HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("modo", "AGREGAR");
+			map.put("ficha", item);
+			map.put("id", idEva);
+			map.put("numero", numeroEvaluacion);
+			Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+			if (winEvaluacionEmpleadoAgregar != null){
+				winEvaluacionEmpleadoAgregar.detach();
+				winEvaluacionEmpleadoAgregar = null;
+			}
+			else{
+			winEvaluacionEmpleadoAgregar = (Window) Executions
+					.createComponents(
+							"/vistas/transacciones/VAgregarEvaluacion.zul",
+							null, map);
+			winEvaluacionEmpleadoAgregar.doModal();
+			winEvaluacionEmpleadoAgregar.setClosable(true);
+
+		}
+	}
 
 	}
 }
