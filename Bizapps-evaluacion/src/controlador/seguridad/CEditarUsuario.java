@@ -133,14 +133,8 @@ public class CEditarUsuario extends CGenerico {
 						usuario.setPassword(password);
 						usuario.setImagen(imagenUsuario);
 						servicioUsuario.guardar(usuario);
-						String correo = usuario.getEmail();
-						String nombreUsuario = usuario.getLogin();
-						if (!correo.equals("")|| !correo.equals(null)){
-						valorCorreo.add(enviarEmailNotificacion(correo, mensaje
-								+ " Usuario: " + nombreUsuario + "  " + "Contraseña: "
-								+ password));
-						confirmacion(valorCorreo);
-						}
+						Messagebox.show("Su contraseña ha sido cambiada correctamente" , "Informacion",
+								Messagebox.OK, Messagebox.INFORMATION);
 						limpiar();
 					} else {
 						msj.mensajeError(Mensaje.contrasennasNoCoinciden);

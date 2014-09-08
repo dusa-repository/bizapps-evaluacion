@@ -52,6 +52,10 @@ import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
 
+import servicio.maestros.SEmpleado;
+import servicio.seguridad.SUsuario;
+import servicio.transacciones.SEvaluacion;
+
 import arbol.MArbol;
 import arbol.Nodos;
 
@@ -70,9 +74,9 @@ public class CEmpleado extends CGenerico {
 	private Include contenido;
 	@Wire
 	private Label etiqueta;
-	private  int idEva;
-	private  Evaluacion eva;
-	public  Revision revision;
+	private int idEva;
+	private Evaluacion eva;
+	public Revision revision;
 	TreeModel _model;
 	List<String> listmenu1 = new ArrayList<String>();
 	@Wire
@@ -106,7 +110,9 @@ public class CEmpleado extends CGenerico {
 	private static Empleado empleado;
 	Evaluacion evaluacion = new Evaluacion();
 	public Revision revisionActiva;
-	
+	private String fichaE;
+	private boolean tienePersonal = false;
+	List<Evaluacion> evaluacion1 = new ArrayList<Evaluacion>();
 
 	Mensaje msj = new Mensaje();
 
@@ -122,9 +128,9 @@ public class CEmpleado extends CGenerico {
 			}
 		}
 		arbolPersonal.setModel(getModel());
+
 		revisionActiva = servicioRevision.buscarPorEstado("ACTIVO");
-		System.out.println("arbol"+arbolPersonal.getChildren().size());
-		if (arbolPersonal.getChildren().size() == 0){
+		if (!tienePersonal) {
 			msj.mensajeAlerta(Mensaje.personalCargo);
 			cerrarVentana(winArbolPersonal, "De Personal a Cargo", tabs);
 		}
@@ -144,45 +150,66 @@ public class CEmpleado extends CGenerico {
 	 * crear un arbol estructurado, segun la distribucion de las mismas
 	 */
 	private Nodos getFooRoot() {
+		System.out.println("entrooooooooo");
 		Nodos root = new Nodos(null, 0, "", "");
+		System.out.println("entro1");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
+		System.out.println("entro2");
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-
+		System.out.println("entro3");
 		List<Empleado> empleado = servicioEmpleado.BuscarPorSupervisor(u
 				.getCedula());
+		Empleado jefeSesion = servicioEmpleado.buscarPorFicha(u.getCedula());
+		String erredora = jefeSesion.getFichaSupervisor();
+		System.out.println("empleadoojo" + empleado.size());
 		List<Empleado> arboles = new ArrayList<Empleado>();
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		List<Empleado> hijos = new ArrayList<Empleado>();
 		for (int k = 0; k < empleado.size(); k++) {
-			ids.add(Integer.valueOf(empleado.get(k).getFicha()));
-			hijos = servicioEmpleado.BuscarPorSupervisor(empleado.get(k)
-					.getFicha());
-			for (int i = 0; i < hijos.size(); i++) {
-				empleado.add(hijos.get(i));
+			tienePersonal = true;
+			System.out.println("empleado" + empleado.size());
+			if (!empleado.get(k).getFicha().equals(erredora)) {
+				ids.add(Integer.valueOf(empleado.get(k).getFicha()));
+				hijos = servicioEmpleado.BuscarPorSupervisor(empleado.get(k)
+						.getFicha());
+				System.out.println("hijos" + hijos.size());
+				for (int i = 0; i < hijos.size(); i++) {
+					empleado.add(hijos.get(i));
+				}
 			}
 		}
 		Empleado jefe = servicioEmpleado.buscarPorFicha(u.getCedula());
+		System.out.println("entro10");
 		arboles.add(jefe);
 		for (int t = 0; t < ids.size(); t++) {
+			System.out.println("entro11");
 			Empleado a;
 			a = servicioEmpleado.buscarPorFicha(String.valueOf(ids.get(t)));
 			arboles.add(a);
 		}
 		List<Nodos> nodos = new ArrayList<Nodos>();
 		List<String> idsPadre = new ArrayList<String>();
+		System.out.println("entro12");
 		return crearArbol(root, nodos, arboles, 0, idsPadre, jefe.getFicha());
+
 	}
 
 	private Nodos crearArbol(Nodos roote, List<Nodos> nodos,
 			List<Empleado> arboles, int i, List<String> idsPadre, String cedula) {
+		System.out.println("entrooooooooo1");
 		System.out.println("arboles" + arboles.size());
 		for (int z = 0; z < arboles.size(); z++) {
 			Nodos oneLevelNode = new Nodos(null, 0, "", "");
 			Nodos two = new Nodos(null, 0, "", "");
 			if (arboles.get(z).getFicha().equals(cedula)) {
-				oneLevelNode = new Nodos(roote, z,
-						+ arboles.get(z).getGradoAuxiliar()  + " " + "(" + arboles.get(z).getFicha() + ")" + " "  
+				oneLevelNode = new Nodos(roote, z, +arboles.get(z)
+						.getGradoAuxiliar()
+						+ " "
+						+ "("
+						+ arboles.get(z).getFicha()
+						+ ")"
+						+ " "
 						+ arboles.get(z).getNombre(), arboles.get(z).getFicha());
 				roote.appendChild(oneLevelNode);
 				idsPadre.add(arboles.get(z).getFicha());
@@ -192,8 +219,13 @@ public class CEmpleado extends CGenerico {
 					if (idsPadre.get(j).equals(
 							arboles.get(z).getFichaSupervisor())) {
 						oneLevelNode = nodos.get(j);
-						two = new Nodos(oneLevelNode, z, 
-								+ arboles.get(z).getGradoAuxiliar() + " " + "(" + arboles.get(z).getFicha() + ")" + " "  
+						two = new Nodos(oneLevelNode, z, +arboles.get(z)
+								.getGradoAuxiliar()
+								+ " "
+								+ "("
+								+ arboles.get(z).getFicha()
+								+ ")"
+								+ " "
 								+ arboles.get(z).getNombre(), arboles.get(z)
 								.getFicha());
 						oneLevelNode.appendChild(two);
@@ -227,7 +259,8 @@ public class CEmpleado extends CGenerico {
 										"Error", Messagebox.OK,
 										Messagebox.ERROR);
 					} else {
-						gpxListaPersonalCargo.setTitle(arbolPersonal.getSelectedItem().getLabel());
+						gpxListaPersonalCargo.setTitle(arbolPersonal
+								.getSelectedItem().getLabel());
 						lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
 								evaluacion));
 						lbxEvaluacion.renderAll();
@@ -249,13 +282,12 @@ public class CEmpleado extends CGenerico {
 		}
 
 	}
-	
-	
+
 	@Listen("onClick = #btnEliminar")
 	public void eliminar() {
-		
-		idEva=0;
-		
+
+		idEva = 0;
+
 		if (lbxEvaluacion.getItemCount() != 0) {
 
 			Listitem listItem = lbxEvaluacion.getSelectedItem();
@@ -285,62 +317,88 @@ public class CEmpleado extends CGenerico {
 													.eliminarVarios(evaluacionIndicador);
 										}
 										servicioEvaluacionObjetivo
-										.eliminarVarios(evaluacionObjetivo);
-										servicioUtilidad.eliminarConductaPorEvaluacion(idEva);
-										servicioUtilidad.eliminarCompetenciaPorEvaluacion(idEva);
-										servicioUtilidad.eliminarCapacitacionPorEvaluacion(idEva);
+												.eliminarVarios(evaluacionObjetivo);
+										servicioUtilidad
+												.eliminarConductaPorEvaluacion(idEva);
+										servicioUtilidad
+												.eliminarCompetenciaPorEvaluacion(idEva);
+										servicioUtilidad
+												.eliminarCapacitacionPorEvaluacion(idEva);
 										servicioEvaluacion.eliminarUno(idEva);
-									
+
 										msj.mensajeInformacion(Mensaje.eliminado);
 										lbxEvaluacion.getItems().clear();
-										
+
 										if (arbolPersonal.getSelectedItem() != null) {
-											String item = String.valueOf(arbolPersonal.getSelectedItem()
-													.getContext());
+											String item = String
+													.valueOf(arbolPersonal
+															.getSelectedItem()
+															.getContext());
 											System.out.println(item);
 											boolean abrir = true;
-											if (arbolPersonal.getSelectedItem().getLevel() > 0) {
+											if (arbolPersonal.getSelectedItem()
+													.getLevel() > 0) {
 												if (abrir) {
 
 													List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-													evaluacion = servicioEvaluacion.buscarEstado(item);
+													evaluacion = servicioEvaluacion
+															.buscarEstado(item);
 
 													if (evaluacion.isEmpty()) {
 														Messagebox
 																.show("El empleado no tiene evaluaciones registradas",
-																		"Error", Messagebox.OK,
+																		"Error",
+																		Messagebox.OK,
 																		Messagebox.ERROR);
 													} else {
-														gpxListaPersonalCargo.setTitle("(" + "  " + item + ")"
-																+ "   "
-																+ arbolPersonal.getSelectedItem().getLabel());
-														lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
-																evaluacion));
-														lbxEvaluacion.renderAll();
-														for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
-															Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
-															List<Listitem> listItem2 = lbxEvaluacion.getItems();
-															Evaluacion eva = listItem2.get(j).getValue();
-															String fichaS = eva.getFichaEvaluador();
+														gpxListaPersonalCargo
+																.setTitle("("
+																		+ "  "
+																		+ item
+																		+ ")"
+																		+ "   "
+																		+ arbolPersonal
+																				.getSelectedItem()
+																				.getLabel());
+														lbxEvaluacion
+																.setModel(new ListModelList<Evaluacion>(
+																		evaluacion));
+														lbxEvaluacion
+																.renderAll();
+														for (int j = 0; j < lbxEvaluacion
+																.getItems()
+																.size(); j++) {
+															Listitem listItem = lbxEvaluacion
+																	.getItemAtIndex(j);
+															List<Listitem> listItem2 = lbxEvaluacion
+																	.getItems();
+															Evaluacion eva = listItem2
+																	.get(j)
+																	.getValue();
+															String fichaS = eva
+																	.getFichaEvaluador();
 															Empleado empleado = servicioEmpleado
 																	.buscarPorFicha(fichaS);
-															String nombre = empleado.getNombre();
-															((Label) ((listItem.getChildren().get(5)))
-																	.getFirstChild()).setValue(nombre);
+															String nombre = empleado
+																	.getNombre();
+															((Label) ((listItem
+																	.getChildren()
+																	.get(5)))
+																	.getFirstChild())
+																	.setValue(nombre);
 														}
 													}
 
 												}
 											}
 										}
-										
-										
+
 									} else {
 										Messagebox
-										.show("No puede Eliminar la Evaluación",
-												"Alerta",
-												Messagebox.OK,
-												Messagebox.EXCLAMATION);
+												.show("No puede Eliminar la Evaluación",
+														"Alerta",
+														Messagebox.OK,
+														Messagebox.EXCLAMATION);
 									}
 
 								}
@@ -351,10 +409,10 @@ public class CEmpleado extends CGenerico {
 
 		}
 	}
-	
+
 	@Listen("onClick = #btnCopiar")
 	public void copiar() {
-		
+
 		if (lbxEvaluacion.getItemCount() != 0) {
 
 			Listitem listItem = lbxEvaluacion.getSelectedItem();
@@ -370,20 +428,26 @@ public class CEmpleado extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onYes")) {
-									
-									revision = servicioRevision.buscarPorEstado("ACTIVO");
-									
-									Usuario u = servicioUsuario.buscarPorCedula(eva.getFicha());
+
+									revision = servicioRevision
+											.buscarPorEstado("ACTIVO");
+
+									Usuario u = servicioUsuario
+											.buscarPorCedula(eva.getFicha());
 									String ficha = eva.getFicha();
 									Integer idUsuario = u.getIdUsuario();
-									Integer numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(eva.getFicha()) + 1;
-									Integer numeroEvaluacionPrimaria = servicioEvaluacion.buscarId() + 1;
-									Empleado empleado = servicioEmpleado.buscarPorFicha(ficha);
-									String fichaEvaluador = empleado.getFichaSupervisor();
+									Integer numeroEvaluacion = servicioEvaluacion
+											.buscarIdSecundario(eva.getFicha()) + 1;
+									Integer numeroEvaluacionPrimaria = servicioEvaluacion
+											.buscarId() + 1;
+									Empleado empleado = servicioEmpleado
+											.buscarPorFicha(ficha);
+									String fichaEvaluador = empleado
+											.getFichaSupervisor();
 									Cargo cargo = empleado.getCargo();
-									UnidadOrganizativa unidadOrganizativa = empleado.getUnidadOrganizativa();
-									
-									
+									UnidadOrganizativa unidadOrganizativa = empleado
+											.getUnidadOrganizativa();
+
 									eva.setIdEvaluacion(numeroEvaluacionPrimaria);
 									eva.setIdEvaluacionSecundario(numeroEvaluacion);
 									eva.setCargo(cargo);
@@ -399,7 +463,7 @@ public class CEmpleado extends CGenerico {
 									eva.setResultadoObjetivos(0);
 									eva.setResultadoGeneral(0);
 									eva.setHoraAuditoria(horaAuditoria);
-									
+
 									Bitacora bitacora = new Bitacora();
 
 									bitacora.setEvaluacion(eva);
@@ -407,130 +471,163 @@ public class CEmpleado extends CGenerico {
 									bitacora.setFechaAuditoria(fechaHora);
 									bitacora.setHoraAuditoria(horaAuditoria);
 									bitacora.setEstadoEvaluacion("EN EDICION");
-									System.out.println(bitacora.getEvaluacion().getIdEvaluacion());
-									System.out.println(evaluacion + " " + u + " " + fechaHora
-											+ horaAuditoria);
+									System.out.println(bitacora.getEvaluacion()
+											.getIdEvaluacion());
+									System.out.println(evaluacion + " " + u
+											+ " " + fechaHora + horaAuditoria);
 
 									servicioEvaluacion.guardar(eva);
 									servicioBitacora.guardar(bitacora);
-									
-									Integer idEvaluacionObjetivoOriginal=0;
-									
+
+									Integer idEvaluacionObjetivoOriginal = 0;
+
 									List<EvaluacionObjetivo> listaEvaluacionObjetivo = servicioEvaluacionObjetivo
 											.buscarObjetivosEvaluar(idEva);
 									for (int i = 0; i < listaEvaluacionObjetivo
 											.size(); i++) {
-										
-										EvaluacionObjetivo evaluacionObjetivo=listaEvaluacionObjetivo
+
+										EvaluacionObjetivo evaluacionObjetivo = listaEvaluacionObjetivo
 												.get(i);
-										idEvaluacionObjetivoOriginal=evaluacionObjetivo.getIdObjetivo();
+										idEvaluacionObjetivoOriginal = evaluacionObjetivo
+												.getIdObjetivo();
 										evaluacionObjetivo.setIdObjetivo(0);
-										evaluacionObjetivo.setIdEvaluacion(numeroEvaluacionPrimaria);
-										servicioEvaluacionObjetivo.guardar(evaluacionObjetivo);
-										
+										evaluacionObjetivo
+												.setIdEvaluacion(numeroEvaluacionPrimaria);
+										servicioEvaluacionObjetivo
+												.guardar(evaluacionObjetivo);
+
 										List<EvaluacionObjetivo> listaEvaluacionObjetivoGuardado = servicioEvaluacionObjetivo
 												.buscarObjetivosEvaluar(numeroEvaluacionPrimaria);
-										
-										Integer idObjetivoGuardado=0;
+
+										Integer idObjetivoGuardado = 0;
 										for (int x = 0; x < listaEvaluacionObjetivoGuardado
 												.size(); x++) {
-											
-											EvaluacionObjetivo evaluacionObjetivoGuardardo=listaEvaluacionObjetivoGuardado
+
+											EvaluacionObjetivo evaluacionObjetivoGuardardo = listaEvaluacionObjetivoGuardado
 													.get(x);
-											idObjetivoGuardado= evaluacionObjetivoGuardardo.getIdObjetivo();
-											
+											idObjetivoGuardado = evaluacionObjetivoGuardardo
+													.getIdObjetivo();
+
 										}
-										
+
 										List<EvaluacionIndicador> listaEvaluacionIndicador = servicioEvaluacionIndicador
 												.buscarIndicadores(idEvaluacionObjetivoOriginal);
 										for (int x = 0; x < listaEvaluacionIndicador
 												.size(); x++) {
-											
-											EvaluacionIndicador evaluacionIndicador=listaEvaluacionIndicador
+
+											EvaluacionIndicador evaluacionIndicador = listaEvaluacionIndicador
 													.get(x);
-											evaluacionIndicador.setIdIndicador(0);
-											evaluacionIndicador.setIdObjetivo(idObjetivoGuardado);
-											servicioEvaluacionIndicador.guardar(evaluacionIndicador);
+											evaluacionIndicador
+													.setIdIndicador(0);
+											evaluacionIndicador
+													.setIdObjetivo(idObjetivoGuardado);
+											servicioEvaluacionIndicador
+													.guardar(evaluacionIndicador);
 										}
-									
+
 									}
-									
-									
-									Evaluacion evaluacionAuxiliar = servicioEvaluacion.buscarEvaluacion(idEva);
-									List<EvaluacionCompetencia> listaEvaluacionCompetencias = servicioEvaluacionCompetencia.buscar(evaluacionAuxiliar);
-									
+
+									Evaluacion evaluacionAuxiliar = servicioEvaluacion
+											.buscarEvaluacion(idEva);
+									List<EvaluacionCompetencia> listaEvaluacionCompetencias = servicioEvaluacionCompetencia
+											.buscar(evaluacionAuxiliar);
+
 									for (int i = 0; i < listaEvaluacionCompetencias
 											.size(); i++) {
-										
-										EvaluacionCompetencia evaluacionCompetencia=listaEvaluacionCompetencias
+
+										EvaluacionCompetencia evaluacionCompetencia = listaEvaluacionCompetencias
 												.get(i);
-										evaluacionCompetencia.setEvaluacion(eva);
-										servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
+										evaluacionCompetencia
+												.setEvaluacion(eva);
+										servicioEvaluacionCompetencia
+												.guardar(evaluacionCompetencia);
 
 									}
-											
-									
-									List<EvaluacionConducta> listaEvaluacionConductas = servicioEvaluacionConducta.buscar(evaluacionAuxiliar);
-									
+
+									List<EvaluacionConducta> listaEvaluacionConductas = servicioEvaluacionConducta
+											.buscar(evaluacionAuxiliar);
+
 									for (int i = 0; i < listaEvaluacionConductas
 											.size(); i++) {
-										
-										EvaluacionConducta evaluacionConducta=listaEvaluacionConductas
+
+										EvaluacionConducta evaluacionConducta = listaEvaluacionConductas
 												.get(i);
 										evaluacionConducta.setEvaluacion(eva);
-										servicioEvaluacionConducta.guardar(evaluacionConducta);
+										servicioEvaluacionConducta
+												.guardar(evaluacionConducta);
 
 									}
-									
-									
-									List<EvaluacionCapacitacion> listaEvaluacionCapacitacion = servicioEvaluacionCapacitacion.buscarPorEvaluacion(idEva);
-									
+
+									List<EvaluacionCapacitacion> listaEvaluacionCapacitacion = servicioEvaluacionCapacitacion
+											.buscarPorEvaluacion(idEva);
+
 									for (int i = 0; i < listaEvaluacionCapacitacion
 											.size(); i++) {
-										
-										EvaluacionCapacitacion evaluacionCapacitacion=listaEvaluacionCapacitacion
+
+										EvaluacionCapacitacion evaluacionCapacitacion = listaEvaluacionCapacitacion
 												.get(i);
-										evaluacionCapacitacion.setIdEvaluacion(numeroEvaluacionPrimaria);
-										servicioEvaluacionCapacitacion.guardar(evaluacionCapacitacion);
+										evaluacionCapacitacion
+												.setIdEvaluacion(numeroEvaluacionPrimaria);
+										servicioEvaluacionCapacitacion
+												.guardar(evaluacionCapacitacion);
 
 									}
-											
-									
-									
-									
+
 									if (arbolPersonal.getSelectedItem() != null) {
-										String item = String.valueOf(arbolPersonal.getSelectedItem()
-												.getContext());
+										String item = String
+												.valueOf(arbolPersonal
+														.getSelectedItem()
+														.getContext());
 										System.out.println(item);
 										boolean abrir = true;
-										if (arbolPersonal.getSelectedItem().getLevel() > 0) {
+										if (arbolPersonal.getSelectedItem()
+												.getLevel() > 0) {
 											if (abrir) {
 
 												List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-												evaluacion = servicioEvaluacion.buscarEstado(item);
+												evaluacion = servicioEvaluacion
+														.buscarEstado(item);
 
 												if (evaluacion.isEmpty()) {
 													Messagebox
 															.show("El empleado no tiene evaluaciones registradas",
-																	"Error", Messagebox.OK,
+																	"Error",
+																	Messagebox.OK,
 																	Messagebox.ERROR);
 												} else {
-													gpxListaPersonalCargo.setTitle("(" + "  " + item + ")"
-															+ "   "
-															+ arbolPersonal.getSelectedItem().getLabel());
-													lbxEvaluacion.setModel(new ListModelList<Evaluacion>(
-															evaluacion));
+													gpxListaPersonalCargo
+															.setTitle("("
+																	+ "  "
+																	+ item
+																	+ ")"
+																	+ "   "
+																	+ arbolPersonal
+																			.getSelectedItem()
+																			.getLabel());
+													lbxEvaluacion
+															.setModel(new ListModelList<Evaluacion>(
+																	evaluacion));
 													lbxEvaluacion.renderAll();
-													for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
-														Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
-														List<Listitem> listItem2 = lbxEvaluacion.getItems();
-														Evaluacion eva = listItem2.get(j).getValue();
-														String fichaS = eva.getFichaEvaluador();
+													for (int j = 0; j < lbxEvaluacion
+															.getItems().size(); j++) {
+														Listitem listItem = lbxEvaluacion
+																.getItemAtIndex(j);
+														List<Listitem> listItem2 = lbxEvaluacion
+																.getItems();
+														Evaluacion eva = listItem2
+																.get(j)
+																.getValue();
+														String fichaS = eva
+																.getFichaEvaluador();
 														empleado = servicioEmpleado
 																.buscarPorFicha(fichaS);
-														String nombre = empleado.getNombre();
-														((Label) ((listItem.getChildren().get(5)))
-																.getFirstChild()).setValue(nombre);
+														String nombre = empleado
+																.getNombre();
+														((Label) ((listItem
+																.getChildren()
+																.get(5)))
+																.getFirstChild())
+																.setValue(nombre);
 													}
 												}
 
@@ -546,10 +643,6 @@ public class CEmpleado extends CGenerico {
 
 		}
 	}
-	
-	
-
-	
 
 	@Listen("onDoubleClick = #lbxEvaluacion")
 	public void mostrarEvaluacion() {
@@ -591,10 +684,9 @@ public class CEmpleado extends CGenerico {
 		}
 
 	}
-	
+
 	@Listen("onClick = #btnAgregar")
-	public void selectedNodeA()
-	{
+	public void selectedNodeA() {
 		if (arbolPersonal.getSelectedItem() != null) {
 			String item = String.valueOf(arbolPersonal.getSelectedItem()
 					.getContext());
@@ -603,10 +695,9 @@ public class CEmpleado extends CGenerico {
 			Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 			Integer idUsuario = u.getIdUsuario();
 			Integer numeroEvaluacion;
-			if (servicioEvaluacion.buscarIdSecundario(item) != null){
-			numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
-			}
-			else {
+			if (servicioEvaluacion.buscarIdSecundario(item) != null) {
+				numeroEvaluacion = servicioEvaluacion.buscarIdSecundario(item) + 1;
+			} else {
 				numeroEvaluacion = 1;
 			}
 			idEva = servicioEvaluacion.buscarId() + 1;
@@ -629,7 +720,7 @@ public class CEmpleado extends CGenerico {
 			evaluacion.setResultadoGeneral(0);
 			evaluacion.setCargo(cargo);
 			evaluacion.setHoraAuditoria(horaAuditoria);
-			
+
 			Bitacora bitacora = new Bitacora();
 
 			bitacora.setEvaluacion(evaluacion);
@@ -642,27 +733,52 @@ public class CEmpleado extends CGenerico {
 					+ horaAuditoria);
 			servicioEvaluacion.guardar(evaluacion);
 			servicioBitacora.guardar(bitacora);
-			
+
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("modo", "AGREGAR");
 			map.put("ficha", item);
 			map.put("id", idEva);
 			map.put("numero", numeroEvaluacion);
+			map.put("listbox", lbxEvaluacion);
+			map.put("empleado", "true");
 			Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-			if (winEvaluacionEmpleadoAgregar != null){
+			if (winEvaluacionEmpleadoAgregar != null) {
 				winEvaluacionEmpleadoAgregar.detach();
 				winEvaluacionEmpleadoAgregar = null;
+			} else {
+				winEvaluacionEmpleadoAgregar = (Window) Executions
+						.createComponents(
+								"/vistas/transacciones/VAgregarEvaluacion.zul",
+								null, map);
+				winEvaluacionEmpleadoAgregar.doModal();
+				winEvaluacionEmpleadoAgregar.setClosable(true);
+
 			}
-			else{
-			winEvaluacionEmpleadoAgregar = (Window) Executions
-					.createComponents(
-							"/vistas/transacciones/VAgregarEvaluacion.zul",
-							null, map);
-			winEvaluacionEmpleadoAgregar.doModal();
-			winEvaluacionEmpleadoAgregar.setClosable(true);
-
 		}
-	}
 
 	}
+
+	public void actualizame1(Listbox listbox, SUsuario servicio,
+			SEvaluacion servicioE, SEmpleado servicioEm, String item) {
+		lbxEvaluacion = listbox;
+		servicioUsuario = servicio;
+		servicioEvaluacion = servicioE;
+		servicioEmpleado = servicioEm;
+		fichaE = new String();
+		fichaE = item;
+		evaluacion1 = servicioEvaluacion.buscar(fichaE);
+		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion1));
+		lbxEvaluacion.renderAll();
+		for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
+			Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
+			List<Listitem> listItem2 = lbxEvaluacion.getItems();
+			Evaluacion eva = listItem2.get(j).getValue();
+			String fichaS = eva.getFichaEvaluador();
+			Empleado empleado = servicioEmpleado
+					.buscarPorFicha(fichaS);
+			String nombre = empleado.getNombre();
+			((Label) ((listItem.getChildren().get(5)))
+					.getFirstChild()).setValue(nombre);
+	}
+}
 }

@@ -61,7 +61,6 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	private static final long serialVersionUID = -5393608637902961029L;
 	Mensaje msj = new Mensaje();
-
 	@Wire
 	private Label txttotalIndicador;
 	@Wire
@@ -312,6 +311,13 @@ public class CAgregarEvaluacion extends CGenerico {
 	public Double resultadoCompetencia = 0.0;
 	public Integer resultadoPesoCompetencia = 0;
 	public Integer resultadoPesoObjetivo = 0;
+	
+	private Listbox listbox;
+	private String item;
+	private boolean agregarW=false;
+	private boolean agregarW1=false;
+	private CListaPersonal controlador = new CListaPersonal();
+	private CEmpleado controlador1 = new CEmpleado();
 
 	@Override
 	public void inicializar() throws IOException {
@@ -341,15 +347,21 @@ public class CAgregarEvaluacion extends CGenerico {
 			if (map.get("modo") != null) {
 
 				if (map.get("modo").equals("AGREGAR")) {
-
+					agregarW = true;
+					listbox =  (Listbox) map.get("listbox");
+					item = (String) map.get("ficha");
 					revision = servicioRevision.buscarPorEstado("ACTIVO");
+					
 					Authentication auth = SecurityContextHolder.getContext()
 							.getAuthentication();
 					u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
 					String ficha = u.getCedula();
+					if (!item.equals(ficha)){
+						agregarW1= true;
+					}
 					/*
 					 * HashMap<String, Object> map = (HashMap<String, Object>)
-					 * Sessions .getCurrent().getAttribute("itemsCatalogo");
+					 * Sessions .getCurrent().getAttribFFute("itemsCatalogo");
 					 */
 
 					if (map != null) {
@@ -1019,9 +1031,20 @@ public class CAgregarEvaluacion extends CGenerico {
 
 	@Listen("onClick = #btnCancelar")
 	public void salir() {
+		if(agregarW && !agregarW1){
+		
+			System.out.println("ojo");
+			System.out.println(agregarW +""+ agregarW1);
+			controlador.actualizame(listbox, servicioUsuario, servicioEvaluacion, servicioEmpleado);
+			agregarW = false;
+		}
+		if (agregarW1 && agregarW){
+			System.out.println("ojo1");
+			System.out.println(agregarW +""+ agregarW1);
+			controlador1.actualizame1(listbox, servicioUsuario, servicioEvaluacion, servicioEmpleado,item);
+			agregarW1= false;
+		}
 		cerrarVentana1(winEvaluacionEmpleado, "Personal");
-		// winEvaluacionEmpleado.onClose();
-
 	}
 
 	@Listen("onClick = #btnAgregar")
@@ -2564,8 +2587,10 @@ public class CAgregarEvaluacion extends CGenerico {
 			txttotalCompetencia2.setValue(r);
 
 			String o = String.valueOf(calcularTotalResultadoObjetivos());
-			Double resul1 = Double.parseDouble(o);
-			lblResultado.setValue(o);
+			String ro = f.format(o);
+			Double resul1 = Double.parseDouble(ro);
+			
+			lblResultado.setValue(ro);
 			lblResultado1.setValue(r);
 			lblDistribucion.setValue(dO);
 			lblDistribucion1.setValue(dC);

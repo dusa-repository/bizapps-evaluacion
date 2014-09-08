@@ -34,6 +34,10 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import servicio.maestros.SEmpleado;
+import servicio.seguridad.SUsuario;
+import servicio.transacciones.SEvaluacion;
+
 import componentes.Mensaje;
 
 import controlador.maestros.CGenerico;
@@ -157,15 +161,19 @@ public class CListaPersonal extends CGenerico {
 				+ horaAuditoria);
 
 		servicioEvaluacion.guardar(evaluacion);
+		String item = ficha;
 		servicioBitacora.guardar(bitacora);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("modo", "AGREGAR");
 		map.put("idEva", idEva);
+		map.put("listbox", lbxEvaluacion);
+		map.put("ficha", item);
 		System.out.println("va" + idEva);
 		Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 		winEvaluacionEmpleado = (Window) Executions.createComponents(
 				"/vistas/transacciones/VAgregarEvaluacion.zul", null, map);
 		winEvaluacionEmpleado.doModal();
+		
 	}
 
 	@Listen("onClick = #btnEliminar")
@@ -441,11 +449,13 @@ public class CListaPersonal extends CGenerico {
 							Messagebox.EXCLAMATION);
 				}
 				else
-				{
+				{				
 					final HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("modo", "EDITAR");
 					map.put("id", evaluacion.getIdEvaluacion());
 					map.put("titulo", evaluacion.getFicha());
+					map.put("listbox", lbxEvaluacion);
+					map.put("lista", evaluacion);
 					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 					
 					
@@ -462,5 +472,38 @@ public class CListaPersonal extends CGenerico {
 
 		}
 
+	}
+
+	public void actualizame(Listbox listbox, SUsuario servicio, SEvaluacion servicioE, SEmpleado servicioEm) {
+		lbxEvaluacion = listbox;
+		servicioUsuario = servicio;
+		servicioEvaluacion = servicioE;
+		servicioEmpleado = servicioEm;
+		fichaE = new String();
+		evaluacion = new ArrayList<Evaluacion>();
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		String ficha = u.getCedula();
+		fichaE = ficha;
+		evaluacion = servicioEvaluacion.buscar(ficha);
+		lbxEvaluacion.setModel(new ListModelList<Evaluacion>(evaluacion));
+		lbxEvaluacion.renderAll();
+		for (int j = 0; j < lbxEvaluacion.getItems().size(); j++) {
+			Listitem listItem = lbxEvaluacion.getItemAtIndex(j);
+			List<Listitem> listItem2 = lbxEvaluacion.getItems();
+			Evaluacion eva = listItem2.get(j).getValue();
+			String fichaS = eva.getFichaEvaluador();
+			Empleado empleado = servicioEmpleado.buscarPorFicha(fichaS);
+			Usuario usuario =servicioUsuario.buscarId(eva.getIdUsuario());
+			String fichaUsuario = usuario.getFicha();
+			String nombre = usuario.getNombre().concat(" ").concat(usuario.getApellido());
+			
+			((Label) ((listItem.getChildren().get(4))).getFirstChild())
+			.setValue(fichaUsuario);
+			
+			((Label) ((listItem.getChildren().get(5))).getFirstChild())
+			.setValue(nombre);
+	}
 	}
 }

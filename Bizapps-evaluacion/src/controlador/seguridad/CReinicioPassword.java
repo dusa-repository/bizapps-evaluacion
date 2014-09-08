@@ -19,6 +19,7 @@ import componentes.Botonera;
 import componentes.Validador;
 
 import controlador.maestros.CGenerico;
+import controlador.reportes.evaluacion.ReporteBase;
 
 public class CReinicioPassword extends CGenerico {
 
@@ -66,12 +67,14 @@ public class CReinicioPassword extends CGenerico {
 						}
 						usuario.setPassword(password);
 						servicioUsuario.guardar(usuario);
-						enviarEmailNotificacion(
-								correo,
-								"Ha Solicitado Reiniciar su Password, sus nuevos datos para el inicio de sesion son: "
-										+ " Usuario: "
-										+ usuario.getLogin()
-										+ "  " + " Password: " + password);
+						EmailHelper.sendCommentEmail(correo, "Reinicio de Contraseña");
+						
+//						enviarEmailNotificacion(
+//								correo,
+//								"Ha Solicitado Reiniciar su Password, sus nuevos datos para el inicio de sesion son: "
+//										+ " Usuario: "
+//										+ usuario.getLogin()
+//										+ "  " + " Password: " + password);
 						limpiar();
 						salir();
 					} else {
@@ -93,7 +96,7 @@ public class CReinicioPassword extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(1).setVisible(false);
+		botonera.getChildren().get(0).setVisible(false);
 		botoneraReinicio.appendChild(botonera);
 	}
 
