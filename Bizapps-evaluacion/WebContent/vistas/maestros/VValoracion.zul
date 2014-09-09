@@ -1,7 +1,7 @@
 <window id="wdwVValoracion" apply="controlador.maestros.CValoracion"
 	border="normal" height="auto" style="background-color:#8A0808;">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Valoracion">
 		<separator />
 		<div id="botoneraValoracion" />
 		<separator />

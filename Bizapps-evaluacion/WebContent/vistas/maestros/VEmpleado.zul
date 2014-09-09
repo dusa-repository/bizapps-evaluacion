@@ -1,5 +1,5 @@
 <window id="wdwVEmpleado" apply="controlador.maestros.CEmpleado"
-	border="normal" height="auto" style="background-color:#8A0808;" width="80%">
+	border="normal" height="auto" style="background-color:#8A0808;" width="85%">
 
 	<groupbox width="auto" mold="3d" title="Empleado">
 		<separator />
@@ -15,8 +15,8 @@
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="8%" />
-					<column label="" width="27%" />
+					<column label="" width="15%" />
+					<column label="" width="20%" />
 				</columns>
 				<rows>
 					<row>

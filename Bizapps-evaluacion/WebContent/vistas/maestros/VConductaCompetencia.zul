@@ -2,7 +2,7 @@
 	apply="controlador.maestros.CConductaCompetencia" border="normal"
 	height="auto" style="background-color:#8A0808;">
 
-	<groupbox width="auto">
+	<groupbox width="auto" mold="3d" title="Conducta Competencia">
 		<separator />
 		<div id="botoneraConductaCompetencia" />
 		<separator />
@@ -16,8 +16,8 @@
 				<columns visible="false">
 					<column label="" width="20%" />
 					<column label="" width="45%" />
-					<column label="" width="8%" />
-					<column label="" width="27%" />
+					<column label="" width="17%" />
+					<column label="" width="18%" />
 				</columns>
 				<rows>
 					<row>
@@ -32,7 +32,7 @@
 						<textbox id="txtCompetenciaConductaCompetencia"
 							width="100%" tabindex="1" maxlength="100"
 							tooltiptext="Ingrese aqui la competencia" />
-						<button id="btnBuscarCompetencia" label=""
+						<button id="btnBuscarCompetencia" label="" class= "btn"
 							tooltiptext="Catalogo de competencias"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
@@ -49,7 +49,7 @@
 							width="100%" tabindex="2" maxlength="100"
 							tooltiptext="Ingrese el dominio" />
 						<button id="btnBuscarDominio" label=""
-							tooltiptext="Catalogo de dominios"
+							tooltiptext="Catalogo de dominios" class= "btn"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
