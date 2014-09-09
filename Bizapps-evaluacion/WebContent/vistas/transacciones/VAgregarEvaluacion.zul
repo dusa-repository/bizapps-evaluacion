@@ -451,7 +451,7 @@
 					<separator />
 					<div align="right" height="100%" width="95%">
 						<label
-							value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia "
+							value="* Para ver/evaluar las conductas de una competencia  debe seleccionar su nivel dominio evidenciado y luego hacer doble click sobre la competencia "
 							style="font-size: 14px;font-weight:bold;"></label>
 					</div>
 					<separator></separator>
@@ -510,7 +510,7 @@
 					<separator />
 					<div align="right" height="100%" width="95%">
 						<label
-							value="* Para ver/evaluar las conductas de una competencia debe hacer doble click sobre la competencia "
+							value="* Para ver/evaluar las conductas de una competencia debe seleccionar su nivel dominio evidenciado y luego hacer doble click sobre la competencia "
 							style="font-size: 14px;font-weight:bold;"></label>
 					</div>
 					<separator></separator>

@@ -52,12 +52,12 @@ public class SEmpleado {
 
 
 	public Empleado buscarPorFicha(String ficha) {
-		return empleadoDAO.findByFicha(ficha);
+		return empleadoDAO.findByFichaOrderByGradoAuxiliarDescNombreDesc(ficha);
 	}
 
 
 	public List<Empleado> BuscarPorSupervisor(String ficha) {
-		return empleadoDAO.findByFichaSupervisor(ficha);
+		return empleadoDAO.findByFichaSupervisorOrderByGradoAuxiliarDescNombreDesc(ficha);
 	}
 	
 	

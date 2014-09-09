@@ -23,7 +23,7 @@ public class SEvaluacion {
 	private IBitacoraDAO bitacoraDAO;
 
 	public List<Evaluacion> buscar(String ficha) {
-		return evaluacionDAO.findByFichaOrderByIdEvaluacionSecundarioDesc(ficha);
+		return evaluacionDAO.findByFichaOrderByRevisionIdDescIdEvaluacionSecundarioDesc(ficha);
 	}
 	
 	public List<Evaluacion> buscarEstado(String ficha) {

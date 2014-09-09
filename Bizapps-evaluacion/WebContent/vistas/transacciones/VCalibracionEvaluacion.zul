@@ -4,9 +4,8 @@
 	<div id="botoneraUnidadOrganizativa" />
 	<separator />
 	
-	<groupbox id="gpxFiltros" width="auto" title="">
-		<caption label="Filtros" style="font-weight:bold"
-			tooltiptext="Presione para Visualizar los filtros" />
+	<groupbox id="gpxFiltros" width="auto"  mold="3d" title="Calibración">
+
 	<grid width="100%">
 		<columns visible="false">
 			<column label="" width="10%" />
@@ -24,7 +23,7 @@
 				</hbox>
 				<textbox id="txtEmpresa" tabindex="1" width="100%"
 					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
-				<button id="btnBuscarEmpresa"
+				<button id="btnBuscarEmpresa" class="btn" label = ""
 					tooltiptext="Catalogo de Empresas" image="/public/imagenes/botones/buscar.png" />
 				<hbox />
 				<hbox />
@@ -37,7 +36,7 @@
 				<textbox id="txtGerencia" tabindex="1" width="100%"
 					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
 				<button id="btnBuscarGerencia" image="/public/imagenes/botones/buscar.png"
-					tooltiptext="Catalogo de gerencias" />
+					tooltiptext="Catalogo de gerencias" class="btn" />
 				<hbox />
 				<hbox />
 			</row>
@@ -49,7 +48,7 @@
 				<textbox id="txtTrabajador" tabindex="1" width="100%"
 					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
 				<button id="btnBuscarTrabajador" image="/public/imagenes/botones/buscar.png"
-					tooltiptext="Catalogo de Trabajador" />
+					tooltiptext="Catalogo de Trabajador" class="btn" />
 				<hbox />
 				<hbox />
 			</row>
@@ -61,7 +60,7 @@
 				<textbox id="txtEvaluador" tabindex="1" width="100%"
 					maxlength="100" tooltiptext="Ingrese aqui la gerencia" />
 				<button id="btnBuscarEvaluador"  image="/public/imagenes/botones/buscar.png"
-					tooltiptext="Catalogo de Evaluador" />
+					tooltiptext="Catalogo de Evaluador" class="btn"/>
 				<hbox />
 				<hbox />
 			</row>
@@ -73,7 +72,7 @@
 				<textbox id="txtValoracion" tabindex="1" width="100%"
 					maxlength="100" tooltiptext="Ingrese aqui la Valoración" />
 				<button id="btnBuscarValoracion" image="/public/imagenes/botones/buscar.png"
-					tooltiptext="Catalogo de Valoración" />
+					tooltiptext="Catalogo de Valoración" class="btn"/>
 				<hbox />
 				<hbox />
 			</row>
@@ -93,13 +92,11 @@
 	
 	</groupbox>
 	<separator />
-
-	<separator />
 	<div width="100%" align="right">
-		<button id="btnVer" label="Ver Evaluación"  image="/public/imagenes/botones/buscar.png"/>
-		<button id="btnGuardar" label="Guardar"  image="/public/imagenes/botones/guardar.png"/>
-		<button id="btnLimpiar" label="Limpiar"  image="/public/imagenes/botones/limpiar.png"/>
-		<button id="btnBuscar" label="Refrescar"  image="/public/imagenes/botones/generar.png"/>
+		<button id="btnVer" label="Ver Evaluación"  image="/public/imagenes/botones/buscar.png" class="btn" width="12%"/>
+		<button id="btnGuardar" label="Guardar"  image="/public/imagenes/botones/guardar.png" class="btn"/>
+		<button id="btnLimpiar" label="Limpiar"  image="/public/imagenes/botones/limpiar.png" class="btn"/>
+		<button id="btnBuscar" label="Refrescar"  image="/public/imagenes/botones/generar.png" class="btn"/>
 	</div>
 	<separator />
 	<div id="divCatalogoEmpresa"

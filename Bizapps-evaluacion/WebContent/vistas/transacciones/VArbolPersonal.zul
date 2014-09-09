@@ -74,8 +74,8 @@
 						<listheader label="Revisión" width="20%" />
 						<listheader label="Fecha" width="20%" />
 						<listheader label="Estado" width="20%" />
-						<listheader label="Usuario" width="15%" />
-						<listheader label="Nombre Usuario" width="20%" />
+						<listheader label="Usuario" width="12%" />
+						<listheader label="Nombre Usuario" width="23%" />
 					</listhead>
 					<template name="model">
 						<listitem>

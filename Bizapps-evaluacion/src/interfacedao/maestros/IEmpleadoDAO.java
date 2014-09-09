@@ -18,10 +18,10 @@ public interface IEmpleadoDAO extends JpaRepository<Empleado, Integer> {
 		public List<Empleado> buscar(ArrayList<Long> ids);
 
 
-	public Empleado findByFicha(String ficha);
+	public Empleado findByFichaOrderByGradoAuxiliarDescNombreDesc(String ficha);
 
 
-	public List<Empleado> findByFichaSupervisor(String ficha);
+	public List<Empleado> findByFichaSupervisorOrderByGradoAuxiliarDescNombreDesc(String ficha);
 
 
 	public List<Empleado> findByIdStartingWithAllIgnoreCase(String valor);

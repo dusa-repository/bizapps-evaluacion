@@ -150,30 +150,23 @@ public class CEmpleado extends CGenerico {
 	 * crear un arbol estructurado, segun la distribucion de las mismas
 	 */
 	private Nodos getFooRoot() {
-		System.out.println("entrooooooooo");
 		Nodos root = new Nodos(null, 0, "", "");
-		System.out.println("entro1");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		System.out.println("entro2");
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
-		System.out.println("entro3");
 		List<Empleado> empleado = servicioEmpleado.BuscarPorSupervisor(u
 				.getCedula());
 		Empleado jefeSesion = servicioEmpleado.buscarPorFicha(u.getCedula());
 		String erredora = jefeSesion.getFichaSupervisor();
-		System.out.println("empleadoojo" + empleado.size());
 		List<Empleado> arboles = new ArrayList<Empleado>();
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		List<Empleado> hijos = new ArrayList<Empleado>();
 		for (int k = 0; k < empleado.size(); k++) {
 			tienePersonal = true;
-			System.out.println("empleado" + empleado.size());
 			if (!empleado.get(k).getFicha().equals(erredora)) {
 				ids.add(Integer.valueOf(empleado.get(k).getFicha()));
 				hijos = servicioEmpleado.BuscarPorSupervisor(empleado.get(k)
 						.getFicha());
-				System.out.println("hijos" + hijos.size());
 				for (int i = 0; i < hijos.size(); i++) {
 					empleado.add(hijos.get(i));
 				}
@@ -251,7 +244,7 @@ public class CEmpleado extends CGenerico {
 				if (abrir) {
 
 					List<Evaluacion> evaluacion = new ArrayList<Evaluacion>();
-					evaluacion = servicioEvaluacion.buscarEstado(item);
+					evaluacion = servicioEvaluacion.buscar(item);
 
 					if (evaluacion.isEmpty()) {
 						Messagebox
