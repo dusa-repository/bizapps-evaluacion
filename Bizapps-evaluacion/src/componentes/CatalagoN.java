@@ -3,12 +3,9 @@ package componentes;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SpinnerDateModel;
 
 import modelo.maestros.Evaluacion;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -32,7 +29,6 @@ import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Space;
-import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
@@ -49,10 +45,7 @@ public abstract class CatalagoN<Clase> extends Window {
 	Textbox txtRT;
 	Label labelRTNombre;
 	Label labelBuscado;
-
-	private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-			"/META-INF/ConfiguracionAplicacion.xml");
-
+	
 	public CatalagoN(final Component cGenerico, String titulo,
 			List<Clase> lista, boolean emergente, boolean udc, boolean textbox,
 			String... campos) {
@@ -76,7 +69,7 @@ public abstract class CatalagoN<Clase> extends Window {
 		exportador = new Button();
 		exportador.setTooltiptext("Exportar los Datos como un Archivo");
 		exportador.setStyle("width: 28px; height: 28px");
-		exportador.setSrc("/public/imagenes/botones/exportar.png");
+		exportador.setImage("/public/imagenes/botones/exportar.png");
 		// ; float: right
 		exportador.addEventListener(Events.ON_CLICK,
 				new EventListener<Event>() {
@@ -88,7 +81,7 @@ public abstract class CatalagoN<Clase> extends Window {
 		pagineo = new Button();
 		pagineo.setTooltiptext("Presione para mostrar todos los registros en una sola lista, sin pagineo");
 		pagineo.setStyle("width: 28px; height: 28px");
-		pagineo.setSrc("/public/imagenes/botones/pagineo.png");
+		pagineo.setImage("/public/imagenes/botones/pagineo.png");
 		pagineo.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 			@Override
 			public void onEvent(Event arg0) throws Exception {

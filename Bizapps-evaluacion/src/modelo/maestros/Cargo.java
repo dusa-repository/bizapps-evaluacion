@@ -1,6 +1,7 @@
 package modelo.maestros;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import modelo.seguridad.Usuario;
@@ -41,6 +42,24 @@ public class Cargo implements Serializable {
 
 	@Column(name = "usuario")
 	private String usuario;
+
+	@Column(name = "nivel_academico")
+	private String nivelAcademico;
+
+	@Column(name = "especialidad")
+	private String especialidad;
+
+	@Column(name = "especializacion")
+	private String especializacion;
+
+	@Column(name = "experiencia")
+	private String experiencia;
+
+	@Column(name = "segundo_idioma")
+	private String idioma;
+
+	@Column(name = "observaciones", length = 500)
+	private String observaciones;
 
 
 	public Cargo() {
@@ -122,6 +141,54 @@ public class Cargo implements Serializable {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getNivelAcademico() {
+		return nivelAcademico;
+	}
+
+	public void setNivelAcademico(String nivelAcademico) {
+		this.nivelAcademico = nivelAcademico;
+	}
+
+	public String getEspecialidad() {
+		return especialidad;
+	}
+
+	public void setEspecialidad(String especialidad) {
+		this.especialidad = especialidad;
+	}
+
+	public String getEspecializacion() {
+		return especializacion;
+	}
+
+	public void setEspecializacion(String especializacion) {
+		this.especializacion = especializacion;
+	}
+
+	public String getExperiencia() {
+		return experiencia;
+	}
+
+	public void setExperiencia(String experiencia) {
+		this.experiencia = experiencia;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 }

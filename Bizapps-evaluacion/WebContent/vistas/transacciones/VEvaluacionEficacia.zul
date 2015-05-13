@@ -2,8 +2,8 @@
 	<style src="/public/Estilo.css" />
 
 	<window id="wdwVEvaluacionEficacia" border="normal" height="auto"
-		apply="controlador.transacciones.CEvaluacionEficacia"
-		style="background-color:#8A0808;" width="100%" >
+		apply="controlador.transacciones.CEvaluacionEficacia" style="background-color:#8A0808;"
+		width="100%">
 		<style>
 			#tabla { border:1px solid black; border-collapse:collapse; }
 		</style>
@@ -13,18 +13,16 @@
 				<panelchildren>
 					<separator />
 					<div align="left">
-						<button id="btnBuscar" tooltiptext="Buscar" class="btn"
-							style="margin-left:5px" label="Buscar" autodisable="self"
-							image="/public/imagenes/botones/buscar.png">
+						<button id="btnGuardar" tooltiptext="Guardar" class="btn"
+							autodisable="self" label="Guardar" image="/public/imagenes/botones/guardar.png">
 						</button>
-						<button id="btnGuardar" tooltiptext="Guardar" class="btn" autodisable="self"
-							label="Guardar" image="/public/imagenes/botones/guardar.png">
+						<button id="btnLimpiar" label="Limpiar" class="btn"
+							autodisable="self" tooltiptext="Limpiar"
+							image="/public/imagenes/botones/limpiar.png">
 						</button>
-						<button id="btnLimpiar" label="Limpiar" class="btn" autodisable="self"
-							tooltiptext="Limpiar" image="/public/imagenes/botones/limpiar.png">
-						</button>
-						<button id="btnSalir" label="Salir" class="btn" autodisable="self"
-							tooltiptext="Salir" image="/public/imagenes/botones/salir.png">
+						<button id="btnSalir" label="Salir" class="btn"
+							autodisable="self" tooltiptext="Salir"
+							image="/public/imagenes/botones/salir.png">
 						</button>
 						<separator />
 					</div>
@@ -35,24 +33,38 @@
 				<separator />
 				<grid width="100%" style="border:0px">
 					<columns visible="false">
-						<column label="" width="15%" />
-						<column label="" width="55%" />
-						<column label="" width="30%" />
+						<column label="" width="16.6%" />
+						<column label="" width="16.6%" />
+						<column label="" width="16.6%" />
+						<column label="" width="16.6%" />
+						<column label="" width="16.6%" />
+						<column label="" width="17%" />
 					</columns>
 					<rows>
 						<row>
+							<hbox>
+								<label class="etiqueta" value="Empleado:" />
+								<space />
+								<label value="*" style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtEmpleado" width="100%"
+								maxlength="50" tooltiptext="Ingrese la ficha del Empleado" />
+							<button id="btnBuscar" tooltiptext="Buscar" class="btn"
+								style="margin-left:5px" label="Buscar" autodisable="self"
+								image="/public/imagenes/botones/buscar.png">
+							</button>
 							<hbox>
 								<label class="etiqueta" value="Curso:" />
 								<space />
 								<label value="*" style="font-weight:bold;color:red">
 								</label>
 							</hbox>
-							<textbox id="txtCursoEvaluacionEficacia" tabindex="1"
+							<textbox id="txtCursoEvaluacionEficacia"
 								width="100%" maxlength="500" tooltiptext="Ingrese aqui el nombre del curso" />
 							<button id="btnBuscarCurso" label="Buscar" class="btn"
 								tooltiptext="Catalogo de cursos" autodisable="self"
 								image="/public/imagenes/botones/buscar.png" />
-
 						</row>
 					</rows>
 				</grid>
@@ -95,8 +107,7 @@
 					<listhead>
 						<listheader label="Código Item" visible="false" />
 						<listheader label="Item de Evaluación" />
-						<listheader label="Si" width="10%" />
-						<listheader label="No" width="10%" />
+						<listheader label="Si/No" width="20%" />
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -106,10 +117,10 @@
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
 							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+								<radiogroup>
+									<radio label="SI" value="SI" />
+									<radio label="NO" value="NO" />
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>
@@ -122,15 +133,6 @@
 				</div>
 				<separator />
 				<html>
-
-
-
-
-
-
-
-
-					
 					<![CDATA[ <table id="tabla" align="center"
 					style="width:220px"> <tr> <td id="tabla"
 					bgcolor="#9ACD32" >100 &nbsp81</td> <td id="tabla"
@@ -145,15 +147,6 @@
 					<tr> <td id="tabla" bgcolor="red">20 &nbsp&nbsp
 					0</td> <td id="tabla" bgcolor="red">DEFICIENTE</td>
 					</tr> </table> ]]>
-
-
-
-
-
-
-
-
-
 				</html>
 				<separator />
 				<separator />
@@ -175,7 +168,8 @@
 							<listcell label="${each.descripcion}"></listcell>
 							<listcell>
 
-								<textbox width="90%" />
+								<doublebox width="90%" onChanging='$composer.cambio()'
+									onChange='$composer.cambio()' />
 
 							</listcell>
 							<listcell>
@@ -183,20 +177,20 @@
 							</listcell>
 						</listitem>
 					</template>
+					<listfoot>
+						<listfooter />
+						<listfooter>
+							<label value="PORCENTAJE DE EFICACIA INDIVIDUAL: "
+								style="font-style:italic; margin-left:10px; font-weight:bold" />
+						</listfooter>
+						<listfooter>
+							<doublebox id="txtPorcentajeEvaluacionEficacia" style="color:black !important;"
+								tabindex="2" width="100%" maxlength="100" disabled="true" />
+						</listfooter>
+					</listfoot>
 				</listbox>
 				<separator />
 				<separator />
-				<div align="right">
-					<hbox>
-						<label value="PORCENTAJE DE EFICACIA INDIVIDUAL: "
-							style="font-style:italic; margin-left:10px; font-weight:bold" />
-						<textbox id="txtPorcentajeEvaluacionEficacia" style="color:black !important;"
-							tabindex="2" width="90%" maxlength="100" disabled="true" />
-						<button id="btnCalcularPorcentaje" label="" autodisable="self"
-							tooltiptext="Calcular porcentaje de eficacia" image="/public/imagenes/botones/calcular.png" />
-
-					</hbox>
-				</div>
 			</groupbox>
 		</groupbox>
 		<div id="divCatalogoEmpleado" tooltiptext="Click para Seleccionar un empleado" />

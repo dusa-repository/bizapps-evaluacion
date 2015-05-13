@@ -5,72 +5,64 @@
 		<div id="botoneraCargo" />
 		<separator />
 		<separator />
-		<groupbox id="gpxRegistroCargo" width="auto" title="" class = "azul"
+		<groupbox id="gpxRegistroCargo" width="auto" title="" class="azul"
 			open="false">
 			<caption label="Nuevo" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para registrar un nuevo cargo" />
 			<separator />
 			<grid width="100%">
 				<columns visible="false">
-					<column label="" width="20%" />
-					<column label="" width="55%" />
-					<column label="" width="25%" />
+					<column label="" width="10%" />
+					<column label="" width="40%" />
+					<column label="" width="10%" />
+					<column label="" width="40%" />
 				</columns>
 				<rows>
 					<row>
 						<hbox>
-							<label value="Descripción:"
-								class="etiqueta" />
+							<label value="Descripción:" class="etiqueta" />
 							<space />
-							<label value="*"
-								style="font-weight:bold;color:red">
+							<label value="*" style="font-weight:bold;color:red">
 							</label>
 						</hbox>
-
-						<textbox id="txtDescripcionCargo" width="60%"
-							maxlength="100" tabindex="1"
-							tooltiptext="Ingrese aqui la descripcion del cargo" />
-							<hbox />
-							<hbox />
-					</row>
-					<row>
+						<textbox id="txtDescripcionCargo" maxlength="100"
+							tabindex="1" tooltiptext="Ingrese aqui la descripcion del cargo" />
 						<label value="Nómina:" class="etiqueta" />
-
-						<textbox id="txtNominaCargo" width="60%"
-							maxlength="50" tabindex="2"
+						<textbox id="txtNominaCargo" maxlength="50" tabindex="2"
 							tooltiptext="Ingrese aqui la nomina del cargo" />
-							<hbox />
-							<hbox />
 					</row>
 					<row>
 						<label value="Cargo Auxiliar:" class="etiqueta" />
-
-						<textbox id="txtCargoAuxiliarCargo" width="60%"
-							maxlength="50" tabindex="3"
-							tooltiptext="Ingrese aqui el cargo auxiliar" />
-							<hbox />
-							<hbox />
+						<textbox id="txtCargoAuxiliarCargo" maxlength="50"
+							tabindex="3" tooltiptext="Ingrese aqui el cargo auxiliar" />
+						<label value="Empresa Auxiliar:" class="etiqueta" />
+						<textbox id="txtEmpresaAuxiliarCargo" maxlength="50"
+							tabindex="4" tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
 					</row>
 					<row>
-						<label value="Empresa Auxiliar:"
-							class="etiqueta" />
-
-						<textbox id="txtEmpresaAuxiliarCargo"
-							width="60%" maxlength="50" tabindex="4"
-							tooltiptext="Ingrese aqui el nombre de la empresa auxiliar" />
-							<hbox />
-							<hbox />
+						<label value="Nivel academico requerido:" class="etiqueta" />
+						<textbox id="txtNivel" maxlength="255"
+							tooltiptext="Ingrese aqui el Nivel academico requerido para el cargo" />
+						<label value="Segundos idiomas requeridos:" class="etiqueta" />
+						<textbox id="txtIdioma" maxlength="255"
+							tooltiptext="Ingrese aqui los posibles segundos idiomas requeridos para el cargo" />
+					</row>
+					<row>
+						<label value="Observaciones adcionales:" class="etiqueta" />
+						<cell colspan="3">
+							<textbox id="txtObservaciones" multiline="true" class="multilinea" maxlength="500"
+								tooltiptext="Ingrese aqui cualquier observacion adicional que pueda adicionar al cargo" />
+						</cell>
 					</row>
 				</rows>
 			</grid>
 		</groupbox>
 		<separator />
 		<separator />
-		<groupbox id="gpxDatosCargo" width="auto" title="" class ="azul">
+		<groupbox id="gpxDatosCargo" width="auto" title="" class="azul">
 			<caption label="Registros" style="font-weight:bold; font-size: 13px"
 				tooltiptext="Presione para visualizar los cargos registrados" />
-			<div id="catalogoCargo"
-				tooltiptext="Seleccione el cargo para realizar una accion" />
+			<div id="catalogoCargo" tooltiptext="Seleccione el cargo para realizar una accion" />
 		</groupbox>
 		<separator />
 		<separator />

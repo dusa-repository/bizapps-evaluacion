@@ -27,6 +27,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
@@ -69,6 +70,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 	List<EmpleadoCurso> empleadosCurso = new ArrayList<EmpleadoCurso>();
 	List<EmpleadoParametro> empleadoParametros = new ArrayList<EmpleadoParametro>();
 	List<Empleado> empleadoMap = new ArrayList<Empleado>();
+	List<Listbox> listas = new ArrayList<Listbox>();
 	private int idCurso = 0;
 	private int idEmpleado = 0;
 	private Empleado empleado;
@@ -97,8 +99,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("itemsCatalogo");
 		if (map != null) {
-			if (map.get("id") != null) {
-
+			// if (map.get("id") != null) {
+			if (map.get("idCurso") != null) {
 				idCurso = (Integer) map.get("idCurso");
 				idEmpleado = (Integer) map.get("idEmpleado");
 				empleado = servicioEmpleado.buscarPorId(idEmpleado);
@@ -132,13 +134,18 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 					.buscarUsuarioPorNombre(nombreUsuario).getFicha());
 
 		}
-
+		listas.add(lsbParametroEquipos);
+		listas.add(lsbParametroContenidoInformacion);
+		listas.add(lsbParametroFacilitadorActividad);
+		listas.add(lsbParametroInformacionPrevia);
+		listas.add(lsbParametroResumen);
 	}
 
 	public List<Curso> cursosEmpleado() {
 
 		List<Curso> cursos = new ArrayList<Curso>();
-		empleadosCurso = servicioEmpleadoCurso.buscarCursos(empleado);
+		empleadosCurso = servicioEmpleadoCurso
+				.buscarCursosAsistidosYFinalizados(empleado);
 
 		for (int i = 0; i < empleadosCurso.size(); i++) {
 			cursos.add(empleadosCurso.get(i).getCurso());
@@ -203,25 +210,10 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 	public void seleccionCurso() {
 		Curso curso = catalogoCurso.objetoSeleccionadoDelCatalogo();
 		idCurso = curso.getId();
+		txtCursoEvaluacionSatisfaccion.setValue(curso.getNombreCurso()
+				.getNombre());
+		llenarLista();
 		catalogoCurso.setParent(null);
-
-		EmpleadoCurso cursoEmpleado = servicioEmpleadoCurso
-				.buscarPorempleadoYCurso(empleado, curso);
-
-		if (cursoEmpleado.getEstadoCurso().equals("APROBADO")
-				|| cursoEmpleado.getEstadoCurso().equals("REPROBADO")) {
-
-			txtCursoEvaluacionSatisfaccion.setValue(curso.getNombreCurso()
-					.getNombre());
-			llenarLista();
-
-		} else {
-
-			Messagebox
-					.show("El curso debe estar finalizado para poder realizar la evaluacion de satisfaccion",
-							"Advertencia", Messagebox.OK,
-							Messagebox.EXCLAMATION);
-		}
 
 	}
 
@@ -276,8 +268,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 	@Listen("onClick = #btnSalir")
 	public void salir() {
-		cerrarVentana(wdwVEvaluacionSatisfaccion,titulo,
-				tabs);
+		cerrarVentana(wdwVEvaluacionSatisfaccion, titulo, tabs);
 	}
 
 	public void llenarLista() {
@@ -325,53 +316,31 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 		if (empleadoParametros.size() != 0) {
 
 			for (int i = 0; i < lsbParametroInformacionPrevia.getItems().size(); i++) {
-
 				for (int j = 0; j < empleadoParametros.size(); j++) {
-
 					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo1
 							.get(i).getId()) {
-
 						Listitem listItem = lsbParametroInformacionPrevia
 								.getItemAtIndex(i);
-
+						Radiogroup grupo = ((Radiogroup) ((listItem
+								.getChildren().get(2))).getFirstChild());
 						if (empleadoParametros.get(j).getValorEvaluacion()
-								.equals("MUY BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(3)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("REGULAR")) {
-
-							((Checkbox) ((listItem.getChildren().get(4)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(5)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MUY MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(6)))
-									.getFirstChild()).setChecked(true);
-
-						}
-
+								.equals("MUY BUENO"))
+							grupo.getItemAtIndex(0).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("BUENO"))
+							grupo.getItemAtIndex(1).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("REGULAR"))
+							grupo.getItemAtIndex(2).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MALO"))
+							grupo.getItemAtIndex(3).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY MALO"))
+							grupo.getItemAtIndex(4).setChecked(true);
 					}
-
 				}
-
 			}
-
 			for (int i = 0; i < lsbParametroContenidoInformacion.getItems()
 					.size(); i++) {
 
@@ -382,38 +351,23 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 						Listitem listItem = lsbParametroContenidoInformacion
 								.getItemAtIndex(i);
-
+						Radiogroup grupo = ((Radiogroup) ((listItem
+								.getChildren().get(2))).getFirstChild());
 						if (empleadoParametros.get(j).getValorEvaluacion()
-								.equals("MUY BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(3)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("REGULAR")) {
-
-							((Checkbox) ((listItem.getChildren().get(4)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(5)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MUY MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(6)))
-									.getFirstChild()).setChecked(true);
-
-						}
+								.equals("MUY BUENO"))
+							grupo.getItemAtIndex(0).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("BUENO"))
+							grupo.getItemAtIndex(1).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("REGULAR"))
+							grupo.getItemAtIndex(2).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MALO"))
+							grupo.getItemAtIndex(3).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY MALO"))
+							grupo.getItemAtIndex(4).setChecked(true);
 
 					}
 
@@ -431,38 +385,23 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 						Listitem listItem = lsbParametroFacilitadorActividad
 								.getItemAtIndex(i);
-
+						Radiogroup grupo = ((Radiogroup) ((listItem
+								.getChildren().get(2))).getFirstChild());
 						if (empleadoParametros.get(j).getValorEvaluacion()
-								.equals("MUY BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(3)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("REGULAR")) {
-
-							((Checkbox) ((listItem.getChildren().get(4)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(5)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MUY MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(6)))
-									.getFirstChild()).setChecked(true);
-
-						}
+								.equals("MUY BUENO"))
+							grupo.getItemAtIndex(0).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("BUENO"))
+							grupo.getItemAtIndex(1).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("REGULAR"))
+							grupo.getItemAtIndex(2).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MALO"))
+							grupo.getItemAtIndex(3).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY MALO"))
+							grupo.getItemAtIndex(4).setChecked(true);
 
 					}
 
@@ -479,39 +418,23 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 						Listitem listItem = lsbParametroEquipos
 								.getItemAtIndex(i);
-
+						Radiogroup grupo = ((Radiogroup) ((listItem
+								.getChildren().get(2))).getFirstChild());
 						if (empleadoParametros.get(j).getValorEvaluacion()
-								.equals("MUY BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(3)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("REGULAR")) {
-
-							((Checkbox) ((listItem.getChildren().get(4)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(5)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MUY MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(6)))
-									.getFirstChild()).setChecked(true);
-
-						}
-
+								.equals("MUY BUENO"))
+							grupo.getItemAtIndex(0).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("BUENO"))
+							grupo.getItemAtIndex(1).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("REGULAR"))
+							grupo.getItemAtIndex(2).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MALO"))
+							grupo.getItemAtIndex(3).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY MALO"))
+							grupo.getItemAtIndex(4).setChecked(true);
 					}
 
 				}
@@ -524,42 +447,25 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo5
 							.get(i).getId()) {
-
 						Listitem listItem = lsbParametroResumen
 								.getItemAtIndex(i);
-
+						Radiogroup grupo = ((Radiogroup) ((listItem
+								.getChildren().get(2))).getFirstChild());
 						if (empleadoParametros.get(j).getValorEvaluacion()
-								.equals("MUY BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("BUENO")) {
-
-							((Checkbox) ((listItem.getChildren().get(3)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("REGULAR")) {
-
-							((Checkbox) ((listItem.getChildren().get(4)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(5)))
-									.getFirstChild()).setChecked(true);
-
-						} else if (empleadoParametros.get(j)
-								.getValorEvaluacion().equals("MUY MALO")) {
-
-							((Checkbox) ((listItem.getChildren().get(6)))
-									.getFirstChild()).setChecked(true);
-
-						}
-
+								.equals("MUY BUENO"))
+							grupo.getItemAtIndex(0).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("BUENO"))
+							grupo.getItemAtIndex(1).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("REGULAR"))
+							grupo.getItemAtIndex(2).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MALO"))
+							grupo.getItemAtIndex(3).setChecked(true);
+						else if (empleadoParametros.get(j).getValorEvaluacion()
+								.equals("MUY MALO"))
+							grupo.getItemAtIndex(4).setChecked(true);
 					}
 
 				}
@@ -570,345 +476,139 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 	}
 
+	private boolean validarVacios() {
+		for (int i = 0; i < listas.size(); i++) {
+			Listbox lista = listas.get(i);
+			for (int j = 0; j < lista.getItemCount(); j++) {
+				Listitem listItem = lista.getItemAtIndex(j);
+				Radiogroup grupo = ((Radiogroup) ((listItem.getChildren()
+						.get(2))).getFirstChild());
+				if (grupo.getSelectedItem() == null) {
+					Messagebox
+							.show("Debe seleccionar la respuesta de su preferencia en cada uno de los parametros de las listas",
+									"Advertencia", Messagebox.OK,
+									Messagebox.EXCLAMATION);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
-
-		boolean parametrosGuardados = false;
-	
 		if (validar()) {
-
-			Curso curso = servicioCurso.buscarCurso(idCurso);
-			List<EmpleadoCurso> cursoEmpleado = servicioEmpleadoCurso
-					.buscar(curso);
-
-			if (cursoEmpleado.size() != 0) {
-
-				if (lsbParametroInformacionPrevia.getItemCount() != 0) {
-
-					for (int i = 0; i < lsbParametroInformacionPrevia
-							.getItemCount(); i++) {
-
-						Listitem listItem = lsbParametroInformacionPrevia
-								.getItemAtIndex(i);
-
-						if (((Checkbox) ((listItem.getChildren().get(2)))
-								.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(3)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(4)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(5)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(6)))
-										.getFirstChild()).isChecked()) {
-
-							parametrosGuardados = true;
-
+			if (validarVacios()) {
+				Curso curso = servicioCurso.buscarCurso(idCurso);
+				List<EmpleadoCurso> cursoEmpleado = servicioEmpleadoCurso
+						.buscar(curso);
+				if (cursoEmpleado.size() != 0) {
+					if (lsbParametroInformacionPrevia.getItemCount() != 0) {
+						for (int i = 0; i < lsbParametroInformacionPrevia
+								.getItemCount(); i++) {
+							Listitem listItem = lsbParametroInformacionPrevia
+									.getItemAtIndex(i);
 							int codigoParametro1 = ((Intbox) ((listItem
 									.getChildren().get(0))).getFirstChild())
 									.getValue();
-
+							Radiogroup grupo = ((Radiogroup) ((listItem
+									.getChildren().get(2))).getFirstChild());
 							String valorEvaluacion = null;
-
-							if (((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(3))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(4))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "REGULAR";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(5))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MALO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(6))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY MALO";
-
-							}
-
+							if (grupo.getSelectedItem() != null)
+								valorEvaluacion = grupo.getSelectedItem()
+										.getValue();
 							Parametro parametro1 = servicioParametro
 									.buscarParametro(codigoParametro1);
 							EmpleadoParametro empleadoParametro1 = new EmpleadoParametro(
 									empleado, parametro1, curso,
 									valorEvaluacion);
-
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro1);
-
 						}
-
 					}
-
-				}
-
-				if (lsbParametroContenidoInformacion.getItemCount() != 0) {
-
-					for (int i = 0; i < lsbParametroContenidoInformacion
-							.getItemCount(); i++) {
-
-						Listitem listItem = lsbParametroContenidoInformacion
-								.getItemAtIndex(i);
-
-						if (((Checkbox) ((listItem.getChildren().get(2)))
-								.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(3)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(4)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(5)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(6)))
-										.getFirstChild()).isChecked()) {
-
-							parametrosGuardados = true;
-
+					if (lsbParametroContenidoInformacion.getItemCount() != 0) {
+						for (int i = 0; i < lsbParametroContenidoInformacion
+								.getItemCount(); i++) {
+							Listitem listItem = lsbParametroContenidoInformacion
+									.getItemAtIndex(i);
 							int codigoParametro2 = ((Intbox) ((listItem
 									.getChildren().get(0))).getFirstChild())
 									.getValue();
-
+							Radiogroup grupo = ((Radiogroup) ((listItem
+									.getChildren().get(2))).getFirstChild());
 							String valorEvaluacion = null;
-
-							if (((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(3))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(4))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "REGULAR";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(5))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MALO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(6))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY MALO";
-
-							}
-
+							if (grupo.getSelectedItem() != null)
+								valorEvaluacion = grupo.getSelectedItem()
+										.getValue();
 							Parametro parametro2 = servicioParametro
 									.buscarParametro(codigoParametro2);
 							EmpleadoParametro empleadoParametro2 = new EmpleadoParametro(
 									empleado, parametro2, curso,
 									valorEvaluacion);
-
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro2);
-
 						}
 					}
-
-				}
-
-				if (lsbParametroFacilitadorActividad.getItemCount() != 0) {
-
-					for (int i = 0; i < lsbParametroFacilitadorActividad
-							.getItemCount(); i++) {
-
-						Listitem listItem = lsbParametroFacilitadorActividad
-								.getItemAtIndex(i);
-
-						if (((Checkbox) ((listItem.getChildren().get(2)))
-								.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(3)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(4)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(5)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(6)))
-										.getFirstChild()).isChecked()) {
-
-							parametrosGuardados = true;
-
+					if (lsbParametroFacilitadorActividad.getItemCount() != 0) {
+						for (int i = 0; i < lsbParametroFacilitadorActividad
+								.getItemCount(); i++) {
+							Listitem listItem = lsbParametroFacilitadorActividad
+									.getItemAtIndex(i);
 							int codigoParametro3 = ((Intbox) ((listItem
 									.getChildren().get(0))).getFirstChild())
 									.getValue();
-
+							Radiogroup grupo = ((Radiogroup) ((listItem
+									.getChildren().get(2))).getFirstChild());
 							String valorEvaluacion = null;
-
-							if (((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(3))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(4))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "REGULAR";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(5))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MALO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(6))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY MALO";
-
-							}
-
+							if (grupo.getSelectedItem() != null)
+								valorEvaluacion = grupo.getSelectedItem()
+										.getValue();
 							Parametro parametro3 = servicioParametro
 									.buscarParametro(codigoParametro3);
 							EmpleadoParametro empleadoParametro3 = new EmpleadoParametro(
 									empleado, parametro3, curso,
 									valorEvaluacion);
-
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro3);
-
 						}
-
 					}
 
-				}
-
-				if (lsbParametroEquipos.getItemCount() != 0) {
-
-					for (int i = 0; i < lsbParametroEquipos.getItemCount(); i++) {
-
-						Listitem listItem = lsbParametroEquipos
-								.getItemAtIndex(i);
-
-						if (((Checkbox) ((listItem.getChildren().get(2)))
-								.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(3)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(4)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(5)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(6)))
-										.getFirstChild()).isChecked()) {
-
-							parametrosGuardados = true;
-
+					if (lsbParametroEquipos.getItemCount() != 0) {
+						for (int i = 0; i < lsbParametroEquipos.getItemCount(); i++) {
+							Listitem listItem = lsbParametroEquipos
+									.getItemAtIndex(i);
 							int codigoParametro4 = ((Intbox) ((listItem
 									.getChildren().get(0))).getFirstChild())
 									.getValue();
-
+							Radiogroup grupo = ((Radiogroup) ((listItem
+									.getChildren().get(2))).getFirstChild());
 							String valorEvaluacion = null;
-
-							if (((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(3))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(4))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "REGULAR";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(5))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MALO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(6))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY MALO";
-
-							}
-
+							if (grupo.getSelectedItem() != null)
+								valorEvaluacion = grupo.getSelectedItem()
+										.getValue();
 							Parametro parametro4 = servicioParametro
 									.buscarParametro(codigoParametro4);
 							EmpleadoParametro empleadoParametro4 = new EmpleadoParametro(
 									empleado, parametro4, curso,
 									valorEvaluacion);
-
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro4);
-
 						}
 					}
 
-				}
-
-				if (lsbParametroResumen.getItemCount() != 0) {
-
-					for (int i = 0; i < lsbParametroResumen.getItemCount(); i++) {
-
-						Listitem listItem = lsbParametroResumen
-								.getItemAtIndex(i);
-
-						if (((Checkbox) ((listItem.getChildren().get(2)))
-								.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(3)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(4)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(5)))
-										.getFirstChild()).isChecked()
-								|| ((Checkbox) ((listItem.getChildren().get(6)))
-										.getFirstChild()).isChecked()) {
-
-							parametrosGuardados = true;
-
+					if (lsbParametroResumen.getItemCount() != 0) {
+						for (int i = 0; i < lsbParametroResumen.getItemCount(); i++) {
+							Listitem listItem = lsbParametroResumen
+									.getItemAtIndex(i);
 							int codigoParametro5 = ((Intbox) ((listItem
 									.getChildren().get(0))).getFirstChild())
 									.getValue();
-
+							Radiogroup grupo = ((Radiogroup) ((listItem
+									.getChildren().get(2))).getFirstChild());
 							String valorEvaluacion = null;
-
-							if (((Checkbox) ((listItem.getChildren().get(2)))
-									.getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(3))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "BUENO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(4))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "REGULAR";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(5))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MALO";
-
-							} else if (((Checkbox) ((listItem.getChildren()
-									.get(6))).getFirstChild()).isChecked()) {
-
-								valorEvaluacion = "MUY MALO";
-
-							}
-
+							if (grupo.getSelectedItem() != null)
+								valorEvaluacion = grupo.getSelectedItem()
+										.getValue();
 							Parametro parametro5 = servicioParametro
 									.buscarParametro(codigoParametro5);
 							EmpleadoParametro empleadoParametro5 = new EmpleadoParametro(
@@ -921,30 +621,14 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 						}
 
 					}
-
-				}
-
-				if (parametrosGuardados) {
-
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiarCampos();
-
 				} else {
 
-					Messagebox
-							.show("Debe seleccionar la respuesta de su preferencia en cada uno de los parametros",
-									"Advertencia", Messagebox.OK,
-									Messagebox.EXCLAMATION);
-
+					msj.mensajeAlerta(Mensaje.codigoCurso);
+					txtCursoEvaluacionSatisfaccion.setFocus(true);
 				}
-
-			} else {
-
-				msj.mensajeAlerta(Mensaje.codigoCurso);
-				txtCursoEvaluacionSatisfaccion.setFocus(true);
-
 			}
-
 		}
 
 	}

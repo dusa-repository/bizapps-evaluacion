@@ -10,16 +10,19 @@ import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.PerfilCargo;
 import modelo.maestros.Periodo;
+import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -30,18 +33,18 @@ import controlador.maestros.CGenerico;
 
 public class CNecesidadesAdiestramiento extends CGenerico {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Wire
 	private Window wdwVNecesidadesAdiestramiento;
 	@Wire
 	private Button btnBuscar;
 	@Wire
-	private Button btnGuardar;
-	@Wire
 	private Button btnLimpiar;
 	@Wire
 	private Button btnSalir;
-	@Wire
-	private Textbox txtPeriodoNecesidadesAdiestramiento;
 	@Wire
 	private Textbox txtHorasAcumuladas;
 	@Wire
@@ -53,6 +56,8 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 	@Wire
 	private Listbox lsbPerfilCargo;
 	@Wire
+	private Listbox lsbCursosTransito;
+	@Wire
 	private Listbox lsbCursosRealizados;
 	@Wire
 	private Listbox lsbCursosDisponibles;
@@ -60,15 +65,16 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 	private Div divCatalogoEmpleado;
 	@Wire
 	private Div divCatalogoPeriodo;
+	@Wire
+	private Textbox txtEmpleado;
 	List<Empleado> empleadoDatos = new ArrayList<Empleado>();
 	List<Empleado> empleadoFormacion = new ArrayList<Empleado>();
 	List<EmpleadoCurso> cursosEmpleado = new ArrayList<EmpleadoCurso>();
-	List<Curso> cursos = new ArrayList<Curso>();
 	List<Curso> cursosRealizados = new ArrayList<Curso>();
+	List<Curso> cursosTramite = new ArrayList<Curso>();
 	List<Curso> cursosDisponibles = new ArrayList<Curso>();
 	List<PerfilCargo> perfilCargo = new ArrayList<PerfilCargo>();
 	private int idEmpleado = 0;
-	private int idCurso = 0;
 	private int idPeriodo = 0;
 
 	Mensaje msj = new Mensaje();
@@ -77,8 +83,6 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		// TODO Auto-generated method stub
-
 		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("mapaGeneral");
 		if (mapa != null) {
@@ -89,93 +93,7 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 				mapa = null;
 			}
 		}
-
-		txtPeriodoNecesidadesAdiestramiento.setFocus(true);
-
-	}
-
-	@Listen("onClick = #btnBuscarPeriodo")
-	public void mostrarCatalogoPeriodo() {
-		final List<Periodo> listPeriodo = servicioPeriodo.buscarTodos();
-		catalogoPeriodo = new Catalogo<Periodo>(divCatalogoPeriodo,
-				"Catalogo de Periodos", listPeriodo, true, false, false,
-				"Nombre", "Descripción", "Fecha Inicio", "Fecha Fin", "Estado") {
-
-			@Override
-			protected List<Periodo> buscar(List<String> valores) {
-				List<Periodo> lista = new ArrayList<Periodo>();
-
-				for (Periodo periodo : listPeriodo) {
-					if (periodo.getNombre().toLowerCase()
-							.contains(valores.get(0).toLowerCase())
-							&& periodo.getDescripcion().toLowerCase()
-									.contains(valores.get(1).toLowerCase())
-							&& String
-									.valueOf(
-											formatoFecha.format(periodo
-													.getFechaInicio()))
-									.toLowerCase()
-									.contains(valores.get(2).toLowerCase())
-							&& String
-									.valueOf(
-											formatoFecha.format(periodo
-													.getFechaFin()))
-									.toLowerCase()
-									.contains(valores.get(3).toLowerCase())
-							&& periodo.getEstadoPeriodo().toLowerCase()
-									.contains(valores.get(4).toLowerCase())) {
-						lista.add(periodo);
-					}
-				}
-				return lista;
-
-			}
-
-			@Override
-			protected String[] crearRegistros(Periodo periodo) {
-				String[] registros = new String[6];
-				registros[0] = periodo.getNombre();
-				registros[1] = periodo.getDescripcion();
-				registros[2] = formatoFecha.format(periodo.getFechaInicio());
-				registros[3] = formatoFecha.format(periodo.getFechaFin());
-				registros[4] = periodo.getEstadoPeriodo();
-
-				return registros;
-			}
-
-		};
-
-		catalogoPeriodo.setClosable(true);
-		catalogoPeriodo.setWidth("80%");
-		catalogoPeriodo.setParent(divCatalogoPeriodo);
-		catalogoPeriodo.setTitle("Catalogo de Periodos");
-		catalogoPeriodo.doModal();
-	}
-
-	@Listen("onSeleccion = #divCatalogoPeriodo")
-	public void seleccionPeriodo() {
-		Periodo periodo = catalogoPeriodo.objetoSeleccionadoDelCatalogo();
-		idPeriodo = periodo.getId();
-		txtPeriodoNecesidadesAdiestramiento.setValue(periodo.getNombre());
-		catalogoPeriodo.setParent(null);
-
-		if (idEmpleado != 0)
-			llenarLista();
-	}
-
-	@Listen("onChange = #txtPeriodoNecesidadesAdiestramiento")
-	public void buscarPeriodo() {
-		List<Periodo> periodos = servicioPeriodo
-				.buscarPorNombres(txtPeriodoNecesidadesAdiestramiento
-						.getValue());
-
-		if (periodos.size() == 0) {
-			msj.mensajeAlerta(Mensaje.codigoPeriodo);
-			txtPeriodoNecesidadesAdiestramiento.setFocus(true);
-		} else {
-			idPeriodo = periodos.get(0).getId();
-		}
-
+		txtEmpleado.setFocus(true);
 	}
 
 	@Listen("onClick = #btnBuscar")
@@ -242,45 +160,49 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 	public void seleccionEmpleado() {
 		Empleado empleado = catalogoEmpleado.objetoSeleccionadoDelCatalogo();
 		idEmpleado = empleado.getId();
+		txtEmpleado.setValue(empleado.getFicha());
 		catalogoEmpleado.setParent(null);
 		llenarLista();
 	}
 
+	@Listen("onChange = #txtEmpleado; onOK =  #txtEmpleado")
+	public void buscarIdGerencia() {
+		if (txtEmpleado.getValue() != null) {
+			if (txtEmpleado.getText().compareTo("") != 0) {
+				Empleado empleado = servicioEmpleado.buscarPorFicha(txtEmpleado
+						.getValue());
+				if (empleado != null) {
+					txtEmpleado.setValue(empleado.getFicha());
+					idEmpleado = empleado.getId();
+					empleadoDatos.add(empleado);
+					llenarLista();
+				} else {
+					txtEmpleado.setValue("");
+					idEmpleado = 0;
+					llenarLista();
+					msj.mensajeError(Mensaje.noHayRegistros);
+				}
+			}
+		}
+	}
+
 	@Listen("onClick = #btnLimpiar")
 	public void limpiarCampos() {
-
 		idEmpleado = 0;
 		idPeriodo = 0;
-		idCurso = 0;
-		txtPeriodoNecesidadesAdiestramiento.setValue("");
+		txtEmpleado.setValue("");
 		txtHorasAcumuladas.setValue("");
 		lsbEmpleadoDatos.setModel(new ListModelList<Empleado>());
 		lsbEmpleadoFormacion.setModel(new ListModelList<Empleado>());
 		lsbPerfilCargo.setModel(new ListModelList<PerfilCargo>());
 		lsbCursosDisponibles.setModel(new ListModelList<Curso>());
+		lsbCursosTransito.setModel(new ListModelList<Curso>());
 		lsbCursosRealizados.setModel(new ListModelList<Curso>());
 		lsbCursosDisponibles
 				.setEmptyMessage("No se ha seleccionado un empleado");
 		lsbCursosRealizados
 				.setEmptyMessage("No se ha seleccionado un empleado");
-		txtPeriodoNecesidadesAdiestramiento.setFocus(true);
-	}
-
-	public boolean camposLLenos() {
-		if (txtPeriodoNecesidadesAdiestramiento.getText().compareTo("") == 0) {
-			return false;
-		} else
-			return true;
-	}
-
-	protected boolean validar() {
-
-		if (!camposLLenos()) {
-			msj.mensajeError(Mensaje.camposVacios);
-			return false;
-		} else
-			return true;
-
+		lsbCursosTransito.setEmptyMessage("No se ha seleccionado un empleado");
 	}
 
 	@Listen("onClick = #btnSalir")
@@ -290,18 +212,17 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 	}
 
 	public void llenarLista() {
-
 		empleadoDatos = new ArrayList<Empleado>();
 		empleadoFormacion = new ArrayList<Empleado>();
 		perfilCargo = new ArrayList<PerfilCargo>();
 		cursosEmpleado = new ArrayList<EmpleadoCurso>();
-		cursos = new ArrayList<Curso>();
 		cursosRealizados = new ArrayList<Curso>();
+		cursosTramite = new ArrayList<Curso>();
 		cursosDisponibles = new ArrayList<Curso>();
 		lsbCursosDisponibles.setModel(new ListModelList<Curso>());
+		lsbCursosTransito.setModel(new ListModelList<Curso>());
 		lsbCursosRealizados.setModel(new ListModelList<Curso>());
 		float horasAcumuladas = 0;
-
 		Empleado empleado = servicioEmpleado.buscar(idEmpleado);
 		empleadoDatos.add(empleado);
 		lsbEmpleadoDatos.setModel(new ListModelList<Empleado>(empleadoDatos));
@@ -312,235 +233,108 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 				.getCargo());
 		perfilCargo.add(perfil);
 		lsbPerfilCargo.setModel(new ListModelList<PerfilCargo>(perfilCargo));
-
-		cursos = servicioCurso.buscarTodos();
 		cursosEmpleado = servicioEmpleadoCurso.buscarCursos(empleado);
-
-		if (cursosEmpleado.size() != 0) {
-
-			for (int i = 0; i < cursosEmpleado.size(); i++) {
-
-				if (cursosEmpleado.get(i).getEstadoCurso().equals("APROBADO")) {
-
-					Curso curso = cursosEmpleado.get(i).getCurso();
-					horasAcumuladas = horasAcumuladas
-							+ cursosEmpleado.get(i).getCurso().getDuracion();
-					cursosRealizados.add(curso);
-				}
-
+		for (int i = 0; i < cursosEmpleado.size(); i++) {
+			if (cursosEmpleado.get(i).getEstadoCurso().equals("APROBADO")
+					|| cursosEmpleado.get(i).getEstadoCurso()
+							.equals("REPROBADO")) {
+				Curso curso = cursosEmpleado.get(i).getCurso();
+				horasAcumuladas = horasAcumuladas
+						+ cursosEmpleado.get(i).getCurso().getDuracion();
+				cursosRealizados.add(curso);
+			}
+			if (cursosEmpleado.get(i).getEstadoCurso().equals("EN TRAMITE")) {
+				Curso curso = cursosEmpleado.get(i).getCurso();
+				cursosTramite.add(curso);
 			}
 
-			if (idPeriodo == 0)
-				lsbCursosDisponibles
-						.setEmptyMessage("No se ha seleccionado un periodo");
-
-			txtHorasAcumuladas.setValue(String.valueOf(horasAcumuladas));
-			lsbCursosRealizados.setModel(new ListModelList<Curso>(
-					cursosRealizados));
-
-		} else {
-
+		}
+		lsbCursosRealizados
+				.setModel(new ListModelList<Curso>(cursosRealizados));
+		lsbCursosTransito.setModel(new ListModelList<Curso>(cursosTramite));
+		if (cursosTramite.isEmpty())
+			lsbCursosTransito
+					.setEmptyMessage("El empleado no posee cursos en Tramite");
+		if (cursosRealizados.isEmpty())
 			lsbCursosRealizados
 					.setEmptyMessage("El empleado no posee cursos realizados");
-
-			if (idPeriodo == 0)
-				lsbCursosDisponibles
-						.setEmptyMessage("No se ha seleccionado un periodo");
-			else {
-
-				Periodo periodo = servicioPeriodo.buscarPeriodo(idPeriodo);
-
-				for (int i = 0; i < cursos.size(); i++) {
-
-					if (cursos.get(i).getPeriodo().getId() != periodo.getId()) {
-
-						cursos.remove(i);
-
-					}
-
-				}
-
-				System.out.println(cursos.size());
-
-				lsbCursosDisponibles.setModel(new ListModelList<Curso>(cursos));
-				lsbCursosDisponibles.renderAll();
-				lsbCursosDisponibles.setMultiple(false);
-				lsbCursosDisponibles.setCheckmark(false);
-				lsbCursosDisponibles.setMultiple(true);
-				lsbCursosDisponibles.setCheckmark(true);
-
-			}
-
-		}
-
-		if (cursosEmpleado.size() != 0 && cursos.size() != 0) {
-
-			System.out.println("Entre");
-
-			for (int i = 0; i < cursos.size(); i++) {
-
-				for (int j = 0; j < cursosEmpleado.size(); j++) {
-
-					if (cursos.get(i).getId() == cursosEmpleado.get(j)
-							.getCurso().getId()
-							&& cursosEmpleado.get(j).getEstadoCurso()
-									.equals("APROBADO")) {
-
-						cursos.remove(i);
-
-					}
-
-				}
-
-			}
-
-			if (idEmpleado != 0 && idPeriodo != 0) {
-
-				Periodo periodo = servicioPeriodo.buscarPeriodo(idPeriodo);
-
-				for (int i = 0; i < cursos.size(); i++) {
-
-					if (cursos.get(i).getPeriodo().getId() != periodo.getId()) {
-
-						cursos.remove(i);
-
-					}
-
-				}
-
-				lsbCursosDisponibles.setModel(new ListModelList<Curso>(cursos));
-				lsbCursosDisponibles.renderAll();
-				lsbCursosDisponibles.setMultiple(false);
-				lsbCursosDisponibles.setCheckmark(false);
-				lsbCursosDisponibles.setMultiple(true);
-				lsbCursosDisponibles.setCheckmark(true);
-
-				for (int i = 0; i < lsbCursosDisponibles.getItems().size(); i++) {
-
-					Listitem listItem = lsbCursosDisponibles.getItemAtIndex(i);
-					Curso curso = listItem.getValue();
-					EmpleadoCurso cursosSeleccionados = servicioEmpleadoCurso
-							.buscarPorempleadoYCurso(empleado, curso);
-					if (cursosSeleccionados != null) {
-
-						if (cursosSeleccionados.getEstadoCurso().equals(
-								"EN TRAMITE")) {
-
-							listItem.setSelected(true);
-
-						}
-
-					}
-
-				}
-			} else {
-
-				if (idPeriodo != 0) {
-
-					lsbCursosDisponibles
-							.setEmptyMessage("No se ha seleccionado un periodo");
-
-				}
-
-			}
-
-		}
-
+		cursosDisponibles = servicioCurso.buscarDisponibles(cursosEmpleado);
+		lsbCursosDisponibles.setModel(new ListModelList<Curso>(
+				cursosDisponibles));
+		if (idPeriodo != 0)
+			lsbCursosDisponibles
+					.setEmptyMessage("No se ha seleccionado un periodo");
+		listasMultiples();
 	}
 
-	@Listen("onClick = #btnGuardar")
-	public void guardar() {
+	private boolean validarSeleccion(List<Curso> procesadas) {
+		if (procesadas == null) {
+			msj.mensajeAlerta(Mensaje.noHayRegistros);
+			return false;
+		} else {
+			if (procesadas.isEmpty()) {
+				msj.mensajeAlerta(Mensaje.noSeleccionoItem);
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
 
-
-		if (validar()) {
-
-			System.out.println(idPeriodo);
-			Periodo periodo = servicioPeriodo.buscarPeriodo(idPeriodo);
-			Empleado empleado = servicioEmpleado.buscar(idEmpleado);
-
-			if (periodo != null) {
-
-				if (obtenerSeleccionados().size() != 0) {
-
-					if (obtenerSeleccionados().size() <= 3) {
-
-						if (lsbCursosDisponibles.getItemCount() != 0) {
-
-							for (int j = 0; j < lsbCursosDisponibles
-									.getItemCount(); j++) {
-
-								Listitem listItem = lsbCursosDisponibles
-										.getItemAtIndex(j);
-
-								Curso cursoRegistrado = listItem.getValue();
-								EmpleadoCurso cursosSeleccionados = servicioEmpleadoCurso
-										.buscarPorempleadoYCurso(empleado,
-												cursoRegistrado);
-								if (cursosSeleccionados != null) {
-
-									if (cursosSeleccionados.getEstadoCurso()
-											.equals("EN TRAMITE")) {
-
-										servicioEmpleadoCurso
-												.eliminar(cursosSeleccionados);
-
+	@Listen("onClick= #btnAceptarCurso, #btnSalirCurso")
+	public void procesar(Event evento) {
+		String nombre = "";
+		List<Curso> procesadas2 = new ArrayList<Curso>();
+		switch (evento.getTarget().getId()) {
+		case "btnAceptarCurso":
+			nombre = "Agregar";
+			procesadas2 = obtenerSeleccionados(lsbCursosDisponibles);
+			break;
+		case "btnSalirCurso":
+			nombre = "Remover";
+			procesadas2 = obtenerSeleccionados(lsbCursosTransito);
+			break;
+		}
+		final List<Curso> procesadas = procesadas2;
+		final String estado = nombre;
+		if (validarSeleccion(procesadas)) {
+			Messagebox.show("¿Desea " + nombre + " los " + procesadas.size()
+					+ " Cursos al Empleado?", "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								Empleado empleado = servicioEmpleado
+										.buscar(idEmpleado);
+								if (estado.equals("Remover")) {
+									servicioEmpleadoCurso.remover(procesadas,
+											empleado);
+								} else {
+									List<EmpleadoCurso> guardadas = new ArrayList<EmpleadoCurso>();
+									for (int i = 0; i < procesadas.size(); i++) {
+										Curso curso = procesadas.get(i);
+										EmpleadoCurso cursosEmpleado = new EmpleadoCurso(
+												curso, empleado, "EN TRAMITE",
+												"NO");
+										guardadas.add(cursosEmpleado);
 									}
-								}
-							}
-
-							for (int i = 0; i < lsbCursosDisponibles
-									.getItemCount(); i++) {
-
-								Listitem listItem = lsbCursosDisponibles
-										.getItemAtIndex(i);
-
-								if (lsbCursosDisponibles.getItems().get(i)
-										.isSelected()) {
-
-									Curso curso = listItem.getValue();
-									String estadoCurso = "EN TRAMITE";
-
-									EmpleadoCurso cursosEmpleado = new EmpleadoCurso(
-											curso, empleado, estadoCurso,"NO");
 									servicioEmpleadoCurso
-											.guardar(cursosEmpleado);
-
+											.guardarVarios(guardadas);
 								}
-
+								llenarLista();
 							}
-
-							msj.mensajeInformacion(Mensaje.guardado);
-							limpiarCampos();
-
 						}
-
-					} else {
-
-						msj.mensajeAlerta(Mensaje.limiteCurso);
-
-					}
-
-				} else {
-
-					msj.mensajeAlerta(Mensaje.noSeleccionoCurso);
-				}
-
-			} else {
-
-				msj.mensajeAlerta(Mensaje.codigoPeriodo);
-				txtPeriodoNecesidadesAdiestramiento.setFocus(true);
-
-			}
-
+					});
 		}
 
 	}
 
-	public List<Curso> obtenerSeleccionados() {
+	public List<Curso> obtenerSeleccionados(Listbox lista) {
 		List<Curso> valores = new ArrayList<Curso>();
 		boolean entro = false;
-		if (lsbCursosDisponibles.getItemCount() != 0) {
-			final List<Listitem> list1 = lsbCursosDisponibles.getItems();
+		if (lista.getItemCount() != 0) {
+			final List<Listitem> list1 = lista.getItems();
 			for (int i = 0; i < list1.size(); i++) {
 				if (list1.get(i).isSelected()) {
 					Curso curso = list1.get(i).getValue();
@@ -555,6 +349,38 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 			return valores;
 		} else
 			return null;
+	}
+
+	public void listasMultiples() {
+		lsbCursosTransito.renderAll();
+		lsbCursosTransito.setMultiple(false);
+		lsbCursosTransito.setCheckmark(false);
+		lsbCursosTransito.setMultiple(true);
+		lsbCursosTransito.setCheckmark(true);
+		lsbCursosDisponibles.renderAll();
+		lsbCursosDisponibles.setMultiple(false);
+		lsbCursosDisponibles.setCheckmark(false);
+		lsbCursosDisponibles.setMultiple(true);
+		lsbCursosDisponibles.setCheckmark(true);
+	}
+
+	@Listen("onClick = #btnImprimir")
+	public void reporte() {
+		if (idEmpleado != 0) {
+			Empleado empleado = servicioEmpleado.buscar(idEmpleado);
+			Usuario u = servicioUsuario
+					.buscarUsuarioPorNombre(nombreUsuarioSesion());
+			Clients.evalJavaScript("window.open('"
+					+ damePath()
+					+ "Impresion?par1=gna"
+					+ "&par2="
+					+ empleado.getFicha()
+					+ "&par3="
+					+ u.getFicha()
+					+ ""
+					+ "','','top=100,left=200,height=600,width=800,scrollbars=1,resizable=1')");
+		} else
+			msj.mensajeAlerta("No se ha seleccionado un empleado");
 	}
 
 }

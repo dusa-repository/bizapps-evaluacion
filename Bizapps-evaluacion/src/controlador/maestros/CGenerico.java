@@ -36,9 +36,7 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Window;
 
 import componentes.Mensaje;
-
 import arbol.CArbol;
-
 import servicio.maestros.SActividad;
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
@@ -70,7 +68,6 @@ import servicio.reportes.SReporte;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
-
 import servicio.transacciones.SActividadCurso;
 import servicio.transacciones.SBitacora;
 import servicio.transacciones.SConductaCompetencia;
@@ -201,20 +198,27 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
 	public String titulo = "";
-	
+
 	public Tab tab;
 	/* Titulos de Mensaje */
 	public String informacion = "INFORMACION";
 	public String alerta = "ALERTA";
-	
-	private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-			"/META-INF/PropiedadesBaseDatos.xml");
 
+	private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+			"/META-INF/ConfiguracionAplicacion.xml");
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		inicializar();
+	}
+
+	public static SEmpleado getServicioEmpleado() {
+		return applicationContext.getBean(SEmpleado.class);
+	}
+
+	public static SEmpleadoCurso getServicioEmpleadoCurso() {
+		return applicationContext.getBean(SEmpleadoCurso.class);
 	}
 
 	public abstract void inicializar() throws IOException;
@@ -272,7 +276,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			}
 		}
 	}
-	
+
 	public void cerrarVentana(Window div, String id, List<Tab> tabs2) {
 		div.setVisible(false);
 		tabs = tabs2;
@@ -287,6 +291,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			}
 		}
 	}
+
 	public String nombreUsuarioSesion() {
 		Authentication sesion = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -340,7 +345,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			return new PasswordAuthentication("cdusa", "cartucho");
 		}
 	}
-	
+
 	public String damePath() {
 		return Executions.getCurrent().getContextPath() + "/";
 	}
@@ -354,7 +359,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		arreglo.add(ds.getUrl());
 		return arreglo;
 	}
-	
+
 	public void cerrarVentana2(Window window, String id, List<Tab> tabs2) {
 		window.setVisible(false);
 		tabs = tabs2;

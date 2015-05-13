@@ -295,7 +295,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 					String nombrecurso = sheet.getCell(2, fila).getContents();
 					String nombreArea = sheet.getCell(3, fila).getContents();
 					String tipoFormacion = sheet.getCell(4, fila).getContents();
-					//String nombrePeriodo = sheet.getCell(5, fila).getContents();
+					String nombrePeriodo = sheet.getCell(5, fila).getContents();
 					/*String gerencia = sheet.getCell(6, fila).getContents();
 					String cargo = sheet.getCell(7, fila).getContents();*/
 
@@ -329,7 +329,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 
 					// VALIDACION PERIODO
 
-					/*periodo = servicioPeriodo.buscarPorNombre(nombrePeriodo);
+					periodo = servicioPeriodo.buscarPorNombre(nombrePeriodo);
 
 					if (periodo == null) {
 
@@ -343,7 +343,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 					} else {
 
 						lineasValidas = lineasValidas + 1;
-					}*/
+					}
 
 					filaEvaluada++;
 					fila++;
@@ -357,8 +357,6 @@ public class CGestionarAdiestramiento extends CGenerico {
 			}
 
 			if (lineasInvalidas > 0) {
-
-				
 
 				limpiarCampos();
 				final HashMap<String, Object> map = new HashMap<String, Object>();
@@ -421,7 +419,6 @@ public class CGestionarAdiestramiento extends CGenerico {
 
 						// VALIDACION FICHA
 						empleado = servicioEmpleado.buscarPorFicha(ficha);
-
 					
 						nombreCurso = servicioNombreCurso
 								.buscarPorNombre(nombrecurso);

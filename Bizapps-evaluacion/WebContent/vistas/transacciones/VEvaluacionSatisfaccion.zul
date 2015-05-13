@@ -96,40 +96,36 @@
 					mold="paging" pageSize="6" oddRowSclass="non-odd"
 					emptyMessage="No ha seleccionado el curso">
 					<listhead>
-						<listheader label="Código parametro" width="15%"
+						<listheader label="Código parametro"
 							visible="false" />
 						<listheader
 							label="EVALUACIÓN DE LA INFORMACIÓN PREVIA A LA ACTIVIDAD"
-							width="55%" />
-						<listheader label="MUY BUENO" />
-						<listheader label="BUENO" />
-						<listheader label="REGULAR" />
-						<listheader label="MALO" />
-						<listheader label="MUY MALO" />
+							width="60%" />
+						<listheader label="MUY BUENO"/>
+						<listheader label="BUENO"/>
+						<listheader label="REGULAR"/>
+						<listheader label="MALO"/>
+						<listheader label="MUY MALO"/>
 					</listhead>
 					<template name="model">
 						<listitem>
 							<listcell>
-
-								<intbox value="${each.id}" width="auto"
+								<intbox value="${each.id}"
 									style="border:none" readonly="true" />
-
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+							<listcell span="5" >
+								<radiogroup width="100%">
+									<radio value="MUY BUENO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="BUENO" />
+									<space /><space /><space /><space /><space /><space />
+									<radio value="REGULAR"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MALO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MUY MALO"/>
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>
@@ -140,11 +136,11 @@
 					width="100%" mold="paging" pageSize="6" oddRowSclass="non-odd"
 					emptyMessage="No ha seleccionado el curso">
 					<listhead>
-						<listheader label="Código parametro" width="15%"
+						<listheader label="Código parametro"
 							visible="false" />
 						<listheader
 							label="EVALUACIÓN DEL CONTENIDO E INFORMACIÓN DE LA ACTIVIDAD"
-							width="55%" />
+							width="60%" />
 						<listheader label="MUY BUENO" />
 						<listheader label="BUENO" />
 						<listheader label="REGULAR" />
@@ -160,20 +156,18 @@
 
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+							<listcell span="5">
+								<radiogroup width="100%">
+									<radio value="MUY BUENO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="BUENO" />
+									<space /><space /><space /><space /><space /><space />
+									<radio value="REGULAR"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MALO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MUY MALO"/>
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>
@@ -184,11 +178,11 @@
 					width="100%" mold="paging" pageSize="6" oddRowSclass="non-odd"
 					emptyMessage="No ha seleccionado el curso">
 					<listhead>
-						<listheader label="Código parametro" width="15%"
+						<listheader label="Código parametro"
 							visible="false" />
 						<listheader
 							label="EVALUACIÓN DEL FACILITADOR O INSTRUCTOR DE LA ACTIVIDAD"
-							width="55%" />
+							width="60%" />
 						<listheader label="MUY BUENO" />
 						<listheader label="BUENO" />
 						<listheader label="REGULAR" />
@@ -204,20 +198,18 @@
 
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+							<listcell span="5">
+								<radiogroup width="100%">
+									<radio value="MUY BUENO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="BUENO" />
+									<space /><space /><space /><space /><space /><space />
+									<radio value="REGULAR"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MALO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MUY MALO"/>
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>
@@ -228,10 +220,10 @@
 					mold="paging" pageSize="6" oddRowSclass="non-odd"
 					emptyMessage="No ha seleccionado el curso">
 					<listhead>
-						<listheader label="Código parametro" width="15%"
+						<listheader label="Código parametro"
 							visible="false" />
 						<listheader
-							label="EVALUACIÓN DE LOS EQUIPOS E INFRAESTRUCTURA" width="55%" />
+							label="EVALUACIÓN DE LOS EQUIPOS E INFRAESTRUCTURA" width="60%" />
 						<listheader label="MUY BUENO" />
 						<listheader label="BUENO" />
 						<listheader label="REGULAR" />
@@ -247,20 +239,18 @@
 
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+							<listcell span="5">
+								<radiogroup width="100%">
+									<radio value="MUY BUENO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="BUENO" />
+									<space /><space /><space /><space /><space /><space />
+									<radio value="REGULAR"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MALO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MUY MALO"/>
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>
@@ -271,10 +261,10 @@
 					mold="paging" pageSize="6" oddRowSclass="non-odd"
 					emptyMessage="No ha seleccionado el curso">
 					<listhead>
-						<listheader label="Código parametro" width="15%"
+						<listheader label="Código parametro"
 							visible="false" />
 						<listheader label="RESUMEN DE EVALUACIÓN"
-							width="55%" />
+							width="60%" />
 						<listheader label="MUY BUENO" />
 						<listheader label="BUENO" />
 						<listheader label="REGULAR" />
@@ -284,26 +274,23 @@
 					<template name="model">
 						<listitem>
 							<listcell>
-
 								<intbox value="${each.id}" width="auto"
 									style="border:none" readonly="true" />
 
 							</listcell>
 							<listcell label="${each.descripcion}"></listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
-							</listcell>
-							<listcell>
-								<checkbox />
+							<listcell span="5">
+								<radiogroup width="100%">
+									<radio value="MUY BUENO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="BUENO" />
+									<space /><space /><space /><space /><space /><space />
+									<radio value="REGULAR"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MALO"/>
+									<space /><space /><space /><space /><space /><space />
+									<radio value="MUY MALO"/>
+								</radiogroup>
 							</listcell>
 						</listitem>
 					</template>

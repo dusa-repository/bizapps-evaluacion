@@ -2,10 +2,6 @@ package componentes;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -45,10 +41,6 @@ public abstract class Catalogo<Clase> extends Window {
 	Textbox txtRT;
 	Label labelRTNombre;
 	Label labelBuscado;
-
-	private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-			"/META-INF/ConfiguracionAplicacion.xml");
-
 
 	public Catalogo(final Component cGenerico, String titulo,
 			List<Clase> lista, boolean emergente, boolean udc, boolean param2,

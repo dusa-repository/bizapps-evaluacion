@@ -6,6 +6,7 @@ import modelo.maestros.Curso;
 import modelo.maestros.NombreCurso;
 import modelo.maestros.Periodo;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -31,6 +32,8 @@ public interface ICursoDAO extends JpaRepository<Curso, Integer> {
 	/* Busca ultimo curso registrado */
 	@Query("select max(c.id) from Curso c")
 	public int ultimoCursoRegistrado();
+
+	public List<Curso> findByIdNotIn(List<Integer> ids, Sort o);
 
 
 }

@@ -3,15 +3,18 @@ package servicio.maestros;
 import interfacedao.maestros.ICursoDAO;
 import interfacedao.maestros.IAreaDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
+import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.NombreCurso;
 import modelo.maestros.Periodo;
 import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service("SCurso")
@@ -19,8 +22,8 @@ public class SCurso {
 
 	@Autowired
 	private ICursoDAO cursoDAO;
-	
-	private String[] estado = {"ACTIVO", "INACTIVO"};
+
+	private String[] estado = { "ACTIVO", "INACTIVO" };
 
 	/* Servicio que permite guardar los datos de un curso */
 	public void guardar(Curso curso) {
@@ -45,14 +48,14 @@ public class SCurso {
 		cursos = cursoDAO.findByEstadoOrderByNombreCursoAreaAsc(estado[0]);
 		return cursos;
 	}
-	
+
 	/* Servicio que permite buscar todos los cursos por periodo */
 	public List<Curso> buscarPorPeriodo(Periodo periodo) {
 		List<Curso> cursos;
 		cursos = cursoDAO.findByPeriodo(periodo);
 		return cursos;
 	}
-	
+
 	/* Servicio que permite buscar todos los cursos por periodo */
 	public Curso buscarPorCursoYPeriodo(NombreCurso curso, Periodo periodo) {
 		Curso cursoPeriodo;
@@ -94,22 +97,32 @@ public class SCurso {
 		return cursoDAO.findByEstadoStartingWithAllIgnoreCase(valor);
 	}
 
-		
 	/* Servicio que permite buscar un curso de acuerdo al nombre */
 	public List<Curso> buscarPorNombres(String nombre) {
 		List<Curso> cursos;
 		cursos = cursoDAO.findByNombreCursoNombreAllIgnoreCase(nombre);
 		return cursos;
 	}
-	
-	
-	//Buscar ultimo curso registrado
-		public Curso buscarUltimoCurso() {
-			Curso ultimoCurso;
-			ultimoCurso = cursoDAO.findOne(cursoDAO.ultimoCursoRegistrado());
-			return ultimoCurso;
-		}
-	
 
+	// Buscar ultimo curso registrado
+	public Curso buscarUltimoCurso() {
+		Curso ultimoCurso;
+		ultimoCurso = cursoDAO.findOne(cursoDAO.ultimoCursoRegistrado());
+		return ultimoCurso;
+	}
+
+	public List<Curso> buscarDisponibles(List<EmpleadoCurso> cursosEmpleado) {
+		List<String> ordenar = new ArrayList<String>();
+		List<Integer> ids = new ArrayList<Integer>();
+		ordenar.add("periodoFechaInicio");
+		ordenar.add("nombreCursoNombre");
+		Sort o = new Sort(Sort.Direction.ASC, ordenar);
+		if (cursosEmpleado.isEmpty())
+			return cursoDAO.findAll(o);
+		for (int i = 0; i < cursosEmpleado.size(); i++) {
+			ids.add(cursosEmpleado.get(i).getCurso().getId());
+		}
+		return cursoDAO.findByIdNotIn(ids, o);
+	}
 
 }

@@ -88,8 +88,6 @@ public class CControlAsistencia extends CGenerico {
 
 		if (idPeriodo != 0) {
 
-			Periodo periodo = servicioPeriodo.buscarPeriodo(idPeriodo);
-
 			final List<Curso> listCurso = servicioCurso.buscarTodos();
 			catalogoCurso = new Catalogo<Curso>(divCatalogoCurso,
 					"Catalogo de Cursos", listCurso, true, false, false,

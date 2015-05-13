@@ -40,6 +40,12 @@ public class CCargo extends CGenerico {
 	@Wire
 	private Textbox txtDescripcionCargo;
 	@Wire
+	private Textbox txtNivel;
+	@Wire
+	private Textbox txtIdioma;
+	@Wire
+	private Textbox txtObservaciones;
+	@Wire
 	private Textbox txtNominaCargo;
 	@Wire
 	private Textbox txtCargoAuxiliarCargo;
@@ -86,6 +92,18 @@ public class CCargo extends CGenerico {
 						idCargo = cargo.getId();
 						txtDescripcionCargo.setValue(cargo.getDescripcion());
 						txtNominaCargo.setValue(cargo.getNomina());
+						if (cargo.getIdioma() != null)
+							txtIdioma.setValue(cargo.getIdioma());
+						else
+							txtIdioma.setValue("");
+						if (cargo.getNivelAcademico() != null)
+							txtNivel.setValue(cargo.getNivelAcademico());
+						else
+							txtNivel.setValue("");
+						if (cargo.getObservaciones() != null)
+							txtObservaciones.setValue(cargo.getObservaciones());
+						else
+							txtObservaciones.setValue("");
 						txtCargoAuxiliarCargo.setValue(cargo
 								.getIdCargoAuxiliar());
 						txtEmpresaAuxiliarCargo.setValue(cargo
@@ -111,6 +129,9 @@ public class CCargo extends CGenerico {
 					Cargo cargo = new Cargo(idCargo, descripcion,
 							fechaAuditoria, horaAuditoria, idCargoAuxiliar,
 							idEmpresaAuxiliar, nomina, usuario);
+					cargo.setIdioma(txtIdioma.getValue());
+					cargo.setObservaciones(txtObservaciones.getValue());
+					cargo.setNivelAcademico(txtNivel.getValue());
 					servicioCargo.guardar(cargo);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
@@ -131,7 +152,7 @@ public class CCargo extends CGenerico {
 			@Override
 			public void salir() {
 				// TODO Auto-generated method stub
-				cerrarVentana2(wdwVCargo, titulo,tabs);
+				cerrarVentana2(wdwVCargo, titulo, tabs);
 			}
 
 			@Override
@@ -156,7 +177,8 @@ public class CCargo extends CGenerico {
 													servicioCargo
 															.eliminarVariosCargos(eliminarLista);
 													msj.mensajeInformacion(Mensaje.eliminado);
-													listaGeneral = servicioCargo.buscarTodos();
+													listaGeneral = servicioCargo
+															.buscarTodos();
 													catalogo.actualizarLista(listaGeneral);
 												}
 											}
@@ -179,7 +201,8 @@ public class CCargo extends CGenerico {
 															.eliminarUnCargo(idCargo);
 													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													listaGeneral = servicioCargo.buscarTodos();
+													listaGeneral = servicioCargo
+															.buscarTodos();
 													catalogo.actualizarLista(listaGeneral);
 													abrirCatalogo();
 												}
@@ -195,26 +218,26 @@ public class CCargo extends CGenerico {
 			public void buscar() {
 				// TODO Auto-generated method stub
 				abrirCatalogo();
-				
+
 			}
 
 			@Override
 			public void annadir() {
 				abrirRegistro();
 				mostrarBotones(false);
-				
+
 			}
 
 			@Override
 			public void reporte() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void ayuda() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 		};
@@ -235,14 +258,19 @@ public class CCargo extends CGenerico {
 		txtEmpresaAuxiliarCargo.setValue("");
 		catalogo.limpiarSeleccion();
 		txtDescripcionCargo.setFocus(true);
-
+		txtIdioma.setValue("");
+		txtNivel.setValue("");
+		txtObservaciones.setValue("");
 	}
 
 	public boolean camposEditando() {
 		if (txtDescripcionCargo.getText().compareTo("") != 0
 				|| txtNominaCargo.getText().compareTo("") != 0
 				|| txtCargoAuxiliarCargo.getText().compareTo("") != 0
-				|| txtEmpresaAuxiliarCargo.getText().compareTo("") != 0) {
+				|| txtEmpresaAuxiliarCargo.getText().compareTo("") != 0
+				|| txtIdioma.getText().compareTo("") != 0
+				|| txtNivel.getText().compareTo("") != 0
+				|| txtObservaciones.getText().compareTo("") != 0) {
 			return true;
 		} else
 			return false;
@@ -325,17 +353,15 @@ public class CCargo extends CGenerico {
 		botonera.getChildren().get(2).setVisible(bol);
 		botonera.getChildren().get(4).setVisible(bol);
 		botonera.getChildren().get(8).setVisible(false);
-		
 
 	}
-
 
 	public void mostrarCatalogo() {
 
 		listaGeneral = servicioCargo.buscarTodos();
 		catalogo = new Catalogo<Cargo>(catalogoCargo, "Catalogo de Cargos",
-				listaGeneral,false,false,false, "Descripción", "Nómina", "Cargo Auxiliar",
-				"Empresa Auxiliar") {
+				listaGeneral, false, false, false, "Descripción", "Nómina",
+				"Cargo Auxiliar", "Empresa Auxiliar") {
 
 			@Override
 			protected List<Cargo> buscar(List<String> valores) {
@@ -343,7 +369,7 @@ public class CCargo extends CGenerico {
 
 				for (Cargo cargo : listaGeneral) {
 					if (cargo.getDescripcion().toLowerCase()
-									.contains(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& cargo.getNomina().toLowerCase()
 									.contains(valores.get(1).toLowerCase())
 							&& cargo.getIdCargoAuxiliar().toLowerCase()
