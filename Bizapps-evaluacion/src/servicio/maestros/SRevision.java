@@ -4,8 +4,6 @@ import interfacedao.maestros.IRevisionDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Dominio;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 

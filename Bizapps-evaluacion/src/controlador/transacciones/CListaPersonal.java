@@ -15,7 +15,6 @@ import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
-import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 import modelo.maestros.UnidadOrganizativa;
 import modelo.seguridad.Usuario;

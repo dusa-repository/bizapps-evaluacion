@@ -1,17 +1,14 @@
 package servicio.maestros;
 
 import interfacedao.maestros.ICursoDAO;
-import interfacedao.maestros.IAreaDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Curso;
-import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.NombreCurso;
 import modelo.maestros.Periodo;
-import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

@@ -1,10 +1,9 @@
 package modelo.pk;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import modelo.maestros.Cargo;
-import modelo.maestros.Competencia;
+import javax.persistence.Embeddable;
+
 import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Evaluacion;
 

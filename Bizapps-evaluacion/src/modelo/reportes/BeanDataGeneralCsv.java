@@ -1,6 +1,5 @@
 package modelo.reportes;
 
-import java.math.BigDecimal;
 
 public class BeanDataGeneralCsv {
 	

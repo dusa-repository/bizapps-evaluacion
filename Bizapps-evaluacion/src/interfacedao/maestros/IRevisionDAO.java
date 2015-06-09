@@ -7,7 +7,6 @@ import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface IRevisionDAO extends JpaRepository<Revision, Integer> {
 

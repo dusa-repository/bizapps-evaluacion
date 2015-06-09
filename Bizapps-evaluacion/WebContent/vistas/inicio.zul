@@ -1,7 +1,34 @@
 <?page id="mainPage" title="GDE" contentType="text/html;charset=utf-8"?>
-<zk>
+<zk><style>
+		.z-tree-icon .z-tree-open {
+		background-image:
+		url('../public/imagenes/generales/carpetaCerrada.png');
+		background-repeat:no-repeat;
+		background-size: cover;
+		width: 100%;
+		}
+
+		.z-tree-icon
+		.z-tree-close {
+		background-image:
+		url('../public/imagenes/generales/carpetaAbierta.png');
+		background-repeat:no-repeat;
+		background-size: cover;
+		width: 100%;
+		}
+		/*remove the font awesome icon*/
+		.z-tree-icon .z-tree-open::before,
+		.z-tree-icon .z-tree-close::before {
+		content: '';
+		} 
+          
+		span.z-tree-spacer:nth-last-child(2):before {
+		        font-family: fontawesome;
+			content: url('../public/imagenes/generales/hoja.png');;
+		}
+	</style>
 	<style src="../public/Estilo.css" />
-	<script src="/public/progress.js" />
+	<script src="../public/progress.js" />
 	<window id="wdwIndex" title="" height="100%" width="100%"
 		border="0" apply="arbol.CArbol">
 		<borderlayout height="100%" style="background-color:#fff;">
@@ -63,7 +90,7 @@
 			</north>
 			<west title="Menú" id="west" size="19%" splittable="true"
 				collapsible="true" autoscroll="true">
-				<tree id="arbolMenu" width="99%" zclass="z-vfiletree">
+				<tree id="arbolMenu" width="99%">
 					<template name="model">
 						<treeitem context="menupopup">
 							<treerow>

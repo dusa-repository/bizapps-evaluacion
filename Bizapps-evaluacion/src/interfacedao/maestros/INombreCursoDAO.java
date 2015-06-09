@@ -1,9 +1,6 @@
 package interfacedao.maestros;
 
-import java.util.List;
-
 import modelo.maestros.Area;
-import modelo.maestros.Curso;
 import modelo.maestros.NombreCurso;
 
 import org.springframework.data.jpa.repository.JpaRepository;

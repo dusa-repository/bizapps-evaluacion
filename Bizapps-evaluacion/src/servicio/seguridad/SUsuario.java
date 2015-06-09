@@ -1,8 +1,9 @@
 package servicio.seguridad;
 
+import interfacedao.seguridad.IUsuarioDAO;
+
 import java.util.List;
 
-import interfacedao.seguridad.IUsuarioDAO;
 import modelo.seguridad.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,16 @@ public class SUsuario {
 
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
-	
+
 	@Transactional
 	public Usuario buscarUsuarioPorId(long codigo) {
 		return usuarioDAO.findOne(codigo);
 	}
-	
-	@Transactional
-	public Usuario buscarUsuarioPorId(String id) {
-		return usuarioDAO.findByCedula(id);
-	}
+
+	// @Transactional
+	// public Usuario buscarUsuarioPorId(String id) {
+	// return usuarioDAO.findByCedula(id);
+	// }
 
 	public void guardar(Usuario usuario) {
 		usuarioDAO.save(usuario);
@@ -51,11 +52,9 @@ public class SUsuario {
 		return usuarioDAO.findByCedulaStartingWithAllIgnoreCase(valor);
 	}
 
-	
-
-	public List<Usuario> filtroLogin(String valor) {
-		return usuarioDAO.findByLoginStartingWithAllIgnoreCase(valor);
-	}
+	// public List<Usuario> filtroLogin(String valor) {
+	// return usuarioDAO.findByLoginStartingWithAllIgnoreCase(valor);
+	// }
 
 	public Usuario buscarId(Integer idUsuario) {
 		return usuarioDAO.findByIdUsuario(idUsuario);
@@ -63,6 +62,18 @@ public class SUsuario {
 
 	public Usuario buscarPorCedulayCorreo(String value, String value2) {
 		return usuarioDAO.findByCedulaAndEmail(value, value2);
+	}
+
+	public void eliminarVarios(List<Usuario> eliminarLista) {
+		usuarioDAO.delete(eliminarLista);
+	}
+
+	public Usuario buscarFicha(String idUsuario) {
+		List<Usuario> lista = usuarioDAO.findByFicha(idUsuario);
+		if (!lista.isEmpty())
+			return lista.get(0);
+		else
+			return null;
 	}
 
 }

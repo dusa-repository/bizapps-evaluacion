@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Address;
 import javax.mail.Authenticator;
@@ -18,6 +19,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import modelo.seguridad.Usuario;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -35,8 +38,11 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Window;
 
-import componentes.Mensaje;
-import arbol.CArbol;
+import security.modelo.Grupo;
+import security.modelo.UsuarioSeguridad;
+import security.servicio.SArbol;
+import security.servicio.SGrupo;
+import security.servicio.SUsuarioSeguridad;
 import servicio.maestros.SActividad;
 import servicio.maestros.SArea;
 import servicio.maestros.SCargo;
@@ -65,8 +71,6 @@ import servicio.maestros.SUnidadOrganizativa;
 import servicio.maestros.SUrgencia;
 import servicio.maestros.SValoracion;
 import servicio.reportes.SReporte;
-import servicio.seguridad.SArbol;
-import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 import servicio.transacciones.SActividadCurso;
 import servicio.transacciones.SBitacora;
@@ -83,6 +87,7 @@ import servicio.transacciones.SEvaluacionIndicador;
 import servicio.transacciones.SEvaluacionObjetivo;
 import servicio.transacciones.SNivelCompetenciaCargo;
 import servicio.transacciones.SUtilidad;
+import componentes.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public abstract class CGenerico extends SelectorComposer<Component> {
@@ -93,6 +98,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SArbol servicioArbol;
 	@WireVariable("SGrupo")
 	protected SGrupo servicioGrupo;
+	@WireVariable("SUsuarioSeguridad")
+	protected SUsuarioSeguridad servicioUsuarioSeguridad;
 	@WireVariable("SUsuario")
 	protected SUsuario servicioUsuario;
 	@WireVariable("SEmpleado")
@@ -371,6 +378,26 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 				tabs.get(i).onClose();
 				tabs.remove(i);
 			}
+		}
+	}
+
+	public void guardarDatosSeguridad(Usuario usuarioLogica,
+			Set<Grupo> gruposUsuario) {
+		UsuarioSeguridad usuario = new UsuarioSeguridad(
+				usuarioLogica.getLogin(), usuarioLogica.getEmail(),
+				usuarioLogica.getPassword(), usuarioLogica.getImagen(), true,
+				usuarioLogica.getNombre(),
+				usuarioLogica.getApellido(), fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), gruposUsuario);
+		servicioUsuarioSeguridad.guardar(usuario);
+	}
+
+	public void inhabilitarSeguridad(List<Usuario> list) {
+		for (int i = 0; i < list.size(); i++) {
+			UsuarioSeguridad usuario = servicioUsuarioSeguridad
+					.buscarPorLogin(list.get(i).getLogin());
+			usuario.setEstado(false);
+			servicioUsuarioSeguridad.guardar(usuario);
 		}
 	}
 }

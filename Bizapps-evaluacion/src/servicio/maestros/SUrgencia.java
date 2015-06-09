@@ -1,12 +1,9 @@
 package servicio.maestros;
 
-import interfacedao.maestros.ICargoDAO;
 import interfacedao.maestros.IUrgenciaDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Dominio;
 import modelo.maestros.Urgencia;
 
 import org.springframework.beans.factory.annotation.Autowired;

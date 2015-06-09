@@ -1,16 +1,11 @@
 package servicio.maestros;
 
-import interfacedao.maestros.ICursoDAO;
-import interfacedao.maestros.IAreaDAO;
 import interfacedao.maestros.INombreCursoDAO;
 
 import java.util.List;
 
 import modelo.maestros.Area;
-import modelo.maestros.Curso;
-import modelo.maestros.Empleado;
 import modelo.maestros.NombreCurso;
-import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

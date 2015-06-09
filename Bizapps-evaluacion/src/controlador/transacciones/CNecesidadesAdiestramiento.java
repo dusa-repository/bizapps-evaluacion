@@ -29,6 +29,7 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CNecesidadesAdiestramiento extends CGenerico {

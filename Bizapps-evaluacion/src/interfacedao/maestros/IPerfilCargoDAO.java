@@ -6,7 +6,6 @@ import modelo.maestros.Cargo;
 import modelo.maestros.PerfilCargo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface IPerfilCargoDAO extends JpaRepository<PerfilCargo, Integer> {
 

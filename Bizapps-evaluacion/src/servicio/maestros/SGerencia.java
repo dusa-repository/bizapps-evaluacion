@@ -4,8 +4,6 @@ import interfacedao.maestros.IGerenciaDAO;
 
 import java.util.List;
 
-import modelo.maestros.Cargo;
-import modelo.maestros.Dominio;
 import modelo.maestros.Gerencia;
 
 import org.springframework.beans.factory.annotation.Autowired;

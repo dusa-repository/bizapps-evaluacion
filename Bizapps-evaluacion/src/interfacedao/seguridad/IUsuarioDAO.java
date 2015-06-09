@@ -2,7 +2,6 @@ package interfacedao.seguridad;
 
 import java.util.List;
 
-import modelo.maestros.Empleado;
 import modelo.seguridad.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +23,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Long> {
 	Usuario findByIdUsuario(Integer idUsuario);
 
 	Usuario findByCedulaAndEmail(String value, String value2);
+
+	List<Usuario> findByFicha(String idUsuario);
 }

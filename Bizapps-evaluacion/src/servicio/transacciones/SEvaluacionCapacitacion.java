@@ -1,15 +1,10 @@
 package servicio.transacciones;
 
-import interfacedao.maestros.ICargoDAO;
-import interfacedao.maestros.ITipoFormacionDAO;
 import interfacedao.transacciones.IEvaluacionCapacitacionDAO;
-import interfacedao.transacciones.IEvaluacionObjetivoDAO;
 
 import java.util.List;
 
 import modelo.maestros.EvaluacionCapacitacion;
-import modelo.maestros.EvaluacionObjetivo;
-import modelo.maestros.TipoFormacion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

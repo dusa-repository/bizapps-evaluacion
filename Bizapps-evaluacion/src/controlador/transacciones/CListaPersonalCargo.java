@@ -14,7 +14,6 @@ import modelo.maestros.EvaluacionCompetencia;
 import modelo.maestros.EvaluacionConducta;
 import modelo.maestros.EvaluacionIndicador;
 import modelo.maestros.EvaluacionObjetivo;
-import modelo.maestros.NivelCompetenciaCargo;
 import modelo.maestros.Revision;
 import modelo.maestros.UnidadOrganizativa;
 import modelo.seguridad.Usuario;
@@ -26,18 +25,17 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Include;
-import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
-import controlador.maestros.CGenerico;
+
 import componentes.Mensaje;
+
+import controlador.maestros.CGenerico;
 
 public class CListaPersonalCargo extends CGenerico {
 

@@ -1,8 +1,6 @@
 package servicio.transacciones;
 
 import interfacedao.transacciones.IEmpleadoCursoDAO;
-import interfacedao.transacciones.IEvaluacionDAO;
-import interfacedao.transacciones.INivelCompetenciaCargoDAO;
 
 import java.util.List;
 

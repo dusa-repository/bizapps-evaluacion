@@ -1,6 +1,5 @@
 package servicio.maestros;
 
-import interfacedao.maestros.IAreaDAO;
 import interfacedao.maestros.IValoracionDAO;
 
 import java.util.List;

@@ -1,10 +1,9 @@
 package servicio.maestros;
 
 import interfacedao.maestros.IMedicionDAO;
+
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Gerencia;
 import modelo.maestros.Medicion;
 
 import org.springframework.beans.factory.annotation.Autowired;

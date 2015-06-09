@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -11,16 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
-import java.io.File;
-
-import jxl.*;
+import jxl.Sheet;
+import jxl.Workbook;
 import jxl.read.biff.BiffException;
-
 import modelo.beans.BeanCapacitacionRequerida;
-import modelo.maestros.Actividad;
-import modelo.maestros.ActividadCurso;
 import modelo.maestros.Area;
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
@@ -28,23 +24,18 @@ import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.NombreCurso;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
-import modelo.seguridad.Arbol;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.springframework.data.jpa.repository.Query;
-import org.zkoss.io.Files;
 import org.zkoss.util.media.Media;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Groupbox;
@@ -61,14 +52,15 @@ import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
 
+import security.modelo.Arbol;
 import arbol.CArbol;
 
 import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CGestionarAdiestramiento extends CGenerico {
@@ -367,7 +359,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 				map.put("lineasInvalidas", lineasInvalidas);
 				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 				List<Arbol> arboles = servicioArbol
-						.buscarPorArbolPorNombre("Resultado Importacion");
+						.buscarPorNombreArbol("Resultado Importacion");
 				if (!arboles.isEmpty()) {
 					Arbol arbolItem = arboles.get(0);
 					cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,
@@ -482,7 +474,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 				map.put("lineasInvalidas", lineasInvalidas);
 				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
 				List<Arbol> arboles = servicioArbol
-						.buscarPorArbolPorNombre("Resultado Importacion");
+						.buscarPorNombreArbol("Resultado Importacion");
 				if (!arboles.isEmpty()) {
 					Arbol arbolItem = arboles.get(0);
 					cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,

@@ -7,26 +7,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import modelo.maestros.Actividad;
-import modelo.maestros.ActividadCurso;
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.EmpleadoItem;
 import modelo.maestros.ItemEvaluacion;
-import modelo.maestros.Parametro;
-import modelo.maestros.PerfilCargo;
-import modelo.maestros.Periodo;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
-import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -34,13 +27,13 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
-import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CEvaluacionEficacia extends CGenerico {

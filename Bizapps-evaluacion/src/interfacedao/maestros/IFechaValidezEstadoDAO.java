@@ -4,7 +4,6 @@ package interfacedao.maestros;
 import java.sql.Timestamp;
 import java.util.List;
 
-import modelo.maestros.Actividad;
 import modelo.maestros.FechaValidezEstado;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,14 +1,11 @@
 package servicio.transacciones;
 
 import interfacedao.transacciones.IActividadCursoDAO;
-import interfacedao.transacciones.IEmpleadoClaseDAO;
 
 import java.util.List;
 
-
 import modelo.maestros.ActividadCurso;
 import modelo.maestros.Curso;
-import modelo.maestros.EmpleadoCurso;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

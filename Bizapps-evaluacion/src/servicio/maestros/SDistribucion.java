@@ -5,7 +5,6 @@ import interfacedao.maestros.IDistribucionDAO;
 import java.util.List;
 
 import modelo.maestros.Distribucion;
-import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

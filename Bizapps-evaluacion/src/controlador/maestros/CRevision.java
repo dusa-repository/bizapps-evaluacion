@@ -1,7 +1,6 @@
 package controlador.maestros;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,11 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Empleado;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
-import modelo.maestros.TipoFormacion;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -21,9 +17,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
-import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;

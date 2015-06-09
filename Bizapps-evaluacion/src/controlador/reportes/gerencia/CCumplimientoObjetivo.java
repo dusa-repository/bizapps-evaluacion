@@ -1,7 +1,6 @@
 package controlador.reportes.gerencia;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,15 +10,10 @@ import modelo.maestros.Empresa;
 import modelo.maestros.Gerencia;
 import modelo.maestros.Revision;
 import modelo.maestros.UnidadOrganizativa;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.zkoss.chart.Charts;
-import org.zkoss.chart.Legend;
 import org.zkoss.chart.Tooltip;
-
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;

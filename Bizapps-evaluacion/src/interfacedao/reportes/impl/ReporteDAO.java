@@ -2,10 +2,6 @@ package interfacedao.reportes.impl;
 
 import interfacedao.reportes.IReporteDAO;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +9,6 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 
 import modelo.reportes.BeanDataGeneralCsv;
 

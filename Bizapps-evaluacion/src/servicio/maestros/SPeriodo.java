@@ -4,11 +4,7 @@ import interfacedao.maestros.IPeriodoDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Cargo;
-import modelo.maestros.Dominio;
 import modelo.maestros.Periodo;
-import modelo.maestros.Revision;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

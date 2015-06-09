@@ -12,8 +12,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import modelo.maestros.Revision;
-import modelo.seguridad.Arbol;
-import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
@@ -41,9 +39,12 @@ import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.West;
 
-import controlador.maestros.CGenerico;
+import security.modelo.Arbol;
+import security.modelo.Grupo;
+import security.modelo.UsuarioSeguridad;
 import componentes.Mensaje;
 import componentes.Validador;
+import controlador.maestros.CGenerico;
 
 public class CArbol extends CGenerico {
 
@@ -80,7 +81,8 @@ public class CArbol extends CGenerico {
 		Clients.confirmClose("Mensaje de la Aplicacion:");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(auth.getName());
+		UsuarioSeguridad u = servicioUsuarioSeguridad.buscarPorLogin(auth
+				.getName());
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
 		if (u.getImagen() == null) {
@@ -106,10 +108,10 @@ public class CArbol extends CGenerico {
 			}
 		}
 		
-		
+		Usuario user = servicioUsuario.buscarUsuarioPorNombre(u.getLogin());
 		String nombre = u.getNombre();
 		String apellido = u.getApellido();
-		String cedula = u.getCedula();
+		String cedula = user.getCedula();
 		String usuario = "(" + cedula + ")" + "   " + nombre + " " + apellido;   
 		lblUsuario.setValue(usuario);
 		arbolMenu.setModel(getModel());

@@ -5,12 +5,9 @@ import java.util.List;
 import modelo.maestros.Competencia;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.EvaluacionCompetencia;
-import modelo.maestros.EvaluacionConducta;
-import modelo.maestros.EvaluacionObjetivo;
 import modelo.pk.EvaluacionCompetenciaPK;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface IEvaluacionCompetenciaDAO extends
 		JpaRepository<EvaluacionCompetencia, EvaluacionCompetenciaPK> {

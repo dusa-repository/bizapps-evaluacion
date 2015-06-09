@@ -1,11 +1,6 @@
 package controlador.transacciones;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,7 +10,6 @@ import java.util.List;
 
 import modelo.maestros.Area;
 import modelo.maestros.Bitacora;
-import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 import modelo.maestros.ConfiguracionGeneral;
 import modelo.maestros.Distribucion;
@@ -34,16 +28,11 @@ import modelo.maestros.Perspectiva;
 import modelo.maestros.Revision;
 import modelo.maestros.TipoFormacion;
 import modelo.maestros.UnidadMedida;
-import modelo.maestros.UnidadOrganizativa;
 import modelo.maestros.Urgencia;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.zkoss.bind.Binder;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -64,10 +53,6 @@ import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-
-import servicio.maestros.SEmpleado;
-import servicio.seguridad.SUsuario;
-import servicio.transacciones.SEvaluacion;
 
 import componentes.Mensaje;
 

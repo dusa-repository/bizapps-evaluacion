@@ -1,12 +1,10 @@
 package servicio.transacciones;
 
 
-import interfacedao.maestros.ICompetenciaDAO;
 import interfacedao.transacciones.IConductaCompetenciaDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
 import modelo.maestros.Competencia;
 import modelo.maestros.ConductaCompetencia;
 import modelo.maestros.Dominio;

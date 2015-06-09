@@ -1,7 +1,8 @@
 package modelo.pk;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Embeddable;
 
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;

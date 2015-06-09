@@ -1,17 +1,13 @@
 package servicio.transacciones;
 
 
-import interfacedao.transacciones.IEvaluacionDAO;
 import interfacedao.transacciones.INivelCompetenciaCargoDAO;
 
 import java.util.List;
 
 import modelo.maestros.Cargo;
 import modelo.maestros.Dominio;
-import modelo.maestros.Empleado;
-import modelo.maestros.Evaluacion;
 import modelo.maestros.NivelCompetenciaCargo;
-import modelo.seguridad.Arbol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

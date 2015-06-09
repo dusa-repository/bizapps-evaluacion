@@ -1,16 +1,10 @@
 package servicio.maestros;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import interfacedao.maestros.IConfiguracionGeneralDAO;
 import interfacedao.maestros.IErrorInterfazDAO;
 
-import modelo.maestros.Actividad;
-import modelo.maestros.Area;
-import modelo.maestros.Clase;
-import modelo.maestros.ConfiguracionGeneral;
+import java.util.List;
+
 import modelo.maestros.ErrorInterfaz;
 
 import org.springframework.beans.factory.annotation.Autowired;

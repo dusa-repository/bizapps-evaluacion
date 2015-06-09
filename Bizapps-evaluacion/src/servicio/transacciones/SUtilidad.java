@@ -1,15 +1,13 @@
 package servicio.transacciones;
 
-import java.util.List;
-import java.util.Map;
-
-import interfacedao.reportes.IReporteDAO;
 import interfacedao.transacciones.IUtilidadDAO;
+
+import java.util.List;
+
+import modelo.beans.BeanCapacitacionRequerida;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.zkoss.chart.model.CategoryModel;
-import modelo.beans.BeanCapacitacionRequerida;
 
 @Service
 public class SUtilidad {

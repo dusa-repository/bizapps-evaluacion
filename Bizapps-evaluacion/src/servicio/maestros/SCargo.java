@@ -4,7 +4,6 @@ import interfacedao.maestros.ICargoDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
 import modelo.maestros.Cargo;
 
 import org.springframework.beans.factory.annotation.Autowired;

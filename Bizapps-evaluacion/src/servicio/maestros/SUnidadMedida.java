@@ -1,11 +1,9 @@
 package servicio.maestros;
 
 import interfacedao.maestros.IUnidadMedidaDAO;
+
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Dominio;
-import modelo.maestros.Perspectiva;
 import modelo.maestros.UnidadMedida;
 
 import org.springframework.beans.factory.annotation.Autowired;

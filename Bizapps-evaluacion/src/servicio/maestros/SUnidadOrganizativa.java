@@ -4,9 +4,6 @@ import interfacedao.maestros.IUnidadOrganizativaDAO;
 
 import java.util.List;
 
-import modelo.maestros.Area;
-import modelo.maestros.Dominio;
-import modelo.maestros.Empresa;
 import modelo.maestros.UnidadOrganizativa;
 
 import org.springframework.beans.factory.annotation.Autowired;

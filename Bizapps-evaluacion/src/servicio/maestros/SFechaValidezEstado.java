@@ -1,15 +1,11 @@
 package servicio.maestros;
 
-import interfacedao.maestros.IActividadDAO;
-import interfacedao.maestros.IAreaDAO;
 import interfacedao.maestros.IFechaValidezEstadoDAO;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import modelo.maestros.Actividad;
 import modelo.maestros.FechaValidezEstado;
-import modelo.seguridad.Grupo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

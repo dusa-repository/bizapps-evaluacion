@@ -5,7 +5,6 @@ import interfacedao.transacciones.IUtilidadDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

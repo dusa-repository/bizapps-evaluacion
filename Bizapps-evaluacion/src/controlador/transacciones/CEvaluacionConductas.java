@@ -1,7 +1,6 @@
 package controlador.transacciones;
 
 import java.io.IOException;
-import org.zkoss.zul.Label;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +14,15 @@ import modelo.maestros.EvaluacionConducta;
 import modelo.pk.EvaluacionCompetenciaPK;
 import modelo.pk.EvaluacionConductaPK;
 import modelo.seguridad.Usuario;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -31,8 +31,9 @@ import org.zkoss.zul.Panel;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import controlador.maestros.CGenerico;
 import componentes.Mensaje;
+
+import controlador.maestros.CGenerico;
 
 public class CEvaluacionConductas extends CGenerico {
 

@@ -5,20 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import modelo.maestros.Actividad;
-import modelo.maestros.ActividadCurso;
 import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
-import modelo.maestros.PerfilCargo;
-import modelo.maestros.Periodo;
-import modelo.seguridad.Arbol;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Include;
@@ -31,10 +25,12 @@ import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import security.modelo.Arbol;
 import arbol.CArbol;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CBuscarEvaluacionSatisfaccion extends CGenerico {
@@ -123,8 +119,7 @@ public class CBuscarEvaluacionSatisfaccion extends CGenerico {
 						map.put("idEmpleado", idEmpleado);
 						Sessions.getCurrent()
 								.setAttribute("itemsCatalogo", map);
-						List<Arbol> arboles = servicioArbol
-								.buscarPorArbolPorNombre("Evaluacion de Satisfacion");
+						List<Arbol> arboles = servicioArbol.buscarPorNombreArbol("Evaluacion de Satisfacion");
 						if (!arboles.isEmpty()) {
 							Arbol arbolItem = arboles.get(0);
 							cArbol.abrirVentanas(arbolItem, tabBox, contenido,

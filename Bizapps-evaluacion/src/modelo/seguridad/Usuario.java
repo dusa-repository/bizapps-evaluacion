@@ -1,9 +1,17 @@
 package modelo.seguridad;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 
-import org.hibernate.annotations.Type;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
@@ -13,23 +21,24 @@ import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
 import modelo.maestros.UnidadOrganizativa;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
-
+import org.hibernate.annotations.Type;
 
 /**
  * The persistent class for the usuario database table.
  * 
  */
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_usuario")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_usuario")
 	private int idUsuario;
+	
+	@Column(name = "id_rol")
+	private int idRol;
 
 	private String apellido;
 
@@ -37,73 +46,76 @@ public class Usuario implements Serializable {
 
 	private String email;
 
-	@Column(name="fecha_auditoria")
+	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
-	@Column(name="hora_auditoria")
+	@Column(name = "hora_auditoria")
 	private String horaAuditoria;
-
-	@Column(name="id_rol")
-	private int idRol;
 
 	private String login;
 
 	private String nombre;
 
 	private String password;
-	
 
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean estado;
 
-	//bi-directional many-to-one association to Cargo
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Cargo
+	@OneToMany(mappedBy = "usuario")
 	private List<Cargo> cargos;
 
-	//bi-directional many-to-one association to Competencia
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Competencia
+	@OneToMany(mappedBy = "usuario")
 	private List<Competencia> competencias;
 
-	//bi-directional many-to-one association to Empresa
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Empresa
+	@OneToMany(mappedBy = "usuario")
 	private List<Empresa> empresas;
 
-	//bi-directional many-to-one association to Gerencia
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Gerencia
+	@OneToMany(mappedBy = "usuario")
 	private List<Gerencia> gerencias;
 
-	//bi-directional many-to-one association to Periodo
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Periodo
+	@OneToMany(mappedBy = "usuario")
 	private List<Periodo> periodos;
 
-	//bi-directional many-to-one association to Revision
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Revision
+	@OneToMany(mappedBy = "usuario")
 	private List<Revision> revisions;
 
-	//bi-directional many-to-one association to UnidadOrganizativa
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to UnidadOrganizativa
+	@OneToMany(mappedBy = "usuario")
 	private List<UnidadOrganizativa> unidadOrganizativas;
 
 	@Lob
 	private byte[] imagen;
-	
-	@ManyToMany
-	@JoinTable(
-		name="grupo_usuario"
-		, joinColumns={
-			@JoinColumn(name="id_usuario", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_grupo", nullable=false)
-			}
-		)
-	private Set<Grupo> grupos;
+
+	public Usuario(int idUsuario, String apellido, String cedula, String email,
+			Timestamp fechaAuditoria, String horaAuditoria, String login,
+			String nombre, String password, boolean estado, byte[] imagen,
+			String ficha) {
+		super();
+		this.idUsuario = idUsuario;
+		this.apellido = apellido;
+		this.cedula = cedula;
+		this.email = email;
+		this.fechaAuditoria = fechaAuditoria;
+		this.horaAuditoria = horaAuditoria;
+		this.login = login;
+		this.nombre = nombre;
+		this.password = password;
+		this.estado = estado;
+		this.imagen = imagen;
+		this.ficha = ficha;
+	}
+
 	public Usuario() {
 	}
-	
-	@Column(name="ficha")
-	private String ficha;
 
+	@Column(name = "ficha")
+	private String ficha;
 
 	public String getFicha() {
 		return ficha;
@@ -145,6 +157,14 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
+	public int getIdRol() {
+		return idRol;
+	}
+
+	public void setIdRol(int idRol) {
+		this.idRol = idRol;
+	}
+
 	public Timestamp getFechaAuditoria() {
 		return this.fechaAuditoria;
 	}
@@ -159,14 +179,6 @@ public class Usuario implements Serializable {
 
 	public void setHoraAuditoria(String horaAuditoria) {
 		this.horaAuditoria = horaAuditoria;
-	}
-
-	public int getIdRol() {
-		return this.idRol;
-	}
-
-	public void setIdRol(int idRol) {
-		this.idRol = idRol;
 	}
 
 	public String getLogin() {
@@ -201,14 +213,6 @@ public class Usuario implements Serializable {
 		this.estado = estado;
 	}
 
-	public Set<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(Set<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
 	public List<Cargo> getCargos() {
 		return this.cargos;
 	}
@@ -219,7 +223,6 @@ public class Usuario implements Serializable {
 
 	public Cargo addCargo(Cargo cargo) {
 		getCargos().add(cargo);
-		
 
 		return cargo;
 	}
@@ -239,14 +242,12 @@ public class Usuario implements Serializable {
 
 	public Competencia addCompetencia(Competencia competencia) {
 		getCompetencias().add(competencia);
-	
 
 		return competencia;
 	}
 
 	public Competencia removeCompetencia(Competencia competencia) {
 		getCompetencias().remove(competencia);
-	
 
 		return competencia;
 	}
@@ -262,13 +263,11 @@ public class Usuario implements Serializable {
 	public Empresa addEmpresa(Empresa empresa) {
 		getEmpresas().add(empresa);
 
-
 		return empresa;
 	}
 
 	public Empresa removeEmpresa(Empresa empresa) {
 		getEmpresas().remove(empresa);
-	
 
 		return empresa;
 	}
@@ -283,14 +282,12 @@ public class Usuario implements Serializable {
 
 	public Gerencia addGerencia(Gerencia gerencia) {
 		getGerencias().add(gerencia);
-	
 
 		return gerencia;
 	}
 
 	public Gerencia removeGerencia(Gerencia gerencia) {
 		getGerencias().remove(gerencia);
-	
 
 		return gerencia;
 	}
@@ -305,14 +302,12 @@ public class Usuario implements Serializable {
 
 	public Periodo addPeriodo(Periodo periodo) {
 		getPeriodos().add(periodo);
-		
 
 		return periodo;
 	}
 
 	public Periodo removePeriodo(Periodo periodo) {
 		getPeriodos().remove(periodo);
-		
 
 		return periodo;
 	}
@@ -327,14 +322,12 @@ public class Usuario implements Serializable {
 
 	public Revision addRevision(Revision revision) {
 		getRevisions().add(revision);
-		
 
 		return revision;
 	}
 
 	public Revision removeRevision(Revision revision) {
 		getRevisions().remove(revision);
-	
 
 		return revision;
 	}
@@ -343,19 +336,21 @@ public class Usuario implements Serializable {
 		return this.unidadOrganizativas;
 	}
 
-	public void setUnidadOrganizativas(List<UnidadOrganizativa> unidadOrganizativas) {
+	public void setUnidadOrganizativas(
+			List<UnidadOrganizativa> unidadOrganizativas) {
 		this.unidadOrganizativas = unidadOrganizativas;
 	}
 
-	public UnidadOrganizativa addUnidadOrganizativa(UnidadOrganizativa unidadOrganizativa) {
+	public UnidadOrganizativa addUnidadOrganizativa(
+			UnidadOrganizativa unidadOrganizativa) {
 		getUnidadOrganizativas().add(unidadOrganizativa);
-	
+
 		return unidadOrganizativa;
 	}
 
-	public UnidadOrganizativa removeUnidadOrganizativa(UnidadOrganizativa unidadOrganizativa) {
+	public UnidadOrganizativa removeUnidadOrganizativa(
+			UnidadOrganizativa unidadOrganizativa) {
 		getUnidadOrganizativas().remove(unidadOrganizativa);
-		
 
 		return unidadOrganizativa;
 	}
@@ -367,7 +362,5 @@ public class Usuario implements Serializable {
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
-	
 
 }

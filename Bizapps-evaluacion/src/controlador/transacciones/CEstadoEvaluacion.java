@@ -1,10 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,28 +10,23 @@ import modelo.maestros.Empresa;
 import modelo.maestros.Evaluacion;
 import modelo.maestros.Gerencia;
 import modelo.maestros.UnidadOrganizativa;
-import modelo.maestros.Valoracion;
 import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
-import org.zkoss.zul.Groupbox;
-import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import componentes.Botonera;
-import componentes.CatalagoN;
 import componentes.Catalogo;
 import componentes.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CEstadoEvaluacion extends CGenerico {

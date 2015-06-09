@@ -1,7 +1,6 @@
 package interfacedao.transacciones;
 
 import java.util.List;
-import java.util.Map;
 
 import modelo.beans.BeanCapacitacionRequerida;
 

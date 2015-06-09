@@ -1,30 +1,21 @@
 package controlador.reportes.evaluacion;
 
-import java.awt.Dimension;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.io.IOException;
 
 import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
-import modelo.seguridad.Usuario;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
-
-import java.util.ResourceBundle;
-
 import controlador.maestros.CGenerico;
 
 public class ReporteBase extends CGenerico {
