@@ -50,8 +50,6 @@ public class CActividad extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		// TODO Auto-generated method stub
-
 		HashMap<String, Object> mapa = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("mapaGeneral");
 		if (mapa != null) {
