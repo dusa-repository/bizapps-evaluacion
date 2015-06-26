@@ -24,7 +24,7 @@ public class SEvaluacionConducta {
 	}
 	
 	public List<EvaluacionConducta> buscarConductas (Integer id){
-		return evaluacionConductaDAO.findByEvaluacionIdEvaluacion(id);
+		return evaluacionConductaDAO.findByIdEvaluacionIdEvaluacion(id);
 	}
 
 	public EvaluacionConducta buscarConducta (Integer id){
@@ -32,15 +32,15 @@ public class SEvaluacionConducta {
 	}
 	
 	public EvaluacionConducta buscar (Evaluacion eva, ConductaCompetencia cc){
-		return evaluacionConductaDAO.findByEvaluacionAndConductaCompetencia(eva, cc);
+		return evaluacionConductaDAO.findByIdEvaluacionAndIdConductaCompetencia(eva, cc);
 	}
 	
 	public List<EvaluacionConducta> buscar (Evaluacion eva, Competencia con){
-		return evaluacionConductaDAO.findByEvaluacionAndCompetencia(eva, con);
+		return evaluacionConductaDAO.findByIdEvaluacionAndCompetencia(eva, con);
 	}
 	
 	public List<EvaluacionConducta> buscar (Evaluacion eva){
-		return evaluacionConductaDAO.findByEvaluacion(eva);
+		return evaluacionConductaDAO.findByIdEvaluacion(eva);
 	}
 		
 

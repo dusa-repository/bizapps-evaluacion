@@ -2,6 +2,7 @@ package modelo.maestros;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,21 +20,11 @@ import modelo.pk.EvaluacionConductaPK;
  */
 @Entity
 @Table(name="evaluacion_conducta")
-@IdClass(EvaluacionConductaPK.class)
 public class EvaluacionConducta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_evaluacion", referencedColumnName = "id_evaluacion")
-	private Evaluacion evaluacion;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_conducta", referencedColumnName = "id_conducta")
-	private ConductaCompetencia conductaCompetencia;
-	
+	@EmbeddedId
+	private  EvaluacionConductaPK id;	
 	
 	@ManyToOne
 	@JoinColumn(name = "id_competencia")
@@ -46,24 +37,13 @@ public class EvaluacionConducta implements Serializable {
 	public EvaluacionConducta() {
 	}
 
-	
-	public Evaluacion getEvaluacion() {
-		return evaluacion;
+	public EvaluacionConductaPK getId() {
+		return id;
 	}
 
 
-	public void setEvaluacion(Evaluacion evaluacion) {
-		this.evaluacion = evaluacion;
-	}
-
-
-	public ConductaCompetencia getConductaCompetencia() {
-		return conductaCompetencia;
-	}
-
-
-	public void setConductaCompetencia(ConductaCompetencia conductaCompetencia) {
-		this.conductaCompetencia = conductaCompetencia;
+	public void setId(EvaluacionConductaPK id) {
+		this.id = id;
 	}
 
 

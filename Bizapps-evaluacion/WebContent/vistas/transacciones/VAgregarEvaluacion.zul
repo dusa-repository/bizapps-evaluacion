@@ -429,9 +429,9 @@
 						</listhead>
 						<template name="model">
 							<listitem>
-								<listcell label="${each.competencia.descripcion}">
+								<listcell label="${each.id.competencia.descripcion}">
 								</listcell>
-								<listcell label="${each.dominio.descripcionDominio}">
+								<listcell label="${each.id.dominio.descripcionDominio}">
 								</listcell>
 								<listcell>
 									<combobox readonly="true" placeholder="Seleccione..."
@@ -488,9 +488,9 @@
 						</listhead>
 						<template name="model">
 							<listitem>
-								<listcell label="${each.competencia.descripcion}">
+								<listcell label="${each.id.competencia.descripcion}">
 								</listcell>
-								<listcell label="${each.dominio.descripcionDominio}">
+								<listcell label="${each.id.dominio.descripcionDominio}">
 								</listcell>
 								<listcell>
 									<combobox readonly="true" placeholder="Seleccione..."

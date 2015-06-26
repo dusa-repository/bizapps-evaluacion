@@ -31,7 +31,7 @@ public class SEmpleadoItem {
 	 */
 	public List<EmpleadoItem> buscarItems(Empleado empleado, Curso curso) {
 		List<EmpleadoItem> items;
-		items = empleadoItemDAO.findByEmpleadoAndCurso(empleado, curso);
+		items = empleadoItemDAO.findByIdEmpleadoAndIdCurso(empleado, curso);
 		return items;
 	}
 

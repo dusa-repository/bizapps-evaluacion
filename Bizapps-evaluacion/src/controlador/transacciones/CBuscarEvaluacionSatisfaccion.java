@@ -230,7 +230,7 @@ public class CBuscarEvaluacionSatisfaccion extends CGenerico {
 					|| empleadoCurso.get(i).getEstadoCurso()
 							.equals("REPROBADO")) {
 
-				Curso curso = empleadoCurso.get(i).getCurso();
+				Curso curso = empleadoCurso.get(i).getId().getCurso();
 				cursos.add(curso);
 
 			}

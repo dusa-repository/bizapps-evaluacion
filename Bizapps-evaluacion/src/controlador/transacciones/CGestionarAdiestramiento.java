@@ -24,6 +24,7 @@ import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.NombreCurso;
 import modelo.maestros.Periodo;
 import modelo.maestros.Revision;
+import modelo.pk.EmpleadoCursoPK;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -56,11 +57,9 @@ import org.zkoss.zul.Window;
 
 import security.modelo.Arbol;
 import arbol.CArbol;
-
 import componentes.Botonera;
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CGestionarAdiestramiento extends CGenerico {
@@ -252,138 +251,21 @@ public class CGestionarAdiestramiento extends CGenerico {
 			ParseException {
 
 		lineasInvalidas = 0;
-		
+
 		periodo = servicioPeriodo.buscarPeriodoActivo();
-		
-		if (periodo!=null)
-		{
-			
-		
-		
 
-		if (mediaAdiestramiento != null) {
+		if (periodo != null) {
 
-			// Pasamos el excel que vamos a leer
-			Workbook workbook = Workbook.getWorkbook(mediaAdiestramiento
-					.getStreamData());
-			// Seleccionamos la hoja que vamos a leer
-			Sheet sheet = workbook.getSheet(0);
+			if (mediaAdiestramiento != null) {
 
-			String usuario = nombreUsuarioSesion();
-			Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
-			errores = 0;
+				// Pasamos el excel que vamos a leer
+				Workbook workbook = Workbook.getWorkbook(mediaAdiestramiento
+						.getStreamData());
+				// Seleccionamos la hoja que vamos a leer
+				Sheet sheet = workbook.getSheet(0);
 
-			// Metodo para recorrer el archivo excel y verificar que no existan
-			// errores
-
-			while (fila < sheet.getRows()) {
-				if (isNumeric(sheet.getCell(0, fila).getContents())) {
-
-					errorLinea = 0;
-
-					String ficha = sheet.getCell(0, fila).getContents();
-					/*String nombreEmpleado = sheet.getCell(1, fila)
-							.getContents();*/
-					String nombrecurso = sheet.getCell(2, fila).getContents();
-					String nombreArea = sheet.getCell(3, fila).getContents();
-					String tipoFormacion = sheet.getCell(4, fila).getContents();
-					String nombrePeriodo = sheet.getCell(5, fila).getContents();
-					/*String gerencia = sheet.getCell(6, fila).getContents();
-					String cargo = sheet.getCell(7, fila).getContents();*/
-
-					// VALIDACION FICHA
-					empleado = servicioEmpleado.buscarPorFicha(ficha);
-
-					if (empleado == null) {
-
-						errores = errores + 1;
-						errorLinea = errorLinea + 1;
-					}
-
-					// VALIDACION NOMBRE_CURSO
-					nombreCurso = servicioNombreCurso
-							.buscarPorNombre(nombrecurso);
-
-					if (nombreCurso == null) {
-						//lineasInvalidas = lineasInvalidas + 1;
-						errores = errores + 1;
-						errorLinea = errorLinea + 1;
-					} 
-					
-					area = servicioArea.buscarPorNombresTipoFormacion(nombreArea,tipoFormacion);
-
-					if (area == null) {
-						//lineasInvalidas = lineasInvalidas + 1;
-						errores = errores + 1;
-						errorLinea = errorLinea + 1;
-
-					}
-
-					// VALIDACION PERIODO
-
-					periodo = servicioPeriodo.buscarPorNombre(nombrePeriodo);
-
-					if (periodo == null) {
-
-						errores = errores + 1;
-						errorLinea = errorLinea + 1;
-					}
-
-					if (errorLinea != 0) {
-						lineasInvalidas = lineasInvalidas + 1;
-
-					} else {
-
-						lineasValidas = lineasValidas + 1;
-					}
-
-					filaEvaluada++;
-					fila++;
-
-				} else {
-
-					filaInvalida++;
-
-				}
-
-			}
-
-			if (lineasInvalidas > 0) {
-
-				limpiarCampos();
-				final HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("id", "consulta");
-				map.put("archivo", mediaAdiestramiento.getName());
-				map.put("lineasEvaluadas", filaEvaluada);
-				map.put("lineasValidas", lineasValidas);
-				map.put("lineasInvalidas", lineasInvalidas);
-				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-				List<Arbol> arboles = servicioArbol
-						.buscarPorNombreArbol("Resultado Importacion");
-				if (!arboles.isEmpty()) {
-					Arbol arbolItem = arboles.get(0);
-					cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,
-							tabs);
-				}
-
-			} else {
-
-				
-				// CUANDO NO HAY ERRORES ENTRA POR ACA A INSERTAR
-
-				// Copiar archivo excel en el directorio C:\files\
-				/*Files.copy(
-						new File("C:\\files\\" + mediaAdiestramiento.getName()),
-						mediaAdiestramiento.getStreamData());*/
-
-				// Insercion de los datos en la base de datos
-
-				fila = 1;
-				filaEvaluada = 0;
-				filaInvalida = 0;
-				lineasEvaluadas = 0;
-				lineasValidas = 0;
-				lineasInvalidas = 0;
+				String usuario = nombreUsuarioSesion();
+				Timestamp fechaAuditoria = new Timestamp(new Date().getTime());
 				errores = 0;
 
 				// Metodo para recorrer el archivo excel y verificar que no
@@ -396,108 +278,239 @@ public class CGestionarAdiestramiento extends CGenerico {
 						errorLinea = 0;
 
 						String ficha = sheet.getCell(0, fila).getContents();
-						/*String nombreEmpleado = sheet.getCell(1, fila)
-								.getContents();*/
+						/*
+						 * String nombreEmpleado = sheet.getCell(1, fila)
+						 * .getContents();
+						 */
 						String nombrecurso = sheet.getCell(2, fila)
 								.getContents();
 						String nombreArea = sheet.getCell(3, fila)
 								.getContents();
 						String tipoFormacion = sheet.getCell(4, fila)
 								.getContents();
-						/*String nombrePeriodo = sheet.getCell(5, fila)
-								.getContents();*/
-						/*String gerencia = sheet.getCell(6, fila).getContents();
-						String cargo = sheet.getCell(7, fila).getContents();*/
+						String nombrePeriodo = sheet.getCell(5, fila)
+								.getContents();
+						/*
+						 * String gerencia = sheet.getCell(6,
+						 * fila).getContents(); String cargo = sheet.getCell(7,
+						 * fila).getContents();
+						 */
 
 						// VALIDACION FICHA
 						empleado = servicioEmpleado.buscarPorFicha(ficha);
-					
+
+						if (empleado == null) {
+
+							errores = errores + 1;
+							errorLinea = errorLinea + 1;
+						}
+
+						// VALIDACION NOMBRE_CURSO
 						nombreCurso = servicioNombreCurso
 								.buscarPorNombre(nombrecurso);
-						
-						
 
-						// SI CURSO NO EXISTE LO CREA
 						if (nombreCurso == null) {
-							
-							area = servicioArea.buscarPorNombresTipoFormacion(nombreArea,tipoFormacion);
-							
-							NombreCurso curso = new NombreCurso(
-									idNombreCurso, area, nombrecurso,
-									fechaAuditoria, horaAuditoria, usuario);
-							servicioNombreCurso.guardar(curso);
-							
-							NombreCurso ultimoCurso = servicioNombreCurso
-									.buscarUltimoCurso();
+							// lineasInvalidas = lineasInvalidas + 1;
+							errores = errores + 1;
+							errorLinea = errorLinea + 1;
+						}
 
-							Curso configurarCurso = new Curso(idCurso,
-									periodo, ultimoCurso, null, null,
-									0, null, null, "ACTIVO",
-									fechaAuditoria, horaAuditoria,
-									usuario);
-							servicioCurso.guardar(configurarCurso);
+						area = servicioArea.buscarPorNombresTipoFormacion(
+								nombreArea, tipoFormacion);
 
-							
-							
+						if (area == null) {
+							// lineasInvalidas = lineasInvalidas + 1;
+							errores = errores + 1;
+							errorLinea = errorLinea + 1;
 
-						} 
-						
-						Curso ultimoCursoRegistrado = servicioCurso
-								.buscarUltimoCurso();
+						}
 
-						EmpleadoCurso cursosEmpleado = new EmpleadoCurso(
-								ultimoCursoRegistrado, empleado,
-								"EN TRAMITE","NO");
-						servicioEmpleadoCurso.guardar(cursosEmpleado);
-						
-						/*Messagebox.show("Se importo correctamente la informacion de los cursos", "Advertencia",
-								Messagebox.OK, Messagebox.INFORMATION );*/
+						// VALIDACION PERIODO
 
-						
+						periodo = servicioPeriodo
+								.buscarPorNombre(nombrePeriodo);
 
-						fila++;
+						if (periodo == null) {
+
+							errores = errores + 1;
+							errorLinea = errorLinea + 1;
+						}
+
+						if (errorLinea != 0) {
+							lineasInvalidas = lineasInvalidas + 1;
+
+						} else {
+
+							lineasValidas = lineasValidas + 1;
+						}
+
 						filaEvaluada++;
+						fila++;
 
 					} else {
 
 						filaInvalida++;
 
 					}
+
 				}
 
-				limpiarCampos();
-				final HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("id", "consulta");
-				map.put("archivo", mediaAdiestramiento.getName());
-				map.put("lineasEvaluadas", filaEvaluada);
-				map.put("lineasValidas", lineasValidas);
-				map.put("lineasInvalidas", lineasInvalidas);
-				Sessions.getCurrent().setAttribute("itemsCatalogo", map);
-				List<Arbol> arboles = servicioArbol
-						.buscarPorNombreArbol("Resultado Importacion");
-				if (!arboles.isEmpty()) {
-					Arbol arbolItem = arboles.get(0);
-					cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,
-							tabs);
+				if (lineasInvalidas > 0) {
+
+					limpiarCampos();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", "consulta");
+					map.put("archivo", mediaAdiestramiento.getName());
+					map.put("lineasEvaluadas", filaEvaluada);
+					map.put("lineasValidas", lineasValidas);
+					map.put("lineasInvalidas", lineasInvalidas);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					List<Arbol> arboles = servicioArbol
+							.buscarPorNombreArbol("Resultado Importacion");
+					if (!arboles.isEmpty()) {
+						Arbol arbolItem = arboles.get(0);
+						cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,
+								tabs);
+					}
+
+				} else {
+
+					// CUANDO NO HAY ERRORES ENTRA POR ACA A INSERTAR
+
+					// Copiar archivo excel en el directorio C:\files\
+					/*
+					 * Files.copy( new File("C:\\files\\" +
+					 * mediaAdiestramiento.getName()),
+					 * mediaAdiestramiento.getStreamData());
+					 */
+
+					// Insercion de los datos en la base de datos
+
+					fila = 1;
+					filaEvaluada = 0;
+					filaInvalida = 0;
+					lineasEvaluadas = 0;
+					lineasValidas = 0;
+					lineasInvalidas = 0;
+					errores = 0;
+
+					// Metodo para recorrer el archivo excel y verificar que no
+					// existan
+					// errores
+
+					while (fila < sheet.getRows()) {
+						if (isNumeric(sheet.getCell(0, fila).getContents())) {
+
+							errorLinea = 0;
+
+							String ficha = sheet.getCell(0, fila).getContents();
+							/*
+							 * String nombreEmpleado = sheet.getCell(1, fila)
+							 * .getContents();
+							 */
+							String nombrecurso = sheet.getCell(2, fila)
+									.getContents();
+							String nombreArea = sheet.getCell(3, fila)
+									.getContents();
+							String tipoFormacion = sheet.getCell(4, fila)
+									.getContents();
+							/*
+							 * String nombrePeriodo = sheet.getCell(5, fila)
+							 * .getContents();
+							 */
+							/*
+							 * String gerencia = sheet.getCell(6,
+							 * fila).getContents(); String cargo =
+							 * sheet.getCell(7, fila).getContents();
+							 */
+
+							// VALIDACION FICHA
+							empleado = servicioEmpleado.buscarPorFicha(ficha);
+
+							nombreCurso = servicioNombreCurso
+									.buscarPorNombre(nombrecurso);
+
+							// SI CURSO NO EXISTE LO CREA
+							if (nombreCurso == null) {
+
+								area = servicioArea
+										.buscarPorNombresTipoFormacion(
+												nombreArea, tipoFormacion);
+
+								NombreCurso curso = new NombreCurso(
+										idNombreCurso, area, nombrecurso,
+										fechaAuditoria, horaAuditoria, usuario);
+								servicioNombreCurso.guardar(curso);
+
+								NombreCurso ultimoCurso = servicioNombreCurso
+										.buscarUltimoCurso();
+
+								Curso configurarCurso = new Curso(idCurso,
+										periodo, ultimoCurso, null, null, 0,
+										null, null, "ACTIVO", fechaAuditoria,
+										horaAuditoria, usuario);
+								servicioCurso.guardar(configurarCurso);
+
+							}
+
+							Curso ultimoCursoRegistrado = servicioCurso
+									.buscarUltimoCurso();
+							EmpleadoCursoPK clave = new EmpleadoCursoPK();
+							clave.setCurso(ultimoCursoRegistrado);
+							clave.setEmpleado(empleado);
+							EmpleadoCurso cursosEmpleado = new EmpleadoCurso(
+									clave, "EN TRAMITE", "NO");
+							servicioEmpleadoCurso.guardar(cursosEmpleado);
+
+							/*
+							 * Messagebox.show(
+							 * "Se importo correctamente la informacion de los cursos"
+							 * , "Advertencia", Messagebox.OK,
+							 * Messagebox.INFORMATION );
+							 */
+
+							fila++;
+							filaEvaluada++;
+
+						} else {
+
+							filaInvalida++;
+
+						}
+					}
+
+					limpiarCampos();
+					final HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", "consulta");
+					map.put("archivo", mediaAdiestramiento.getName());
+					map.put("lineasEvaluadas", filaEvaluada);
+					map.put("lineasValidas", lineasValidas);
+					map.put("lineasInvalidas", lineasInvalidas);
+					Sessions.getCurrent().setAttribute("itemsCatalogo", map);
+					List<Arbol> arboles = servicioArbol
+							.buscarPorNombreArbol("Resultado Importacion");
+					if (!arboles.isEmpty()) {
+						Arbol arbolItem = arboles.get(0);
+						cArbol.abrirVentanas(arbolItem, tabBox, contenido, tab,
+								tabs);
+					}
+
 				}
+
+			} else {
+
+				Messagebox.show("Debe seleccionar un archivo", "Advertencia",
+						Messagebox.OK, Messagebox.EXCLAMATION);
 
 			}
 
 		} else {
 
-			Messagebox.show("Debe seleccionar un archivo", "Advertencia",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			Messagebox.show(
+					"Debe existir un periodo activo para poder continuar",
+					"Advertencia", Messagebox.OK, Messagebox.EXCLAMATION);
 
 		}
-		
-		}
-		else {
-
-			Messagebox.show("Debe existir un periodo activo para poder continuar", "Advertencia",
-					Messagebox.OK, Messagebox.EXCLAMATION);
-
-		}
-		
 
 	}
 
@@ -509,7 +522,8 @@ public class CGestionarAdiestramiento extends CGenerico {
 		txtArchivoAdiestramiento.setStyle("color:black !important;");
 		txtPeriodoGestionarAdiestramiento.setValue("");
 		rdgGestionarAdiestramiento.setSelectedItem(null);
-		lsbAdiestramientos.setModel(new ListModelList<BeanCapacitacionRequerida>());
+		lsbAdiestramientos
+				.setModel(new ListModelList<BeanCapacitacionRequerida>());
 		gbImportar.setVisible(false);
 		gbExportar.setVisible(false);
 
@@ -535,9 +549,9 @@ public class CGestionarAdiestramiento extends CGenerico {
 	public void buscarPeriodo() {
 
 		final List<Revision> listPeriodo = servicioRevision.buscarTodas();
-		catalogoPeriodo =  new Catalogo<Revision>(divCatalogoPeriodo,
-				"Catalogo de Revisiones", listPeriodo, false,false,false,"Periodo",
-				"Descripción", "Estado") {
+		catalogoPeriodo = new Catalogo<Revision>(divCatalogoPeriodo,
+				"Catalogo de Revisiones", listPeriodo, false, false, false,
+				"Periodo", "Descripción", "Estado") {
 
 			@Override
 			protected List<Revision> buscar(List<String> valores) {
@@ -568,8 +582,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 			}
 
 		};
-		
-		
+
 		catalogoPeriodo.setClosable(true);
 		catalogoPeriodo.setWidth("80%");
 		catalogoPeriodo.setParent(divCatalogoPeriodo);
@@ -590,41 +603,45 @@ public class CGestionarAdiestramiento extends CGenerico {
 	public void llenarLista() {
 
 		if (idRevision != 0) {
-			/*Periodo periodoCursos = servicioPeriodo.buscarPeriodo(idPeriodo);
-			cursos = servicioCurso.buscarPorPeriodo(periodoCursos);
+			/*
+			 * Periodo periodoCursos = servicioPeriodo.buscarPeriodo(idPeriodo);
+			 * cursos = servicioCurso.buscarPorPeriodo(periodoCursos);
+			 * 
+			 * empleadoCursos = servicioEmpleadoCurso.buscarTodos();
+			 * 
+			 * for (int i = 0; i < cursos.size(); i++) {
+			 * 
+			 * for (int j = 0; j < empleadoCursos.size(); j++) {
+			 * 
+			 * if (cursos.get(i).getId() == empleadoCursos.get(j)
+			 * .getCurso().getId()) {
+			 * 
+			 * if (empleadoCursos.get(j).getEstadoCurso() .equals("EN TRAMITE"))
+			 * {
+			 * 
+			 * EmpleadoCurso cursosEmpleados = empleadoCursos .get(j);
+			 * cursosPeriodo.add(cursosEmpleados);
+			 * 
+			 * }
+			 * 
+			 * }
+			 * 
+			 * }
+			 * 
+			 * }
+			 */
 
-			empleadoCursos = servicioEmpleadoCurso.buscarTodos();
+			List<BeanCapacitacionRequerida> lista = servicioUtilidad
+					.getListaCapacitacionRequerida(idRevision);
 
-			for (int i = 0; i < cursos.size(); i++) {
-
-				for (int j = 0; j < empleadoCursos.size(); j++) {
-
-					if (cursos.get(i).getId() == empleadoCursos.get(j)
-							.getCurso().getId()) {
-
-						if (empleadoCursos.get(j).getEstadoCurso()
-								.equals("EN TRAMITE")) {
-
-							EmpleadoCurso cursosEmpleados = empleadoCursos
-									.get(j);
-							cursosPeriodo.add(cursosEmpleados);
-
-						}
-
-					}
-
-				}
-
-			}*/
-			
-			List<BeanCapacitacionRequerida> lista= servicioUtilidad.getListaCapacitacionRequerida(idRevision);
-
-			lsbAdiestramientos.setModel(new ListModelList<BeanCapacitacionRequerida>(lista));
+			lsbAdiestramientos
+					.setModel(new ListModelList<BeanCapacitacionRequerida>(
+							lista));
 
 		}
 
 	}
-	
+
 	@Listen("onClick = #btnExportarAdiestramientos")
 	public void exportar() throws IOException {
 		System.out.println(lsbAdiestramientos.getItemCount());
@@ -642,15 +659,17 @@ public class CGestionarAdiestramiento extends CGenerico {
 				}
 			}
 			for (Object item : lsbAdiestramientos.getItems()) {
-				int x=1;
+				int x = 1;
 				String i = "";
 				for (Object cell : ((Listitem) item).getChildren()) {
-					i += ((Listcell) cell).getLabel().trim().replaceAll("[\n\r]","") + s;
+					i += ((Listcell) cell).getLabel().trim()
+							.replaceAll("[\n\r]", "")
+							+ s;
 				}
 				sb.append(i + "\n");
 				System.out.println("PASE: " + x);
 			}
-			
+
 			Messagebox.show(Mensaje.exportar, "Alerta", Messagebox.OK
 					| Messagebox.CANCEL, Messagebox.QUESTION,
 					new org.zkoss.zk.ui.event.EventListener<Event>() {
@@ -658,7 +677,8 @@ public class CGestionarAdiestramiento extends CGenerico {
 								throws InterruptedException {
 							if (evt.getName().equals("onOK")) {
 								Filedownload.save(sb.toString().getBytes(),
-										"text/plain", "CapacitacionRequeridaRevision.csv");
+										"text/plain",
+										"CapacitacionRequeridaRevision.csv");
 							}
 						}
 					});
@@ -666,15 +686,17 @@ public class CGestionarAdiestramiento extends CGenerico {
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 	}
 
-	
 	public void exportarDatos() throws IOException {
-		
-		List<BeanCapacitacionRequerida> lista= servicioUtilidad.getListaCapacitacionRequerida(idRevision);
+
+		List<BeanCapacitacionRequerida> lista = servicioUtilidad
+				.getListaCapacitacionRequerida(idRevision);
 
 		if (lista.size() != 0) {
 
-			/*Periodo periodoSeleccionado = servicioPeriodo
-					.buscarPeriodo(idRevision);*/
+			/*
+			 * Periodo periodoSeleccionado = servicioPeriodo
+			 * .buscarPeriodo(idRevision);
+			 */
 
 			/* La ruta donde se creara el archivo */
 			String rutaArchivo = System.getProperty("user.home") + "/DNA" + "_"
@@ -730,7 +752,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 					celda7.setCellValue("Cargo");
 					celda8.setCellValue("Grado");
 					celda9.setCellValue("Revision");
-					
+
 				} else {
 					/* Si no es la primera fila establecemos un valor */
 					celda0.setCellValue(lista.get(f - 1).getFicha());
@@ -743,8 +765,7 @@ public class CGestionarAdiestramiento extends CGenerico {
 					celda7.setCellValue(lista.get(f - 1).getCargo());
 					celda8.setCellValue(lista.get(f - 1).getGrado());
 					celda9.setCellValue(lista.get(f - 1).getRevision());
-					
-					
+
 				}
 
 			}

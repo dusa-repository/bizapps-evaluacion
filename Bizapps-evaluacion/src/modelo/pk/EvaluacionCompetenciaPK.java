@@ -3,6 +3,9 @@ package modelo.pk;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import modelo.maestros.Competencia;
 import modelo.maestros.Evaluacion;
@@ -16,11 +19,13 @@ public class EvaluacionCompetenciaPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-//	@Column(name="id_evaluacion")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_competencia", referencedColumnName = "id_competencia")
+	private Competencia competencia;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_evaluacion", referencedColumnName = "id_evaluacion")
 	private Evaluacion evaluacion;
-
-//	@Column(name="id_competencia")
-	private  Competencia competencia;
 
 	public EvaluacionCompetenciaPK() {
 	}

@@ -3,6 +3,7 @@ package modelo.maestros;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,24 +20,11 @@ import modelo.pk.EmpleadoParametroPK;
  */
 @Entity
 @Table(name = "empleado_parametro")
-@IdClass(EmpleadoParametroPK.class)
 public class EmpleadoParametro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
-	private Empleado empleado;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_parametro", referencedColumnName = "id_parametro")
-	private Parametro parametro;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
-	private Curso curso;
+	@EmbeddedId
+	private EmpleadoParametroPK id;
 
 	@Column(name = "valor_evaluacion")
 	private String valorEvaluacion;
@@ -46,39 +34,18 @@ public class EmpleadoParametro implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public EmpleadoParametro(Empleado empleado, Parametro parametro,
-			Curso curso, String valorEvaluacion) {
+	public EmpleadoParametro(EmpleadoParametroPK id, String valorEvaluacion) {
 		super();
-		this.empleado = empleado;
-		this.parametro = parametro;
-		this.curso = curso;
+		this.id = id;
 		this.valorEvaluacion = valorEvaluacion;
 	}
 
-
-
-	public Empleado getEmpleado() {
-		return empleado;
+	public EmpleadoParametroPK getId() {
+		return id;
 	}
 
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
-
-	public Parametro getParametro() {
-		return parametro;
-	}
-
-	public void setParametro(Parametro parametro) {
-		this.parametro = parametro;
-	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setId(EmpleadoParametroPK id) {
+		this.id = id;
 	}
 
 	public String getValorEvaluacion() {

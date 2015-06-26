@@ -12,6 +12,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.EmpleadoItem;
 import modelo.maestros.ItemEvaluacion;
+import modelo.pk.EmpleadoItemPK;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -33,7 +34,6 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CEvaluacionEficacia extends CGenerico {
@@ -109,7 +109,7 @@ public class CEvaluacionEficacia extends CGenerico {
 
 		for (int i = 0; i < empleadosCurso.size(); i++) {
 
-			cursos.add(empleadosCurso.get(i).getCurso());
+			cursos.add(empleadosCurso.get(i).getId().getCurso());
 		}
 
 		return cursos;
@@ -197,7 +197,7 @@ public class CEvaluacionEficacia extends CGenerico {
 			msj.mensajeAlerta(Mensaje.codigoCurso);
 			txtCursoEvaluacionEficacia.setFocus(true);
 		} else {
-			idCurso = cursos.get(0).getCurso().getId();
+			idCurso = cursos.get(0).getId().getCurso().getId();
 			llenarLista();
 		}
 
@@ -403,7 +403,7 @@ public class CEvaluacionEficacia extends CGenerico {
 		if (empleadoItems.size() != 0) {
 			for (int i = 0; i < lsbItemEvaluacionCualitativa.getItems().size(); i++) {
 				for (int j = 0; j < empleadoItems.size(); j++) {
-					if (empleadoItems.get(j).getItem().getId() == itemPonderacionCualitativa
+					if (empleadoItems.get(j).getId().getItem().getId() == itemPonderacionCualitativa
 							.get(i).getId()) {
 						Listitem listItem = lsbItemEvaluacionCualitativa
 								.getItemAtIndex(i);
@@ -424,7 +424,7 @@ public class CEvaluacionEficacia extends CGenerico {
 			double total = 0;
 			for (int i = 0; i < lsbItemEvaluacionCuantitativa.getItems().size(); i++) {
 				for (int j = 0; j < empleadoItems.size(); j++) {
-					if (empleadoItems.get(j).getItem().getId() == itemPonderacionCuantitativa
+					if (empleadoItems.get(j).getId().getItem().getId() == itemPonderacionCuantitativa
 							.get(i).getId()) {
 						Listitem listItem = lsbItemEvaluacionCuantitativa
 								.getItemAtIndex(i);
@@ -484,9 +484,12 @@ public class CEvaluacionEficacia extends CGenerico {
 						if (!error) {
 							ItemEvaluacion item = servicioItemEvaluacion
 									.buscarItem(codigoItem);
-							EmpleadoItem empleadoItem = new EmpleadoItem(
-									empleadoDatos.get(0), item, curso, fecha,
-									valorEvaluacion);
+							EmpleadoItemPK clave = new EmpleadoItemPK();
+							clave.setCurso(curso);
+							clave.setEmpleado(empleadoDatos.get(0));
+							clave.setItem(item);
+							EmpleadoItem empleadoItem = new EmpleadoItem(clave,
+									fecha, valorEvaluacion);
 							servicioEmpleadoItem.guardar(empleadoItem);
 							datosGuardados = true;
 						}
@@ -520,9 +523,12 @@ public class CEvaluacionEficacia extends CGenerico {
 
 							ItemEvaluacion item = servicioItemEvaluacion
 									.buscarItem(codigoItem);
+							EmpleadoItemPK clave2 = new EmpleadoItemPK();
+							clave2.setCurso(curso);
+							clave2.setItem(item);
+							clave2.setEmpleado(empleadoDatos.get(0));
 							EmpleadoItem empleadoItem = new EmpleadoItem(
-									empleadoDatos.get(0), item, curso, fecha,
-									valorEvaluacion.toString());
+									clave2, fecha, valorEvaluacion.toString());
 							servicioEmpleadoItem.guardar(empleadoItem);
 							datosGuardados = true;
 

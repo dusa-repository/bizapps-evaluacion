@@ -565,7 +565,7 @@ public class CEmpleado extends CGenerico {
 
 												EvaluacionCompetencia evaluacionCompetencia = listaEvaluacionCompetencias
 														.get(i);
-												evaluacionCompetencia
+												evaluacionCompetencia.getId()
 														.setEvaluacion(eva);
 												servicioEvaluacionCompetencia
 														.guardar(evaluacionCompetencia);
@@ -580,7 +580,7 @@ public class CEmpleado extends CGenerico {
 
 												EvaluacionConducta evaluacionConducta = listaEvaluacionConductas
 														.get(i);
-												evaluacionConducta
+												evaluacionConducta.getId()
 														.setEvaluacion(eva);
 												servicioEvaluacionConducta
 														.guardar(evaluacionConducta);

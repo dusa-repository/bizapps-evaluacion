@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface INivelCompetenciaCargoDAO extends JpaRepository<NivelCompetenciaCargo, NivelCompetenciaCargoPK> {
 	
-	public List<NivelCompetenciaCargo> findByCargo(Cargo cargo);
+	public List<NivelCompetenciaCargo> findByIdCargo(Cargo cargo);
 	
-	public NivelCompetenciaCargo findByDominio(Dominio dominio);
+	public NivelCompetenciaCargo findByIdDominio(Dominio dominio);
 	
 	
 }

@@ -13,16 +13,16 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IEvaluacionConductaDAO extends JpaRepository<EvaluacionConducta, Integer> {
 	
-	public List <EvaluacionConducta> findByEvaluacionIdEvaluacion (Integer id);
+	public List <EvaluacionConducta> findByIdEvaluacionIdEvaluacion (Integer id);
 
-	@Query("select ec from EvaluacionConducta ec where ec.evaluacion.idEvaluacion = ?1")
+	@Query("select ec from EvaluacionConducta ec where ec.id.evaluacion.idEvaluacion = ?1")
 	public EvaluacionConducta buscar(Integer id);
 	
-	public EvaluacionConducta findByEvaluacionAndConductaCompetencia (Evaluacion eva, ConductaCompetencia cc);
+	public EvaluacionConducta findByIdEvaluacionAndIdConductaCompetencia (Evaluacion eva, ConductaCompetencia cc);
 	
-	public List <EvaluacionConducta> findByEvaluacionAndCompetencia (Evaluacion eva, Competencia con);
+	public List <EvaluacionConducta> findByIdEvaluacionAndCompetencia (Evaluacion eva, Competencia con);
 		
-	public List <EvaluacionConducta> findByEvaluacion (Evaluacion eva);
+	public List <EvaluacionConducta> findByIdEvaluacion (Evaluacion eva);
 	
 	
 

@@ -3,6 +3,7 @@ package modelo.maestros;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,19 +20,11 @@ import modelo.pk.EmpleadoClasePK;
  */
 @Entity
 @Table(name = "empleado_clase")
-@IdClass(EmpleadoClasePK.class)
 public class EmpleadoClase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_clase", referencedColumnName = "id_clase")
-	private Clase clase;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
-	private Empleado empleado;
+	@EmbeddedId
+	private EmpleadoClasePK id;
 
 	@Column(name = "asistencia")
 	private String asistencia;
@@ -42,29 +35,21 @@ public class EmpleadoClase implements Serializable {
 	}
 	
 	
-	public EmpleadoClase(Clase clase, Empleado empleado, String asistencia) {
+	public EmpleadoClase(EmpleadoClasePK id, String asistencia) {
 		super();
-		this.clase = clase;
-		this.empleado = empleado;
+		this.id = id;
 		this.asistencia = asistencia;
 	}
 
-
-	public Clase getClase() {
-		return clase;
+	public EmpleadoClasePK getId() {
+		return id;
 	}
 
-	public void setClase(Clase clase) {
-		this.clase = clase;
+
+	public void setId(EmpleadoClasePK id) {
+		this.id = id;
 	}
 
-	public Empleado getEmpleado() {
-		return empleado;
-	}
-
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
 
 	public String getAsistencia() {
 		return asistencia;

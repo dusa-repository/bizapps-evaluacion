@@ -10,6 +10,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.PerfilCargo;
 import modelo.maestros.Periodo;
+import modelo.pk.EmpleadoCursoPK;
 import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.Sessions;
@@ -29,7 +30,6 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CNecesidadesAdiestramiento extends CGenerico {
@@ -239,13 +239,14 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 			if (cursosEmpleado.get(i).getEstadoCurso().equals("APROBADO")
 					|| cursosEmpleado.get(i).getEstadoCurso()
 							.equals("REPROBADO")) {
-				Curso curso = cursosEmpleado.get(i).getCurso();
+				Curso curso = cursosEmpleado.get(i).getId().getCurso();
 				horasAcumuladas = horasAcumuladas
-						+ cursosEmpleado.get(i).getCurso().getDuracion();
+						+ cursosEmpleado.get(i).getId().getCurso()
+								.getDuracion();
 				cursosRealizados.add(curso);
 			}
 			if (cursosEmpleado.get(i).getEstadoCurso().equals("EN TRAMITE")) {
-				Curso curso = cursosEmpleado.get(i).getCurso();
+				Curso curso = cursosEmpleado.get(i).getId().getCurso();
 				cursosTramite.add(curso);
 			}
 
@@ -315,9 +316,11 @@ public class CNecesidadesAdiestramiento extends CGenerico {
 									List<EmpleadoCurso> guardadas = new ArrayList<EmpleadoCurso>();
 									for (int i = 0; i < procesadas.size(); i++) {
 										Curso curso = procesadas.get(i);
+										EmpleadoCursoPK clave = new EmpleadoCursoPK();
+										clave.setCurso(curso);
+										clave.setEmpleado(empleado);
 										EmpleadoCurso cursosEmpleado = new EmpleadoCurso(
-												curso, empleado, "EN TRAMITE",
-												"NO");
+												clave, "EN TRAMITE", "NO");
 										guardadas.add(cursosEmpleado);
 									}
 									servicioEmpleadoCurso

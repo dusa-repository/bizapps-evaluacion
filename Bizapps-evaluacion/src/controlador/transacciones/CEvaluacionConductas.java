@@ -123,7 +123,7 @@ public class CEvaluacionConductas extends CGenerico {
 									conductasE));
 					lbxConductasRectoras.renderAll();
 					for (int i = 0; i < conductasE.size(); i++) {
-						Integer id = conductasE.get(i).getConductaCompetencia()
+						Integer id = conductasE.get(i).getId().getConductaCompetencia()
 								.getId();
 						Evaluacion evaluacion = servicioEvaluacion
 								.buscarEvaluacion(idEva);
@@ -189,8 +189,10 @@ public class CEvaluacionConductas extends CGenerico {
 		Competencia competencia = servicioCompetencia
 				.buscarCompetencia(idCompetencia);
 		String nivelC = competencia.getNivel();
-		evaluacionCompetencia.setCompetencia(competencia);
-		evaluacionCompetencia.setEvaluacion(evaluacion);
+		EvaluacionCompetenciaPK clave = new EvaluacionCompetenciaPK();
+		clave.setCompetencia(competencia);
+		clave.setEvaluacion(evaluacion);
+		evaluacionCompetencia.setId(clave);
 		evaluacionCompetencia.setIdDominio(idDominio);
 		servicioUtilidad.eliminarConductaPorCompetencia(
 				evaluacion.getIdEvaluacion(), competencia.getId());
@@ -203,11 +205,12 @@ public class CEvaluacionConductas extends CGenerico {
 			ConductaCompetencia conductaCompe = listItem2.get(i).getValue();
 			String observacion = ((Textbox) ((listItem.getChildren().get(2)))
 					.getFirstChild()).getValue();
-
+			EvaluacionConductaPK claveConducta = new EvaluacionConductaPK();
+			claveConducta.setConductaCompetencia(conductaCompe);
+			claveConducta.setEvaluacion(evaluacion);
+			evaluacionConducta.setId(claveConducta);
 			evaluacionConducta.setValor(listItem.isSelected());
 			evaluacionConducta.setCompetencia(competencia);
-			evaluacionConducta.setConductaCompetencia(conductaCompe);
-			evaluacionConducta.setEvaluacion(evaluacion);
 			evaluacionConducta.setObservacion(observacion);
 			servicioEvaluacionConducta.guardar(evaluacionConducta);
 			if (nivelC.equals("ESPECIFICAS")){

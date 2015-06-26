@@ -31,7 +31,7 @@ public class SEmpleadoParametro {
 	 */
 	public List<EmpleadoParametro> buscarParametros(Empleado empleado, Curso curso) {
 		List<EmpleadoParametro> parametros;
-		parametros = empleadoParametroDAO.findByEmpleadoAndCurso(empleado, curso);
+		parametros = empleadoParametroDAO.findByIdEmpleadoAndIdCurso(empleado, curso);
 		return parametros;
 	}
 

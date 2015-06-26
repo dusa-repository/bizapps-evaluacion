@@ -80,7 +80,7 @@ public class ReporteBase extends CGenerico {
 							.buscarCursos(trabajador);
 					parameters.put("horas", horas.floatValue());
 					if (!lista.isEmpty())
-						parameters.put("periodo", lista.get(0).getCurso()
+						parameters.put("periodo", lista.get(0).getId().getCurso()
 								.getPeriodo().getNombre());
 //					Revisar este periodo, a cualse refiere
 					parameters.put("cargo", trabajador.getCargo()

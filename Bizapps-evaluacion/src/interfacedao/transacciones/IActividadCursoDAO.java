@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IActividadCursoDAO extends JpaRepository<ActividadCurso, ActividadCursoPK> {
 
-	public List<ActividadCurso> findByCurso(Curso curso);
+	public List<ActividadCurso> findByIdCurso(Curso curso);
 	
 }
 

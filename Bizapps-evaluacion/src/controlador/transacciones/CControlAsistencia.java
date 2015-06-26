@@ -273,7 +273,7 @@ public class CControlAsistencia extends CGenerico {
 
 		for (int i = 0; i < empleadosCurso.size(); i++) {
 
-			empleados.add(empleadosCurso.get(i).getEmpleado());
+			empleados.add(empleadosCurso.get(i).getId().getEmpleado());
 		}
 
 		lsbEmpleado.setModel(new ListModelList<Empleado>(empleados));

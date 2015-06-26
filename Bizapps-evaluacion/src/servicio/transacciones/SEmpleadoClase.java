@@ -22,7 +22,7 @@ public class SEmpleadoClase {
 	}
 	
 	public List<EmpleadoClase> buscar(Clase clase) {
-		return empleadoClaseDAO.findByClase(clase);
+		return empleadoClaseDAO.findByIdClase(clase);
 	}
 	
 	

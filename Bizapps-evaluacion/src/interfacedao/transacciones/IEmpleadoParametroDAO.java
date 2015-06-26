@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEmpleadoParametroDAO extends JpaRepository<EmpleadoParametro, EmpleadoParametroPK> {
 
-	public List<EmpleadoParametro> findByEmpleadoAndCurso(Empleado empleado,
+	public List<EmpleadoParametro> findByIdEmpleadoAndIdCurso(Empleado empleado,
 			Curso curso);
 
 	

@@ -24,9 +24,9 @@ public class SNivelCompetenciaCargo {
 	}
 	
 	public List<NivelCompetenciaCargo> buscar(Cargo cargo) {
-		return nivelCompetenciaCargoDAO.findByCargo(cargo);
+		return nivelCompetenciaCargoDAO.findByIdCargo(cargo);
 	}
 	public NivelCompetenciaCargo buscarPorDominio(Dominio dominio) {
-		return nivelCompetenciaCargoDAO.findByDominio(dominio);
+		return nivelCompetenciaCargoDAO.findByIdDominio(dominio);
 	}
 }

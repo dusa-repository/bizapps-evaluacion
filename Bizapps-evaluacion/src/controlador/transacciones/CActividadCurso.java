@@ -11,6 +11,7 @@ import modelo.maestros.Actividad;
 import modelo.maestros.ActividadCurso;
 import modelo.maestros.Curso;
 import modelo.maestros.Periodo;
+import modelo.pk.ActividadCursoPK;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -30,7 +31,6 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CActividadCurso extends CGenerico {
@@ -130,7 +130,7 @@ public class CActividadCurso extends CGenerico {
 					else
 						registros[2] = String.valueOf(curso.getDuracion());
 
-						return registros;
+					return registros;
 				}
 
 			};
@@ -140,7 +140,6 @@ public class CActividadCurso extends CGenerico {
 			catalogoCurso.setParent(divCatalogoCurso);
 			catalogoCurso.setTitle("Catalogo de Cursos");
 			catalogoCurso.doModal();
-			
 
 		} else {
 
@@ -287,7 +286,7 @@ public class CActividadCurso extends CGenerico {
 
 				for (int j = 0; j < actividadesCurso.size(); j++) {
 					Listitem listItem = lsbActividad.getItemAtIndex(j);
-					if (actividadesCurso.get(j).getActividad().getId() == actividades
+					if (actividadesCurso.get(j).getId().getActividad().getId() == actividades
 							.get(i).getId()) {
 
 						if (actividadesCurso.get(j).getValor()
@@ -385,7 +384,6 @@ public class CActividadCurso extends CGenerico {
 										((Datebox) ((listItem.getChildren()
 												.get(2))).getFirstChild())
 												.getValue().getTime());
-								System.out.println(fecha);
 
 							} else {
 
@@ -394,8 +392,11 @@ public class CActividadCurso extends CGenerico {
 
 							Actividad actividad = servicioActividad
 									.buscarActividad(codigoActividad);
+							ActividadCursoPK clave = new ActividadCursoPK();
+							clave.setActividad(actividad);
+							clave.setCurso(curso);
 							ActividadCurso actividadCurso = new ActividadCurso(
-									actividad, curso, valor, fecha);
+									clave, valor, fecha);
 							servicioActividadCurso.guardar(actividadCurso);
 
 						}

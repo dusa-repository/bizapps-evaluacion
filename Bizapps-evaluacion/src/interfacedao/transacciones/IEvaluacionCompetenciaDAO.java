@@ -13,7 +13,8 @@ public interface IEvaluacionCompetenciaDAO extends
 		JpaRepository<EvaluacionCompetencia, EvaluacionCompetenciaPK> {
 	
 	//@Query("select e from EvaluacionCompetencia e where e.estadoEvaluacion <> 'EN EDICION' and e.ficha = ?1")
-	public EvaluacionCompetencia findByEvaluacionAndCompetencia (Evaluacion evaluacion, Competencia competencia);
-	public List <EvaluacionCompetencia> findByEvaluacion (Evaluacion evaluacion);
+	public EvaluacionCompetencia findByIdEvaluacionAndIdCompetencia (Evaluacion evaluacion, Competencia competencia);
+	
+	public List <EvaluacionCompetencia> findByIdEvaluacion (Evaluacion evaluacion);
 
 }

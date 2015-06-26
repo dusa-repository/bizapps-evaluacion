@@ -9,6 +9,7 @@ import modelo.maestros.Cargo;
 import modelo.maestros.Competencia;
 import modelo.maestros.Dominio;
 import modelo.maestros.NivelCompetenciaCargo;
+import modelo.pk.NivelCompetenciaCargoPK;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -82,8 +83,8 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	public void mostrarCatalogoCargo() {
 		listaGeneral = servicioCargo.buscarTodos();
 		catalogoCargo = new Catalogo<Cargo>(divCatalogoCargo,
-				"Catalogo de Cargos", listaGeneral,true,false,false, "Descripción", "Nómina",
-				"Cargo Auxiliar", "Empresa Auxiliar") {
+				"Catalogo de Cargos", listaGeneral, true, false, false,
+				"Descripción", "Nómina", "Cargo Auxiliar", "Empresa Auxiliar") {
 
 			@Override
 			protected List<Cargo> buscar(List<String> valores) {
@@ -178,7 +179,7 @@ public class CNivelCompetenciaCargo extends CGenerico {
 	@Listen("onClick = #btnSalir")
 	public void salir() {
 
-		cerrarVentana2(wdwVNivelCompetenciaCargo, titulo,tabs);
+		cerrarVentana2(wdwVNivelCompetenciaCargo, titulo, tabs);
 	}
 
 	public void llenarLista() {
@@ -206,12 +207,12 @@ public class CNivelCompetenciaCargo extends CGenerico {
 				Listitem listItem = lsbCompetencia.getItemAtIndex(i);
 				for (int j = 0; j < nivelCompetencias.size(); j++) {
 					if (competenciasDisponibles.get(i).getId() == nivelCompetencias
-							.get(j).getCompetencia().getId()) {
+							.get(j).getId().getCompetencia().getId()) {
 
 						listItem.setSelected(true);
-						if (nivelCompetencias.get(j).getDominio() != null) {
+						if (nivelCompetencias.get(j).getId().getDominio() != null) {
 							String descripcionDominio = nivelCompetencias
-									.get(j).getDominio()
+									.get(j).getId().getDominio()
 									.getDescripcionDominio();
 							System.out.println(descripcionDominio);
 							((Combobox) ((listItem.getChildren().get(4)))
@@ -313,9 +314,12 @@ public class CNivelCompetenciaCargo extends CGenerico {
 									Dominio dominio = servicioDominio
 											.buscarPorNombreTipo(tipoDominio,
 													"REQUERIDO");
-
+									NivelCompetenciaCargoPK clave = new NivelCompetenciaCargoPK();
+									clave.setCargo(cargo);
+									clave.setCompetencia(competencia);
+									clave.setDominio(dominio);
 									NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
-											competencia, cargo, dominio);
+											clave);
 									servicioNivelCompetenciaCargo
 											.guardar(nivel);
 

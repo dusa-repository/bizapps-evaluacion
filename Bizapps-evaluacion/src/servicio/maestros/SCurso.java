@@ -117,7 +117,7 @@ public class SCurso {
 		if (cursosEmpleado.isEmpty())
 			return cursoDAO.findAll(o);
 		for (int i = 0; i < cursosEmpleado.size(); i++) {
-			ids.add(cursosEmpleado.get(i).getCurso().getId());
+			ids.add(cursosEmpleado.get(i).getId().getCurso().getId());
 		}
 		return cursoDAO.findByIdNotIn(ids, o);
 	}

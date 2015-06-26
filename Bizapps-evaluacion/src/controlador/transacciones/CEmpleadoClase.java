@@ -10,6 +10,7 @@ import modelo.maestros.Curso;
 import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoClase;
 import modelo.maestros.EmpleadoCurso;
+import modelo.pk.EmpleadoClasePK;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -28,7 +29,6 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CEmpleadoClase extends CGenerico {
@@ -78,8 +78,8 @@ public class CEmpleadoClase extends CGenerico {
 	public void mostrarCatalogoClase() {
 		final List<Clase> listClase = servicioClase.buscarTodas();
 		catalogoClase = new Catalogo<Clase>(divCatalogoClase,
-				"Catalogo de Clases", listClase,true,false,false, "Curso", "Contenido",
-				"Objetivo", "Entidad Didáctica", "Fecha",
+				"Catalogo de Clases", listClase, true, false, false, "Curso",
+				"Contenido", "Objetivo", "Entidad Didáctica", "Fecha",
 				"Duración", "Lugar", "Tipo de Entrenamiento", "Modalidad") {
 
 			@Override
@@ -101,7 +101,8 @@ public class CEmpleadoClase extends CGenerico {
 													.getFecha())).toLowerCase()
 									.contains(valores.get(4).toLowerCase())
 							&& String.valueOf(clase.getDuracion())
-									.toLowerCase().contains(valores.get(5).toLowerCase())
+									.toLowerCase()
+									.contains(valores.get(5).toLowerCase())
 							&& clase.getLugar().toLowerCase()
 									.contains(valores.get(6).toLowerCase())
 							&& clase.getTipoEntrenamiento().toLowerCase()
@@ -132,7 +133,6 @@ public class CEmpleadoClase extends CGenerico {
 				return registros;
 			}
 
-		
 		};
 
 		catalogoClase.setClosable(true);
@@ -198,7 +198,7 @@ public class CEmpleadoClase extends CGenerico {
 	@Listen("onClick = #btnSalir")
 	public void salir() {
 
-		cerrarVentana(wdwVEmpleadoClase,titulo, tabs);
+		cerrarVentana(wdwVEmpleadoClase, titulo, tabs);
 	}
 
 	public void llenarLista() {
@@ -209,7 +209,7 @@ public class CEmpleadoClase extends CGenerico {
 
 		for (int i = 0; i < empleadosCurso.size(); i++) {
 
-			empleados.add(empleadosCurso.get(i).getEmpleado());
+			empleados.add(empleadosCurso.get(i).getId().getEmpleado());
 		}
 
 		lsbEmpleado.setModel(new ListModelList<Empleado>(empleados));
@@ -225,7 +225,7 @@ public class CEmpleadoClase extends CGenerico {
 				for (int j = 0; j < empleadosClase.size(); j++) {
 					Listitem listItem = lsbEmpleado.getItemAtIndex(j);
 					if (empleados.get(i).getId() == empleadosClase.get(j)
-							.getEmpleado().getId()) {
+							.getId().getEmpleado().getId()) {
 						String asistencia = empleadosClase.get(j)
 								.getAsistencia();
 						System.out.println(asistencia);
@@ -245,7 +245,6 @@ public class CEmpleadoClase extends CGenerico {
 
 	@Listen("onClick = #btnGuardar")
 	public void guardar() {
-
 
 		boolean errorCampo = false;
 
@@ -290,9 +289,11 @@ public class CEmpleadoClase extends CGenerico {
 							Empleado empleado = servicioEmpleado
 									.buscar(codigoEmpleado);
 							Clase clase = servicioClase.buscarClase(idClase);
-
+							EmpleadoClasePK clave = new EmpleadoClasePK();
+							clave.setClase(clase);
+							clave.setEmpleado(empleado);
 							EmpleadoClase empleadosClase = new EmpleadoClase(
-									clase, empleado, asistencia);
+									clave, asistencia);
 							servicioEmpleadoClase.guardar(empleadosClase);
 
 						}

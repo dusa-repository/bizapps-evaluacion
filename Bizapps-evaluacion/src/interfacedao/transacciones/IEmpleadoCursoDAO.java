@@ -13,19 +13,19 @@ import org.springframework.data.jpa.repository.Query;
 public interface IEmpleadoCursoDAO extends
 		JpaRepository<EmpleadoCurso, EmpleadoCursoPK> {
 
-	public List<EmpleadoCurso> findByCurso(Curso curso);
+	public List<EmpleadoCurso> findByIdCurso(Curso curso);
 
-	public List<EmpleadoCurso> findByEmpleado(Empleado empleado);
+	public List<EmpleadoCurso> findByIdEmpleado(Empleado empleado);
 
-	public EmpleadoCurso findByEmpleadoAndCurso(Empleado empleado, Curso curso);
+	public EmpleadoCurso findByIdEmpleadoAndIdCurso(Empleado empleado, Curso curso);
 
-	public List<EmpleadoCurso> findByEmpleadoAndCursoIn(Empleado empleado,
+	public List<EmpleadoCurso> findByIdEmpleadoAndIdCursoIn(Empleado empleado,
 			List<Curso> procesadas);
 
-	@Query("select coalesce(sum(em.curso.duracion), '0') from EmpleadoCurso em where em.empleado = ?1")
+	@Query("select coalesce(sum(em.id.curso.duracion), '0') from EmpleadoCurso em where em.id.empleado = ?1")
 	public double sumHours(Empleado trabajador);
 
-	public List<EmpleadoCurso> findByEmpleadoAndAsistioAndEstadoCursoLike(
+	public List<EmpleadoCurso> findByIdEmpleadoAndAsistioAndEstadoCursoLike(
 			Empleado empleado, String string, String string2);
 
 }

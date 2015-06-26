@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -20,20 +21,12 @@ import modelo.pk.ActividadCursoPK;
  */
 @Entity
 @Table(name = "actividad_curso")
-@IdClass(ActividadCursoPK.class)
 public class ActividadCurso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_actividad", referencedColumnName = "id_actividad")
-	private Actividad actividad;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
-	private Curso curso;
-
+	@EmbeddedId
+	private ActividadCursoPK id;
+	
 	@Column(name = "valor")
 	private String valor;
 	
@@ -45,29 +38,20 @@ public class ActividadCurso implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ActividadCurso(Actividad actividad, Curso curso, String valor,
+	public ActividadCurso(ActividadCursoPK id, String valor,
 			Timestamp fecha) {
 		super();
-		this.actividad = actividad;
-		this.curso = curso;
+		this.id = id;
 		this.valor = valor;
 		this.fecha = fecha;
 	}
 
-	public Actividad getActividad() {
-		return actividad;
+	public ActividadCursoPK getId() {
+		return id;
 	}
 
-	public void setActividad(Actividad actividad) {
-		this.actividad = actividad;
-	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setId(ActividadCursoPK id) {
+		this.id = id;
 	}
 
 	public String getValor() {

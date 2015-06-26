@@ -38,7 +38,7 @@ public class UtilidadDAO implements IUtilidadDAO {
 		// TODO Auto-generated method stub
 
 		String sentencia = "";
-		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +" and ec.competencia.id= "+ com +"";	
+		sentencia = " delete from EvaluacionConducta as ec where ec.id.evaluacion.idEvaluacion = "+ eva +" and ec.competencia.id= "+ com +"";	
 		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
 		
 	}
@@ -73,7 +73,7 @@ public class UtilidadDAO implements IUtilidadDAO {
 	public void eliminarConductaPorEvaluacion(Integer eva) {
 		// TODO Auto-generated method stub
 		String sentencia = "";
-		sentencia = " delete from EvaluacionConducta as ec where ec.evaluacion.idEvaluacion = "+ eva +"";	
+		sentencia = " delete from EvaluacionConducta as ec where ec.id.evaluacion.idEvaluacion = "+ eva +"";	
 		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
 	}
 	
@@ -82,7 +82,7 @@ public class UtilidadDAO implements IUtilidadDAO {
 	public void eliminarCompetenciaPorEvaluacion(Integer eva) {
 		// TODO Auto-generated method stub
 		String sentencia = "";
-		sentencia = " delete from EvaluacionCompetencia as ec where ec.evaluacion.idEvaluacion = "+ eva +"";	
+		sentencia = " delete from EvaluacionCompetencia as ec where ec.id.evaluacion.idEvaluacion = "+ eva +"";	
 		int resultado=getEntityManager().createQuery(sentencia).executeUpdate();
 	}
 

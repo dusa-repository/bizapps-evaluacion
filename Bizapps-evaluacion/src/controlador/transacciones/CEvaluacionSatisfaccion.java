@@ -10,6 +10,7 @@ import modelo.maestros.Empleado;
 import modelo.maestros.EmpleadoCurso;
 import modelo.maestros.EmpleadoParametro;
 import modelo.maestros.Parametro;
+import modelo.pk.EmpleadoParametroPK;
 
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -31,7 +32,6 @@ import org.zkoss.zul.Window;
 
 import componentes.Catalogo;
 import componentes.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CEvaluacionSatisfaccion extends CGenerico {
@@ -145,7 +145,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 				.buscarCursosAsistidosYFinalizados(empleado);
 
 		for (int i = 0; i < empleadosCurso.size(); i++) {
-			cursos.add(empleadosCurso.get(i).getCurso());
+			cursos.add(empleadosCurso.get(i).getId().getCurso());
 		}
 
 		return cursos;
@@ -223,7 +223,7 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 			msj.mensajeAlerta(Mensaje.codigoCurso);
 			txtCursoEvaluacionSatisfaccion.setFocus(true);
 		} else {
-			idCurso = cursos.get(0).getCurso().getId();
+			idCurso = cursos.get(0).getId().getCurso().getId();
 			llenarLista();
 		}
 
@@ -314,8 +314,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 			for (int i = 0; i < lsbParametroInformacionPrevia.getItems().size(); i++) {
 				for (int j = 0; j < empleadoParametros.size(); j++) {
-					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo1
-							.get(i).getId()) {
+					if (empleadoParametros.get(j).getId().getParametro()
+							.getId() == parametrosTipo1.get(i).getId()) {
 						Listitem listItem = lsbParametroInformacionPrevia
 								.getItemAtIndex(i);
 						Radiogroup grupo = ((Radiogroup) ((listItem
@@ -343,8 +343,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 				for (int j = 0; j < empleadoParametros.size(); j++) {
 
-					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo2
-							.get(i).getId()) {
+					if (empleadoParametros.get(j).getId().getParametro()
+							.getId() == parametrosTipo2.get(i).getId()) {
 
 						Listitem listItem = lsbParametroContenidoInformacion
 								.getItemAtIndex(i);
@@ -377,8 +377,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 				for (int j = 0; j < empleadoParametros.size(); j++) {
 
-					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo3
-							.get(i).getId()) {
+					if (empleadoParametros.get(j).getId().getParametro()
+							.getId() == parametrosTipo3.get(i).getId()) {
 
 						Listitem listItem = lsbParametroFacilitadorActividad
 								.getItemAtIndex(i);
@@ -410,8 +410,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 				for (int j = 0; j < empleadoParametros.size(); j++) {
 
-					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo4
-							.get(i).getId()) {
+					if (empleadoParametros.get(j).getId().getParametro()
+							.getId() == parametrosTipo4.get(i).getId()) {
 
 						Listitem listItem = lsbParametroEquipos
 								.getItemAtIndex(i);
@@ -442,8 +442,8 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 
 				for (int j = 0; j < empleadoParametros.size(); j++) {
 
-					if (empleadoParametros.get(j).getParametro().getId() == parametrosTipo5
-							.get(i).getId()) {
+					if (empleadoParametros.get(j).getId().getParametro()
+							.getId() == parametrosTipo5.get(i).getId()) {
 						Listitem listItem = lsbParametroResumen
 								.getItemAtIndex(i);
 						Radiogroup grupo = ((Radiogroup) ((listItem
@@ -516,9 +516,12 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 										.getValue();
 							Parametro parametro1 = servicioParametro
 									.buscarParametro(codigoParametro1);
+							EmpleadoParametroPK clave = new EmpleadoParametroPK();
+							clave.setCurso(curso);
+							clave.setParametro(parametro1);
+							clave.setEmpleado(empleado);
 							EmpleadoParametro empleadoParametro1 = new EmpleadoParametro(
-									empleado, parametro1, curso,
-									valorEvaluacion);
+									clave, valorEvaluacion);
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro1);
 						}
@@ -539,9 +542,12 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 										.getValue();
 							Parametro parametro2 = servicioParametro
 									.buscarParametro(codigoParametro2);
+							EmpleadoParametroPK clave = new EmpleadoParametroPK();
+							clave.setCurso(curso);
+							clave.setEmpleado(empleado);
+							clave.setParametro(parametro2);
 							EmpleadoParametro empleadoParametro2 = new EmpleadoParametro(
-									empleado, parametro2, curso,
-									valorEvaluacion);
+									clave, valorEvaluacion);
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro2);
 						}
@@ -562,9 +568,12 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 										.getValue();
 							Parametro parametro3 = servicioParametro
 									.buscarParametro(codigoParametro3);
+							EmpleadoParametroPK clave = new EmpleadoParametroPK();
+							clave.setCurso(curso);
+							clave.setEmpleado(empleado);
+							clave.setParametro(parametro3);
 							EmpleadoParametro empleadoParametro3 = new EmpleadoParametro(
-									empleado, parametro3, curso,
-									valorEvaluacion);
+									clave, valorEvaluacion);
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro3);
 						}
@@ -585,9 +594,12 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 										.getValue();
 							Parametro parametro4 = servicioParametro
 									.buscarParametro(codigoParametro4);
+							EmpleadoParametroPK clave = new EmpleadoParametroPK();
+							clave.setCurso(curso);
+							clave.setEmpleado(empleado);
+							clave.setParametro(parametro4);
 							EmpleadoParametro empleadoParametro4 = new EmpleadoParametro(
-									empleado, parametro4, curso,
-									valorEvaluacion);
+									clave, valorEvaluacion);
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro4);
 						}
@@ -608,9 +620,12 @@ public class CEvaluacionSatisfaccion extends CGenerico {
 										.getValue();
 							Parametro parametro5 = servicioParametro
 									.buscarParametro(codigoParametro5);
+							EmpleadoParametroPK clave = new EmpleadoParametroPK();
+							clave.setCurso(curso);
+							clave.setEmpleado(empleado);
+							clave.setParametro(parametro5);
 							EmpleadoParametro empleadoParametro5 = new EmpleadoParametro(
-									empleado, parametro5, curso,
-									valorEvaluacion);
+									clave, valorEvaluacion);
 
 							servicioEmpleadoParametro
 									.guardar(empleadoParametro5);

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEmpleadoClaseDAO extends JpaRepository<EmpleadoClase, EmpleadoClasePK> {
 
-	public List<EmpleadoClase> findByClase(Clase clase);
+	public List<EmpleadoClase> findByIdClase(Clase clase);
 
 	
 }

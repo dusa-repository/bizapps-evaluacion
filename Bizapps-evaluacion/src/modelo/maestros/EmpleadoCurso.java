@@ -3,6 +3,7 @@ package modelo.maestros;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,19 +20,11 @@ import modelo.pk.EmpleadoCursoPK;
  */
 @Entity
 @Table(name = "empleado_curso")
-@IdClass(EmpleadoCursoPK.class)
 public class EmpleadoCurso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
-	private Curso curso;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
-	private Empleado empleado;
+	@EmbeddedId
+	private EmpleadoCursoPK id;
 
 	@Column(name = "estado_curso")
 	private String estadoCurso;
@@ -44,28 +37,19 @@ public class EmpleadoCurso implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EmpleadoCurso(Curso curso, Empleado empleado, String estadoCurso,String asistio) {
+	public EmpleadoCurso(EmpleadoCursoPK id, String estadoCurso,String asistio) {
 		super();
-		this.curso = curso;
-		this.empleado = empleado;
+		this.id = id;
 		this.estadoCurso = estadoCurso;
 		this.asistio= asistio;
 	}
 
-	public Curso getCurso() {
-		return curso;
+	public EmpleadoCursoPK getId() {
+		return id;
 	}
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public Empleado getEmpleado() {
-		return empleado;
-	}
-
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
+	public void setId(EmpleadoCursoPK id) {
+		this.id = id;
 	}
 
 	public String getEstadoCurso() {

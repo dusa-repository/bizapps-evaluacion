@@ -22,7 +22,7 @@ public class SActividadCurso {
 	}
 	
 	public List<ActividadCurso> buscar(Curso curso) {
-		return actividadCursoDAO.findByCurso(curso);
+		return actividadCursoDAO.findByIdCurso(curso);
 	}
 	
 	

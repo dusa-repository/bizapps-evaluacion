@@ -236,7 +236,7 @@ public class CListaPersonalCargo extends CGenerico {
 										
 										EvaluacionCompetencia evaluacionCompetencia=listaEvaluacionCompetencias
 												.get(i);
-										evaluacionCompetencia.setEvaluacion(eva);
+										evaluacionCompetencia.getId().setEvaluacion(eva);
 										servicioEvaluacionCompetencia.guardar(evaluacionCompetencia);
 
 									}
@@ -249,7 +249,7 @@ public class CListaPersonalCargo extends CGenerico {
 										
 										EvaluacionConducta evaluacionConducta=listaEvaluacionConductas
 												.get(i);
-										evaluacionConducta.setEvaluacion(eva);
+										evaluacionConducta.getId().setEvaluacion(eva);
 										servicioEvaluacionConducta.guardar(evaluacionConducta);
 
 									}

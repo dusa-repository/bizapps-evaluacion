@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -20,25 +21,11 @@ import modelo.pk.EmpleadoItemPK;
  */
 @Entity
 @Table(name = "empleado_item")
-@IdClass(EmpleadoItemPK.class)
 public class EmpleadoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
-	private Empleado empleado;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item", referencedColumnName = "id_item")
-	private ItemEvaluacion item;
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
-	private Curso curso;
-	
+	@EmbeddedId
+	private EmpleadoItemPK id;	
 	
 	@Column(name = "fecha_evaluacion")
 	private Timestamp fecha;
@@ -51,39 +38,20 @@ public class EmpleadoItem implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EmpleadoItem(Empleado empleado, ItemEvaluacion item, Curso curso,
+	public EmpleadoItem(EmpleadoItemPK id,
 			Timestamp fecha, String valorEvaluacion) {
 		super();
-		this.empleado = empleado;
-		this.item = item;
-		this.curso = curso;
+		this.id = id;
 		this.fecha = fecha;
 		this.valorEvaluacion = valorEvaluacion;
 	}
 
-
-	public Empleado getEmpleado() {
-		return empleado;
+	public EmpleadoItemPK getId() {
+		return id;
 	}
 
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
-
-	public ItemEvaluacion getItem() {
-		return item;
-	}
-
-	public void setItem(ItemEvaluacion item) {
-		this.item = item;
-	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setId(EmpleadoItemPK id) {
+		this.id = id;
 	}
 
 	public String getValorEvaluacion() {

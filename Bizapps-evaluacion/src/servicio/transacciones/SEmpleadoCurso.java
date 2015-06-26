@@ -28,20 +28,20 @@ public class SEmpleadoCurso {
 	}
 
 	public List<EmpleadoCurso> buscar(Curso curso) {
-		return empleadoCursoDAO.findByCurso(curso);
+		return empleadoCursoDAO.findByIdCurso(curso);
 	}
 
 	public List<EmpleadoCurso> buscarCursos(Empleado empleado) {
-		return empleadoCursoDAO.findByEmpleado(empleado);
+		return empleadoCursoDAO.findByIdEmpleado(empleado);
 	}
 
 	public List<EmpleadoCurso> buscarCursosAsistidosYFinalizados(Empleado empleado) {
-		return empleadoCursoDAO.findByEmpleadoAndAsistioAndEstadoCursoLike(empleado, "SI", "%ADO");
+		return empleadoCursoDAO.findByIdEmpleadoAndAsistioAndEstadoCursoLike(empleado, "SI", "%ADO");
 	}
 
 	public EmpleadoCurso buscarPorempleadoYCurso(Empleado empleado, Curso curso) {
 
-		return empleadoCursoDAO.findByEmpleadoAndCurso(empleado, curso);
+		return empleadoCursoDAO.findByIdEmpleadoAndIdCurso(empleado, curso);
 	}
 
 	public void eliminar(EmpleadoCurso curso) {
@@ -58,7 +58,7 @@ public class SEmpleadoCurso {
 	}
 
 	public void remover(List<Curso> procesadas, Empleado empleado) {
-		List<EmpleadoCurso> lista = empleadoCursoDAO.findByEmpleadoAndCursoIn(
+		List<EmpleadoCurso> lista = empleadoCursoDAO.findByIdEmpleadoAndIdCursoIn(
 				empleado, procesadas);
 		if (!lista.isEmpty())
 			empleadoCursoDAO.delete(lista);

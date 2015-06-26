@@ -23,11 +23,11 @@ public class SEvaluacionCompetencia {
 	}
 	
 	public EvaluacionCompetencia buscar (Evaluacion evaluacion, Competencia competencia){
-		return evaluacionCompetenciaDAO.findByEvaluacionAndCompetencia(evaluacion, competencia);
+		return evaluacionCompetenciaDAO.findByIdEvaluacionAndIdCompetencia(evaluacion, competencia);
 	}
 	
 	public List<EvaluacionCompetencia> buscar (Evaluacion evaluacion){
-		return  evaluacionCompetenciaDAO.findByEvaluacion(evaluacion);
+		return  evaluacionCompetenciaDAO.findByIdEvaluacion(evaluacion);
 	}
 
 }
