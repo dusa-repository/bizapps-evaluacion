@@ -199,6 +199,8 @@ public class CNivelCompetenciaCargo extends CGenerico {
 				+ lsbCompetencia.getItems().size());
 		System.out.println("Competencias del cargo" + " "
 				+ nivelCompetencias.size());
+		
+		
 
 		if (nivelCompetencias.size() != 0) {
 
@@ -256,6 +258,8 @@ public class CNivelCompetenciaCargo extends CGenerico {
 
 		boolean errorCampo = false;
 		if (validar()) {
+			
+			
 
 			Cargo cargoEmpleado = servicioCargo.buscarCargo(idCargo);
 
@@ -288,6 +292,10 @@ public class CNivelCompetenciaCargo extends CGenerico {
 											"Advertencia", Messagebox.OK,
 											Messagebox.EXCLAMATION);
 						} else {
+							
+							
+							
+							servicioNivelCompetenciaCargo.eliminarVarias(servicioNivelCompetenciaCargo.buscar(servicioCargo.buscarCargo(idCargo)));
 
 							for (int i = 0; i < lsbCompetencia.getItemCount(); i++) {
 
@@ -320,8 +328,9 @@ public class CNivelCompetenciaCargo extends CGenerico {
 									clave.setDominio(dominio);
 									NivelCompetenciaCargo nivel = new NivelCompetenciaCargo(
 											clave);
+									
 									servicioNivelCompetenciaCargo
-											.guardar(nivel);
+									.guardar(nivel);
 
 								}
 

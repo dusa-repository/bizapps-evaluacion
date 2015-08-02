@@ -23,6 +23,16 @@ public class SNivelCompetenciaCargo {
 		nivelCompetenciaCargoDAO.save(nivel);
 	}
 	
+	public void eliminar(NivelCompetenciaCargo nivel) {
+		nivelCompetenciaCargoDAO.delete(nivel);
+	}
+
+	
+	public void eliminarVarias(List<NivelCompetenciaCargo> lista) {
+		nivelCompetenciaCargoDAO.delete(lista);
+	}
+
+	
 	public List<NivelCompetenciaCargo> buscar(Cargo cargo) {
 		return nivelCompetenciaCargoDAO.findByIdCargo(cargo);
 	}
