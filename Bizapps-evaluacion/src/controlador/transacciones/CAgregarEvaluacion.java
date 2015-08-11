@@ -340,6 +340,8 @@ public class CAgregarEvaluacion extends CGenerico {
 
 		// ------------Codigo de Capacitacion------------
 		gpxAgregarCapacitacion.setOpen(false);
+		
+		btnImprimir.setDisabled(true);
 
 		// COMPARTIDO PARA AMBOS COMPORTAMIENTOS
 
@@ -526,23 +528,27 @@ public class CAgregarEvaluacion extends CGenerico {
 								} else {
 									nivel.remove(j);
 								}
-								lbxCompetenciaRectora
-										.setModel(new ListModelList<NivelCompetenciaCargo>(
-												nivel2));
+								
 							}
+							
+							lbxCompetenciaRectora
+							.setModel(new ListModelList<NivelCompetenciaCargo>(
+									nivel2));
+							
+							
 							nivel4 = servicioNivelCompetenciaCargo
 									.buscar(empleado.getCargo());
 							for (int j = 0; j < nivel4.size(); j++) {
 								if (nivel4.get(j).getId().getCompetencia()
 										.getNivel().equals("ESPECIFICAS")) {
 
-									if (nivel.get(j).getId().getCompetencia()
+									if (nivel4.get(j).getId().getCompetencia()
 											.getIdEmpresa() == 0) {
 										nivelEspecificas = nivel4.get(j);
 										nivel3.add(nivelEspecificas);
 										nivelCompetencia1 = nivel3;
 									} else {
-										if (nivel.get(j).getId()
+										if (nivel4.get(j).getId()
 												.getCompetencia()
 												.getIdEmpresa() == empleado
 												.getEmpresa().getId()) {
@@ -558,10 +564,12 @@ public class CAgregarEvaluacion extends CGenerico {
 								} else {
 									nivel4.remove(j);
 								}
-								lbxCompetenciaEspecifica
-										.setModel(new ListModelList<NivelCompetenciaCargo>(
-												nivel3));
+								
 							}
+							
+							lbxCompetenciaEspecifica
+							.setModel(new ListModelList<NivelCompetenciaCargo>(
+									nivel3));
 
 							gpxAgregar.setOpen(false);
 							gpxAgregarIndicador.setOpen(false);
@@ -793,6 +801,7 @@ public class CAgregarEvaluacion extends CGenerico {
 
 								nivel = servicioNivelCompetenciaCargo
 										.buscar(evaluacion.getCargo());
+								
 								for (int j = 0; j < nivel.size(); j++) {
 									if (nivel.get(j).getId().getCompetencia()
 											.getNivel().equals("RECTORAS")) {
@@ -820,24 +829,29 @@ public class CAgregarEvaluacion extends CGenerico {
 									} else {
 										nivel.remove(j);
 									}
-									lbxCompetenciaRectora
-											.setModel(new ListModelList<NivelCompetenciaCargo>(
-													nivel2));
+									
 								}
+								lbxCompetenciaRectora
+								.setModel(new ListModelList<NivelCompetenciaCargo>(
+										nivel2));
+								
+								
 								nivel4 = servicioNivelCompetenciaCargo
 										.buscar(evaluacion.getCargo());
+								
 								for (int j = 0; j < nivel4.size(); j++) {
+
 									if (nivel4.get(j).getId().getCompetencia()
 											.getNivel().equals("ESPECIFICAS")) {
 
-										if (nivel.get(j).getId()
+										if (nivel4.get(j).getId()
 												.getCompetencia()
 												.getIdEmpresa() == 0) {
 											nivelEspecificas = nivel4.get(j);
 											nivel3.add(nivelEspecificas);
 											nivelCompetencia1 = nivel3;
 										} else {
-											if (nivel.get(j).getId()
+											if (nivel4.get(j).getId()
 													.getCompetencia()
 													.getIdEmpresa() == empleado
 													.getEmpresa().getId()) {
@@ -854,10 +868,13 @@ public class CAgregarEvaluacion extends CGenerico {
 									} else {
 										nivel4.remove(j);
 									}
-									lbxCompetenciaEspecifica
-											.setModel(new ListModelList<NivelCompetenciaCargo>(
-													nivel3));
+									
 								}
+								
+								lbxCompetenciaEspecifica
+								.setModel(new ListModelList<NivelCompetenciaCargo>(
+										nivel3));
+								
 
 								lblFicha.setValue(ficha);
 								lblNombreTrabajador.setValue(nombreTrabajador);
@@ -1036,23 +1053,28 @@ public class CAgregarEvaluacion extends CGenerico {
 						} else {
 							nivel.remove(j);
 						}
-						lbxCompetenciaRectora
-								.setModel(new ListModelList<NivelCompetenciaCargo>(
-										nivel2));
+						
 					}
+					
+					lbxCompetenciaRectora
+					.setModel(new ListModelList<NivelCompetenciaCargo>(
+							nivel2));
+					
+					
+					
 					nivel4 = servicioNivelCompetenciaCargo.buscar(evaluacion
 							.getCargo());
 					for (int j = 0; j < nivel4.size(); j++) {
 						if (nivel4.get(j).getId().getCompetencia().getNivel()
 								.equals("ESPECIFICAS")) {
 
-							if (nivel.get(j).getId().getCompetencia()
+							if (nivel4.get(j).getId().getCompetencia()
 									.getIdEmpresa() == 0) {
 								nivelEspecificas = nivel4.get(j);
 								nivel3.add(nivelEspecificas);
 								nivelCompetencia1 = nivel3;
 							} else {
-								if (nivel.get(j).getId().getCompetencia()
+								if (nivel4.get(j).getId().getCompetencia()
 										.getIdEmpresa() == empleado
 										.getEmpresa().getId()) {
 									nivelEspecificas = nivel4.get(j);
@@ -1067,10 +1089,12 @@ public class CAgregarEvaluacion extends CGenerico {
 						} else {
 							nivel4.remove(j);
 						}
-						lbxCompetenciaEspecifica
-								.setModel(new ListModelList<NivelCompetenciaCargo>(
-										nivel3));
+						
 					}
+					
+					lbxCompetenciaEspecifica
+					.setModel(new ListModelList<NivelCompetenciaCargo>(
+							nivel3));
 
 					lblFicha.setValue(ficha);
 					lblNombreTrabajador.setValue(nombreTrabajador);
