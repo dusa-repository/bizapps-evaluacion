@@ -341,7 +341,7 @@ public class CAgregarEvaluacion extends CGenerico {
 		// ------------Codigo de Capacitacion------------
 		gpxAgregarCapacitacion.setOpen(false);
 		
-		btnImprimir.setDisabled(true);
+		//btnImprimir.setDisabled(true);
 
 		// COMPARTIDO PARA AMBOS COMPORTAMIENTOS
 
