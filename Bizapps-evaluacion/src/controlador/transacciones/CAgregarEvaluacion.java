@@ -1,5 +1,7 @@
 package controlador.transacciones;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -337,6 +339,19 @@ public class CAgregarEvaluacion extends CGenerico {
 		Empleado e = servicioEmpleado.buscarPorFicha(fichaEm);
 		int gradoA = e.getGradoAuxiliar();
 		gradoAuxiliar = gradoA;
+		
+	System.out.println("PASE");
+		
+		// UTILIZADO PARA GENERAR ARCHIVO DE COMPETENCIAS.
+		
+		/*List<Evaluacion> lista = servicioEvaluacion.buscarEvaluacionesRevision();
+		
+		  for(Evaluacion  evaluacionAuxiliar:lista )
+		  { 
+			  calcularResultadoFinal(evaluacionAuxiliar); 
+			  }
+		
+		*/
 
 		// ------------Codigo de Capacitacion------------
 		gpxAgregarCapacitacion.setOpen(false);
@@ -1168,12 +1183,8 @@ public class CAgregarEvaluacion extends CGenerico {
 			btnAgregarCapacitacion.setVisible(false);
 		}
 
-		// UTILIZADO PARA GENERAR ARCHIVO DE COMPETENCIAS.
-		/*
-		 * for(Evaluacion
-		 * evaluacionAuxiliar:servicioEvaluacion.buscarEvaluacionesRevision() )
-		 * { calcularResultadoFinal(evaluacionAuxiliar); }
-		 */
+		
+		 
 
 	}
 
@@ -3324,22 +3335,27 @@ public class CAgregarEvaluacion extends CGenerico {
 					}
 
 					// ///////////////////////////
-
-					/*
-					 * String eol = System.getProperty("line.separator");
-					 * content = content +
-					 * evaluacionAux.getIdEvaluacionSecundario()+ ";" +
-					 * evaluacionAux.getFicha() + ";"+ empleado1.getNombre()
-					 * +";" + cargo1 +";" + unidadOrganizativa1 +";" +
-					 * gerenciaReporte1 +";" +
-					 * competenciaRequerida.getDescripcion() +";" + dominioAuxR
-					 * +";" + dominioEvidenciado.getDescripcionDominio() +";" +
-					 * pesoCompetencia +";" + pesoDominioRequerido +";" +
-					 * pesoDominioEvidenciado +";" +
-					 * pesoTotalDominioRequerido+";" + acumuladorPesoConducta +
-					 * ";" + acumuladorPesoCompetencia + ";" + eol ;
-					 */
-
+					// PARA GENERAR EL REPORTE DE COMPENTENCIA DETALLADAS
+					
+				   	/*  DecimalFormat decformat = new DecimalFormat("0.00");
+					
+					  String eol = System.getProperty("line.separator");
+					  content = content +
+					  evaluacionAux.getIdEvaluacionSecundario()+ ";" +
+					  evaluacionAux.getFicha() + ";"+ empleado1.getNombre()
+					  +";" + cargo1 +";" + unidadOrganizativa1 +";" +
+					  gerenciaReporte1 +";" +
+					  competenciaRequerida.getDescripcion() +";" + dominioAuxR
+					  +";" + dominioEvidenciado.getDescripcionDominio() +";" +
+					  decformat.format(pesoCompetencia) +";" + pesoDominioRequerido +";" +
+					  pesoDominioEvidenciado +";" +
+					  pesoTotalDominioRequerido+";" + acumuladorPesoConducta +
+					  ";" + decformat.format(acumuladorPesoCompetencia) + ";" + eol ;
+					  
+					  System.out.println(decformat.format(pesoCompetencia));
+					  */
+					 
+					  
 					// //////////////////////////
 
 				}
@@ -3363,24 +3379,26 @@ public class CAgregarEvaluacion extends CGenerico {
 		// /////////////////////////////////////////////////////
 
 		/*
-		 * File file = new File("c:/evaluacion/Datos.txt"); try
-		 * (FileOutputStream fop = new FileOutputStream(file)) {
-		 * 
-		 * // if file doesn't exists, then create it if (!file.exists()) {
-		 * file.createNewFile(); }
-		 * 
-		 * // get the content in bytes byte[] contentInBytes =
-		 * content.getBytes();
-		 * 
-		 * fop.write(contentInBytes); fop.flush(); fop.close();
-		 * 
-		 * System.out.println("Done");
-		 * 
-		 * 
-		 * 
-		 * } catch (IOException e) { e.printStackTrace(); }
-		 */
-
+		try
+		{
+		  File file = new File("c:/evaluacion/Datos.txt"); 
+		  
+		  
+		  FileOutputStream fop = new FileOutputStream(file) ;
+		  
+		   if (!file.exists()) {
+		      file.createNewFile();
+		   }
+		  
+		  fop.write(content.getBytes()); fop.flush(); fop.close();
+		  
+		  System.out.println("Done");
+		  
+		  
+		  
+		  } catch (IOException e) { e.printStackTrace(); }
+		 
+         */
 		// ///////////////////////////////////////////
 
 		try {

@@ -108,9 +108,9 @@ public class ReporteDAO implements IReporteDAO {
 			beanData.setNombre((String) obj[2]);
 			beanData.setCargo((String) obj[3]);
 			beanData.setUnidad((String) obj[4]);
-			beanData.setResultadoObjetivo((Integer) obj[5]);
-			beanData.setResultadoCompetencia((Integer) obj[6]);
-			beanData.setResultadoTotal((Integer) obj[7]);
+			beanData.setResultadoObjetivo((Double) obj[5]);
+			beanData.setResultadoCompetencia((Double) obj[6]);
+			beanData.setResultadoTotal((Double) obj[7]);
 			beanData.setValoracion((String) obj[8]);
 			beanData.setGrado((Integer) obj[9]);
 			beanData.setGerencia((String) obj[10]);

@@ -10,9 +10,9 @@ public class BeanDataGeneralCsv {
 	private String unidad;
 	private String gerencia;
 	private Integer grado;
-	private Integer resultadoObjetivo;
-	private Integer resultadoCompetencia;
-	private Integer resultadoTotal;
+	private Double resultadoObjetivo;
+	private Double resultadoCompetencia;
+	private Double resultadoTotal;
 	private String valoracion;
 	
 	
@@ -58,27 +58,27 @@ public class BeanDataGeneralCsv {
 		this.valoracion = valoracion;
 	}
 
-	public Integer getResultadoObjetivo() {
+	public Double getResultadoObjetivo() {
 		return resultadoObjetivo;
 	}
 
-	public void setResultadoObjetivo(Integer resultadoObjetivo) {
+	public void setResultadoObjetivo(Double resultadoObjetivo) {
 		this.resultadoObjetivo = resultadoObjetivo;
 	}
 
-	public Integer getResultadoCompetencia() {
+	public Double getResultadoCompetencia() {
 		return resultadoCompetencia;
 	}
 
-	public void setResultadoCompetencia(Integer resultadoCompetencia) {
+	public void setResultadoCompetencia(Double resultadoCompetencia) {
 		this.resultadoCompetencia = resultadoCompetencia;
 	}
 
-	public Integer getResultadoTotal() {
+	public Double getResultadoTotal() {
 		return resultadoTotal;
 	}
 
-	public void setResultadoTotal(Integer resultadoTotal) {
+	public void setResultadoTotal(Double resultadoTotal) {
 		this.resultadoTotal = resultadoTotal;
 	}
 
